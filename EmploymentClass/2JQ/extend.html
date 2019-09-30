@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>extend</title>
+</head>
+
+<body>
+  <h1 id="email">作用</h1>
+  <ol>
+    <li>扩展方法（是$.extend和$.fn.extend的区别所在）</li>
+    <li>浅层克隆</li>
+    <li>深层克隆</li>
+  </ol>
+  <script src="http://www.jq22.com/jquery/jquery-1.7.1.js"></script>
+  <script>
+    // $.extend({
+    //   alertValue: function () {
+    //     $(this).click(function () {
+    //       alert($(this).text());
+    //     });
+    //   }
+    // });
+    // $.alertValue();
+    $.fn.extend({
+      min: function (a, b) {
+        return a < b ? a : b;
+      },
+      max: function (a, b) {
+        return a > b ? a : b;
+      }
+    });
+    console.log($('#email').min(2, 3)); //返回  2
+    console.log($('#email').max(4, 5)); //返回  5
+
+    var obj1 = { a: 'bb', b: 'cc' };
+    var obj2 = { a: 'dd', c: 'ee' };
+    var obj = $.extend(true, obj1, obj2);
+    console.log(obj);
+  </script>
+</body>
+
+</html>

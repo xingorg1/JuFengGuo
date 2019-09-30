@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>缓冲运动封装 - 多物体运动</title>
+  <style>
+    div {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      margin-bottom: 20px;
+      background: tomato;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="demo1">改透明度</div>
+  <div id="demo2">改寬度</div>
+  <div id="demo3">左移</div>
+  <div id="demo4">加高</div>
+  <script>
+    var demo1 = document.getElementById('demo1'),
+      demo2 = document.getElementById('demo2'),
+      demo3 = document.getElementById('demo3'),
+      demo4 = document.getElementById('demo4');
+
+    function getStyle(dom, attr) {
+      if (window.getComputedStyle) {
+        return window.getComputedStyle(dom, null)[attr];
+      } else {
+        return dom.currentStyle(attr);
+      }
+    }
+    demo1.onmouseenter = function () {
+      startMove(this, 'opacity', 0.6, 20);
+    }
+    demo1.onmouseleave = function () {
+      startMove(this, 'opacity', 1, 20);
+    }
+    demo2.onmouseenter = function () {
+      startMove(this, 'width', 300, 2);
+    }
+    demo2.onmouseleave = function () {
+      startMove(this, 'width', 100, 2);
+    }
+    demo4.onmouseenter = function () {
+      startMove(this, 'height', 300, 7);
+    }
+    demo4.onmouseleave = function () {
+      startMove(this, 'height', 100, 7);
+    }
+    demo3.onmouseenter = function () {
+      startMove(this, 'left', 60, 10);
+    }
+    demo3.onmouseleave = function () {
+      startMove(this, 'left', 0, 10);
+    }
+    
+
+    function startMove(dom, attr, target, baseSpd) {
+      var speed = null,
+        dis = null,
+        isOpacity = attr === 'opacity' ? true : false;
+      if (isOpacity) {
+        target *= 100;
+      }
+      clearInterval(dom.timer);
+      dom.timer = setInterval(function () {
+        if (isOpacity) {
+          dis = parseFloat(getStyle(dom, attr)) * 100;
+        } else {
+          dis = parseInt(getStyle(dom, attr));
+        }
+        speed = (target - dis) / baseSpd;
+        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+        if (Math.abs(target - dis) <= Math.abs(speed)) {
+          if (isOpacity) {
+            dom.style[attr] = target / 100;
+          } else {
+            dom.style[attr] = target + 'px';
+          }
+          clearInterval(dom.timer);
+          dom.timer = null;
+        } else {
+          if (isOpacity) {
+            dom.style[attr] = (dis + speed) / 100;
+          } else {
+            dom.style[attr] = dis + speed + 'px';
+          }
+        }
+      },40);
+    }
+    // var a = 'abc=ac==s';
+    // var b = {
+    //   abc: 123,
+    //   c: ['ccccc']
+    // }
+    // var c = a.split('='); //[abc,ac,'',s]
+    // console.log(c, c[0]);
+    // console.log(b[c[0]]);
+    // console.log(b.c[0], b.c);
+    // var dad = {
+    //   a: 1
+    // };
+    // var son = {
+    //   a: 2
+    // };
+
+    // function show() {
+    //   console.log(this)
+    //   return this;
+    // }
+    // var newShow = show.bind(dad);
+    // var newShow1 = newShow.bind(son);
+    // console.log(newShow)
+    // console.log(newShow1)
+    // console.log(newShow() == dad);
+    // console.log(newShow1() == son)
+  </script>
+</body>
+
+</html>

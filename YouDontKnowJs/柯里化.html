@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>柯里化</title>
+</head>
+
+<body>
+  <script>
+    // 调用形式
+    function add(a, b, c) {
+      console.log(this,a,b,c)
+      return a + b + c;
+    }
+    // var newAdd = Curry(add);
+    // newAdd(1)(2)(3);
+    // // 或者
+    // newAdd(1, 2)(3);
+
+    // 我的仿写 - 
+    // function Curry(fun){
+    //   return function(a){
+    //     fun(1);
+    //     return function(b){
+    //       fun(2);
+    //       return function(c){
+    //         fun(3);
+
+    //       }
+    //     }
+    //   }
+    // }
+
+    // 一步一步来，一笔画不出一个“王”字，就先画一个“一”嘛
+    // 固定参数的柯里化
+    /* 也就是Curry里除了add还传了n个参数，那newAdd里就要传最终应该有的参数个数 - n个 */
+    function Curry1(fn) {
+      var args1 = Array.prototype.slice.call(arguments, 1); //从第二个参数截取，避开fn
+      return function () {
+        var args2 = Array.prototype.slice.call(arguments); //转成数组
+        return fn.apply(this, args1.concat(args2));
+      }
+    }
+    var obj = {
+      add : function(a,b,c){
+        console.log(this,a,b,c)
+        return a + b + c;
+      }
+    }
+    var newAdd1 = Curry1(add, 2);
+    var newAdd2 = Curry1(obj.add, 2);
+    console.log(newAdd1(2, 3));
+    console.log(newAdd2(2, 2));
+    // 以上，从curry中获取除了fn的所有参数，利用数组slice方法，截取除第一个以外的所有参数。（这里不能用shift，因为shift改变原数组。slice不改变原数组）
+    // 然后curry的返回值还是一个函数，这个函数也就是后期示例中newAdd1调用的那个函数，这个函数内部的所有参数都是用来add的参数，需要全部获取。同时为了后期的参数合并，这里也利用slice方法进行了转化、
+    // 最后调用fn，并传参，参数是两次arguments组成的数组。至于使用apply，一方面可以改变fn内部this指向。（否则fn调用的时候this指向window）另外主要是为了传参用我们刚才合成的数组。只有apply有这个功能让我们把所有参数合成一个数组全部穿进去。
+    
+
+    // 默写柯里化函数 - 固定传参形式：
+    function fixedCurry(fn){
+      var args = Array.prototype.slice.call(arguments,1);//从第二个参数开始截取，把arguments转化成伪数组。
+      return function(){//返回一个新的函数，供第二次调用时传参使用。第二次调用传参就得把剩下数量的参数传齐
+        var args2 = Array.prototype.slice.call(arguments);//把第二次调用传的剩下的参数转化为数组备用。
+        return fn.apply(this,args.concat(args2));//合并两个参数数组，当作apply的第二个参数传给fn函数，也就是案例中的add函数。并返回函数调用后的返回值。
+      }
+    }
+    /* 真正灵活的柯里化函数实现 */
+    // 每次传的参数都不一定完整，但是期望他是完整的，如果真的是那最好。如果不是那也没关系，我等待你下次给我传完整的参数。
+    function Curry(fn,len){//一开始告诉我需要几个参数，你不告诉我，我就自己获取实际调用函数需要几个参数
+      len = len || fn.length;//fn.length能够获取函数的参数个数。
+      return function(){
+        var args = Array.prototype.slice.call(arguments),
+          argsLen = args.length;
+          var params = [fn].concat(args);
+        if(argsLen < len){
+          // 期望参数传进来的数量不够，就使用固定传函数
+          // fixedCurry(fn,args);如果直接这么调用的话，args没有被扩展开，到了fixedCurry里边相当于除了第一个fn，就传了一个参数。
+          // fixedCurry.apply(this,[fn,args]);若要扩展开，还得需要apply的帮助
+          // 因此，需要提前把fn和args合并成一个数组：var params = [fn].concat(args);
+          
+          // fixedCurry.apply(this,params);//这样，把fixedCurry需要的参数装到数组里传给他，利用apply把数组展开了。
+          // 以上是设想的满意效果，如果第二次传参的长度刚好等于剩下长度时。但如果不等于的话。还要继续：
+          return Curry(fixedCurry.apply(this,params),len - argsLen);//目前还应该传的参数个数是期望参数个数 - 已传参数。最后把值返回出去
+
+        }else{
+          // 实际输入参数已经达到需要传的参数的数量,就可以最终执行函数了。
+          console.log(params,'==',fn);
+          return fn.apply(this,args);
+        }
+      }
+    }
+    function test(fn,args){
+      var args = Array.prototype.slice.call(arguments,1);
+      console.log(args);
+    }
+    test(add,[1])
+    function fixedCurry(fn){
+      var args = Array.prototype.slice.call(arguments,1);
+      return function(){
+        var args2 = Array.prototype.slice.call(arguments);
+        return fn.apply(this,args.concat(args2));
+      }
+    }
+    
+    function Curry(fn,len){
+      len = len || fn.length;
+      return function(){
+        var args = Array.prototype.slice.call(arguments),
+          argsLen = args.length,
+          params = [fn].concat(args);
+        if(argsLen < len){
+          return Curry(fixedCurry.apply(this,params),len - argsLen);
+        }else{
+          return fn.apply(this,args); 
+        }
+      }
+    }
+    /* 使用示例 */
+    var result = Curry(add);
+    console.log('test',result(1)(2)(3))
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script>
+    const {log} = console;
+  </script>
+  <style>
+    .list li{
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  <ul id="list" class="list">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+  <textarea name="" id="textarea" cols="30" rows="10"></textarea>
+  <script >
+    // textarea oninput事件
+    // textarea.oninput = function(e){
+    textarea.onkeyup = function(e){
+      log(e)
+    }
+    let a = '{}[]()';
+    for(var item of a){
+      log(item)
+      let code = item.charCodeAt();
+      log(code)
+    }  
+    let str = 'aa\\aasdf';
+    let reg = /[\\]/g;
+    log(str.match(reg))
+    log(str.replace(reg,'-'))
+  </script>
+  <script>
+    // let oList = document.getElementById('list');
+    // let oLi = oList.getElementsByTagName('li');
+    let oList = document.getElementsByClassName('list')[0];
+    let oLi = oList.children;
+    log(oLi)
+   for (let i = 0; i < oLi.length; i++) {
+    oLi[i].onclick = function(){
+      // console.log(12)
+      window.location.href = 'http://www.baidu.com'
+    }
+   }
+  </script>
+  <script>
+    let a0709 = 0,
+      b0709 = 0;
+    function A0709(a0709){
+      A0709 = function(b0709){
+        log('three',a0709 + b0709++, a0709,b0709);
+        log('four',a0709,b0709);
+      }
+      log('one-',a0709++,a0709);
+      log('two-',a0709);
+    }
+    A0709(1);
+    A0709(2);
+  </script>
+  <script>
+    // 0710-闭包
+    function fn0710(){
+      var a = 0;
+      return function fn(){
+        // a++,alert(a)
+        // alert(++a)
+        // alert(a++);
+      }
+    }
+    fn0710()();
+    var fn0710Var = fn0710();
+    fn0710Var();
+    fn0710Var();
+    
+    setTimeout(()=>{
+      log(1);
+    })
+    new Promise((res,rej)=>{
+      log(2);
+      for(var i=0;i<1;i++){
+        log(i+'iii');
+        i==1-1&&res();
+      }
+    }).then(()=>{
+      log(3)
+    })
+  </script>
+  <script>
+    // 20190714
+    (function(x){
+      return (function(y){
+        log('x的结果是：',x);
+      }(2));
+    }(1))
+  </script>
+</body>
+</html>

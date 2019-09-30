@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Date日期</title>
+</head>
+
+<body>
+  <h1>封装函数，打印当前是何年何月何日，几分几秒</h1>
+  <div class="time"></div>
+  <script>
+    function formatDate() {
+      function add0(n) {
+        return n = n < 10 ? '0' + n : n;
+      }
+      var weekArr = ['日', '一', '二', '三', '四', '五', '六', ],
+        date = new Date(),
+        year = date.getFullYear(),
+        month = add0(date.getMonth() + 1),
+        day = add0(date.getDate()),
+        hour = add0(date.getHours()),
+        min = add0(date.getMinutes()),
+        sec = add0(date.getSeconds()),
+        week = weekArr[date.getDay()];
+      return year + '年' + month + '月' + day + '日  ' + hour + '时：' + min + '分：' + sec + '秒, 星期' + week;
+    }
+    var div = document.getElementsByClassName('time')[0];
+    div.innerText = formatDate();
+    setInterval(function () {
+      div.innerText = formatDate();
+    }, 1000);
+
+    function getDay(y,m){
+      var date = new Date();
+      console.log(date.setFullYear(y,m));
+      console.log(date.setDate(0));
+      console.log(date.getDate());
+    }
+    getDay(2019,02);
+    
+  </script>
+</body>
+</html>

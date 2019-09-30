@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>class模拟</title>
+</head>
+<body>
+  <div>
+    <ul>
+      <li>new调用class定义的构造函数正常实现，直接调用会报错，是怎么做到的？
+        <p>有没有可能像bind原理那样来检查是不是new调用</p>
+        <p>我们可以通过this判断，在构造函数当中，当我们用new调用构造函数时，this是实例化对象，this.__proto__ == 构造函数.prototype。
+            但如果不是new的话，普通调用时this指向window对象。上边等式就不成立了。
+            据此，也可以用this instanceof 构造函数，判断this的原型链上有没有构造函数的原型。这正是instanceof要干的事。
+        </p>
+      </li>
+    </ul>
+  </div>
+  <script>
+    const { log } = console;
+  </script>
+  <script>
+    /* ES6 - class */
+    class Person{
+      constructor(name){
+        this.name = name;
+      }
+      eat(){
+        log('eat function');
+      }
+    }
+    Person.prototype.lastName = 'Guo';//这样添加在原型上的属性是可以枚举的
+    var person = new Person('class');
+    // Person('class');//class constructor Person cannot be invoked without "new"
+
+    log(person);
+
+  </script>
+  <script>
+    /* ES5 - 构造函数 */
+    (function(){
+      function Person(name){
+        this.name = name;
+      }
+      Person.prototype.lastName = 'Guo';//这样添加在原型上的属性是可以枚举的
+      Person.prototype.eat = function(){//这样添加在原型上的方法是可以枚举的
+        log('eat function');
+      }
+      var person = new Person('构造函数');
+      Person('构造函数');
+
+      log(person)
+    }());
+  </script>
+</body>
+</html>

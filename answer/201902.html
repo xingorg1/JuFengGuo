@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .menu li {
+      float: left;
+    }
+
+    .menu li a {
+      display: block;
+    }
+
+    .box1 {
+      float: left;
+      color: red;
+      padding-right: 20px;
+    }
+
+    .box2 {
+      color: blue;
+      background: #ddffec;
+    }
+
+    .in {
+      float: left;
+    }
+
+    .blue,
+    .red {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      border: 1px solid;
+      /* vertical-align: text-bottom; */
+    }
+
+    .red {
+      border-color: red;
+    }
+
+    .box111 {
+      padding: 1px;
+    }
+
+    img:hover {
+      content: url(http://pic3.nipic.com/20090527/1242397_102231006_2.jpg)
+    }
+
+    .margin {
+      width: 50%;
+      background: #0ff;
+    }
+
+    .for-height {
+      height: 550px;
+      border: 1px solid;
+    }
+
+    .top {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      border: 1px solid tomato;
+      background: #fff;
+    }
+
+    .margin-test span,
+    .margin-test div {
+      margin: 10px;
+      border: 1px solid;
+    }
+
+    div p {
+      color: red;
+    }
+
+    input:focus {
+      outline: none;
+      border: 0;
+    }
+
+    a[href] {
+      color: green;
+    }
+
+    div[data-id] {
+      color: tomato;
+    }
+
+    div[id] {
+      background: tomato;
+    }
+
+    .hover-test {
+      color: rebeccapurple;
+      vertical-align: top;
+    }
+    li:nth-of-type(3n){color: red}
+    .hover-test:hover {}
+    .anniu{
+      background-color: red;
+      background-image: linear-gradient(to right,red,yellow);
+    }
+  </style>
+</head>
+
+<body>
+  <a href="http://www.pptbz.com/pptpic/UploadFiles_6909/201203/2012031220134655.jpg" download="http://www.pptbz.com/pptpic/UploadFiles_6909/201203/2012031220134655.jpg">点击我下载图片</a>
+  <a href="http://www.jq22.com/jquery/jquery-1.7.1.js" download="http://www.jq22.com/jquery/jquery-1.7.1.js">点击我下载jquery-1.7.1.js</a>
+  <div data-id="2">div有data-id的</div>
+  <div id="23">div</div>
+  <a>234</a>
+  <a href="">areare</a>
+  <div class="p">
+    <p>
+      <h1>中文字</h1>
+    </p>
+  </div>
+  <div class="margin-test">
+    <span>1</span>
+    <span>2</span>
+  </div>
+  <div class="margin-test2 margin-test">
+    <div>1</div>
+    <div>2</div>
+  </div>
+  <div class="margin-test3 margin-test">
+    <div>1</div>
+    <span>2</span>
+  </div>
+  <div class="hover-test">hover上去</div>
+  <div class="margin">adfhkafhd</div>
+  <img src="./images/bg.png" alt="" width="200px" height="150px">
+  <img src="http://www.pptbz.com/pptpic/UploadFiles_6909/201203/2012031220134655.jpg" alt="" width="300" height="250">
+  <!-- <div class="box111"> -->
+  <div class="blue">
+    y阿德
+  </div>
+  <div class="red">
+    x中文
+  </div>
+
+  <!-- </div> -->
+  <div contenteditable="true" id="contentEdit">打发</div>
+  <div class="box">
+    <!-- <span class="11">afda</span> -->
+    <input type="text" class="in" id="myInput">
+    <div class="box2">aaa</div>
+  </div>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+  <ol class="olMarign">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ol>
+  <div class="cont">
+    <ul class="menu">
+      <li>
+        <a href="">home
+          <ul class="sub">
+            <li><a href="">1</a></li>
+            <li><a href="">2</a></li>
+            <li><a href="">3</a></li>
+            <li><a href="">4</a></li>
+          </ul>
+        </a>
+      </li>
+      <li><a href="">first</a></li>
+      <li>
+        <a href="">second
+          <ul class="sub">
+            <li><a href="">5</a></li>
+            <li><a href="">6</a></li>
+            <li><a href="">7</a></li>
+            <li><a href="">8</a></li>
+          </ul>
+        </a>
+      </li>
+      <li><a href="">third</a></li>
+    </ul>
+  </div>
+  <div id="MYcheckBox">
+    <input type="checkbox" name="a" id="">a
+    <input type="checkbox" name="b" id="">b
+    <input type="checkbox" name="a" id="">c
+  </div>
+  <!-- 带label的input怎么根据label选中 -->
+  <label for="aa">aad
+    <input type="checkbox" name="a" id="aa">
+  </label>
+  <label for="bb">bbb
+    <input type="checkbox" name="b" id="bb">
+  </label>
+  <ul class="announce_box_gambit_List">
+    <li class="listItem">
+      <label class="lableCheck" for="checkBox">我的桃花签
+        <input type="checkbox" class="checkBox" id="checkBox" />
+      </label>
+    </li>
+    <li class="listItem">单身日记</li>
+    <li class="listItem">我的择偶标准</li>
+    <li class="listItem">只想爆个照</li>
+    <li class="listItem">工作时的你</li>
+    <li class="listItem">2019许个愿</li>
+  </ul>
+  <select name="se1" id="se1">
+    <option value="">1</option>
+    <option value="">2</option>
+    <option value="">3</option>
+    <option value="">4</option>
+    <option value="">5</option>
+    <option value="">6</option>
+    <option value="">7</option>
+    <option value="">8</option>
+  </select>
+  <div class="for-height">撑开高度用的</div>
+  <div class="for-height">撑开高度用的</div>
+  <div class="top" id="goTop">返回顶部</div>
+  <button class="anniu">按钮</button>
+  <script>
+    var $div1 = document.createElement('div');
+    var $div2 = document.createElement('div');
+    $div1.innerHTML = '<span>哈哈哈</span>'
+    $div2.innerHTML = '<span>哈哈哈22222</span>'
+    $div2.appendChild($div1);
+    document.body.appendChild($div2);
+    var obj = {
+      a: function(){
+        console.log(this.b,this);
+        this.b();
+      },
+      b: function(){
+        console.log(this);
+      },
+      c: this.a
+    }
+    console.log(obj.c);
+    var myB = 1;
+    console.log('myB数字', myB++);
+    console.log('myB', myB);
+    var myA;
+    console.log('myA未定义', myA++);
+    console.log('myA', myA);
+    var myC = 'test';
+    console.log('myC字符串', myC++);
+    console.log('myC', myC);
+    var myD = {};
+    console.log('myD对象', myD++);
+    console.log('myD', myD);
+    var myE = true;
+    console.log('myE布尔', myE++);
+    console.log('myE', myE);
+    var myF = [];
+    console.log('myF数组', myF++);
+    console.log('myF', myF);
+    var myG = function () {};
+    console.log('myG函数', myG++);
+    console.log('myG', myG);
+    var myH = '20.3';
+    console.log('myH字符串类型数字', myH++);
+    console.log('myH', myH);
+    var myI = null;
+    console.log('myI - null', myI++);
+    console.log('myI', myI);
+    se1.onchange = function (e) {
+      console.log(e)
+    }
+    contentEdit.onkeyup = function (e) {
+      console.log(e)
+    }
+    var a = document.getElementsByClassName('cont')[0]
+    console.log(a)
+    var xxx = 1234;
+
+    function test(xxx) {
+      console.log(xxx);
+      var xxx = 123;
+
+      function xxx() {}
+      console.log(xxx);
+    }
+    for (let i = 0; i < 10; i++) {
+      if (i == 3) {
+        // continue
+        break
+        // return false;//报错
+      } else {
+        console.log(i)
+      }
+    }
+    var residueCollects = {
+      '1': true,
+      '2': true,
+      '3': true,
+      '4': true,
+      '5': true,
+      '6': true,
+      '7': true
+    };
+    setTimeout(function () {
+      residueCollects[2] = false;
+      console.log(residueCollects)
+    }, 1000);
+    var x = 0;
+    var foo = {
+      x: 1,
+      bar: {
+        x: 2,
+        baz: function () {
+          console.log('..', this, this.x)
+        }
+      }
+    }
+    var a = foo.bar.baz;
+    foo.bar.baz();
+    a();
+
+    var a = function () {
+      console.log(this.x)
+    }
+
+    // var y = 0;
+    function bb() {
+      var y = 'bb';
+      var foo1 = {
+        y: 1,
+        bar: {
+          y: 2,
+          baz: () => {
+            console.log('---', this, this.y)
+          }
+        }
+      }
+
+      var a1 = foo1.bar.baz;
+      foo1.bar.baz();
+      a1();
+    }
+    bb()
+  </script>
+  <script>
+    function inputButClick() {
+      var name = prompt("请输入当前月份", "一月份");
+      var arr = ['三月份', '五月份', '七月份', '八月份', '十月份', '十二月份'];
+      var nextMonthDay = 0;
+      if (name != null && name != "") {
+        for (var item of arr) {
+          console.log(item, name, item == name);
+          if (name === '一月份') {
+            nextMonthDay = 28
+          } else if (item === name) {
+            if (item == '七月份' || item == '十二月份') {
+              nextMonthDay = 31;
+            } else {
+              nextMonthDay = 30;
+            }
+            break;
+          } else {
+            nextMonthDay = 31;
+          }
+        }
+        document.write(`${name}你好! 这个月过得好吗？ 下个月有${nextMonthDay}天`)
+      }
+    }
+    // inputButClick();
+    //  使用正则来限制prompt只能输入1~12月份应该怎么样写呢
+    /* 计算点击的个数 */
+    // checkBox
+    // 输入一个月份数字，计算下个月的天数
+    function nextMonth(year, month) {
+      month = month + 1 > 12 ? (year++, 1) : month + 1;
+      var date = new Date();
+      date.setFullYear(year, month);
+      date.setDate(0);
+      var day = date.getDate();
+      console.log(`${year}、下个月是${month}月，天数为${day}`)
+      return day
+    }
+    nextMonth(2019, 1);
+    nextMonth(2019, 2);
+    nextMonth(2019, 3);
+    nextMonth(2019, 4);
+    nextMonth(2019, 5);
+    nextMonth(2019, 6);
+    nextMonth(2019, 7);
+    nextMonth(2019, 8);
+    nextMonth(2019, 9);
+    nextMonth(2019, 10);
+    nextMonth(2019, 11);
+    nextMonth(2019, 12);
+    myInput.onkeydown = function (e) {
+      if (e.keyCode == 13) {
+        console.log(myInput.value);
+        var date = new Date();
+
+      }
+    }
+  </script>
+  <script src="http://www.jq22.com/jquery/jquery-1.7.1.js"></script>
+  <script>
+    $('.announce_box_gambit_List').on('click', 'li', function () {
+      console.log($(this))
+    })
+    var checkbox = $("#checkBox");
+    console.log(checkbox);
+    $(".lableCheck").click(function (e) {
+      e.stopPropagation();
+      console.log($(this))
+      console.log(checkbox.is(":checked"));
+    });
+    $(".box2").css({
+      'border': '1px solid red',
+      'color': 'green'
+    });
+    var foo = 213;
+
+    function print() {
+      this.foo = 234;
+      console.log(foo)
+    }
+    print();
+    var a = {};
+    var b = {
+      key: 1
+    }
+    var c = {
+      key: 2
+    }
+    a[b] = 123;
+    a[c] = 234;
+    a[b.key] = 11;
+    a[c.key] = 22;
+    for (const key in a) {
+      console.log(typeof key)
+    }
+    console.log(a);
+    // 返回顶部
+    $('#goTop').click(function (event) {
+      $('html, body').animate({
+        scrollTop: 0
+      }, 300);
+      return false;
+    });
+  </script>
+  <script src="../gjfUtils/vconsole.min.js"></script>
+  <script>
+    let vConsole = new VConsole();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>animation</title>
+  <style>
+    .demo{
+      width: 30px;
+      height: 30px;
+      border: 1px solid #eee;
+      animation: colors 4s steps(1,end) forwards;
+
+    }
+    @keyframes colors{
+      0%{
+        background: red;
+      }
+      25%{
+        background: blue;
+      }
+      50%{
+        background: yellow;
+      }
+      75%{
+        background: green;
+      }
+      100%{
+        background: purple;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo"></div>
+</body>
+</html>

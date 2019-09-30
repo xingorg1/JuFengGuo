@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>小石头的群聊</title>
+  <style>
+    #rst{
+      width: 300px;
+      height: 300px;
+      border: 1px solid #f1f1f1;
+      background-color: #fdfdfd;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <input type="text" placeholder="请输入要发送的内容" id="ipt">
+      <button id="btn">发送请求</button>
+      <p>
+        群聊内容如下：
+      </p>
+      <div id="rst">
+
+      </div>
+      <button id="closeBtn" style="background: tomato;">退出群聊</button>
+  </div>
+  <script>
+    // 聊天室功能
+    const ws = new WebSocket('ws://localhost:8081'),
+          ipt = document.getElementById('ipt'),
+          btn = document.getElementById('btn'),
+          closeBtn = document.getElementById('closeBtn'),
+          content = document.getElementById('rst');
+
+    // 初次进入聊天室，给个提醒
+    ws.addEventListener('open',(e)=>{
+      console.log('加入聊天室成功',e);
+      content.appendChild(creatEle('加入聊天室成功'));
+    });
+
+    // 接收ws服务器发送的消息，并展示到div#rst当中
+    ws.addEventListener('message',(e)=>{
+      console.log(e.data);
+      content.appendChild(creatEle(e.data));
+    });
+
+    // btn被点击时发送请求
+    btn.onclick = function(){
+      if(ipt.value.length <= 0){
+        alert('不能发送空消息');
+        return;
+      }
+      ws.send(ipt.value);
+      ipt.value = '';
+    }
+    // close-btn被点击时退出群聊
+    closeBtn.onclick = function(){
+      ws.close();
+    }
+
+    // 创建一个p标签，存储对应内容，以追加到内容展示区域
+    function creatEle(str){
+      const eleP = document.createElement('p');
+      eleP.innerText = str;
+      return eleP;
+    }
+
+
+  </script>
+
+</body>
+</html>

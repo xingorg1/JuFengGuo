@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>反复运动</title>
+  <style>
+    .demo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: tomato;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    #start,
+    #end {
+      margin-top: 130px;
+    }
+
+    .line {
+      position: absolute;
+      top: 0;
+      left: 300px;
+      width: 2px;
+      height: 150px;
+      border: 1px solid #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo" id="demo">
+  </div>
+  <div class="line" id='line'>一睹墙</div>
+  <button id="start">开始</button>
+  <button id="end">结束</button>
+  <script>
+    // 我自己第一遍没听课前封装的
+    var demo = document.getElementById('demo'),
+      start = document.getElementById('start'),
+      line = document.getElementById('line'),
+      end = document.getElementById('end');
+    var target = line.offsetLeft;
+    timer = null;
+    start.onclick = function (e) {
+      var left = demo.offsetLeft + demo.clientWidth;
+      var speed = left - target >= 0 ? -5 : 5;
+      clearInterval(timer);
+      timer = setInterval(() => {
+        var curLeft = demo.style.left;
+        var curWith = demo.clientWidth;
+        if (speed > 0) {
+          if (parseInt(curLeft) + curWith >= target) {
+            // 停止
+            demo.style.left = target - curWith + 'px';
+            /* 清除是为了让点击事件触发多次时，不触发多个定时器 */
+            clearInterval(timer);
+            timer = null;
+            start.innerText = '返回';
+          } else {
+            demo.style.left = demo.offsetLeft + speed + 'px';
+          }
+        } else {
+          if (parseInt(curLeft) <= 0) {
+            demo.style.left = '0px';
+            clearInterval(timer);
+            timer = null;
+            start.innerText = '开始';
+          } else {
+            demo.style.left = demo.offsetLeft + speed + 'px';
+          }
+        }
+      }, 60);
+    }
+    end.onclick = function (e) {
+      clearInterval(timer);
+      timer = null;
+    }
+  </script>
+</body>
+
+</html>

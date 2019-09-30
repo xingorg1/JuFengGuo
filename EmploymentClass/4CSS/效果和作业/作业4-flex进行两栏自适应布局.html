@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>自适应两栏伸缩布局</title>
+  <style>
+    body{
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    .container{
+      display: -webkit-flex;
+      display: flex;
+      /* align-items: center; */
+      width: 750px;
+      padding: 20px;
+      margin: 300px auto;
+      background: rgba(159, 170, 147, 0.11);
+      border-radius: 8px;
+      box-sizing: border-box;
+      box-shadow: 0 3px 11px #dcdcdc;
+    }
+    .img-box{
+      /* margin-right: 40px; */
+      font-size: 0;
+    }
+    .img-box img{
+      display: block;
+    }
+    .txt{
+      flex: 1;
+      padding-top: 40px;
+      padding-left: 40px;
+    }
+    .name{
+      font-size: 44px;
+      font-weight: 600;
+      color: #233;
+    }
+    .intro{
+      margin-top: 20px;
+      font-size: 30px;
+      color: #454545;
+    }
+    .intro p{
+      margin: 0;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="img-box">
+      <img src="https://img02.sogoucdn.com/net/a/04/link?url=https%3A%2F%2Fi02picsos.sogoucdn.com%2Fb04082bb92183778&appid=122" alt="图片迷路了……">
+    </div>
+    <div class="txt">
+      <div class="name">郭菊锋</div>
+      <div class="intro">
+        <p>演员、歌手、中国四小花旦之一</p>
+        <p>2001年10月12日 (18岁)</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

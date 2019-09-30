@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>webWorker</title>
+</head>
+
+<body>
+  <div id="demo">dom测试</div>
+  <script>
+    function oldJs(){
+      console.log('==在同步代码中间计算求和公式==')
+      console.log('==在同步代码中间计算求和公式==')
+      var num = 12000;
+      var rst1 = 0;
+      for (let i = 0; i < num; i++) {
+        rst1 += i;
+      }
+      console.log(`循环${num}圈后的结果`,rst1);
+      console.log('==原来写法的局限是，我后边的代码必须等他计算完了才会执行。==')
+      console.log('==如果是大量的计算操作，要等几秒的那种，那用户也得等着了。==')
+    }
+    // oldJs();
+    function workerJs(){
+      console.log('==在同步代码中间计算求和公式==');
+      console.log('==在同步代码中间计算求和公式==');
+      var num = 12000;
+      // worker开启新线程，异步执行计算公式
+      var worker1 = new Worker('./worker.js');
+      //参数为js的文件名。他就会加载这个js文件，并在接收到命令后执行。
+      // 本页面中script行为主线程，worker.js为异步线程， 在主线程中发送让分线程开始工作的指令，并传递参数对象
+      worker1.postMessage({
+        myNum: num,
+        // dom: document.getElementById('demo')
+      });
+      // 同worker.js线程，用onMessage接收分线程的应答消息。
+      worker1.onmessage = function(e){
+        console.log(e.data);//同样data中存放结果数据
+      }
+      worker1.terminate();//worker对象让worker.js线程停止、终止。停止工作。
+      console.log('==但是worker就不一样了，不会阻塞主任务，而是开辟新线程做耗时任务，主线程做主任务。==')
+      console.log('==等新线程执行完毕再把结果返回给主线程。==')
+    }
+    workerJs();
+    
+  </script>
+</body>
+
+</html>

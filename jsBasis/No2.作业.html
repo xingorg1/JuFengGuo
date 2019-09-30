@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>第2节，条件语句 循环语句</title>
+</head>
+
+<body>
+  <h2>click事件的target，this指向window还是自身？——答案是自身</h2>
+  <script src="./xingorg1Utils.js"></script>
+  <script>
+    console.log(xingorg1Utils)
+    console.log('3 的 4 次幂：', xingorg1Utils.exponentiation('3', 4))
+    console.log('3 的阶乘：', xingorg1Utils.factorial(4))
+    console.log('12 的斐波那契数列：', xingorg1Utils.fibonacci(12))
+    console.log('100 以内的质数：', xingorg1Utils.primeNumber(100))
+    console.log('这几个数的最大值：', xingorg1Utils.maxNumber(12, 4, 123, '567', 2))
+    // (3*2*1)
+    function a(n) {
+      console.log('n', n);
+      if (n > 1) {
+        console.log(n + '*' + (n - 1) + '=', n * n - 1)
+        return n * a(n - 1);
+      } else {
+        return 1;
+      }
+    }
+    // console.log(a(4))
+    function io(number) {
+
+    }
+    switch (7) {
+      case 6:
+      case 7:
+        console.log('周末');
+        break;
+      default:
+        console.log('工作日');
+        break;
+    }
+
+    var num = 10;
+    var obj = {
+      num: 0,
+      inner: {
+        num: 6,
+        print: function () {
+          console.log(this)
+          console.log(this.num);
+        }
+      }
+    }
+    num = 88;
+    obj.inner.print();
+    // 谁调用指向谁，这个算谁调用呢？算inner，这个也有链式调用啊
+    var fn = obj.inner.print;
+    fn();
+    (obj.inner.print)(); //意外的是，这个居然是6，为什么？
+    (obj.inner.print = obj.inner.print)(); //知道这个是88，但为什么？
+
+    var out = 25;
+    inner = {
+      out: 20,
+      func: function () {
+        var out = 30;
+        console.log(this)
+        return this.out;
+      }
+    }
+    console.log((inner.func, inner.func)()) //25
+    console.log(inner.func()) //20
+    console.log((inner.func)) // 25X 20
+    console.log((inner.func)()) // 25X 20
+
+    console.log((inner.func = inner.func))
+    console.log((inner.func = inner.func)()) // 25
+
+    // onclick里边的this指向谁？
+    document.onclick = function(){
+      console.log(this)
+    }
+    var h2 = document.getElementsByTagName('h2')[0];
+    h2.onclick = function(){
+      console.log(this)
+    }
+    var fruits = ['Apple', 'Banana'];
+    fruits.forEach(function (item, index, array) {
+        console.log(item, index,array);
+    });
+  </script>
+</body>
+
+</html>

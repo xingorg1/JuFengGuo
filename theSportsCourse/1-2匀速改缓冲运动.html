@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>匀速运动->改缓冲</title>
+  <style>
+    .demo,
+    .demo1 {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: tomato;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    .demo1 {
+      left: 10px;
+      left: 710px;
+    }
+
+    #start,
+    #end,
+    #start1,
+    #end1 {
+      margin-top: 130px;
+    }
+
+    .line,
+    .line1 {
+      position: absolute;
+      top: 0;
+      left: 300px;
+      width: 1px;
+      height: 150px;
+      border-left: 1px solid #333;
+    }
+
+    .two {
+      position: relative;
+      margin-top: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo" id="demo">
+  </div>
+  <div class="line" id='line'>一睹墙</div>
+  <button id="start">开始</button>
+  <button id="end">结束</button>
+  <div class="two">
+    <div class="demo1" id="demo1">
+    </div>
+    <div class="line1" id='line1'>一睹墙</div>
+    <button id="start1">开始</button>
+    <button id="end1">结束</button>
+  </div>
+  <script>
+    // 第二遍
+    var demo1 = document.getElementById('demo1'),
+      timer = null,
+      start1 = document.getElementById('start1');
+    start1.onclick = function () {
+      startMove(demo1, 300)
+    }
+
+    function startMove(dom, target) {
+      // var speed = target - dom.offsetLeft > 0 ? 5 : -5;不能是单纯的死值了。
+      var speed = null;
+      clearInterval(timer);
+      timer = setInterval(function () {
+        speed = (target - dom.offsetLeft) / 7; //速度是出发点到目标点距离的差值，再加个分母就，这是数学题我也算不明白。
+        console.log(speed, target - dom.offsetLeft); //否则，speed就永远得不到整数，距离永远与速度差点，定时器永不不能因为满足条件进而被清除掉
+        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed); //*记得，凡事涉及css值得设置，都要取整操作
+        if (Math.abs(target - dom.offsetLeft) <= Math.abs(speed)) {//最后一步刚好是速度的大小，也可以直接等于目标值。
+          console.log(speed, Math.abs(target - dom.offsetLeft));
+          dom.style.left = target + 'px';
+          clearInterval(timer);
+          timer = null;
+        } else {
+          dom.style.left = dom.offsetLeft + speed + 'px';
+        }
+      }, 40);
+    }
+    demo1.onclick = function () {
+      clearInterval(timer);
+      timer = null;
+    }
+  </script>
+
+</body>
+
+</html>

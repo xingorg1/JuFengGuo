@@ -1,0 +1,43 @@
+extends ../node_modules/yi-yiche-ui/m-widget/src/pug/layout.pug
+block pugConfig
+  -const pugConfig={titleText:`QQ音乐`, cssName:`public`, confName:`index`, isNotSpa:false, otherJs: false, column:'1', bodyClassName:[''], hrefUrl:'../'};
+block mainLeft
+  //- 顶部
+  header
+    .btn-reback 返回按钮
+    .info
+      .title 声律启蒙
+      .user #[a(href="javascript:;") 郭菊锋]
+    .btns-contact
+      .btn-attention
+        .user-head 
+          | 用户头像
+          img(src="", alt="")
+        span + 关注
+      .btn-share 分享
+  //- 唱片部分
+  section.main-content
+    section.recode-box
+      .recode-img
+        | 唱片
+        img(src="", alt="")
+    .rocker.down 摇杆
+  footer
+    //- 点赞按钮部分
+    section.contact
+      .btn-like 喜欢
+      .btn-download.downed 下载
+      .btn-comments 评论
+      .btn-info   歌曲信息
+
+    //- 进度条部分
+    section.progress-box
+    //- 按钮部分
+    section.btns-box
+  section.layer
+    ul.layer-list
+      li 第一条
+      li 第二条
+      li 第三条
+  .loading
+    .load #[i.icon.icon-loading]加载中...

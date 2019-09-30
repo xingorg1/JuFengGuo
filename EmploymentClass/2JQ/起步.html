@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jq起步</title>
+  <style>
+    #editInof {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: tomato;
+    }
+
+    div {
+      border: 1px solid;
+    }
+
+    body {
+      height: 1500px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="editInof">
+    test
+  </div>
+  <h1>jq起步</h1>
+  <h1>jq起步</h1>
+  <h1>jq起步</h1>
+  <div class="wrapper" data-duyi='good'>
+    <span class="txt">测试jq</span>
+    <p>1</p>
+    <p>2</p>
+  </div>
+  <ul class="list">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ul>
+  <script src="http://www.jq22.com/jquery/jquery-1.7.1.js"></script>
+  <script>
+var opts = {
+  scale: scale,
+  // 添加的scale 参数
+  canvas: canvas,
+  //自定义 canvas
+  logging: false,
+  //日志开关，便于查看html2canvas的内部执行流程
+  width: width,
+  //dom 原始宽度
+  height: height,
+  useCORS: true // 【重要】开启跨域配置
+};
+    var obj = {
+      x: 'iojb',
+      a: function () {
+        y = function () {
+          X = 2;
+        };
+        console.log(arguments)
+        return function () {
+          var x = 3;
+          y();
+          console.log(this.x, this);
+        }.apply(this, arguments);
+      }
+    }
+    obj.a();
+    console.log(y, '\n', X);
+
+    var length = 10;
+
+    function fn() {
+      console.log(this.length);
+    }
+    var obj = {
+      length: 5,
+      method: function () {
+        fn();
+        arguments[0]();
+      }
+    }
+    obj.method(fn, 1);
+
+    function fun(n, o) {
+      console.log(o);
+      return {
+        fun: function (m) {
+          return fun(m, n);
+        }
+      }
+    }
+    var a = fun(0);
+    a.fun(1);
+    a.fun(2);
+    a.fun(3);
+    var b = fun(0).fun(1).fun(2).fun(3);
+    var c = fun(0).fun(1);
+    c.fun(2);
+    c.fun(3);
+  </script>
+  <script>
+    console.log($('.wrapper').data().duyi)
+    console.log($('.wrapper').attr('data-duyi'))
+    // console.log($('.wrapper').prop('data-duyi'))
+    $('ul.list').on('click', 'li', function (e, index) {
+      console.log($(this).index());
+    });
+    // $('p').appendTo('h1')
+    // $('h1').after('<p>目標</p>')
+    $('p').insertAfter('h1')
+    $(function () {
+      $(window).scroll(function () {
+        var top = $(window).scrollTop() + 200;
+        var left = $(window).scrollLeft() + 300;
+        $('#editInof').css({
+          left: left + 'px',
+          top: top + 'px'
+        });
+      })
+    })
+    $('.wrapper').animate({
+      width: '100px',
+      borderWidth: 10
+    }, 1000, function () {
+      console.log('animate over');
+    })
+
+    $('div').prop('data', 'duyi')
+    $('div').prop('id', 'duyiC');
+
+    jQuery.prototype.on = function (type, handle) {
+      var len = this.length;
+      for (let i = 0; i < len; i++) {
+        if (!this[i].cacheEvent) {
+          this[i].cacheEvent = {};
+        }
+        if (!this[i].cacheEvent[type]) {
+          this[i].cacheEvent[type] = [handle];
+        } else {
+          this[i].cacheEvent[type].push(handle);
+        }
+      }
+    }
+    jQuery.prototype.trigger = function (type) {
+      var len = this.length,
+        self = this,
+        params = arguments.length > 1 ? Array.prototype.slice.call(arguments, 1) : [];
+      for (let i = 0; i < len; i++) {
+        if (this[i].cacheEvent[type]) {
+          this[i].cacheEvent[type].forEach((ele, index) => {
+            ele.apply(self, params)
+          });
+        }
+      }
+    }
+    jQuery.prototype.queue = function () {
+      var len = arguments.length,
+        queueObj = this,
+        queueName = arguments[0] || 'fx',
+        addFunc = arguments[1] || null;
+      if (len == 1) {
+        return queueObj[0][queueName];
+      }
+      queueObj[0][queueName] == undefined ? queueObj[0][queueName] = [addFunc] : queueObj[0][queueName].push(addFunc);
+      return this;
+    }
+    jQuery.prototype.dequeue = function (type) {
+      var next = null,
+        self = this,
+        queueName = arguments[0] || 'fx',
+        queueArr = this.queue(queueName),
+        currFunc = queueArr.shift();
+      if (currFunc == undefined) {
+        return;
+      }
+      next = function () {
+        self.dequeue(queueName);
+      }
+      currFunc(next);
+      return this;
+    }
+    jQuery.prototype.deferred = function () {
+      var arr = [
+          [
+            jQuery.myCallbacks('once memory'), 'done', 'resolve'
+          ],
+          [
+            jQuery.myCallbacks('once memory'), 'fail', 'reject'
+          ],
+          [
+            jQuery.myCallbacks('memory'), 'progress', 'notify'
+          ]
+        ],
+        len = arr.length,
+        pendding = true,
+        myDeferred = {};
+      for (let i = 0; i < len; i++) {
+        myDeferred[arr[i][1]] = function (func) {
+          arr[i][0].add(func);
+        }
+
+        myDeferred[arr[i][2]] = function () {
+          if (pendding) {
+            arr[i][0].fire.apply(window, arguments);
+            arr[i][2] == 'resolve' || arr[i][2] == 'reject' ? pendding = false : '';
+          }
+        }
+      }
+      return myDeferred;
+    }
+
+    (function () {
+      var a = b = 3;
+    })()
+    console.log(typeof a !== 'undefined')
+    console.log(typeof b !== 'undefined')
+  </script>
+</body>
+
+</html>

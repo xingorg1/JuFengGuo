@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>盒模型</title>
+  <style>
+    div{
+
+      font-size: 40px;
+    }
+    .box_a{
+      width: 300px;
+      height: 200px;
+      border: 1px solid;
+      /* 可以像textarea那样让用户手动移动看效果了 */
+      resize: both;
+      overflow: hidden;
+      overflow: scroll;
+    }
+  </style>
+</head>
+<body>
+  <div class="box_a">
+    郭菊锋加油郭菊锋加油郭菊锋加油郭菊锋加油郭菊锋加油resize：让用户可以调节元素的大小、可以单独设置是水平方向调整还是垂直方向调整。
+    特殊：必须配合overflow这个属性，不管属性值是啥，必须加这个属性才行。
+  </div>
+  <div class="">
+      郭菊锋加油郭菊锋加油郭菊锋加油郭菊锋加油郭菊锋加油resize：让用户可以调节元素的大小、可以单独设置是水平方向调整还是垂直方向调整。
+      特殊：必须配合overflow这个属性，不管属性值是啥，必须加这个属性才行。
+    </div>
+</body>
+</html>

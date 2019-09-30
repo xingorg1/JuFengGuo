@@ -1,0 +1,224 @@
+/*
+ * @Author: @Guojufeng 
+ * @Date: 2019-03-24 20:46:59 
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2019-03-24 21:57:20
+ */
+
+/* reset */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+
+}
+
+body {
+  color: #563d7c;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+/* common */
+.left {
+  float: left;
+}
+
+.hide {
+  display: none;
+}
+
+/* nav */
+.nav {
+  height: 75px;
+  padding: 0 45px;
+  overflow: hidden;
+}
+
+.nav-main {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {}
+
+.nav-list {}
+
+.nav-list li {
+  float: left;
+  margin-left: 20px;
+}
+
+.text-right {
+  /* float: right; */
+  text-align: right;
+  line-height: 75px;
+}
+
+.nav-list li:hover,
+.logo:hover {
+  cursor: pointer;
+  color: tomato;
+}
+.nav-btn{
+  display: inline-block;
+  width: 28px;
+  height: 25px;
+  padding: 5px 0;
+  float: right;
+  margin-top: 25px;
+  border: 5px solid #563d7c;
+  border-right: none;
+  border-left: none;
+  background: #563d7c;
+  background-clip: content-box;
+  text-indent: -9999px;
+  transition: transform .35s ease-in-out;
+}
+.nav-btn:hover{
+  cursor: pointer;
+  transform: rotate(90deg) translateZ(0);
+}
+/* 开屏区 */
+.header {
+  height: 500px;
+  color: #fff;
+  font-size: 45px;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  background: linear-gradient(to bottom right, #adf, #fde);
+}
+.slogan{
+  width: 100%;
+  padding: 0 45px;
+}
+.btn{
+  font-size: 20px;
+  width: 300px;
+  padding: 20px 0;
+  margin: 35px auto 0;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  /* box-shadow: 0 2px 5px #fff; */
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.btn:hover{
+  cursor: pointer;
+  background: rgba(255,255,255,0.2);
+}
+/* 内容区 */
+article{
+  margin: 80px 0;
+}
+section{
+  padding: 0 45px;
+}
+h1{
+  font-size: 40px;
+  margin-bottom: 50px;
+}
+.box-reflect{
+  /* -webkit-box-reflect: below; */
+}
+.intro{
+  padding: 150px 0 80px;
+}
+.flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.item{
+  width: 450px;
+  line-height: 450px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+.intro::before{
+  content: "";
+  display: block;
+  width: 100px;
+  margin: 0 auto 45px;
+  border-top: 1px solid #e1e1e1;
+}
+
+.slogan2{
+  font-size: 30px;
+}
+
+.btn2{
+  border-color: #563d7c;
+}
+.btn2:hover{
+  background: #eef;
+}
+
+footer{
+  line-height: 55px;
+  background: #eef;
+  color: #563d7cb2;
+}
+@media screen and (max-width: 1200px){
+  .item{
+    width: 320px;
+  }
+}
+
+@media screen and (max-width: 1080px){
+  .item{
+    width: 280px;
+  }
+}
+@media screen and (max-width: 960px){
+  .item{
+    width: 250px;
+  }
+}
+
+@media screen and (max-width: 850px){
+  .flex{
+    display: block;
+  }
+  .item{
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+@media screen and (max-width: 750px){
+  .nav{
+    line-height: 75px;
+  }
+  .nav-list,.text-right{
+    display: none;
+  }
+  .nav-btn{
+    display: block;
+  }
+}
+@media screen and (max-width: 500px){
+  .slogan{
+    font-size: 40px;
+  }
+}
+@media screen and (max-width: 480px){
+  .slogan{
+    font-size: 35px;
+  }
+  .slogan2{
+    font-size: 25px;
+  }
+  h1{
+    font-size: 32px;
+  }
+}

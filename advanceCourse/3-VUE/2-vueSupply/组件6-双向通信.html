@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>双向通信</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+    源数据：{{count}}
+    <!-- 父组件像子组件传值，通过绑定属性的方式 -->
+    <!-- <gege :value="count" @input="changeCount"></gege> -->
+    <!-- <gege v-model="count"></gege> -->
+    <!-- update:value就是一个带特殊符号的字符串，是事件的名字。和@input没有什么区别。 -->
+    <!-- <gege :value="count" @update:value="changeCount"></gege> -->
+    <!-- .sync是:value +  @update:value的语法糖 使用.sync后要在emit中主动触发update:value这种事件-->
+    <gege :gjf.sync="count"></gege>
+  </div>
+  <script>
+    // sync
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        count: 0
+      },
+      methods:{
+        changeCount(val){
+          console.log(val)
+          this.count = val;
+        }
+      },
+      components: {
+        gege: {
+          template: `<div class="children01"><h3 >修改后的数据：{{ sonCount }}</h3></div>`,
+          props: ['gjf'],
+          data() {
+            return {
+              sonCount: undefined
+            }
+          },
+          created(){
+            this.sonCount = this.gjf;
+              setInterval(()=>{
+                this.sonCount ++;
+                this.$emit('update:gjf',this.sonCount)
+              },500) 
+          },
+          mounted(){
+          }
+        }
+      },
+    })
+    // // $emit触发v-model
+    // const vm = new Vue({
+    //   el: '#app',
+    //   data: {
+    //     count: 0
+    //   },
+    //   /* methods:{
+    //     changeCount(val){
+    //       console.log(val)
+    //       this.count = val;
+    //     }
+    //   }, */
+    //   components: {
+    //     gege: {
+    //       template: `<div class="children01"><h3 >修改后的数据：{{ sonCount }}</h3></div>`,
+    //       props: ['value'],
+    //       data() {
+    //         return {
+    //           sonCount: undefined
+    //         }
+    //       },
+    //       created(){
+    //         this.sonCount = this.value;
+    //           setInterval(()=>{
+    //             this.sonCount ++;
+    //             this.$emit('input',this.sonCount)
+    //           },500) 
+    //       },
+    //       mounted(){
+    //       }
+    //     }
+    //   },
+    // })
+    // $emit触发自定义事件传递值到父组件
+    /* 
+      const vm = new Vue({
+      el: '#app',
+      data: {
+        count: 0
+      },
+      methods:{
+        changeCount(val){
+          // console.log(val)
+          this.count = val;
+        }
+      },
+      components: {
+        gege: {
+          template: `<div class="children01"><h3 >修改后的数据：{{ sonCount }}</h3></div>`,
+          props: ['count'],
+          data() {
+            return {
+              sonCount: undefined
+            }
+          },
+          created(){
+            this.sonCount = this.count;
+            setInterval(()=>{
+              this.sonCount ++;
+              this.$emit('change',this.sonCount)
+            },500)
+          },
+          mounted(){
+          }
+        }
+      },
+     }) 
+    */
+    
+  </script>
+</body>
+
+</html>

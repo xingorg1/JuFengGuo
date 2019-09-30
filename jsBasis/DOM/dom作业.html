@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>dom homeWork</title>
+  <style>
+    .work1 span {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>1、遍历元素节点树 - 在原型链上编程</h1>
+  <div class="work1">
+    <span class="s1">
+      <b>1</b>
+    </span>
+    <span class="s2">2
+      <a href="">a链接</a>
+    </span>
+    <span class="s3">3
+      <em>3-1</em>
+      <em>3-2
+        <a href="">a链接</a>
+      </em>
+    </span>
+    <strong class="s4">4</strong>
+  </div>
+  <script>
+    // 1、给你父元素，把子元素打印出来
+    var xingoeg1Dom = {
+      printSon: function (ele, grand) {
+        /*
+         * @Author: @Guojufeng 
+         * @Date: 2019-01-30 13:29:15 
+         * 打印ele下的所有子元素， 相当于node.children属性，但是兼容性更好
+         * params : {ele} 目标元素，获取该元素下的所有子元素
+         * {返回值}: 子元素组成的数组
+         */
+        var childrens = ele.childNodes,
+          len = childrens.length,
+          arr = [];
+        for (var i = 0; i < len; i++) {
+          if (childrens[i].nodeType === 1) { //元素节点
+            arr.push(childrens[i]);
+            if (grand && childrens[i].childNodes.length > 1) {
+              // 获取子孙节点
+              arr.push(this.printSon(childrens[i], grand));
+            }
+          }
+        }
+        return arr;
+      }
+    }
+    var div1 = document.getElementsByClassName('work1')[0];
+    console.log(xingoeg1Dom.printSon(div1, true));
+
+    function getChildByFather(ele) {
+      console.log(ele)
+      var childrens = ele.childNodes;
+      var len = childrens.length;
+      for (var i = 0; i < len; i++) {
+        if (childrens[i].nodeType === 1) {
+          console.log(childrens[i])
+        }
+      }
+    }
+    getChildByFather(div1);
+    // 2、给你父元素，把子孙打印出来：打印出一个树形结构，比如上边的html例子，除了把work1里边的全span打印出来，还要把span内部的a、em、b等标签打印出来
+    console.log('-------2--------')
+    var div1 = document.getElementsByClassName('work1')[0];
+
+    function getElementTree(ele, d) {
+      var d = d || 0;
+      var childrens = ele.childNodes;
+      var len = childrens.length;
+      console.log(d, ele);
+      for (var i = 0; i < len; i++) {
+        if (childrens[i].nodeType === 1) {
+          getElementTree(childrens[i], d++);
+        }
+      }
+      return ele;
+    }
+    getElementTree(div1);
+  </script>
+  <h1>2、封装函数，返回元素e的第n层祖先元素节点</h1>
+  <div class="work2">
+    <span class="s1">
+      <b>1</b>
+    </span>
+    <div class="s2">3
+      <em>3-1</em>
+      <span class="s3">3
+        <div class="s4">3
+          <em>3-1</em>
+          <span class="s5">3
+            <em class="target">target</em>
+            <em>3-2</em>
+          </span>
+        </div>
+        <em>3-2</em>
+      </span>
+    </div>
+  </div>
+  <script>
+    console.log('----target,5--------')
+    // 返回class为target的元素的第5层祖先元素节点
+    var div2 = document.getElementsByClassName('work2')[0];
+    var target = div2.getElementsByClassName('target')[0];
+
+    function getFather(target, num) {
+      var father = null;
+      // var arr = new Array(num);
+      // console.log(arr.length);
+      // arr.reduce(function (pre, cur, i) {
+      // 想用数组的方法实现，奈何空数组不进行遍历，不能投机取巧了，只能for遍历了。
+      //   console.log(pre);
+      //   pre = pre.parentElement;
+      //   return pre;
+      // }, target)
+      for (var i = 0; i < num; i++) {
+        target = target === null ? null : target.parentElement;
+      }
+      return target;
+    }
+    console.log('jieguo-', getFather(target, 2));
+    console.log('father-', getFather(target, 9));
+  </script>
+  <h1>3、 返回元素e的第n个兄弟元素节点，n为正，返回后面的兄弟元素节点，n为负，返回前面的，n为0，返回自己</h1>
+  <div class="work3">
+    <b class="b1">1</b>
+    <span class="s1">11
+    </span>
+    <span class="s2">2
+    </span>
+    <a href="" class="ele">a链接</a>
+    <span class="s3">
+    </span>
+    <em class="em1">3-1</em>
+    <em class="em2">3-2</em>
+    <strong class="s4">4</strong>
+  </div>
+  <script>
+    // 返回元素e的第n个兄弟元素节点，n为正，返回后面的兄弟元素节点，n为负，返回前面的，n为0，返回自己
+    var div3 = document.getElementsByClassName('work3')[0];
+    var ele = div3.getElementsByClassName('ele')[0];
+
+    function getBrother(ele, n) {
+      console.log(ele);
+      if (n > 0) {
+        for (let i = 0; i < n; i++) {
+          // if(ele === null){
+          //   return ele;
+          // }else{
+          //   ele = ele.nextElementSibling;
+          // }
+          ele = ele == null ? null : ele.nextElementSibling;
+        }
+      } else if (n < 0) {
+        for (let i = n; i < 0; i++) {
+          // ele = ele.previousElementSibling;
+          // 容错处理
+          ele = ele == null ? null : ele.previousElementSibling;
+        }
+      }
+      return ele;
+    }
+
+    function getBrother(ele, n) {
+      if (n > 0) {
+        for (let i = 0; i < n; i++) {
+          ele = ele == null ? null : ele.nextElementSibling;
+        }
+      } else if (n < 0) {
+        for (let i = n; i < 0; i++) {
+          ele = ele == null ? null : ele.previousElementSibling;
+        }
+      }
+      return ele;
+    }
+    console.log('result', getBrother(ele, 2));
+    console.log('result', getBrother(ele, -2));
+    console.log('result', getBrother(ele, 8));
+    console.log('result', getBrother(ele, -8));
+    console.log('ziji', getBrother(ele, 0));
+  </script>
+  <h1>4、编辑函数，封装myChildren功能，解决以前部分浏览器的兼容性问题</h1>
+  <div class="work4">
+    <span class="s1">
+      <b>1</b>
+    </span>
+    <span class="s2">2
+      <a href="">a链接</a>
+    </span>
+    <span class="s3">3
+      <em>3-1</em>
+      <em>3-2
+        <a href="">a链接</a>
+      </em>
+    </span>
+    <strong class="s4">4</strong>
+  </div>
+  <script>
+    var work4 = document.getElementsByClassName('work4')[0];
+    console.log(work4.children)
+
+    function myChildren(ele) {
+      var child = ele.childNodes,
+        len = child.length,
+        arr = {
+          length: 0,
+          push: Array.prototype.push,
+          splice: Array.prototype.splice
+        };
+      for (var i = 0; i < len; i++) {
+        if (child[i].nodeType === 1) {
+          arr.push(child[i]);
+        }
+      }
+      return arr;
+    }
+    console.log(myChildren(work4))
+  </script>
+  <h1>5、封装haschildren()方法，不可用children属性</h1>
+  <script>
+    function hasChildren(ele) {
+      var child = ele.childNodes,
+        len = child.length,
+        result = false;
+      for (var i = 0; i < len; i++) {
+        if (child[i].nodeType === 1) {
+          result = true;
+        }
+      }
+      return result;
+    }
+    console.log(hasChildren(work4))
+    var s4 = work4.getElementsByClassName('s4')[0];
+    console.log(hasChildren(s4))
+  </script>
+  <h1>6、封装insertAfter，功能类似insertBefore，可直接在Element.prototype上编程</h1>
+  <div class="wrapper">
+    <span class="txt">span</span>
+    <a class="txt">a</a>
+    <p>p</p>
+  </div>
+  <script>
+    var div = document.getElementsByClassName('wrapper')[0];
+    var span = div.getElementsByTagName('span')[0];
+    var p = div.getElementsByTagName('p')[0];
+    var a = div.getElementsByTagName('a')[0];
+    Element.prototype.insertAfter = function (target, site) {
+      var next = site.nextElementSibling;
+      if (next) {
+        this.insertBefore(target, next);
+      } else {
+        this.appendChild(target);
+      }
+    }
+    div.insertAfter(span, a);
+  </script>
+
+  <h1>7、将目标节点内部的节点顺序逆序</h1>
+  <div class="wrapper7">
+    <h1>1</h1>
+    <h2>2</h2>
+    <h3>3</h3>
+    <h4>4</h4>
+    <h5>5</h5>
+    <h6>6</h6>
+  </div>
+  <script>
+    var div7 = document.getElementsByClassName('wrapper7')[0];
+    Element.prototype.reverseEle = function () {
+      var list = this.childNodes,
+        len = list.length;
+      for (var i = len - 1; i > 0; i--) {
+        if (list[i].nodeType === 1) {
+          this.appendChild(this.removeChild(list[i]));
+        }
+      }
+    }
+    div7.reverseEle();
+  </script>
+</body>
+
+</html>

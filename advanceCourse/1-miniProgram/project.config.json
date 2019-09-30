@@ -1,0 +1,55 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false,
+		"uglifyFileName": true,
+		"checkInvalidKey": true
+	},
+	"compileType": "plugin",
+	"libVersion": "2.7.0",
+	"appid": "wxb3cc7e46f1b5ed8b",
+	"projectname": "miniProgram",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": 0,
+			"list": [
+				{
+					"id": 0,
+					"name": "作业1",
+					"pathName": "pages/homework1/homework1",
+					"scene": null
+				}
+			]
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": []
+		}
+	}
+}

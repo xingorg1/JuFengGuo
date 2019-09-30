@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="searchWord">
+    <input type="button" id="btn" value="搜索">
+    <div class="content"></div>
+    <script>
+   
+            var data = [{
+                name: '渡一'
+            },{
+                name: '渡一教育'
+            },{
+                name: 'HTML'
+            },{
+                name: 'css'
+            },{
+                name: 'js'
+            },{
+                name: 'xxx'
+            },{
+                name: '前端'
+            }];
+            var content = document.getElementsByClassName('content')[0];
+            var btn = document.getElementById('btn');
+            var inp = document.getElementById('searchWord');
+            btn.onclick = function () {
+                var showData = data.filter(function (item) {
+                    return item.name.indexOf(inp.value) > -1;
+                });
+                renderDom(showData);
+                history.pushState({
+                    value: inp.value
+                }, null, '#'+ inp.value);
+            }
+            function renderDom(data) {
+                var str = '';
+                for (var i = 0; i < data.length; i++) {
+                    str += '<div>' + data[i].name + '</div>';
+                }
+                content.innerHTML = str;
+            }
+            renderDom(data);
+            window.addEventListener('popstate', function(e) {
+                // console.log(e.state.value);
+                var value = e.state ? e.state.value : '';
+                var showData = data.filter(function (item) {
+                    return item.name.indexOf(value) > -1;
+                });
+                inp.value = value;
+                renderDom(showData);
+            }, false);
+            // window.addEventListener('hashchange', function (e) {
+            //     console.log(e);
+            // }, false);
+    </script>
+</body>
+</html>

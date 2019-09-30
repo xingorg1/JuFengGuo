@@ -1,0 +1,409 @@
+2
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>animation</title>
+  <style>
+    * {
+      margin: 0;
+      list-style: none;
+    }
+
+    body {
+      background: #000;
+    }
+
+    .world {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 30%;
+      left: 0;
+      overflow: hidden;
+    }
+
+    .sky {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 30%;
+      left: 0;
+      background: linear-gradient(to top, #f1f1f1 #05b6ff);
+      animation: sky 20s linear infinite forwards;
+    }
+
+    .cloud {
+      width: 150px;
+      height: 130px;
+      background: #fff;
+      border-radius: 50%;
+      position: relative;
+      position: absolute;
+      box-shadow: 2px 2px 15px 12px #fff;
+    }
+
+    .cloud1 {
+      top: 15%;
+      left: 12%;
+      animation: cloud1 25s linear infinite forwards, cloud 20s linear infinite;
+      /* top: 15%; */
+      /* left: -400px; */
+    }
+
+    .cloud2 {
+      top: 22%;
+      animation: cloud2 35s linear infinite forwards, cloud 20s linear infinite;
+      right: 20%;
+      transform: scale(1.4);
+    }
+
+    .cloud3 {
+      top: 8%;
+      left: 50%;
+      animation: cloud3 40s linear infinite forwards, cloud 20s linear infinite;
+      transform: scale(.64);
+    }
+
+    .cloud::before {
+      content: "";
+      position: absolute;
+      top: 30px;
+      left: -40px;
+      width: 110px;
+      height: 90px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 2px 2px 15px 12px #fff;
+    }
+
+    .cloud::after {
+      content: "";
+      position: absolute;
+      right: -30px;
+      bottom: 10px;
+      width: 80px;
+      height: 60px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 2px 2px 15px 12px #fff;
+    }
+
+    .land {
+      position: absolute;
+      bottom: -30px;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      height: 10%;
+      background-color: #000;
+      /* background: linear-gradient(rgba(217, 208, 152,1), black 32.77%); */
+      border-radius: 50%;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      /* animation: land 20s linear infinite forwards; */
+
+    }
+
+    .sun {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      left: 0;
+      bottom: 70%;
+      right: 0;
+      margin: 0 auto;
+      background: #fffc8d;
+      border-radius: 50%;
+      /* box-shadow: 0 0 50px 40px #fff98b, 0 0 90px 70px #ffe030, 0 0 150px 140px #fffc20, 0 0 240px 140px #fff98b; */
+      box-shadow: 0 0 50px 40px #fffe12, 0 0 90px 70px #fff70e, 0 0 150px 140px #ffd21e, 0 0 240px 140px #fff98b;
+      background: #fff;
+      box-shadow: 0 0 50px 50px #fff,
+        0 0 90px 90px #ff0,
+        0 0 190px #ff0,
+        0 0 250px 90px #ff0;
+      animation: sun 20s linear infinite forwards;
+    }
+
+    .moon {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      bottom: -15%;
+      right: 20%;
+      border-radius: 50%;
+      box-shadow: 0 0 0px #fff, inset 20px 0 20px #a9a268;
+      /* transform: rotate(20deg); */
+      animation: moon 20s linear 10s infinite forwards;
+    }
+
+    .time {
+      position: absolute;
+      bottom: 15%;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-size: 34px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sky">
+    <!-- 天空 -->
+  </div>
+  <div class="world">
+    <div class="sun"></div>
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    <div class="cloud cloud3"></div>
+    <div class="moon"></div>
+    <div class="land"></div>
+  </div>
+  <div class="time" id="time"></div>
+
+  <style>
+    /* 动画样式 */
+    @keyframes cloud1 {
+
+      0%,
+      100% {
+        top: 15%;
+        left: 12%;
+      }
+
+      25% {
+        top: 17%;
+      }
+
+      30% {
+        top: 15%;
+        left: -10%;
+      }
+
+      30.01% {
+        left: 100%;
+        top: 20%;
+      }
+    }
+
+    @keyframes cloud2 {
+
+      0%,
+      100% {
+        top: 22%;
+        right: 20%;
+      }
+
+      35% {
+        top: 17%;
+      }
+
+      70% {
+        top: 15%;
+        right: 104%;
+      }
+
+      70.01% {
+        right: -10%;
+        top: 20%;
+      }
+    }
+
+    @keyframes cloud3 {
+
+      0%,
+      100% {
+        top: 8%;
+        left: 50%;
+      }
+
+      25% {
+        top: 17%;
+      }
+
+      45% {
+        top: 8%;
+      }
+
+      60% {
+        top: 15%;
+        left: -10%;
+      }
+
+      60.01% {
+        top: 6%;
+        left: 100%;
+      }
+    }
+
+    /* 关键帧
+      0，100% - 深夜
+      25% 黎明
+      45% 正午
+      60% 晌午
+      80% 傍晚
+     */
+    @keyframes sun {
+
+      0%,
+      50%,
+      100% {
+        bottom: -20%;
+        transform: scale(0.5);
+        right: 35%;
+        left: 0%;
+      }
+
+      5% {
+        bottom: 5%;
+        transform: scale(.5);
+        opacity: 0.7;
+      }
+
+      20%,
+      30% {
+        bottom: 70%;
+        right: 0%;
+        left: 0%;
+        opacity: 1;
+        transform: scale(1.05);
+      }
+
+      45% {
+        bottom: 5%;
+        left: 35%;
+        right: 0%;
+        opacity: 0.7;
+        transform: scale(.5);
+      }
+
+      49% {
+        right: 0%;
+        left: 35%;
+      }
+    }
+
+    @keyframes moon {
+
+      0%,
+      50%,
+      100% {
+        bottom: -15%;
+        transform: scale(0.8);
+        right: 60%;
+      }
+
+      5% {
+        bottom: 5%;
+        right: 60%;
+        transform: scale(.8) rotate(-10deg);
+        /* opacity: 0.8; */
+      }
+
+      20%,
+      30% {
+        bottom: 70%;
+        right: 40%;
+        /* opacity: 1; */
+        transform: scale(1.05) rotate(-80deg);
+      }
+
+      45% {
+        bottom: 5%;
+        right: 20%;
+        /* opacity: 0.8; */
+        transform: scale(.8) rotate(-10deg);
+      }
+
+      49% {
+        right: 20%;
+      }
+    }
+
+    @keyframes sky {
+
+      0%,
+      50%,
+      100% {
+        opacity: 0;
+      }
+
+      20%,
+      30% {
+        opacity: 1;
+      }
+
+      70%,
+      80% {
+        opacity: .1;
+      }
+
+    }
+    @keyframes cloud{
+      0%,
+      50%,
+      100% {
+        opacity: 0;
+      }
+
+      20%,
+      30% {
+        opacity: 1;
+      }
+
+      70%,
+      80% {
+        opacity: .2;
+      }
+    }
+
+    @keyframes land {
+
+      0%,
+      100% {
+        background: linear-gradient(rgba(217, 208, 152, 0), black 32.77%);
+      }
+
+      20%,
+      80% {
+        background: linear-gradient(rgba(217, 208, 152, .15), black 32.77%);
+      }
+
+      45%,
+      60% {
+        background: linear-gradient(rgba(217, 208, 152, 1), black 32.77%);
+      }
+    }
+  </style>
+  <script>
+    var weekArr = ['日', '一', '二', '三', '四', '五', '六'];
+
+    function addZero(str) {
+      str += '';
+      return str.replace(/^(\d)$/g, '0$1');
+    };
+
+    function addTxt() {
+      var date = new Date(),
+        y = date.getFullYear(),
+        m = addZero(date.getMonth() + 1),
+        d = addZero(date.getDate()),
+        w = weekArr[date.getDay()],
+        h = addZero(date.getHours()),
+        min = addZero(date.getMinutes()),
+        s = addZero(date.getSeconds());
+
+        time.innerText = y + '年' + m + '月' + d + '日 星期' + w + ' ' + h + ':' + min + ':' + s;
+    }
+    addTxt();
+    setInterval(addTxt, 1000);
+  </script>
+</body>
+
+</html>

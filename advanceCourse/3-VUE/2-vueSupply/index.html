@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue初识</title>
+  <style>
+    span {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+    <!-- 插值表达式 -->
+    <!-- {{ {name: '对象'} }} -->
+    <!-- {{{name:'对象的花括号要和插值表达式的花括号隔开，不然不起作用'}}} -->
+
+    <!-- <br> -->
+    <!-- <h4>插值表达式都可以放啥</h4> -->
+    <!-- 不能放声明赋值语句 -->
+    <!-- {{ var a = 1; return a;}} -->
+    <!-- 不能放流程控制语句 -->
+    <!-- {{ if(true){return 'a'} }} -->
+
+    <!-- 可以放三元表达式 -->
+    <!-- {{ true ? '三元可以放' : '哈哈'}} -->
+
+    <!-- 打印一个全局变量 -->
+    <!-- {{name}} -->
+
+    <!-- 打印一个undefined关键字，不输出不报错 -->
+    <!-- {{undefined}} -->
+
+    <!-- 打印一个null关键字，不输出不报错 -->
+    <!-- {{null}} -->
+
+    <!-- el的data数据name结果为：{{ name }}<br> 
+      el的data数据age结果为：{{ age }} -->
+    <!-- <div class="two">
+      <span :class="[one, two, three]"></span>
+
+      <span :class="isShow ? one : two "></span>
+
+      <span :class="isShow ? 'first-class' : 'second-class' "></span>
+
+      <span :class="isShow && three">短路语句</span>
+
+      <span :class="{ three : isShow }"></span>
+
+      <span :class="{ 'third-class' : isShow }" :class="[one, two]"></span>
+
+      <span :class="{ 'a' : isShow,'b' : isLoad ,'c' : isRead  }"></span>
+
+      <span :class="[one, isShow && two, { 'a' : isShow,'b' : isLoad ,'c' : isRead  }]"> 综合写法 </span>
+
+      <span class="my-self" :class=" isShow && two">已有再增</span>
+
+    </div> -->
+
+    <!-- <div class="three" @click="sameName('gjf')"> -->
+      
+      <!-- <div class="three" @click="sameName"> -->
+        <!-- <div class="three" @click="sameName()">
+
+      <span :style="{height: '30px', display: 'block', backgroundColor: color}">变量+对象的形式</span>
+
+      <span :style="styleVal">对象（变量名）形式绑定style</span>
+
+      <span style="backgroundColor: blue;" :style="styleVal">样式优先级</span>
+
+      <span :style="[styleVal, styleVal2]">数组包裹，多个style对象合并</span>
+
+      <p v-for="(item,i) in arr" :key="i + 'arr'">{{i}} 。 {{item }}</p>
+
+      <p v-for="(item,index) in arr2" :key="index + 'arr2'">{{index}} 。 {{item }}</p>
+
+      <p v-for="(val,key) in obj1">{{key}} 。 {{val }}</p>
+
+      <p v-for="val in obj1">{{val}} </p>
+      <p v-for="val of obj1">{{val}} </p>
+
+      <template v-if="isShow">
+        <p v-for="i in 5" >{{i}}</p>
+        <p v-for="str in 'xing.org1^'">{{str}}</p>
+      </template> -->
+
+      <!-- <template v-for="str in 'xing.org1^'" :key="str">
+        <span>{{str}}</span>
+        <span>{{str}}</span>
+      </template> -->
+ 
+      <!-- <div class="form">
+        <input type="text" key='name'>
+        <input type="text" key='age'>
+      </div> -->
+    <!-- </div> -->
+
+  </div>
+  <script>
+    window.name = 'window.name'
+    // 实例化Vue构造函数
+    
+    const vm = new Vue({
+      // el: '#app',//让Vue构造函数和dom结构app进行关联。注意这里填#app,有点像css选择器
+      data: {
+        name: 'vue.name',
+        age: 5,
+        one: 'first-class',
+        two: 'second-class',
+        three: 'third-class',
+        isShow: true,
+        isLoad: false,
+        isRead: true,
+        color: '#ade',
+        arr: ['first-class','second-class','third-class'],
+        arr2: ['first-class','second-class','third-class','a'],
+        obj1 :{
+          name: 'vue obj',
+          one: 'first-class',
+          two: 'second-class',
+          three: 'third-class'
+        },
+        styleVal: {
+          'height': '30px',
+          'display': 'block',
+          'backgroundColor': '#fde'
+        },
+        styleVal2: {
+          border: '1px solid tomato'
+        },
+        // sameName(a) {
+        //   console.log(a, 'data里的同名函数')
+        //   console.log('this', this);
+        // }
+      },
+      methods: {
+        sameName(b) {
+          console.log(b, 'methods里的同名函数')
+          console.log('this', this);
+        }
+      }
+    }).$mount('#app');
+    // vm.$mount('#app'); //$mount第二种写法
+    // console.log('修改前：', vm.$el.innerHTML)
+    // vm.name = 'new vue name';
+    // console.log('vm.name: ', vm.name)
+    // console.log('修改后1：', vm.$el.innerHTML)
+    // setTimeout(function () {
+    //   console.log('修改后2：', vm.$el.innerHTML)
+    // }, 0)
+    // console.log('修改后3：', vm.$el.innerHTML)
+    // vm.$nextTick(function () {
+    //   // 看执行顺序，感觉他也是异步的，但是又比setTimeout执行的早，
+    //   // 像是promise的then回调一样的微任务
+    //   console.log('修改后4：', vm.$el.innerHTML)
+    // })
+  </script>
+</body>
+
+</html>

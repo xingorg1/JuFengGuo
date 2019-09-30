@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var originArr = [{
+      name: 'cst',
+      age: '18'
+    }, {
+      name: 'jc',
+      age: '20'
+    }, {
+      name: 'dxm',
+      age: '50'
+    }, {
+      name: 'dcg',
+      age: '30'
+    }];
+    // 正确写法
+    var result222 = originArr.filter((el) => {
+      var reg = /c/g;
+      return reg.test(el.name);
+    });
+    console.log('result222ya', result222);
+    /* 不连写 */
+    result222.map((el) => {
+      console.log('el', el);
+      el.age = el.age * 2 + '';
+      return el;
+    });
+    // 正确写法
+    var result = originArr.filter((el) => {
+      var reg = /c/g;
+      console.log('哈哈',reg.lastIndex)
+      return reg.test(el.name);
+    }).map((el) => {
+      console.log('el', el);
+      el.age = el.age * 2 + '';
+      return el;
+    });
+    console.log('结果哈', result);
+    // 错误写法
+    var result = originArr.filter((el) => {
+      var reg = /c/g;
+      console.log('哈哈1',reg.lastIndex)
+      var isHave = reg.test(el.name);
+      console.log('哈哈2',reg.lastIndex)
+      return reg.test(el.name);
+    }).map((el) => {
+      console.log('el', el);
+      el.age = el.age * 2 + '';
+      return el;
+    });
+    console.log('结果哈', result);
+    
+  </script>
+</body>
+
+</html>

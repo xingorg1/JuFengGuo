@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>父子传值</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+      <children-one :fathername="fathername" :fathercont="fathercont"></children-one>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        name: '父组件的data属性',
+        fathername: '父组件的标题',
+        fathercont: '父组件的内容文案'
+      },
+      components: {
+        childrenOne: {
+          // props: ['fathername','fathercont'],
+          props: {
+            fathername:{
+              type: String,
+              required: true
+            },
+            fathercont:{
+              type: Number,//如果传值类型不正确，就会警告（不阻塞页面）
+              validitor(val){
+                // 返回true，验证成功，返回false，验证失败
+                return val > 3;//验证传过来的值是不是满足条件
+              },
+              required: true,//如果没传，就会警告（不阻塞页面）
+              default: '默认值'
+            }
+          },
+          template: `<div class="children01">
+                        <h3> {{ fathername }} </h3>
+                        <p> {{ fathercont }} </p>
+                      </div>
+              `, //组件模板
+          data() {
+            return {
+              // name: '第一个子组件',
+              // content: '第一个子组件的内容文案'
+            }
+          }
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>计算一个字符串的字节长度</h1>
+  <h3>字符串的charCodeAt()方法，一个中文占两个字节，一个英文占一个字节。</h3>
+  <h1>charCodeAt():</h1>
+  <h3>方法可返回字符串固定位置的字符的Unicode编码，这个返回值是0-65535之间的整数，如果值<=255时为英文，反之为中文</h3> 
+  <script>
+    // 思路
+    var testStr = "郭菊 12ert锋";
+    var strLength = 0;
+    for (let i = 0; i < testStr.length; i++) {
+      console.log(testStr.charAt(i), "长度为：" + testStr.charCodeAt(i));
+      if (testStr.charCodeAt(i) >= 255) {
+        strLength += 2;
+      } else {
+        strLength += 1;
+      }
+    }
+    console.log("总字节长度为：", strLength)
+    // 函数封装
+    // 1. 计算字节长度
+    function getStrBytes(str) {
+      str = str.toString();
+      var strLen = 0;
+      for (let s = 0; s < str.length; s++) {
+        if (str.charCodeAt(s) >= 255) {
+          // 中文，字节为2.
+          strLen += 2;
+        } else {
+          // 非中文,字节为1.
+          strLen += 1;
+        }
+      }
+      return strLen;
+    }
+
+    function getStrBytes2(str) {
+      str = str.toString();
+      var strLen,
+        count;
+      strLen = count = str.length;
+      for (let s = 0; s < strLen; s++) {
+        if (str.charCodeAt(s) >= 255)
+          count++;
+      }
+      return count;
+    }
+    console.log("字节长度为：" + getStrBytes2("gjf四郭菊锋"))
+    // 2. 计数器
+    function getStrNum(str) {
+      return Math.ceil(getStrBytes(str) / 2);
+    }
+    getStrNum("郭菊锋继续努力加油!!耶!");
+    var a = 5;
+
+    function test() {
+      a = 0;
+      console.log(a)
+      console.log(this.a)
+      var a;
+      console.log(a)
+    }
+    new test();
+    // 一个字符串[a-z]组成，请找出该字符串第一个只出现1次的字母
+    function getUniqChat0(str) {
+      var arr = str.split(''),
+        len = arr.length,
+        obj = {};
+      arr.forEach(el => {
+        if (obj[el]) {
+          obj[el]++;
+        } else {
+          obj[el] = 1;
+        }
+      });
+      console.log(222,obj);
+    }
+    getUniqChat0('afjdkafdizkjvh');
+    // 方法二，循环依次比较法
+    function getUniqChat(str) {
+      var arr = str.split(''),
+        len = arr.length,
+        obj = {},
+        result;
+      console.log(len);
+      for (let i = 0; i < len; i++) {
+        console.log('当前循环：', arr[i]);
+        if (!obj[arr[i]]) { //如果对象中已有，说明对比过且不符合条件，直接不做二次比较
+          for (let j = i + 1; j < len; j++) {
+            console.log('当前比较：', j, arr[j]);
+            if (arr[i] === arr[j]) {
+              /* 判断重复，添加到对象中做个记号 */
+              console.log(arr[i], '重复');
+              obj[arr[i]] = true;
+              result = undefined; //重复了，就把结果清空，给下一位腾位置
+              break;
+            } else {
+              result = arr[i];
+            }
+            if (j == len - 1 && result) {
+              /* 遍历到最后，结果还有值，就是这个值。 */
+              console.log('结果就是', result);
+              return;
+            }
+          }
+        }
+      }
+      console.log(obj);
+    }
+
+    function getUniqChat(str) {
+      var arr = str.split(''),
+        len = arr.length,
+        obj = {},
+        result;
+      for (let i = 0; i < len; i++) {
+        if (!obj[arr[i]]) {
+          for (let j = i + 1; j < len; j++) {
+            if (arr[i] === arr[j]) {
+              obj[arr[i]] = true;
+              result = undefined;
+              break;
+            } else {
+              result = arr[i];
+            }
+            if (j == len - 1 && result) {
+              return result;
+            }
+          }
+        }
+      }
+    }
+    var resu = getUniqChat('afjdkafdizkjvh');
+    var resu2 = getUniqChat('afjdkafdjk');
+    console.log('resu', resu)
+    console.log('resu2', resu2)
+    // 判断一个字符串中，指定字符的个数
+    String.prototype.getInCludes = function(x){
+      console.log(this.split(x))
+      return (this.split(x).length - 1)
+    }
+    var str = 'adfakrjoawjelajsfdoaeojsdgjaeota';
+    console.log(str.getInCludes('a'))
+    var reg = /a/g;
+    console.log(str.match(reg),str.match(reg).length)
+    String.prototype.getInCludes = function(x){
+      var len = this.length,
+      count = 0;
+      for (let i = 0; i < len; i++) {
+        console.log(this[i]);
+        console.log('------',this.indexOf(x))
+        if(this[i] === x){
+          count++
+        }
+      }
+      return count;
+    }
+    var num = str.getInCludes('a');
+    console.log(num)
+    var str = 'adfakrjoawjelajsfdoaeojsdgjaeota';
+    str.indexOf('a')
+    var str = 'jkafoawaieajrjao';
+    console.log(str.split('a'))
+    var reg = /a/g,
+        str = 'aarqwrweeewqwaaweraaaaweweaaweweaaeeeeee';
+    console.log(str.match(reg),"字符出现的次数：", str.match(reg).length);
+    
+  </script>
+
+</body>
+
+</html>

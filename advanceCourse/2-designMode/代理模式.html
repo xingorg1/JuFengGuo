@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>图片懒加载 - 虚拟代理</title>
+</head>
+<body>
+  <button id="oBth"></button>
+  <script>
+    // 图片懒加载
+    var MyImage = function(){
+      // this
+      var oImg = new Image();//===document.createElement('img');结果都是一个DOM对象HTMLImageElement
+      this.setSrc = function(src){
+        oImg.src = src;
+      }
+      document.body.appendChild(oImg);
+    }
+
+    var newImg = new MyImage();
+    newImg.setSrc('https://...demo.jpg');
+
+    
+  </script>
+</body>
+</html>

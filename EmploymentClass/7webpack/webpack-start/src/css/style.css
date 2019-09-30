@@ -1,0 +1,56 @@
+/*
+ * @Author: @Guojufeng 
+ * @Date: 2019-04-25 20:02:03 
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2019-04-28 20:06:06
+ */
+
+:root {
+  --mainColor: red;
+  --fontSize: .2rem;
+}
+
+a {
+  color: var(--mainColor);
+  transform: rotate(45deg);
+}
+
+body{
+  background: #def;
+  color: rgb(0, 79, 143);
+}
+h1{
+  margin: 0;
+  padding: 10px 20px;
+  border: 1px solid rgb(255, 74, 165);
+  font-size: var(--fontSize);
+  line-height: calc(var(--fontSize) * 1.5);
+  overflow-wrap: break-word;
+  padding-left: calc(var(--fontSize) / 2 + 1px);
+  padding-right: calc(var(--fontSize) / 2 + 1px);
+}
+/* a{
+  color: #333;
+} */
+ul,li,ol{
+  margin:0;
+  padding: 0;
+  list-style: none;
+}
+.img{
+  width: 300px;
+  height: 300px;
+  /* background: url('../img/pic1.png'); */
+  background-size: 50% 50%;
+}
+.img2{
+  width: 300px;
+  height: 300px;
+  /* background: url('../img/pic3.jpg'); */
+  background-size: 50% 50%;
+}
+img{
+  display: block;
+  width: 300px;
+  height: 300px;
+}

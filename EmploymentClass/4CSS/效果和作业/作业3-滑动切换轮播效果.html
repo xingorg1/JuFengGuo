@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>滑动切换轮播效果</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    }
+
+    .demo-father {
+      width: 600px;
+      height: 800px;
+      padding: 20px;
+      margin: 40px auto;
+      font-size: 40px;
+      border: 1px solid tomato;
+      overflow: hidden;
+
+    }
+
+    .demo {
+      height: 100%;
+      column-width: 600px;
+      column-gap: 20px;
+      word-break: break-all;
+      border-radius: 10px;
+      /* transform: translateX(-20px); */
+      transition: transform .35s ease-in-out;
+      cursor: pointer;
+      -webkit-touch-callout: none;
+      /* 禁止文字被鼠标选中  */
+      moz-user-select: -moz-none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    .btns {
+      font-size: 30px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .btns div {
+      cursor: pointer;
+      border: 1px solid;
+      color: #eee;
+      display: inline-block;
+      width: 120px;
+      height: 120px;
+      line-height: 120px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+
+    .btns div:hover,
+    div.active {
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo-father">
+    <div class="demo" id="demo">
+      normal：
+      默认的换行规则。依据各自语言的规则，允许在字间发生换行。
+      keep-all：
+      对于 CJK（中文，韩文，日文）文本不允许在字符内发生换行。Non-CJK 文本表现同normal
+      break-all：
+      对于 Non-CJK 文本允许在任意字符内发生换行。该值适合包含一些非亚洲文本的亚洲文本，比如使连续的英文字符断行。
+      break-word：
+      与break-all相同，不同的地方在于它要求一个没有断行破发点的词必须保持为一个整体单位。这与word-wrap的break-word值效果相同
+      定义元素内容文本的字间与字符间的换行行为。
+      作为IE的私有属性之一，IE5.5率先实现了word-break，后期被w3c采纳成标准属性；
+      对于解决防止页面中出现连续无意义的长字符打破布局，应该使用break-all | break-word属性值；
+      同为强制打断单词的break-all与break-word的两个值，需要了解她们间的主要区别（下述2个示例需要在webkit/blink浏览器下查看）：normal：
+      默认的换行规则。依据各自语言的规则，允许在字间发生换行。
+      keep-all：
+      对于 CJK（中文，韩文，日文）文本不允许在字符内发生换行。Non-CJK 文本表现同normal
+      break-all：
+      对于 Non-CJK 文本允许在任意字符内发生换行。该值适合包含一些非亚洲文本的亚洲文本，比如使连续的英文字符断行。
+      break-word：
+      与break-all相同，不同的地方在于它要求一个没有断行破发点的词必须保持为一个整体单位。这与word-wrap的break-word值效果相同
+      定义元素内容文本的字间与字符间的换行行为。
+      作为IE的私有属性之一，IE5.5率先实现了word-break，后期被w3c采纳成标准属性；
+      对于解决防止页面中出现连续无意义的长字符打破布局，应该使用break-all | break-word属性值；
+      同为强制打断单词的break-all与break-word的两个值，需要了解她们间的主要区别（下述2个示例需要在webkit/blink浏览器下查看）：normal：
+      默认的换行规则。依据各自语言的规则，允许在字间发生换行。
+      keep-all：
+      对于 CJK（中文，韩文，日文）文本不允许在字符内发生换行。Non-CJK 文本表现同normal
+      break-all：
+      对于 Non-CJK 文本允许在任意字符内发生换行。该值适合包含一些非亚洲文本的亚洲文本，比如使连续的英文字符断行。
+      break-word：
+      与break-all相同，不同的地方在于它要求一个没有断行破发点的词必须保持为一个整体单位。这与word-wrap的break-word值效果相同
+      定义元素内容文本的字间与字符间的换行行为。
+      作为IE的私有属性之一，IE5.5率先实现了word-break，后期被w3c采纳成标准属性；
+      对于解决防止页面中出现连续无意义的长字符打破布局，应该使用break-all | break-word属性值；
+      同为强制打断单词的break-all与break-word的两个值，需要了解她们间的主要区别（下述2个示例需要在webkit/blink浏览器下查看）：normal：
+      默认的换行规则。依据各自语言的规则，允许在字间发生换行。
+      keep-all：
+      对于 CJK（中文，韩文，日文）文本不允许在字符内发生换行。Non-CJK 文本表现同normal
+      break-all：
+      对于 Non-CJK 文本允许在任意字符内发生换行。该值适合包含一些非亚洲文本的亚洲文本，比如使连续的英文字符断行。
+      break-word：
+      与break-all相同，不同的地方在于它要求一个没有断行破发点的词必须保持为一个整体单位。这与word-wrap的break-word值效果相同
+      定义元素内容文本的字间与字符间的换行行为。
+      作为IE的私有属性之一，IE5.5率先实现了word-break，后期被w3c采纳成标准属性；
+      对于解决防止页面中出现连续无意义的长字符打破布局，应该使用break-all | break-word属性值；
+      同为强制打断单词的break-all与break-word的两个值，需要了解她们间的主要区别（下述2个示例需要在webkit/blink浏览器下查看）：
+    </div>
+
+  </div>
+  <div class="btns">
+    <div class="btn-left" id="forLeft">
+      上一页
+    </div>
+    <div class="btn-right" id="forRight">
+      下一页
+    </div>
+  </div>
+  <script>
+    function getStyle(target, attr) {
+      if (window.getComputedStyle) {
+        return window.getComputedStyle(target, null)[attr];
+      } else {
+        return target.currentStyle[attr];
+      }
+    };
+    var idx = 0,
+      bigIdx = 6;
+    demo = document.getElementById('demo'),
+      oW = parseInt(getStyle(demo, 'width')),
+      oGap = parseInt(getStyle(demo, 'columnGap')),
+      oClientW = demo.scrollWidth,
+      biggistW = oClientW - oW + oGap;
+
+    forRight.onclick = function () {
+      idx = idx + 1 == bigIdx ? 0 : idx + 1;
+      removeDom();
+    }
+    forLeft.onclick = function () {
+      idx = idx - 1 < 0 ? bigIdx - 1 : idx - 1;
+      removeDom();
+    }
+
+    function removeDom() {
+      console.log(idx, oW, oGap, oClientW, biggistW);
+      demo.style.transform = `translateX(-${idx * oW + idx * oGap}px)`
+    };
+   
+  </script>
+</body>
+
+</html>

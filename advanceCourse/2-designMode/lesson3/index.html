@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* div {
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+        } */
+        span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div id="demo">
+    </div>
+    <button id='btn'>click</button>   -->
+
+    <!-- <div id='show'>duyi</div>
+    <button type='bg'>add greenBg</button>
+    <button type='cl'>add blueColor</button>
+    <button type='fs'>add fontSize</button>
+    <button type='fw'>add fontWeight</button>
+    <button type='op'>add opacity</button> -->
+
+
+    <div>
+        用户名: <input type="text" id='userDom' name='username'/>
+        <span id='showUser'></span>
+        密码: <input type="password" id='psDom' name='code'/>
+        <span id='showPs'></span>
+        邮箱: <input type="text" id='emDom' name='email'>
+        <span id='showEm'></span>            
+        <button id='submit'>提交</button>
+    </div>
+    <script src='./validator.js'></script>
+    <script>
+
+        // 规定1：用户名长度不能超过四个
+        // 规定2：密码不能为空 密码长度不能小于6 
+        // 先假定 数据是可以发送成功的
+
+        var flag = true;
+        submit.onclick = function () {
+            /* 旧代码，基本思路
+            showUser.innerText = '';
+            showPs.innerText = '';
+            if (userDom.value == '') {
+                flag = false;
+                showUser.innerText = '用户名不能为空'
+            }else if (userDom.value.length >= 4) {
+                flag = false;
+                showUser.innerText = '用户名长度不能大于等于4';
+            }
+            if (psDom.value == '') {
+                flag = false;
+                showPs.innerText = '密码不能为空';
+            }else if (psDom.value.length < 6) {
+                flag = false;
+                showPs.innerText = '密码不能小于6';
+            } */
+            ProxyRequest();
+        }
+
+        // 代理模式 和 策略模式 结合一下 搞定他 
+        // A = C = B
+        
+        var validator = new Validator();
+        validator.extend({
+            isEmail: function (value, errorMsg) {
+                if (value != '' && value.indexOf('@') == -1) {
+                    return errorMsg
+                }
+                return true;
+            },
+            isPhone: function (value, errorMsg) {
+                if (value != '' && value.length != 11) {
+                    return errorMsg
+                }
+                return true;
+            }
+        })
+
+        var ProxyRequest = (function () {
+            // 1.校验内容dom 2.错误信息显示dom 3.检验规则
+            validator.add(userDom, showUser, [{strategy: 'isNonEmpty', errorMsg: '用户名不为空'}, {strategy: 'maxLength:4', errorMsg: '用户名长度不能超过4'}]);
+            validator.add(psDom, showPs, [{strategy: 'isNonEmpty', errorMsg: '密码不能为空'}, {strategy: 'minLength:6', errorMsg: '密码长度不能小于6'}]);
+            validator.add(emDom, showEm, [{strategy: 'isNonEmpty', errorMsg: '邮箱不能为空'}, {strategy: 'isEmail', errorMsg: '邮箱格式不正确'}]);
+            return function () {
+                if (validator.start() == true) {
+                    Request();
+                }
+            }
+        })();
+
+        function Request () {
+            console.log('send')
+        }
+
+
+            /* // 代理模式 - 仿多文件上传
+
+            var oDiv = document.getElementById('show');
+            var oButtonArray = document.getElementsByTagName('button');
+
+            for (var i = 0; i < oButtonArray.length; i++) {
+                oButtonArray[i].onclick = realChangeStyle;
+            }
+
+            var realChangeStyle = ProxyRequest(changeStyle);
+
+            var ProxyRequest = function (func) {
+                var cache = [];
+                var timer = null;
+                return function () {
+                    cache.push(this.getAttribute('type'))
+                    clearTimeout(timer);
+                    timer = setTimeout(function () {
+                        // cache => changeStyle
+                        func(oDiv, cache);
+                        cache = [];
+                    }, 2000)
+                }
+            }
+
+            // 文件上传  后台的处理代码
+            function changeStyle (dom, typeArr) {
+                // type => dom  style = value
+                var typeObj = {
+                    bg: ['backgroundColor', 'green'],
+                    cl: ['color', 'blue'],
+                    fs: ['fontSize', '24px'],
+                    fw: ['fontWeight', 'bold'],
+                    op: ['opacity', '0.3']
+                }
+                if (typeArr.constructor == Array) {
+                    typeArr.forEach(function (ele) {
+                        dom.style[typeObj[ele][0]] = typeObj[ele][1];
+                    })
+                }else {
+                    dom.style[typeObj[typeArr][0]] = typeObj[typeArr][1];                
+                }
+            } */
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        /* 1. 预加载 -> https://timgcMj.jpg
+
+        首先要在计算机性能较好的时候，先发送一次。  之后再用就是取缓存了
+
+        2. 懒加载 -> 监控真正要展示的图片内容 是否有被加载成功， https://timgs70.jpg
+
+        提高用户体验的同时 减少对性能的伤害
+        function MyImage (_id) {
+            var oImg = document.createElement('img');
+            this.setSrc = function (_src) {
+                oImg.src = _src;
+            }
+            document.getElementById(_id).appendChild(oImg);
+        }
+        // new MyImage('demo').setSrc('https://timgcMj.jpg');
+
+        var ProxyImage = (function () {
+            var oImg = new Image();
+            var oMyImage = new MyImage('demo');
+            oImg.onload = function () {
+                setTimeout(function () {
+                    oMyImage.setSrc(oImg.src);                    
+                }, 2000)
+            }
+            return function (occupySrc, src) {
+                oImg.src = src;      
+                oMyImage.setSrc(occupySrc);                      
+            }
+        })();
+
+
+        ProxyImage('https://timgj.jpg', 'https://tim0.jpg'); */
+
+
+
+    </script>
+</body>
+</html>

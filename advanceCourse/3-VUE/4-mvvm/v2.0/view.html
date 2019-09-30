@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" c√ontent="ie=edge">
+  <title>数据劫持与双向绑定-Object-defineProperty</title>
+</head>
+
+<body>
+  <div class="main">
+    <!-- 1、用一个通用的渲染符号（比如插值表达式{{}}），将数据所对应的变量名key值绑定到dom中 -->
+    <div id="mvvmTest">
+      <h3 class="title">{{title}}</h3>
+      <p>
+        【{{title}}】当前数据是：{{count}}
+      </p>
+    </div>
+  </div>
+  <!-- 双向绑定 -->
+  <hr/>
+  <div>
+    <label for="oTitle">
+      title修改: <input type="text" id="oTitle" value="">
+    </label>
+  </div>
+  <h3></h3>
+  <div>
+    <label for="oCount">
+      count修改: <input type="text" id="oCount" value="">
+    </label>
+  </div>
+  <script src="./myVue.js"></script>
+  <script>
+    // model，数据
+    var data = {
+      title: 'mvvm模拟',
+      count: 1.0,
+      info: {
+        name: 'guo',
+        study: {
+          a: 'vue',
+          b: 'react'
+        }
+      }
+    };
+
+    // dom 元素
+    var oMvvmTest = document.getElementById('mvvmTest');
+    // 相当于实例化vue，将html与vue挂钩
+    var myVue = new MyVue(oMvvmTest, data);
+
+    // 双向绑定
+    oTitle.value = data.title;
+    oCount.value = data.count;
+    oTitle.oninput = function (e) {
+      data.title = e.target.value
+    }
+    oCount.oninput = function (e) {
+      data.count = e.target.value
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>模拟蛇身运动，蛇身跟随舌头</title>
+  <style>
+    html,body{
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .box{
+      margin: 0 auto;
+      height: 100%;
+      position: relative;
+      border: 1px solid;
+    }
+    .dot{
+      width: 10px;
+      height: 10px;
+      background: red;
+      position: absolute;
+      left: 0;
+      top: 0;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="box" id='box'>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+  <script>
+    /* 获取鼠标的坐标值 - onmousemove事件 - e */
+    var oX = 0;
+    var oY = 0;
+    var box = document.getElementById('box');
+    var dot = document.getElementsByClassName('dot');
+    var len = dot.length;
+    box.onmousemove = function(e){
+      /* 运动跟随 - 第一个头子的值跟随鼠标，后边的box跟随前一个box上一次移动的点 */
+      var e = e || window.event;
+      oX = e.pageX;
+      oY = e.pageY;
+      dot[0].style.left = oX - 15/2 + 'px';
+      dot[0].style.top = oY - 15/2 + 'px';
+      dot[0].style.width = '15px';
+      dot[0].style.height = '15px';
+      for (var i = 1; i < len; i++) {
+        (function(i){
+          setTimeout(function(){
+            let lastleft = parseInt(dot[i-1].style.left);
+            let lastTop = parseInt(dot[i-1].style.top);
+            let lastW = parseFloat(dot[i-1].style.width)- 0.3;
+            let lastH = parseFloat(dot[i-1].style.height) - 0.3;
+            dot[i].style.left =  lastleft + 'px';
+            dot[i].style.top = lastTop + 'px';
+            dot[i].style.width = lastW + 'px';
+            dot[i].style.height = lastH + 'px';
+          },100 + 10 * i)
+        })(i)
+      }
+      /* 问题是，很死板，一点都不缓和，需要缓冲运动-加了延迟运动形成缓动效果。 */
+    }
+  </script>
+</body>
+</html>

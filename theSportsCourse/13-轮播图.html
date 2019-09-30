@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>轮播图</title>
+  <style>
+    .gjf-swiper {
+      width: 300px;
+      height: 150px;
+      overflow: hidden;
+      margin-top: 100px;
+      margin-left: 100px;
+      position: relative;
+      box-shadow: 4px 7px 10px 0px #f4f8ffb8;
+      border-radius: 8px;
+    }
+    ul {
+      list-style: none;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      width: 1200px;
+      text-align: center;
+      line-height: 150px;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    li {
+      width: 300px;
+      height: 150px;
+      float: left;
+      font-size: 24px;
+      color: #666;
+      font-weight: 600;
+    }
+    li:nth-child(1),
+    li:nth-child(4) {
+      background: #edf
+    }
+    li:nth-child(2) {
+      background: #def;
+    }
+    li:nth-child(3) {
+      background: #fde;
+    }
+    div span.btns {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto 0;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 50%;
+      font-size: 14px;
+      font-weight: 600;
+      color: tomato;
+      text-align: center;
+      background: #fff;
+      cursor: pointer;
+      transition: all .35s linear;
+      opacity: 0.45;
+    }
+    .prev {
+      left: 10px;
+    }
+    .next {
+      right: 10px;
+    }
+    div span.btns:hover {
+      color: #fff;
+      background: tomato;
+    }
+    div span.btns:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      margin: auto;
+      border: 5px solid;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+    }
+    div span.prev:after {
+      left: -8px;
+      border-left-color: transparent;
+    }
+    div span.next:after {
+      left: 8px;
+      border-right-color: transparent;
+    }
+    .dotteds {
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      overflow: hidden;
+    }
+    .dotteds span {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      margin: 0 5px;
+      cursor: pointer;
+    }
+    .dotteds span.cur,
+    .dotteds span:hover {
+      background: tomato;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="mySwiper" class="gjf-swiper">
+    <ul id="oUl">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>1</li>
+    </ul>
+    <span class="btns prev" id="goPrev"></span>
+    <span class="btns next" id="goNext"></span>
+    <div class="dotteds" id="dotteds">
+      <span class="cur"></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <script>
+    /* 第一步，实现自动播放 */
+    var mySwiper = document.getElementById('mySwiper');
+    var goPrev = document.getElementById('goPrev');
+    var goNext = document.getElementById('goNext');
+    var dotteds = document.getElementById('dotteds');
+    var oDot = dotteds.getElementsByTagName('span');
+    var oDotLen = oDot.length;
+    var oLi = mySwiper.getElementsByTagName('li');
+    var len = oLi.length;
+    var timer = null;
+    var liWidth = oLi[0].offsetWidth;
+    var i = 0; //记录当前播放的张数
+    /* 小圆点点击事件 */
+    var lastDot = 0; //初始化记录默认展示的小圆点的索引
+    for (let d = 0; d < oDotLen; d++) {
+      (function (num) {
+        oDot[num].onclick = function () {
+          changeClass(num);
+          /* 获取索引值，重新调用轮播动画 */
+          i = num;
+          carousel();
+        }
+      })(d);
+    }
+    function changeClass(index) {
+      if(index >= oDotLen){
+        index = 0;
+      }
+      oDot[lastDot].className = ''; //把上一个记录的有cur的小圆点类名清空（这样免除了一次全部遍历）
+      oDot[index].className = 'cur'; //把当前点击的加上类名
+      lastDot = index; //重新记录当前有cur的小圆点的索引
+    }
+    /* 前后按钮 点击事件 */
+    goPrev.onclick = function () {
+      /* 重新计算i的值并重新调用轮播动画 */
+      i--;
+      carousel();
+    }
+    goNext.onclick = function () {
+      /* 重新计算i的值并重新调用轮播动画 */
+      i++;
+      carousel();
+    }
+    /* 自动轮播 */
+    function carousel() {
+      clearTimeout(timer);
+      console.log(i)
+      if (i >= len) {
+        /* 极端问题，一直向右超出所有轮播的时候，右边没图了，就立马跳转到开始，并预备下一次i值为展示第二张 */
+        i = 1;
+        oUl.style.left = '0px';
+        carousel(); //重置为0后，再次递归调用
+      }else if (i < 0) { 
+        //极端问题，一直向左没有值时，当左边没图了的时候，立马跳转到最后一张双包胎，并预备让i变成倒数第二张图
+        i = len - 1;
+        oUl.style.left = -(liWidth * i) + 'px';
+        console.log(i,-(liWidth * i) + 'px')
+      } else {
+        /* 正常情况，图片运动和小圆点类名切换 */
+        changeClass(i);
+        startMove(oUl, {
+          'left': -(i * liWidth)
+        }, function () {
+          /* 上一次动画完毕，再次调用轮播，实现循环自动轮播 */
+          timer = setTimeout(function () {
+            i++; //定时器触发的时候i再加加，要不然i先加加了，定时器没触发，这中间若再触发了点击事件，图片就会快速增加两张
+            carousel(); //重置为0后，再次递归调用
+          }, 1000); //上一个运动结束，再修改下一个
+        });
+      }
+    }
+    // 初始化调用轮播
+    timer = setTimeout(carousel, 1000);
+    /* 类名获取 */
+    function getStyle(dom, attr) {
+      if (window.getComputedStyle) {
+        return window.getComputedStyle(dom, null)[attr];
+      } else {
+        return dom.currentStyle(attr);
+      }
+    }
+    /* 运动封装 */
+    function startMove(dom, attrObj, callback) {
+      var speed = null,
+        dis = null;
+      clearInterval(dom.timer);
+      dom.timer = setInterval(function () {
+        var isEnd = true; //1、先假定运动可以停止
+        for (const key in attrObj) {
+          if (attrObj.hasOwnProperty(key)) {
+            var curAttr,
+              curTarget = attrObj[key],
+              isOpa = key == 'opacity' ? true : false;
+            if (isOpa) {
+              curAttr = parseFloat(getStyle(dom, key)) * 100;
+              curTarget *= 100;
+            } else {
+              curAttr = parseInt(getStyle(dom, key));
+            }
+            speed = (curTarget - curAttr) / 7;
+            speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+            // 2、让物体直接运动，先不做停止判断。
+            if (isOpa) {
+              dom.style[key] = (curAttr + speed) / 100;
+            } else {
+              dom.style[key] = curAttr + speed + 'px';
+            }
+            // 3、在for循环中判断，只要有一个属性的当前所在点不等于设置的目标点，就把总的变量置否。
+            if (curAttr != curTarget) {
+              isEnd = false;
+            }
+          }
+        }
+        // 最后在for循环的外边判断是否能够真正的停止了。如果可以，停止定时器
+        if (isEnd) {
+          clearInterval(dom.timer);
+          dom.timer = null;
+          typeof (callback) == 'function' ? callback(): new Error('你不用回调吗？');
+        }
+      }, 40);
+    }
+  
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>class铺垫-构造函数</title>
+</head>
+
+<body>
+  <h1>构造函数与继承</h1>
+  <ul>
+    <li>
+      回顾es5，构造函数，私有属性，公有属性，私有属性继承(call调用 - 借用构造函数的方式)，公有属性继承(圣杯模式继承)。
+      <p>es5的一个缺点是，构造函数名字首字母大写是我们人为定的规则，并不是语法规定，可以不执行。这么松散，容易出问题。但是es6中就不行，class定义的函数，大小写无所谓了，但是必须用new来调用</p>
+    </li>
+    <li>
+      <h4>
+        继承的几种方式
+      </h4>
+      <p>1、共享原型的方式继承，比如让B.prototype =
+        A.prototype。这么做的缺点是大家成了绑在一条绳上的蚂蚱，一损俱损、一改都改。且B构造出来的实例化对象的constructor成了A，而不是B了。这就乱套了，瞎认祖宗了。</p>
+      <p>2、让B.prototype = new A()。
+        让原型指向构造函数的实例化对象，通过实例化对象的__proto__去得到构造函数的原型。缺点也是B构造出来的实例化对象的constructor成了A，而不是B了。这就乱套了，认贼作父了。另外缺点还有A构造函数的实例化对象身上的私有属性也被继承了。
+      </p>
+      <p>
+        <pre>
+          上边两条，因为你把人家的原型修改了，他的原型成了A的实例化对象，A的实例化对象的__proto__指向的就是A的原型，
+          A原型上的constructor指向A本身这本没有错。B构造出来的实例化对象的__proto__就是A构造出来的实例化对象，
+          顺着原型链找肯定就是A成了B实例化对象的构造类。
+      </pre>
+      </p>
+      <p>3、圣杯前身：中转一下。新建一个Temp函数，让Temp.prototype = A.prototype；让B.prototype = new Temp();
+        这样还是改变不了B的实例化对象得到的constructor指向A这种认贼作父的局面。原因很简单，B的实例化对象（b）沿着__proto__查找constructor。因b.__proto__ == B.prototype =
+        new Temp(),还是个对象，没有constructor。所以还得找到Temp实例化对象的__proto__, 即Temp.prototype，而Temp.prototype ==
+        A.prototype，这次终于找到了prototype还有constructor。但是遗憾的是，这个prototype是A，A.prototype.constructor === A;所以最后结果还得是A。
+      </p>
+      <p>4、圣杯模式的继承：在上一个基础上，人为的去修改constructor。封装起来得到圣杯模式。
+        <pre>
+        (function(){
+          /* 圣杯模式 */
+          var Inherit = function(){};
+          Inherit.prototype = Person.prototype;
+          Man.prototype = new Inherit();
+          Man.prototype.constructor = Man;//在prototype添加固定属性，中途拦截一下constructor
+          Man.prototype.uber = Person.prototype;// 设置他的超类
+        }());
+      </pre>
+
+      </p>
+      <p>
+        5、老师提的高级模式：prototype.__proto__指向的是Object.__prototype__，既然没用何不改一下？
+        Man.prototype.__proto__ = Person.prototype;
+        简直不要太高级。不过缺点就是__proto__作为隐式属性，是系统自己的属性，不建议我们去修改，如果理解不透彻容易改错，所以不推荐使用。
+      </p>
+      <p>
+        6、高级模式的合法身份 - es6中的继承写法 - Object.setPrototypeOf(B.prototype,A.prototype)。含义就是让B的原型是A的原型。其原理同第五条，只不过是es6给我们新增的官方用法。更安全、更可靠。
+      </p>
+      <p>
+        7、有了上一个Object的方法，联想到另一个es5的Object.create()。本意用来创建一个新对象，第一个参数是一个对象，用来当做新对象的__proto__，第二个参数是一个配置对象，和Object.defineProperties()的第二个参数一致。
+        <pre>
+          Man.prototype = Object.create(Person.prototype,{
+            constructor: {
+              value: Man
+            }
+          });
+      </pre>
+      </p>
+    </li>
+    <li>最后回顾，这些方法其实都很麻烦，为什么还要人为的去搞一下继承？好像要科学方法改细胞似的。就不能天生继承吗？这就是class出现的原因了。class写法更简单，目的更明确。
+    </li>
+  </ul>
+  <script>
+    /* 构造函数 */
+    function Person(name) {
+      this.name = name; //私有属性
+      return this;
+    }
+    Person.prototype.eat = function () { //公有属性/方法
+      console.log('I can eat');
+      return this;
+    }
+    var person = new Person('构造函数');
+    console.log(person);
+
+    function Man(sex) {
+      Person.call(this, '继承私有属性'); //借用构造函数的方式实现其他对象私有属性的继承。
+      this.sex = sex;
+    }
+    // 公有属性继承
+    // 1、
+    // Man.prototype = Person.prototype;
+    // 2、
+    // Man.prototype = new Person('继承第二种');
+    // 3、
+    /* function Temp(){};
+    Temp.prototype = Person.prototype;
+    Man.prototype = new Temp(); */
+    // 4、
+    /* (function(){
+      // 圣杯模式
+      var Inherit = function(){};
+      Inherit.prototype = Person.prototype;
+      Man.prototype = new Inherit();
+      Man.prototype.constructor = Man;//在prototype添加固定属性，中途拦截一下constructor
+      Man.prototype.uber = Person.prototype;// 设置他的超类
+    }()); */
+    // 5、
+    // 老师提的高级模式：prototype.__proto__指向的是Object.__prototype__，既然没用何不改一下？
+    // Man.prototype.__proto__ = Person.prototype;
+    // 6、
+    // Object.setPrototypeOf(Man.prototype,Person.prototype);
+    // 7、
+    Man.prototype = Object.create(Person.prototype, {
+      constructor: {
+        value: Man
+      }
+    });
+
+    var man = new Man('male');
+    console.log(man);
+    console.log(man.constructor);
+  </script>
+</body>
+
+</html>

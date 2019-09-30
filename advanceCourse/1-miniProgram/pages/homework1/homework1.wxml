@@ -1,0 +1,10 @@
+<view class='article'>
+  <image src="../assets/images/img01.jpg"></image>
+  <text class='desc'>
+  小程序提供了一个简单高效的应用开发框架和丰富的组件及帮助开发者在微信中开
+  </text>
+  <text class='author'>
+  --- 尼古拉斯 · 小石头
+  </text>
+  <text bindtap='goBack'>返回上一级</text>
+</view>

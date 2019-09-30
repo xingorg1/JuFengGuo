@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./jquery.js"></script>
+  <script>
+    $(document).on('keydown', function (e, a) {
+        goTrigger(Array.prototype.slice.call(arguments, 1));
+    });
+    $(document).trigger('keydown', [27, '其他参数1', '其他参数2']);
+
+    function goTrigger() {
+      let args = [...arguments[0]];
+      let args2 = Array.from(arguments[0]);//伪数组转换为数组
+      console.log('trigger自动触发',args,args2);
+      if (args[0] === 27) {
+        args2.forEach((item,i)=>{
+          console.log(i,item);
+        });
+      }
+    }
+  </script>
+
+</body>
+
+</html>

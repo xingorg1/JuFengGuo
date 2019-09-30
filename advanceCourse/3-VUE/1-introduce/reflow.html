@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div {
+      /* float: left; */
+      width: 120px;
+      height: 120px;
+      background: #00dcff;
+      /* visibility: hidden; */
+      padding: 20px;
+      font-size: 16px;
+      font-weight: normal;
+    }
+
+    div:hover {
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    div:hover span {
+      font-weight: normal;
+      font-size: 16px;
+    }
+
+    span {
+      border: 1px solid;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    调整视口大小会进行重排吗
+    <br>
+    <span>文字加粗我受影响吗？</span>
+  </div>
+  
+</body>
+
+</html>

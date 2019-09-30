@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /*
+    * @Author: guojufeng@ 
+    * @Date: 2017-12-20 15:07:06
+    * @purpose 获取一个值的类型
+    * @param {variateName} target: 要获取类型的变量名或对象
+    * @output {string} result || "null": 返回的参数 - result或者null,为字符串形式的
+    */
+    function getType(target) {
+      if(target === null){
+        console.log("getType: " + target)
+        return "null";
+      }
+      let result = typeof (target);
+      if (result == "object") {
+        if (target instanceof Array) {
+          result = "array";
+        } else if (target instanceof Object) {
+          var target = Object.prototype.toString.call(target);
+          if(target == "[object Object]"){
+            result = "object";
+          }else{
+            // 构造函数
+            result = target;
+          }
+        }
+      }
+      console.log("getType: " + result)
+      return result;//返回类型值的字符串形式
+    }
+    var a = function(){}
+    var b  = [];
+    var c = new Array;
+    var d = {};
+    var e = new Object;
+    var s = "123";
+    var bl = false;
+    var n = 123;
+    var nan = parseInt("req");
+    var nu= null;// null 怎么算
+    var un= undefined;
+    getType(a)
+    // getType(b)
+    // getType(c)
+    // getType(d)
+    getType(e)
+    // getType(s)
+    // getType(bl)
+    // getType(n)
+    // getType(nan)
+    // getType(nu)
+    // getType(un)
+    /* null 等于 一个值为null的变量的拷贝值 */
+    // var m = nu;
+    // console.log(m === null);
+    // console.log(nu === null);
+    var arr = new Number();
+    var str = new String();
+    var bool = new Boolean();
+    getType(arr)
+    getType(str)
+    getType(bool)
+  </script>
+</body>
+</html>

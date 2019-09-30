@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>伪类选择器</title>
+  <style>
+    .main p:first-child{
+      background: red;
+    }
+    .main p:first-of-type{
+      background: red;
+    }
+    p:last-child{
+      background: green;
+    }
+    .main span:only-of-type{
+      display: block;
+      background: blue;
+    }
+  </style>
+</head>
+<body>
+  <h1>被选择元素的一种状态</h1>
+  <div class="main">
+    <span>1</span>
+    <p>2</p>
+    <p>3</p>
+    <span>1</span>
+    <p>4</p>
+  </div>
+  <p>5</p>
+  <input type="text" value="我是只读的" readonly>
+</body>
+</html>

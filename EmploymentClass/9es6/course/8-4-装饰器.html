@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>装饰器</title>
+</head>
+
+<body>
+  <p>装饰器</p>
+  <input type="text" id="inp">
+  <button id="btn">搜索</button>
+
+  <script>
+    // /* 一段模拟百度搜索功能需要额外挂其他功能的代码 - 张三的代码 */
+    // let onInput = document.getElementById('inp'),
+    //   oBtn = document.getElementById('btn'),
+    //   keyValue = '';
+    // onInput.oninput = function(e){
+    //   console.log(this.value);
+    //   keyValue = this.value;
+    // }
+    // oBtn.onclick = function(){
+    //   // 模拟发送请求
+    //   // getContent(keyValue);
+    //   newGetContent(keyValue);//换成外挂代理函数
+    // }
+    // function getContent(data){
+    //   // 模拟ajax功能函数
+    //   var url = 'url-a';
+    //   console.log(`已发送 ${data} 到地址 ${url}`);
+    // }
+
+
+
+    // /* 第二个人李四的外挂功能 - 计数埋点高阶函数 */
+    // function dealFunc(func){
+    //   // 植入代理思想，传进来的函数我还会帮你执行，但是额外的我会加入点我自己的代码。
+    //   var count = 0;
+    //   return function (){
+    //     // 新增自己的附加代码
+    //     count++;
+    //     console.log(count,'埋点计数被执行，发送到别的服务器做热力图用。。。');
+    //     // 代理功能，帮别人实现
+    //     return func.apply(this,arguments);//代理的时候记得返回别人的执行结果
+    //   }
+    // }
+
+    // var newGetContent = dealFunc(getContent);//newGetContent代理getContent了。
+  </script>
+  <script src="../a-babelInit/babelFile/8-4-classES7.js">
+  </script>
+</body>
+
+</html>

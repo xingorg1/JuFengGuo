@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Set</title>
+</head>
+
+<body>
+  <h1>set</h1>
+  <ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <script>
+    var oLi = document.getElementsByTagName('li');
+    console.log(oLi)
+    const {
+      log
+    } = console;
+
+    let st1 = new Set([1, 2, 'e', 34, {
+      name: 12
+    }]);
+    log(st1);
+    st1.add(2);
+    st1.add(12);
+    st1.add(22);
+    st1.add([1, 2, 3]); //以数组形式添加，会被拆开添加进去还是添加一个数组进去？ - 添加一个数组
+    st1.add({
+      name: 12
+    }); //添加一个已存在的对象，看是否会去重 - 没有去重
+    st1.add({
+      name: 12
+    }, {
+      name: 23
+    }); //一次性添加多个对象，且有已存在对象 - 只加了第一个，且未去重
+    st1.add(4, 5, 6); //一次性添加多个值 - 只加了第一个4
+    var obj1 = {
+      name: 'set去重'
+    };
+    var arr1 = ['set去重', 'set去重'];
+    st1.add(obj1);
+    st1.add(arr1);
+    st1.add(obj1);
+    st1.add(arr1);
+    console.log(st1)
+
+    // delete
+    st1.delete(1, 2, 4);
+    st1.delete({
+      name: 12
+    });
+    st1.delete(obj1);
+    console.log(st1);
+
+    // has
+    log(st1.has(arr1))
+
+    // forEach 
+    st1.forEach((a) => {
+      // console.log(a)
+    });
+    // es6新增for of遍历
+    for (var item of st1) {
+      console.log(item)
+    }
+    // for of只能遍历具备iterator迭代接口的数，所以不能遍历对象
+    /* for(let obj of obj1){
+      console.log(obj)
+    } */
+
+
+    // clear
+    // st1.clear();
+
+
+    // 转换为数组
+    var ar1 = Array.from(st1);
+    var ar2 = [...st1];
+    console.log(ar1, ar2)
+
+
+    var arrOne = [1, 2, 3, 1, 8];
+    var arrTwo = [2, 3, 4, 2, 9];
+
+    var set1 = new Set(arrOne); //转为set结构并去重
+    var set2 = new Set(arrTwo); //转为set结构并去重
+
+    // set求交集
+    var jiaojiRst = jiaoji([...set1], set2); //再传进去去重后的数组格式
+    function jiaoji(arr1, arr2) {
+      return arr1.filter(el => {
+        return arr2.has(el);
+      });
+    };
+
+    var jiaojiRst = jiaoji(set1, set2); //再传进去去重后的数组格式
+    function jiaoji(arr1, arr2) {
+      var rst = [];
+      set1.forEach(el => {
+        if (arr2.has(el)) {
+          rst.push(el);
+        }
+      });
+      return rst
+    };
+
+    // set求并集
+    var bingjiRst = bingji(arrOne, arrTwo);
+
+    function bingji(arr1, arr2) {
+      var arr = arr1.concat(arr2); //第一种数组合并的方法
+      var setArr = new Set(arr);
+      var rst = Array.from(setArr); //第1种Set解构转数组写法
+      return rst;
+    }
+
+    function bingji(arr1, arr2) {
+      var arr = arr1.concat(arr2);
+      var setArr = new Set(arr);
+      var rst = [...setArr]; //第2种Set解构转数组写法
+      return rst;
+    }
+
+    function bingji(arr1, arr2) {
+      var setArr = new Set([...arr1, ...arr2]); //第二种数组合并的方法
+      var rst = [...setArr]; //第2种Set解构转数组写法
+      return rst;
+    }
+
+    function bingji(arr1, arr2) {
+      // 先将两个数组合并、再用set去重，最后模板字符串将去重后的set数据结构转成数组解构
+      return [...new Set(arr1.concat(arr2))]
+    }
+
+    function bingji(arr1, arr2) {
+      return [...new Set([...arr1, ...arr2])];
+    }
+
+    // set求差集
+    var chajiRst = chaji(set1, set2);
+
+    function chaji(arr1, arr2) {
+      let rst = [];
+      arr1.forEach(el => {
+        if (!arr2.has(el)) {
+          rst.push(el);
+        }
+      });
+      arr2.forEach(el => {
+        if (!arr1.has(el)) {
+          rst.push(el);
+        }
+      });
+      return rst;
+    }
+    // 老师的写法
+    function chaji(arr1, arr2) {
+      let newArr1 = [...arr1].filter((el) => !arr2.has(el));
+      let newArr2 = [...arr2].filter((el) => !arr1.has(el));
+      return [...newArr1, ...newArr2];
+    }
+    console.log(jiaojiRst, bingjiRst, chajiRst);
+  </script>
+</body>
+
+</html>

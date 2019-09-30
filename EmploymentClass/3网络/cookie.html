@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var manageCookie = {
+      setCookie: function (name, value, time) {
+        // 增、改
+        console.log(name)
+        document.cookie = name + '=' + value + ';max-age=' + time;
+        return this;
+      },
+      delCookie: function (name) {
+        // 删
+        return this.setCookie(name, '', -1);
+      },
+      getCookie: function (name, callback) {
+        // 格式化cookie 字符串->对象
+        var allCookieArr = document.cookie.split('; '),
+          len = allCookieArr.length;
+        for (let i = 0; i < len; i++) { //for循环和forEach的区别是，for循环找到就停止循环，forEach就必须全部循环完
+          var itemArr = allCookieArr[i].split('=');
+          if (itemArr[0] == name) {
+            callback(itemArr[1]);
+            return this;
+          }
+        }
+        callback(undefined);
+        return this;
+      }
+    }
+    manageCookie
+      .setCookie('color', 'red', 10000)
+      .setCookie('color2', 'red2', 30000)
+      // .delCookie('color')
+      // .getCookie('color2',function(data){
+        // console.log(data);
+      // });
+
+      document.cookie = 'age=18;max-age=1000';
+  </script>
+</body>
+
+</html>

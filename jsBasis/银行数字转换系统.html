@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /* 
+      输入一串低于10位的数字，输出这串数字的中文大写。
+      把读法写出来，千分位如果有值就不用读零，如果是零就读零
+      5 伍元
+      14 壹拾肆
+      24 贰拾肆
+      34 叁拾肆
+      023 贰拾叁元
+      123 壹佰贰拾叁
+      1235 壹仟贰佰叁拾伍
+      1250 壹仟贰佰伍拾
+      10000 壹萬元 【特殊情况，后边的零都不用输出，判断后边数字连着为0的情况】
+      10001 壹萬零壹元
+      10010 壹萬零壹拾元
+      10100 壹萬零壹佰元
+      11000 壹萬壹仟元
+
+      100100  拾萬零壹佰元
+      123456  拾贰万叁仟肆佰伍拾陆 
+      101000  拾萬壹仟元
+      1009000 壹佰萬玖仟元
+      1000500 壹佰萬零伍佰元
+      1001010 壹佰萬壹仟零壹拾
+      1345235 壹佰叁拾肆萬伍仟贰佰叁拾伍
+    */
+    /* 思路：
+      1\判断长度
+      2\看每一个数字是哪一位数上的，
+      个位数  直接输出数字 + 元 || 如果为零直接输出元
+      十位数  数字(排除0和1,1直接输出拾) + 拾 ||  如长度大于2且当前位数为0，输出零，否则不输出（因为09就直接输出9元即可）
+      百位数  数字 + 佰 || 如长度大于3且当前位数为0，输出零，否则不输出（同上）【注意10000这种情况】
+      千位数  同上
+      万位数  同上
+      十万位数 十万位是数字+拾(排除0和1,1直接输出拾) 后边萬同上
+      百万位数 
+      3\判断后边数字连着为0的情况
+     */
+    /* 131224
+     i = 6-1  取site[1]拾 5-5 6代表数字的位数
+     i = 7-1  site[2]佰 7-5
+     i = 8-1  site[3]仟
+     i = 9-1  site[4]萬
+     */
+    // switch (transferI) {
+    //   case 5:
+    //     result += site[len - 5];/* 拾万以上 */
+    //     break;
+    //   case 6:
+    //     result += site[len - 5];/* 佰万以上 */
+    //     break;
+    //   case 7:
+    //     result += site[len - 7];/* 仟万以上 */
+    //     break;
+    //   case 8:
+    //     result += '亿';/* 亿万以上 */
+    //     break;
+    //   default: 
+    //     result += site[transferI]; //按位字加上单位
+    //     break;
+    // }
+    function bankCounting(num) {
+      var numArr = (num + '').split(''),
+          len = numArr.length,
+          site = ['元', '拾', '佰', '仟', '萬'],
+          digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'],
+          result = '';
+          continue0 = 0,
+          overSite = len - 5;
+          console.log(num, len);
+      numArr.forEach((el, i) => {
+        var transferI = len - 1 - i; //翻转i的值,计算出是几位数
+        console.log(transferI, i, el);
+        // debugger;
+        // if (el === '0') { // 非个位数是0，标识已填一个'零'
+        //   continue0++;
+        // }
+        // if (continue0 >= 2 && el === '0' && transferI !== 3) { //下次还是0，判断两个'零'连着，就不再写‘零’
+        //   result += '';
+        // } else {
+          result += digit[el]; // 按位子打印出对应的数字大写
+        // }
+        // if (el !== '0') {
+          if (len > 5 && transferI >= 5) {
+             /* 拾万以上 */
+            if (transferI == 8) {
+              result += '亿'
+            } else {
+              result += site[overSite];
+            }
+            overSite--;
+          } else {
+            /* 拾万以下 */
+            if(el !== '0'){
+              result += site[transferI]; //按位字加上单位
+            }
+            if (el == '0' && transferI == 4) {
+              console.log(site[transferI])
+              result += site[transferI]; //按位字加上单位
+            }
+          }
+        // }
+        console.log(result, result.length, result.indexOf('零') == result.length - 1)
+      });
+      //最后，如果result是1000这样类似数字，会打出'壹仟零'，把零替换为元
+      var arr = result.split(''),lastIndex = arr[arr.length - 1];
+      lastIndex == '零' ? arr[arr.length - 1] = '元' : arr[arr.length - 1] = lastIndex;
+      result = arr.join('');
+      document.write(num + ' : ' + result + '<br/>')
+      return result;
+    }
+    bankCounting(4)
+    bankCounting(24)
+    bankCounting(234)
+    bankCounting(1224)
+    bankCounting(31224)
+    bankCounting(131224) //壹拾叁萬壹仟贰佰贰拾肆元
+    bankCounting(6332312)//陆佰叁拾叁萬贰仟叁佰壹拾贰元
+    bankCounting(36332312)//叁仟陆佰叁拾叁萬贰仟叁佰壹拾贰元
+    bankCounting(336332312)//叁亿叁仟陆佰叁拾叁萬贰仟叁佰壹拾贰元
+    bankCounting(102)
+    bankCounting(1002)
+    bankCounting(1000)
+    bankCounting(1300)
+    bankCounting(10302)
+    bankCounting(100000)
+  </script>
+</body>
+
+</html>

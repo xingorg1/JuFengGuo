@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>border</title>
+  <style>
+    body{
+      font-size: 0
+    }
+    div{
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      margin: 20px;
+      background: #89f;
+      background: #333;
+      color: #fff;
+      font-size: 14px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .div{
+      border-radius: 40px;
+    }
+    .div1{
+      border-radius: 50%;
+      border-radius: 50px;
+    }
+    .div2{
+      border-radius: 10px 20px 30px 40px;
+    }
+    .div3{
+      border-radius: 10px 40px;
+    }
+    .div4{
+      border-radius: 10px 30px 40px;
+    }
+    .div5{
+      border-top-left-radius: 100px 100px;
+    }
+    .div6{
+      /* 正圆是正方形做的，半圆就是1/2个正方形，也就是一个长方形 */
+      border-top-left-radius: 100px 100px;
+      border-top-right-radius: 100px 100px;
+      height: 50px;
+    }
+    .div7{
+      border-top-left-radius: 100px 100px;
+      border-bottom-right-radius: 100px 100px;
+    }
+    .div8{
+      border-radius: 10px / 10px;
+    }
+    .div8-2{
+      border-radius: 10px 20px 30px 40px / 10px 20px 30px 40px;
+    }
+  </style>
+</head>
+<body>
+  <!-- <div>
+  </div> -->
+  <div class="div">1</div>
+  <div class="div1">正圆</div>
+  <div class="div2">3</div>
+  <div class="div3">4</div>
+  <div class="div4">5</div>
+  <div class="div5">扇形</div>
+  <div class="div6">半圆</div>
+  <div class="div7">叶状</div>
+  <div class="div8">特殊写法</div>
+  <div class="div8-2">特殊写法</div>
+</body>
+</html>

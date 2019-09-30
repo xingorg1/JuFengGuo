@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>子向父传递数据</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+    <!-- <children-Son ref='SonComp' @click.native="fatherFun('333')"></children-Son> -->
+    <children-Son :name="name" ref='SonComp2' v-on:click="fatherFun('$listeners')" @mymousedown="fatherFun3">
+    </children-Son>
+    <!-- <children-Son ref='SonComp3'></children-Son> -->
+    <!-- <h3 ref="h3" v-for="item in 3">h3标签{{item}}</h3> -->
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      provide: {
+        fatherFun2(val) {
+          console.log('222-子组件传参为', val)
+        }
+      },
+      data: {
+        name: '父组件的data属性',
+      },
+      mounted() {
+        // console.log(this.$children)
+        // console.log(this.$refs)
+        // console.log(this.$refs.SonComp.childData)
+      },
+      methods: {
+        fatherFun(val) {
+          console.log('子组件传参为', val)
+        },
+        fatherFun3(val) {
+          console.log('fatherFun3', val)
+        }
+      },
+      components: {
+        childrenSon: {
+          inject: ['fatherFun2'],
+          mounted() {
+            console.log(this)
+            this.$parent.fatherFun('我是子组件children01，调用了fatherFun');
+            this.fatherFun2('provide+inject尝试');
+            console.log(this.$attrs)
+            console.log(this.$listeners)
+            this.$listeners.click();
+            // this.$listeners.mymousedown('mymousedown传参');
+
+            this.$emit('mymousedown','$emit触发自定义事件')
+
+          },
+          template: `<div class="children01">
+                 <!-- <h3  v-on:click="Fun1" @mymousedown="Fun2"> -->
+                  <!-- <h3 v-on="$listeners"> -->
+                      <h3 >
+                        {{ childData }}
+                      </h3>
+                     </div>
+                    `,
+          data() {
+            return {
+              childData: '我是children01的数据'
+            }
+          },
+          methods: {
+            fun1() {
+              console.log(2)
+            }
+          },
+          components: {
+            childrenGrand: {
+              template: `<div class="children02">
+                            <p> 
+                              {{ childData }}
+                            </p>
+                          </div>
+                  `,
+              data() {
+                return {
+                  childData: '我是children02的数据'
+                }
+              },
+            }
+          },
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

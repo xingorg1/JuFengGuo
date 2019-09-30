@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Map练习</title>
+</head>
+
+<body>
+  <h1>Map练习</h1>
+  <ul>
+    <li><a href=""></a></li>
+    <li><a href=""></a></li>
+    <li><a href=""></a></li>
+    <li><a href=""></a></li>
+  </ul>
+  <script>
+    const {
+      log
+    } = console;
+    let mp1 = new Map();
+    log(mp1);
+    let mp2 = new Map([
+      ['name', 'xing.org1'],
+      ['age', 18],
+      ['call', 110]
+    ]); //放一个数组，数组里嵌套二维数组，放[key,value]的形式。
+    log(mp2);
+    let st1 = new Set([1, 2]);
+    let mp3 = new Map([
+      [NaN, NaN],
+      [null, 'xing.org1'],
+      [undefined, null],
+      [true, undefined],
+      [{}, {}],
+      [
+        [],
+        []
+      ],
+      [function a() {}, `放函数`],
+      [st1, `放set${st1}`]
+    ]);
+    console.log(mp3);
+
+    // api
+    mp3.set(3, '新增值')
+    log(mp3.get(NaN))
+    log(mp3.get(3))
+    log(mp3.has(3))
+
+    mp3.delete(3);
+
+    mp3.set({}, '空对象');
+    log(mp3.get({})) // undefined,因为前后两个对象不是同一个堆内存地址
+
+    var obj1 = {
+      name: '存储对象变量才能get'
+    }
+    mp3.set(obj1, obj1);
+    log(mp3.get(obj1))
+
+    log(mp3.size) //size属性
+
+    mp3.forEach((a, b, c) => {
+      // console.log(a,b,c);//属性值value、属性key、实例化对象自身mp3
+    });
+
+    log(mp3.keys());
+
+    log(mp3.entries())
+    log(mp3)
+
+    for (var item of mp3) {
+      log(item);
+    }
+
+    log('-----for of 遍历entries---')
+    for (var item of mp3.entries()) {
+      log(item);
+    }
+    log('for of 遍历 keys-----')
+    for (var item of mp3.keys()) {
+      log(item);
+    }
+
+    // map模拟
+    function gjfMap() {
+      this.bucketLength = 8; // 定义桶的长度为8（也就是数组中8个对象来放值用）
+      this.init(); //初始化开始
+    }
+    // init
+    gjfMap.prototype.init = function () {
+      // 创建map中的桶，桶里有特定个数的对象，对象中有next以实现链表
+      this.bucket = new Array(this.bucketLength);
+      for (let i = 0; i < this.bucketLength; i++) {
+        // 桶里边放桶长度个数的空对象（小节），每个空对象里一个初始化next，指向空null
+        this.bucket[i] = {
+          type: 'bucket' + i, //桶中小节的名字
+          next: null
+        };
+
+      }
+    }
+    // makehash - 计算hash值得算法。目的是分散放置key，不至于让桶中某一小节的对象后边的链条非常长，一直next->next的放。这种相对平均的分布一下hash，争取让不同的值对应不同的小节对象上。如果这么放还是会使得某一小节过长的话，可以增加桶的长度，再扩大hash值得范围。
+    gjfMap.prototype.makehash = function (key) {
+      let hash = 0;
+      // 把不定范围的值转成特定范围的值，这里的作用是，将不同类型的值通过一个算法，按照一定的规律计算得出不同的代表号。再按照这个号码放到桶的对应标号小节（bucket1 || bucket2等）中
+      // 接收一个参数，参数为map要set值得key值，判断这个key值得类型，计算出hash编号，hash范围是[0,this.bucketLength)。
+      // *注意：重复算同一个key值，得到的hash值应该是固定的。
+      // key可能的值：string、number、boolean、NaN(特殊处理)、undefined、null、Object、array、function、date、regexp...(这些值在map中都可以作为属性值存在)
+      if (typeof key !== 'string') {
+        if (typeof key === 'number') {
+          // key是数字类型,直接让hash值等于这个key值。如果是NaN，特殊让hash等于7（看心情赋值）
+          hash = Object.is(key, NaN) ? 7 :
+            key; //是否是NaN判断这里用了Object提供的新方法is()，他是严格全等判断。不过也可以用字符串判断：key+'' === 'NaN';也可以进行判断
+        } else if (typeof key === 'object') {
+          // key是对象 null、Object、array、date、regexp..,设置为固定值。
+          hash = 5;
+        } else if (typeof key === 'boolean') {
+          // key是布尔
+          hash = +key; //利用+号的隐式类型转换，true会转为1，false转为0。或者可以用Number(key)转成数字
+        } else if (typeof key === 'function') {
+          // key是函数
+          hash = 2;
+        } else {
+          // 其他情况 null、undefined等
+          hash = 0;
+        }
+      } else {
+        // key 是 string 类型时，因为字符串的长度和内容是不定的，所以我们人为的定一个规则，只取字符串中前三/后三位字符，然后对截取的字符进行ASCII码转换后，累加ASCII码再%8得到[0,8)的hash值。目的只是为了得到[0,8)的hash值,规则可以另改。。。
+        for (let i = 0; i < 3; i++) {
+          //中括号在字符串中的用法：'abc'[0] => 'a';'abc'[1] => 'b';'abc'[2] => 'c';
+          //'abc'[0].charCodeAt(0) => 可以得到字符a的ASCII码，后边b、c改下标即可。
+          //'abc'.charCodeAt(1) => 可以取到前边字符串第二个字符的ASCII码。
+          hash += key[i] ? key[i].charCodeAt(0) : 0; //注意当字符长度小于3时，做一下容错处理,如果对应索引有字符，就累加该字符的ASCII码，如果没有就累加0.
+        }
+      }
+      return hash % 8; //让最终的hash值对8取余，得到[0,8)的hash值
+    }
+    // set - 放置就是一个查找链表的过程
+    gjfMap.prototype.set = function (key, value) {
+      let hash = this.makehash(key); //得到这个key值需要存放的几号对象小节，就好像一个公寓楼里，要把它放到第几层一样。
+      let oTempBucket = this.bucket[hash]; //找到桶数组中的第hash个数组，并存到临时小节中。
+      while (oTempBucket.next) { //gjfMap中放第一个key value时，这个条件一定不成立，因为next初始化为null，所以会跳过循环走下边的直接赋值。
+        // oTempBucket = oTempBucket.next;// 如果第一个next中有对象了，就把这个临时小节换成本小节的next，一直递归下去，直到当前对象的next为null时，也就是找到了当前链表上的最后一个next，然后跳出循环。
+        if (oTempBucket.key === key) { //但是也不一定是非要放到最后一个，我们这是设置值，加入这个值已经被设置过了，再次设置就需要覆盖了，所以在递归过程中如果遇到了相同的key，就直接赋值并跳出。
+          oTempBucket.value = value;
+          return false; //覆盖值后，直接返回，不再走下边的逻辑。
+        } else {
+          oTempBucket = oTempBucket.next; // 如果key不存在，那么就递归找到链表最末尾的对象
+        }
+      }
+      oTempBucket.next = { //第一次跳过循环直接赋值，后几次因为oTemoBucket被重新赋值，所以他是oTempBucket.next.next了，递归思路。永远是链条上最后一个对象。
+        key: key,
+        value: value,
+        next: null,
+      }
+    }
+    // get
+    gjfMap.prototype.get = function (key) {
+      let hash = this.makehash(key); //获取到要取的key的hash，好去对应标号为hash的对象上找到他。
+      let oTempBucket = this.bucket[hash]; //取到key所在的hash编号对象上。
+      while (oTempBucket) {//递归查找，判断当前对象小节是否有值
+        if (oTempBucket.key === key) {//如果有就判断这个对象上的key是不是要找的。
+          return oTempBucket.value;//是就返回对应值
+        } else {//不是，就把查找的对象替换一下，替换成链表的下一节。
+          oTempBucket = oTempBucket.next;
+        }
+      }
+      return undefined;//最终什么也没找到，返回undefined；
+    }
+    // delete
+    gjfMap.prototype.delete = function (key) {
+      let hash = this.makehash(key);
+      let oTempBucket = this.bucket[hash];
+      while(oTempBucket.next){//先看下一个有没有值
+        if(oTempBucket.next.key === key){//如果是我要删的值
+          oTempBucket.next = oTempBucket.next.next;//就架空当前key所在对象 即 对象.next指向的那个对象，让对象.next指向next.next。这里有点绕，画图解决。
+          return true;//删除成功
+        }else{
+          oTempBucket = oTempBucket.next;//不是目标删除值，就下移一层，再做递归判断。
+        }
+      }
+      return false;//没有删除 || 没得删除
+    }
+    // has
+    gjfMap.prototype.has = function (key) {
+      let hash = this.makehash(key); //获取到要取的key的hash，好去对应标号为hash的对象上找到他。
+      let oTempBucket = this.bucket[hash]; //取到key所在的hash编号对象上。
+      while (oTempBucket) {//递归查找，判断当前对象小节是否有值
+        if (oTempBucket.key === key) {//如果有就判断这个对象上的key是不是要找的。
+          return true;//是就返回对应值
+        } else {//不是，就把查找的对象替换一下，替换成链表的下一节。
+          oTempBucket = oTempBucket.next;
+        }
+      }
+      return false;//最终什么也没找到，返回undefined；
+    }
+    // clear
+    gjfMap.prototype.clear = function () {
+      this.init();//重新建立一个new Map()、或者干脆直接初始化
+    }
+
+    let gjfmap = new gjfMap();
+    gjfmap.set('name', 'fangxie ');
+    gjfmap.set('name2', 'fangxie2 ');
+    gjfmap.set('name5', '123 ');
+    gjfmap.set('name6', true);
+    gjfmap.get('name');// 'fangxie '
+    gjfmap.get('name5');// '123
+    gjfmap.get('name6');//true
+
+  </script>
+</body>
+
+</html>

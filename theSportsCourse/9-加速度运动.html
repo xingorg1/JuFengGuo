@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>加速度运动</title>
+  <style>
+    .demo {
+      width: 100px;
+      height: 100px;
+      background: tomato;
+      position: absolute;
+      left: 0;
+      border-radius: 50%;
+    }
+    .line{
+      width: 1px;
+      height: 300px;
+      position: absolute;
+      border-left: 1px solid;
+      left: 800px;
+      top: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo" id="demo"></div>
+  <div class="line"></div>
+  <script>
+    demo.onclick = function () {
+      // startMove(this,{
+      //   left: 0
+      // });
+      startMove(this,800)
+    }
+
+    function getStyle(dom, attr) {
+      if (window.getComputedStyle) {
+        return window.getComputedStyle(dom, null)[attr];
+      } else {
+        return dom.currentStyle(attr);
+      }
+    }
+
+    function startMove(dom, attrObj) {
+      var speed = null,
+        dis = null;
+      clearInterval(dom.timer);
+      dom.timer = setInterval(function () {
+        for (const key in object) {
+          if (object.hasOwnProperty(key)) {
+            const element = object[key];
+
+          }
+        }
+      }, 40)
+    }
+
+    /* 第一步  简单的加速度运动（在匀速的基础上） */
+    function startMove(dom) {
+      var timer = null;
+      var speed = 1; //初速度值
+      var addSpeed = 1; //加速度值
+      clearInterval(timer);
+      timer = setInterval(function () {
+        speed += addSpeed; // v = v + a
+        dom.style.left = dom.offsetLeft + speed + 'px';
+      }, 30);
+    }
+    /* 第二步 加速度改造的基础弹性运动 - 左右摇摆运动 */
+    function startMove(dom) {
+      var timer = null;
+      var speed = 1; //初速度值
+      var addSpeed = 1; //加速度值
+      clearInterval(timer);
+      timer = setInterval(function () {
+        if (dom.offsetLeft < 800) {
+          console.log(window.innerWidth, dom.offsetLeft)
+          speed += addSpeed; // v = v + a (加速度不变的加速运动)
+        } else {
+          speed -= addSpeed; // v = v - a (加速度不变的减速运动)
+          console.log(speed)
+        }
+        dom.style.left = dom.offsetLeft + speed + 'px';
+      }, 30);
+    }
+    /* 第三步 加速度的速度（动力）变化 */
+    function startMove(dom,target) {
+      var timer = null;
+      var speed = 1; //初速度值
+      var addSpeed = 1; //加速度值
+      clearInterval(timer);
+      timer = setInterval(function () {
+        addSpeed = (target - dom.offsetLeft) / 7;
+        speed += addSpeed; // v = v + a (加速度不变的加速运动)
+        /* 方向都不用改了，直接target-dom的位置关系，就能决定a的方向
+        if (dom.offsetLeft < 800) {
+        } else {
+          speed -= addSpeed; // v = v - a (加速度不变的减速运动)
+        } */
+        dom.style.left = dom.offsetLeft + speed + 'px';
+      }, 30);
+    }
+    /* 第四步 加速度的能量损耗 - 加上阻力u */
+    function startMove(dom,target) {
+      var timer = null;
+      var speed = 1; //初速度值
+      var addSpeed = 1; //加速度值
+      var nowel = 0.8;
+      clearInterval(timer);
+      timer = setInterval(function () {
+        addSpeed = (target - dom.offsetLeft) / 7;
+        speed += addSpeed;
+        speed *= nowel;//给速度附加上阻力
+        console.log(Math.abs(target - dom.offsetLeft),Math.abs(speed));
+        if(Math.abs(speed) < 1 && Math.abs(target - dom.offsetLeft) < 1){
+          // 需要到了目标点且速度接近0的时候才能停止。否则两个极端时，速度也有可能接近0。
+          dom.style.left = target + 'px';
+          clearInterval(timer);
+          timer = null;
+        }else{
+          dom.style.left = dom.offsetLeft + speed + 'px';
+        }
+      }, 30);
+    }
+    
+  </script>
+</body>
+
+</html>

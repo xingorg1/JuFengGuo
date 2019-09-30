@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CMD</title>
+</head>
+
+<body>
+  <h3>CMD按需加载 - 看console.log</h3>
+  <input type="text" name="wp_title" id="wp_title" value="这个世界究竟是怎么了？">
+  <!-- https://libs.baidu.com/jquery/1.7.1/jquery.min.js -->
+  <script src="./libs/sea.js"></script>
+  <script>
+    seajs.use('./main.js');
+    // seajs.config({
+    //   alias: {
+    //     'jquery': 'https://libs.baidu.com/jquery/1.7.1/jquery.min.js'
+    //   }
+    // });
+
+    // seajs.use(['./main', 'jquery'], function (main, $) {
+    //   $('body').css('backgroundColor','#eee');
+    // });
+    var value = document.getElementsByTagName('input')[0];
+    console.log(value.value, wp_title.value);
+  </script>
+</body>
+
+</html>

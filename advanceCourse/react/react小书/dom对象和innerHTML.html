@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>测试带事件的dom对象是否能用innerHTML插入到结构中，还是必须用DOM API - 比如appendChild这样
+  </h1>
+  <div id="demo"></div>
+  <script>
+    var oDiv = document.createElement('div');
+    oDiv.className = 'test';
+    oDiv.innerText = '我是测试';
+    oDiv.onclick = function(e){
+      console.log(e.target)
+      alert(e.target)
+    }
+    demo.innerHTML = oDiv;
+    demo.appendChild(oDiv)
+  </script>
+</body>
+</html>

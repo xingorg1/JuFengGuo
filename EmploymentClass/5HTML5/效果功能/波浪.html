@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>波浪效果</title>
+  <style>
+    .can1 {
+      background: #edf;
+    }
+
+    .can2 {
+      background: #efd;
+    }
+
+    .can3 {
+      background: #def;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>
+    静态一个波浪
+  </h3>
+  <canvas class="can1" id="myCan1">静态一个波浪</canvas>
+  <h3>
+    实现波浪平移
+  </h3>
+  <canvas class="can2" id="myCan2">实现波浪平移</canvas>
+  <h3>
+    实现波浪波动效果
+  </h3>
+  <canvas class="can3" id="myCan3">实现波浪波动效果</canvas>
+  <script>
+    var width = 500; //canvas的宽
+    var height = 300; //canvas的高
+  </script>
+  <script>
+    drawOneWave();
+
+    function drawOneWave() {
+      var myCan1 = document.getElementById('myCan1');
+      var ctx1 = myCan1.getContext('2d');
+      myCan1.width = width;
+      myCan1.height = height;
+      ctx1.beginPath();
+      ctx1.moveTo(0, height / 2);
+      ctx1.quadraticCurveTo(width / 4, 0, width / 2, height / 2); // 前两个点表示第二个贝塞尔点的位置，后两个点表示第三个贝塞尔的位置
+      ctx1.quadraticCurveTo(width / 4 * 3, height, width, height / 2);
+      ctx1.stroke();
+    }
+  </script>
+  <script>
+    // 动态的
+    var offset = 0;
+    drawWaveMove(offset);
+    setInterval(function () {
+      offset++;
+      offset %= width;
+      //这样当offset=500的时候,就又变成了0,不用下边这么写
+      /* 
+        if(offset >= 500){
+          offset = 0;
+        }
+      */
+      drawWaveMove(offset);
+    }, 1000 / 60)
+
+    function drawWaveMove(offset) {
+      var myCan2 = document.getElementById('myCan2');
+      var ctx2 = myCan2.getContext('2d');
+      myCan2.width = width;
+      myCan2.height = height;
+      var a1 = width / 4 + offset, //宽度1/4的地方
+        a2 = width / 2 + offset, //宽度一半的地方
+        a3 = width / 4 * 3 + offset, //宽度3/4的地方
+        a4 = width + offset, //最右边
+        b1 = height / 2; //矩形高度的中间
+      // 左边的波浪
+      ctx2.beginPath();
+      ctx2.moveTo(0 + offset - width, b1); //+offset是整体的偏移量,-width是为了把整个第一个波浪向左平移canvas宽度的距离.
+      ctx2.quadraticCurveTo(a1 - width, 0, a2 - width, b1);
+      ctx2.quadraticCurveTo(a3 - width, height, a4 - width, b1);
+      ctx2.stroke();
+      // 右边的波浪
+      ctx2.beginPath();
+      ctx2.moveTo(0 + offset, b1);
+      ctx2.quadraticCurveTo(a1, 0, a2, b1);
+      ctx2.quadraticCurveTo(a3, height, a4, b1);
+      ctx2.stroke();
+    }
+  </script>
+  <script>
+    var offset3 = 0,
+      sinNum = 0;
+    drawWaveMove3(offset3);
+    setInterval(function () {
+      sinNum += 0.02;
+      offset3 += 2;
+      offset3 %= width;
+      drawWaveMove3(offset3);
+    }, 1000 / 120);
+
+    function drawWaveMove3(offset3) {
+      var myCan3 = document.getElementById('myCan3');
+      var ctx3 = myCan3.getContext('2d');
+      myCan3.width = width;
+      myCan3.height = height;
+      var a1 = width / 4 + offset3,
+        a2 = width / 2 + offset3,
+        a3 = width / 4 * 3 + offset3,
+        a4 = width + offset3,
+        b1 = height / 2,
+        shock = Math.sin(sinNum) * 120; //因为sin值是0-1之间的,乘以120是为了放大这个系数
+      // 左边的波浪
+      ctx3.beginPath();
+      // 加上震荡数据shock - 让波浪有上有下,最标准的震荡函数是sin和cos
+      ctx3.moveTo(0 + offset3 - width, b1);
+      ctx3.quadraticCurveTo(a1 - width, 0 - shock, a2 - width, b1);
+      ctx3.quadraticCurveTo(a3 - width, height + shock, a4 - width, b1);
+      ctx3.stroke();
+      // 右边的波浪
+      // ctx3.beginPath();
+      ctx3.moveTo(0 + offset3, b1);
+      ctx3.quadraticCurveTo(a1, 0 - shock, a2, b1);
+      ctx3.quadraticCurveTo(a3, height + shock, a4, b1);
+      ctx3.stroke();
+    }
+  </script>
+</body>
+
+</html>

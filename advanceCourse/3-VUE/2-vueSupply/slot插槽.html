@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>插槽</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+   <component-app01>
+     我是写在组件里的文字
+     第二行文字
+     <template v-slot:h4>
+      <h4>
+        我是哈哈哈，有名字的具名插槽
+      </h4>
+     </template>
+      <template #h402>
+        哈哈哈哈哈哈哈哈哈哈哈哈
+      </template>
+   </component-app01>
+   
+  </div>
+  <script>
+    Vue.component('componentApp01',{
+      template: `<div class="comp1">
+                  <h3>{{ title }}</h3>
+                  <p><slot></slot></p>
+                  <p><slot name="default"></slot></p>
+                  <slot name="h4"></slot>
+                  <slot name="h402"></slot>
+                </div> `,
+      data(){
+        return {
+          title: 'conponent-app01'
+        }
+      }
+    })
+
+    const vm = new Vue({
+      el: '#app',
+      data: {
+      
+      },
+      methods:{
+       
+      }
+    })
+  </script>
+</body>
+
+</html>

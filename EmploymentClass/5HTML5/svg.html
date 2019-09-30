@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>svg</title>
+</head>
+
+<body>
+  <style>
+    :root {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      height: 100%;
+    }
+
+    /* img{
+      css的宽高把标签的额宽高覆盖了
+      background: #edf;
+      display: block;
+      width: 120px;
+      height: 120px;
+    } */
+    svg {
+      width: 100%;
+      height: 99%;
+      box-sizing: border-box;
+      border: 1px solid #333;
+      background: #f1f1f1;
+    }
+
+    line {
+      stroke: red;
+    }
+
+    .line2 {
+      stroke: blue;
+      stroke-width: 5px;
+    }
+
+    rect {
+      /* css的宽高把标签的额宽高覆盖了 */
+      width: 200px;
+      height: 100px;
+    }
+
+    .rect2 {
+      fill: #aae;
+      /* 半透明 */
+      fill-opacity: 0.5;
+    }
+
+    circle {
+      fill: aquamarine;
+    }
+
+    polyline {
+      stroke: #aae;
+      stroke-width: 1px;
+      /* 清除折线默认填充的两种方法 */
+      /* fill-opacity: 0; */
+      fill: transparent;
+    }
+
+    .polyline2 {
+      /* line-clamp: ; */
+      stroke: #faf;
+      stroke-width: 3px;
+
+    }
+
+    polygon {
+      stroke: #faf;
+      stroke-width: 3px;
+      /* 清除折线默认填充的两种方法 */
+      /* fill-opacity: 0; */
+      /* fill: transparent; */
+    }
+
+    text.text {
+      font-weight: bold;
+      font-family: fantasy;
+      letter-spacing: .2em;
+      /* color不起作用 */
+      color: #fda;
+      fill: #fae;
+      stroke: #aae;
+      stroke-width: 3px;
+      font-size: 34px;
+    }
+
+    path {
+      stroke: #aae;
+      stroke-width: 3px;
+      fill: none;
+    }
+
+    .radian1 {
+      stroke: #3ae;
+    }
+
+    .radian2 {
+      stroke: #ac1;
+    }
+
+    .radian3 {
+      stroke: #ff6700;
+    }
+
+    .radian4 {
+      stroke: #a3e;
+    }
+  </style>
+  <svg id="svg" viewBox="0,0,499,499">
+    <!-- 11 高斯模糊 -->
+    <defs>
+       <!-- 定义一个高斯模糊 -->
+      <filter id="gauss01">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="10">
+          <!-- 高斯滤镜 -->
+        </feGaussianBlur>
+      </filter>
+    </defs>
+     <!-- 引用一个高斯模糊 -->
+     <rect x=300 y=630 width=200 height=100 style="filter: url(#gauss01); fill: url(#grad02)"></rect>
+    <!-- 10 线性渐变 -->
+    <defs>
+      <!-- 定义一个线性渐变 -->
+      <linearGradient id="grad01" x1=0 y1=0 x2=100% y2=100%>
+        <stop offset=0% style="stop-color: red"></stop>
+        <stop offset=100% style="stop-color: blue"></stop>
+      </linearGradient>
+      <!-- <linearGradient id="grad02" x1=0 y1=0 x2=0 y2=100%> -->
+      <!-- <linearGradient id="grad02" x1=0 y1=100% x2=100% y2=100%> -->
+      <linearGradient id="grad02" x1=0 y1=100% x2=100% y2=0>
+        <stop offset=0% style="stop-color: yellow"></stop>
+        <stop offset=100% style="stop-color: red"></stop>
+      </linearGradient>
+    </defs>
+    <!-- 引用一个线性渐变 -->
+    <rect x=300 y=510 width=200 height=100 style="fill: url(#grad02)"></rect>
+    <rect x=300 y=400 width=200 height=100 style="fill: url(#grad01)"></rect>
+    <!-- 棒棒糖 -->
+    <!-- <path d="M153 334
+      C153 334 151 334 151 334
+      C151 339 153 344 156 344
+      C164 344 171 339 171 334
+      C171 322 164 314 156 314
+      C142 314 131 322 131 334
+      C131 350 142 364 156 364
+      C175 364 191 350 191 334
+      C191 311 175 294 156 294
+      C131 294 111 311 111 334
+      C111 361 131 384 156 384
+      C186 384 211 361 211 334
+      C211 300 186 274 156 274" style="stroke:red;stroke-width:2"/> -->
+    <!-- 9 画圆弧 -->
+    <!-- <path d="M (Mx My) A (Ax Ay) rotate radian  orientation (endX endY)"></path> -->
+    <path d="M 350 260 A 70 50 0 1 1 410 320" class="radian1"></path>
+    <path d="M 350 260 A 70 50 0 1 0 410 320" class="radian2"></path>
+    <path d="M 350 260 A 70 50 0 0 1 410 320" class="radian3"></path>
+    <path d="M 350 260 A 70 50 0 0 0 410 320" class="radian4"></path>
+    <!-- 8 画路径 -->
+    <path d="M 310 30 L 450 30 m 30 30 L 480 150 l -100 0 Z"></path>
+    <!-- 可填值如下 -->
+    <!-- <path d="M (Mx My) L (Lx Ly) m (mx my) l (lx ly) H (Hnum) V (Vnum) h (h-num) v (v-num) Z/z"></path> -->
+    <!-- 7 画文本 -->
+    <text x=7 y=790 class="text">svg画文本</text>
+    <!-- 6 画多边形 -->
+    <polygon points="10 690, 15 750, 52 678"></polygon>
+    <polyline points="10 690, 15 750, 52 678" class="polyline2"></polyline>
+    <!-- 画一个五角星 - 利用折线的自动填充效果 -->
+    <polyline points="50 580, 200 580, 70 680, 125 530, 175 680,50 580" class="polyline2"></polyline>
+    <!-- 5 画折线 -->
+    <polyline points="10 456, 15 520, 32 478"></polyline>
+    <!-- 4 画椭圆 -->
+    <ellipse rx=120 ry=50 cx=155 cy=390></ellipse>
+    <!--3 画圆形 -->
+    <circle r=50 cx=55 cy=290></circle>
+    <!--2 画矩形 -->
+    <rect x=15 y=121 width='50px' height=35 class="rect2" rx=10 ry=100></rect>
+    <rect x=15 y=15></rect>
+    <!--1 画线 -->
+    <!-- stroke-dasharray -->
+    <line x1='0' y1='3' x2='100px' y2=3></line>
+    <line x1='1' y1='11' x2='200' y2='11' class="line2" stroke-dasharray='5 5'></line>
+  </svg>
+  <!-- <img src="" alt="" width="300" height="100"> -->
+  <script>
+    var svg = document.getElementById('svg');
+
+    function makeSvgFullScreen(svg) {
+      var b = document.body;
+      var d = document.documentElement;
+      fullw = Math.max(b.clientWidth, b.scrollWidth, d.scrollWidth, d.clientWidth);
+      fullh = Math.max(b.clientHeight, b.scrollHeight, d.scrollHeight, d.clientHeight);
+      svg.style.width = fullw + 'px';
+      svg.style.height = fullh + 'px';
+      console.log(fullh, fullw)
+    }
+    makeSvgFullScreen(svg);
+  </script>
+</body>
+
+</html>

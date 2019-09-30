@@ -1,0 +1,189 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+html,body{
+  /* height: 100%; */
+  padding-bottom: 300px;
+}
+.circle{
+  width: 30%;
+  /* height: 30%; */
+  height: 0;
+  /* padding: 30%; */
+  padding-top: 30%;
+  border-radius: 50%;
+  background: #eee;
+}
+.bg{
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}
+.bg1{
+  /* background: linear-gradient(to top, red, yellow); */
+  background: linear-gradient(0deg, red, yellow);
+  /* background: linear-gradient(top to bottom, red, yellow); */
+
+}
+.bg2{
+  background: linear-gradient (to right, red 0, green 100%);
+}
+.img-box{
+  font-size: 0;
+  /* padding: 0; */
+  margin: 0;
+} img{
+  /* margin: 0; */
+  /* float: left; */
+  width: 100px;
+  height: 100px;
+  /* margin: 10px; */
+}
+
+.triangle{
+  /* block元素要把宽度干掉 */
+  width: 0;
+  border: 130px solid transparent; 
+  /* 尖朝上 */
+  border-bottom-color: red;
+  /* 尖朝下 */
+  /* border-top-color: red; */
+  /* 尖朝左 */
+  /* border-right-color: red; */
+  /* 尖朝右 */
+  /* border-left-color: red; */
+}
+
+.one{
+  width: 300px;
+  height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.two{
+  width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.box{
+  margin: 20px;
+}
+.box div{
+  width: 100px;
+  height: 100px;
+  border: 2px solid red;
+}
+.red{
+
+}
+.box .green{
+  border-color: green;
+}
+.box1 .green{
+  transform: translate(12px, -112px);
+}
+.box2 .green{
+  transform: translate(102px, -104px);
+}
+.box3 .green{
+  transform: translate(78px, -130px) skewY(-45deg) scaleX(0.5);
+}
+.box4 .red{
+  transform: skewY(-45deg) scaleX(0.5);
+}
+.box4 .green{
+  transform: translate(26px, -80px);
+}
+
+.wrapper{
+  width: 100px;
+  height: 20px;
+  background: #666;
+}
+.wrapper .box{
+  width: calc(50% - 10px);
+  height: 100%;
+  background: #eee;
+}
+
+.qubie div{
+  width: 200px;
+  height: 200px;
+  border: 1px solid;
+  font-size: 24px;
+}
+
+.dis{
+  display: none;
+}
+.visi{
+  visibility: hidden;
+}
+.opc{
+  opacity: 0;
+  background-image: url('./bdImg.jpg');
+  background-size: center;
+}
+.center-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center{
+  width: 100px;
+  height: 100px;
+  border: 1px solid #eee;
+  
+}
+.center1{
+  background: radial-gradient(red,yellow)
+}
+.center2{
+  background: linear-gradient(45deg,red,green,blue)
+}
+.clearfix::after{
+  content: "";
+  clear: both;
+  display: table;
+}
+.word-wrap{
+  width: 50px;
+  border: 1px solid;
+  margin: 20px;
+  /* word-break: break-all */
+  word-wrap: break-word;
+}
+
+#a{
+  color: red;
+  width: 150px;
+}
+
+.trans{
+  width: 100px;
+  height: 100px;
+  background: red;
+  transition: all 1s ease-in-out;
+}
+.trans:hover{
+  border-radius: 50%;
+  background: #f0f;
+}
+.reflect{
+  background: url(./bdImg.jpg);
+  background-size: 100% 100%;
+  width: 200px;
+  height: 200px;
+  /* -webkit-box-reflect: 
+  left 1px -webkit-gradient(linear, 0% 100%,100% 100%, from(transparent), to(white)); */
+  -webkit-box-reflect: below;
+  /* box-reflect: below; */
+  -webkit-box-reflect: below 6px -webkit-gradient(linear, 0 0, 0 100%, from(transparent), color-stop(.5, transparent), to(rgba(3,3,3,.2)));
+}

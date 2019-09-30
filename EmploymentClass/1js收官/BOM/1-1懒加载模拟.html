@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>懒加载模拟</title>
+  <style>
+    html{
+      height: 2000px;
+    }
+    #demo{
+      position: absolute;
+      top: 2000px;
+      width: 300px;
+      height: 300px;
+      background: #eee;
+    }
+    #demo img{
+      display: block;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>clientWidth包含滚动条吗？包含，只有offset一类不包含</h1>
+  <div id="demo">
+    <img src="" alt="" data-src='http://q1.qlogo.cn/g?b=qq&nk=702004176&s=100&t=1547103209'>
+  </div>
+  <script>
+    var demo = document.getElementById('demo');
+    var img = demo.getElementsByTagName('img')[0];
+    window.onscroll = function(){
+      demo.class = 'duyi';
+      if(window.pageYOffset >= demo.offsetTop - window.innerHeight){
+        img.src = img.getAttribute('data-src');
+      }
+    }
+    // window.onbeforeunload = function(){
+    //   console.log(2)
+    //   return 'hhh';
+    // }
+    demo.onclick = function(){
+      // 新打开的页面名字window.name就叫郭菊锋了
+      newWin = window.open('https://www.baidu.com','郭菊锋','width=200,height=300');
+      console.log(newWin)
+    }
+  </script>
+</body>
+</html>

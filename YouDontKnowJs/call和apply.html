@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div {
+      position: absolute;
+      left: 200px;
+      top: 120px;
+      background: red;
+      width: 200px;
+      height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>bind内部是apply改变的，那call和apply内部是谁在做用呢？</h1>
+  <div></div>
+  <script>
+    var mydiv = document.getElementsByTagName('div')[0];
+    console.log('标签上不写style属性设置left值时，left的值是：', mydiv.style.left);
+    var name = 'window';
+    var obj = {
+      name: 'obj'
+    }
+
+    function show(a, b, c) {
+      console.log(this.name, a, b, c);
+      return '返回值测试'
+    }
+    show();
+    // 其实就是
+    window.show();
+    // 用call
+    show.call(obj);
+    // 其实就是这样
+    // obj.show();
+    // 那obj没有show啊，我们自己给他造一个
+    obj.show2 = show;
+    obj.show2();
+    // 多了一个属性，再删掉
+    delete obj.show;
+    Function.prototype.gjfCall = function (obj) {
+      obj = obj == undefined ? window : obj; //因为不传参、传null或传undefined都可以判断为undefined，因为null==undefined，也因为不传参obj预编译时就是undefined。
+      var newName = this.name; //获取到当前函数的名字
+      obj.newName = this; //用这个名字给obj添加方法，函数体用当前函数自身.这里是引用值得拷贝，只是拷贝了地址
+      var rst = obj.newName(); //调用这个拷贝的方法，利用了this的隐式绑定规则，谁调用this指谁。
+      delete obj.newName; //再删除调给obj上多加的属性。
+      return rst;
+    }
+    var a = show.gjfCall(obj); //测试结果完美
+    var b = show.gjfCall(null); //测试结果完美
+    var c = show.gjfCall(undefined); //测试结果完美
+    var d = show.gjfCall(); //测试结果完美
+    console.log(a, b, c, d, show(), show.call(obj));
+    console.log(show.call(obj));
+
+    console.log('======神圣的转折点======')
+    // call和apply作用一样，我姑且上边的代码换成apply也能用。
+    Function.prototype.gjfApply = function (obj) {
+      obj = obj == undefined ? window : obj;
+      //因为不传参、传null或传undefined都可以判断为undefined，因为null==undefined，也因为不传参obj预编译时就是undefined。
+      var newName = this.name; //获取到当前函数的名字
+      obj.newName = this; //用这个名字给obj添加方法，函数体用当前函数自身.这里是引用值得拷贝，只是拷贝了地址
+      var rst = obj.newName(); //调用这个拷贝的方法，利用了this的隐式绑定规则，谁调用this指谁。
+      delete obj.newName; //再删除调给obj上多加的属性。
+      return rst;
+    }
+    var a = show.gjfApply(obj); //测试结果完美
+    var b = show.gjfApply(null); //测试结果完美
+    var c = show.gjfApply(undefined); //测试结果完美
+    var d = show.gjfApply(); //测试结果完美
+    console.log(a, b, c, d, show(), show.call(obj));
+    console.log(show.call(obj));
+
+    /* 传参 */
+    show.call(obj, 1, 'str', true);
+    show.apply(obj, [1, 'str', true]);
+
+
+    Function.prototype.gjfCall = function () {
+      var newName = this.name;
+      var obj = Array.prototype.shift.call(arguments) || window;
+      var len = arguments.length;
+      var argArr = Array.prototype.reduce.call(arguments, function (pre, cur, i) {
+        pre.push('arguments[' + i + ']');
+        return pre;
+      }, []);
+      obj.newName = this;
+      console.log(argArr.join());
+      var rst = eval('obj.newName(' + argArr.join() + ')');
+      delete obj.newName;
+      return rst;
+    }
+    Function.prototype.gjfCall = function () {
+      var newName = this.name,
+        rst = null,
+        obj = arguments[0] || window,
+        len = arguments.length,
+        argArr = [];
+      for (let i = 1; i < len; i++) {
+        argArr.push('arguments[' + i + ']')
+      }
+      obj.newName = this;
+      console.log(argArr, argArr.join());
+      rst = eval('obj.newName(' + argArr.join() + ')');
+      delete obj.newName;
+      return rst;
+    }
+    var result122 = show.gjfCall(obj, 3, 'str', true);
+    console.log(result122)
+    Function.prototype.gjfApply = function (obj, array) {
+      var newObj = arguments[0] || window,
+        len = arguments[1] && arguments[1].length,
+        newName = this.name,
+        argArr = [],
+        rst = null;
+      obj.newName = this;
+      if (arguments[1]) {
+        for (var i = 0; i < len; i++) {
+          argArr.push('arguments[1][' + i + ']');
+        }
+        rst = eval('obj.newName(' + argArr.join() + ')');
+      } else {
+        rst = obj.newName();
+      }
+      delete obj.newName;
+      return rst;
+    }
+    show.gjfApply(obj, [4, 'str', true]);
+    show.gjfApply(obj, [4, 'str', true],{name: 1});
+  </script>
+</body>
+
+</html>

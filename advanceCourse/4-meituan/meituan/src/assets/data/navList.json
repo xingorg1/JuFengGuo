@@ -1,0 +1,211 @@
+{
+  "myMT": [
+    {
+      "id": "nld01_1",
+      "name": "我的订单",
+      "href": "nld01_1#"
+    },
+    {
+      "id": "nld01_2",
+      "name": "我的收藏",
+      "href": "nld01_2#"
+    },
+    {
+      "id": "nld01_3",
+      "name": "抵用券",
+      "href": "nld01_3#"
+    },
+    {
+      "id": "nld01_4",
+      "name": "用户设置",
+      "href": "nld01_4#"
+    }
+  ],
+  "businessData": [
+    {
+      "id": "nld02_1",
+      "name": "登录商家中心",
+      "href": "nld02_1#"
+    },
+    {
+      "id": "nld02_2",
+      "name": "美团智能收银",
+      "href": "nld02_2#"
+    },
+    {
+      "id": "nld02_3",
+      "name": "我想合作",
+      "href": "nld02_3#"
+    },
+    {
+      "id": "nld02_4",
+      "name": "手机免费开店",
+      "href": "nld02_4#"
+    },
+    {
+      "id": "nld02_5",
+      "name": "餐饮代理商招募",
+      "href": "nld02_5#"
+    },
+    {
+      "id": "nld02_6",
+      "name": "商家申请开票",
+      "href": "nld02_6#"
+    },
+    {
+      "id": "nld02_7",
+      "name": "免费合作美团排队",
+      "href": "nld02_7#"
+    }
+  ],
+  "ruleMT": [
+    {
+      "id": "nld01_1",
+      "name": "规则中心",
+      "href": "nld01_1#"
+    },
+    {
+      "id": "nld01_2",
+      "name": "规则目录",
+      "href": "nld01_2#"
+    },
+    {
+      "id": "nld01_3",
+      "name": "规则评议院",
+      "href": "nld01_3#"
+    }
+  ],
+  "travalData": ["酒店旅游",{
+      "id": "traval01_1",
+      "name": "国际机票",
+      "href": "traval01_1#"
+    },{
+      "id": "traval01_2",
+      "name": "经济型酒店",
+      "href": "traval01_2#"
+    },{
+      "id": "traval01_3",
+      "name": "公寓",
+      "href": "traval01_3#"
+    },{
+      "id": "traval01_4",
+      "name": "青年旅社",
+      "href": "traval01_4#"
+    },{
+      "id": "traval01_5",
+      "name": "农家院",
+      "href": "traval01_5#"
+    },{
+      "id": "traval01_6",
+      "name": "火车票",
+      "href": "traval01_6#"
+    },{
+      "id": "traval01_7",
+      "name": "主题酒店",
+      "href": "traval01_7#"
+    },{
+      "id": "traval01_8",
+      "name": "豪华酒店",
+      "href": "traval01_8#"
+    },{
+      "id": "traval01_9",
+      "name": "度假酒店",
+      "href": "traval01_9#"
+    },{
+      "id": "traval01_10",
+      "name": "榛果民俗",
+      "href": "traval01_10#"
+    },{
+      "id": "traval01_11",
+      "name": "商务酒店",
+      "href": "traval01_11#"
+    },{
+      "id": "traval01_12",
+      "name": "客栈",
+      "href": "traval01_12#"
+    },{
+      "id": "traval01_13",
+      "name": "别墅",
+      "href": "traval01_13#"
+    }],
+  "eatData": ["吃美食",{
+      "id": "eat01_1",
+      "name": "烤鱼",
+      "href": "eat01_1#"
+    },{
+      "id": "eat01_2",
+      "name": "烧烤",
+      "href": "eat01_2#"
+    },{
+      "id": "eat01_3",
+      "name": "火锅",
+      "href": "eat01_3#"
+    },{
+      "id": "eat01_4",
+      "name": "特色小吃",
+      "href": "eat01_4#"
+    },{
+      "id": "eat01_5",
+      "name": "自助餐",
+      "href": "eat01_5#"
+    },{
+      "id": "eat01_6",
+      "name": "代金券",
+      "href": "eat01_6#"
+    }],
+  "movieData": ["看电影",{
+      "id": "movie01_1",
+      "name": "热映电影",
+      "href": "movie01_1#"
+    },{
+      "id": "movie01_2",
+      "name": "热映影院",
+      "href": "movie01_2#"
+    },{
+      "id": "movie01_3",
+      "name": "热映电影口碑榜",
+      "href": "movie01_3#"
+    },{
+      "id": "movie01_4",
+      "name": "最受期待电影",
+      "href": "movie01_4#"
+    },{
+      "id": "movie01_5",
+      "name": "国内票房榜",
+      "href": "movie01_5#"
+    },{
+      "id": "movie01_6",
+      "name": "北美票房榜",
+      "href": "movie01_6#"
+    },{
+      "id": "movie01_7",
+      "name": "电影排行榜",
+      "href": "movie01_7#"
+    }],
+  "appData": ["手机应用",{
+    "id":"app01_1",
+    "name": "美团",
+    "src": "http://s0.meituan.net/bs/fe-web-meituan/e5eeaef/img/appicons/meituan.png",
+    "href": "app01_1"
+  },{
+    "id":"app01_2",
+    "name": "美团外卖",
+    "src": "http://s1.meituan.net/bs/fe-web-meituan/404d350/img/appicons/waimai.png",
+    "href": "app01_2"
+  },{
+    "id":"app01_3",
+    "name": "榛果",
+    "src": "http://s0.meituan.net/bs/fe-web-meituan/404d350/img/appicons/zhenguo.png",
+    "href": "app01_3"
+  },{
+    "id":"app01_4",
+    "name": "大众点评",
+    "src": "http://s1.meituan.net/bs/fe-web-meituan/404d350/img/appicons/dianping.png",
+    "href": "app01_4"
+  },{
+    "id":"app01_5",
+    "name": "猫眼娱乐",
+    "src": "http://s1.meituan.net/bs/fe-web-meituan/404d350/img/appicons/maoyan.png",
+    "href": "app01_5"
+  }]
+}

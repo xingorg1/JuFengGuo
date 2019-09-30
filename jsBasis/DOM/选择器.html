@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>dom选择器</title>
+</head>
+<body>
+  <div class="demo">querySelector选的是一组吗？</div>
+  <div class="demo">是不是？</div>
+  <script>
+    var demo = document.querySelector('.demo');
+    var demoAll = document.querySelectorAll('.demo');
+    console.log(demo);
+    console.log(demoAll,demoAll[0]);
+    demo.onclick = function(e){
+      console.log(e)
+    }
+  </script>
+</body>
+</html>

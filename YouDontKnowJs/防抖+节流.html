@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>防抖、节流</title>
+</head>
+
+<body>
+  <h1>节流</h1>
+  <div>
+    <label for="throttle">节流测试</label>
+    <input type="button" id="throttle" value="节流测试">
+  </div>
+  <script>
+    var input1 = document.getElementById('throttle');
+    var clickNum = 0;
+    function throttle1(fn,delay){
+      var lastTime = 0;//初始触发时间/上次触发时间（重新赋值后）
+      return function(){
+        var now = +new Date();//当前函数触发时间
+        if(now - lastTime > delay){
+          // 如果现在触发的时间，和上一次比。大于需要延迟的时间，说明不是快速点击。执行函数
+          // 由于now是1970年到现在的时间戳，减去0肯定大于delay延迟，所以第一次触发时，条件肯定是成立的。
+          // 而等到触发成功后lastTime就被重新赋值为刚才触发的时间了。
+          fn.apply(this,arguments);
+          lastTime = now;//将点击事件重新改为刚才触发的时间。
+        }
+      }
+    }
+    function throttle(fn,delay){
+      var lastTime = 0;
+      return function(){
+        var now = +new Date();
+        if(now - lastTime > delay){
+          fn.apply(this,arguments);
+          lastTime = now;
+        }
+      }
+    }
+    function gotoClick(e){
+      console.log(this,e);
+      clickNum ++;
+      console.log(clickNum);
+    }
+    input1.onclick = throttle(gotoClick,1000);
+    for (let i = 0; i < 100; i++) {
+      input1.onclick();
+    }
+
+    /* var lastTime = 0;
+    input1.onclick = function(){
+      var now = new Date().getTime();
+      if(now - lastTime > 1000){
+        // 如果现在触发的时间，和上一次比。大于需要延迟的时间，说明不是快速点击。执行函数
+        gotoClick();
+        lastTime = now;//将点击事件重新改为刚才触发的时间。
+      }
+    }; */
+    
+  // 思路，如果一秒内触发n次，都算一次触发
+    /* 
+      改进思路
+      每次触发都记录一下时间，如果本次触发时间和上次相比，小于一秒，不进行函数处理。
+    */
+</script>
+  <h1>防抖</h1>
+  <div>
+    <label for="debounce">防抖测试</label>
+    <input type="text" id="debounce">
+  </div>
+  <script>
+    // var input2 = document.getElementById('debounce');
+    // function getAjax(){
+    //   console.log(this.value);
+    // }
+    // input2.onkeyup = getAjax;
+    var input2 = document.getElementById('debounce');
+
+    function debounce(fn, delay) {
+      // 闭包形成私有化变量
+      var timer = null;
+      return function (e) {
+        // 因为keyup执行时拿到的是这个匿名函数，所以此匿名函数里边的this值得就是事件目标input2
+        // 且此匿名函数的第一个参数就是事件对象e
+        console.log('this', this);
+        var self = this,
+          _args = arguments;
+        clearTimeout(timer); //先清除
+        timer = setTimeout(() => { // 再开新的。
+          console.log('arguments', arguments)
+          fn.apply(self, _args); //用apply重新改变fn（getAjax）里边的this。并把事件对象e和其他参数传给fn。
+        }, delay);
+      }
+    }
+    function debounce3(fn, delay) {
+      var timer = null;
+      return function () {
+        var _args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          fn.apply(this, _args);
+        }, delay);
+      }
+    }
+    function debounce1(fn, delay) {
+      /* 新版 -- 防抖 - 支持用户传入自定义参数 */
+      // 拿到防抖函数后边的所有参数
+      var _args1 = Array.prototype.slice.call(arguments, 2);
+      console.log('用户传入的目标函数fn需要用到的参数', _args1);
+      var timer = null;
+      return function (e) {
+        console.log('系统自动给我们加的事件对象(e)参数', arguments);
+        // 合并当前函数中系统自动给我们加的事件对象(e)参数、和之前用户传入的目标函数fn需要用到的参数
+        var _args2 = Array.prototype.concat.call(Array.prototype.slice.call(arguments), _args1);
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          // 把新的组合好的参数传给目标函数fn，用户执行的时候第一个参数是事件对象，之后的是自定义需要的参数
+          console.log('组合好的参数', _args2);
+          fn.apply(this, _args2);
+        }, delay);
+      }
+    }
+
+    function getAjax(e, a) {
+      // 执行函数
+      console.log('最终传参结果：', e, a)
+      console.log(this.value);
+    }
+
+    input2.onkeyup = debounce3(getAjax, 1000,'AA');
+  </script>
+
+</body>
+
+</html>

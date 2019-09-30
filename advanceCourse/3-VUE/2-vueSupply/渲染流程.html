@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>vue渲染流程</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    {{msg}}
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      template: '<span id="iAmTemplate">{{msg.slice(0,4)}}</span>',
+      beforeCreate(){
+        console.log('beforeCreate',this)
+        console.log(this.$data)
+      },
+      created(){
+        console.log('created',this)
+        console.log(this.$data)
+      },
+      /* render(c){
+        return (
+          // style是需要用对象格式，对象就是js语法，需要放在大括号里，所以你看到了两个大括号
+          <h1 class="h1-class" style={{color: 'rgb(51, 51, 51)', fontSize: '16px'}}>
+            h1内部文案
+            <h2 class="h2-class" style={{color: 'rgb(102, 102, 102)', fontSize: '14px'}}>
+              h2内部文案
+              <h3 class="h3-class" style={{color: 'rgb(153, 153, 153)', fontSize: '12px'}} on-click = { function() { console.log('哈哈哈') } }>h3内部文案</h3>
+            </h2>
+          </h1>
+        )
+      }, */
+      /* render(createElement) {
+        return createElement('h1', {
+          // 添加属性class和style
+          class: 'h1-class',
+          style: {
+            color: '#333',
+            fontSize: '16px'
+          },
+          // // dom操作相关
+          // domProps: {
+          //   // 这里和第三个参数的作用一样，都是给标签内部填写文案，不过一般没人这么骚操作的这么写。
+          //   innerHTML: '嘿嘿嘿'
+          // }
+        }, [
+          'h1内部文案',
+          createElement('h2', {
+              class: 'h2-class',
+              style: {
+                color: '#666',
+                fontSize: '14px'
+              }
+            },
+            ['h2内部文案',
+              createElement('h3', {
+                class: 'h3-class',
+                style: {
+                  color: '#999',
+                  fontSize: '12px'
+                }
+              }, 'h3内部文案')
+            ]
+            // more...)
+          )
+        ]);
+      }, */
+      data: {
+        msg: "vm实例的data数据"
+      }
+    })
+    // vm.$mount('#app');
+  </script>
+</body>
+
+</html>

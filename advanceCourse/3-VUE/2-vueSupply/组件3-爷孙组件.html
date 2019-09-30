@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>爷孙传值</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+    <!-- <children-Son a='1' :fathername="fathername" :fathercont="fathercont"></children-Son> -->
+    <children-Son a='1'></children-Son>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      provide: {
+        // 提供数据"传家宝"
+        fathername: '爷爷组件的标题',
+        fathercont: '爷爷组件的内容文案'
+      },
+      data: {
+        name: '父组件的data属性',
+        // fathername: '爷爷组件的标题',
+        // fathercont: '爷爷组件的内容文案'
+      },
+      /* mounted() {
+        console.log('未被注册的属性', this.$attrs);
+        console.log(this.$children)
+        console.log('根组件的儿子',this.$children[0].childData)
+      }, */
+      components: {
+        childrenSon: {
+          inject: ['fathername'],//接收"传家宝"
+          // inheritAttrs: false,//隐藏没有接收的属性
+          // props: ['fathername','fathercont'],
+          // props: ['fathername'],
+          /* mounted() {
+            console.log('未被注册的属性', this.$attrs);
+            console.log('01的儿子',this.$children[0].childData)
+          }, */
+          /* created() {
+            // console.log(this.$parent)
+          }, */
+          template: `<div class="children01">
+                       <h3> {{ fathername }} </h3>
+                       <children-grand v-bind="$attrs"></children-grand>
+                     </div>
+                    `,
+          data() {
+            return {
+              childData:'我是children01的数据'
+            }
+          },
+          components: {
+            childrenGrand: {
+              inject: ['fathercont'],
+              // props: ['fathername','fathercont'],
+              template: `<div class="children02">
+                            
+                            <p> {{ fathercont }} </p>
+                          </div>
+                  `,
+                created() {
+                  // this.fathername = this.$parent.$parent.fathername;
+                  // this.fathercont = this.$parent.$parent.fathercont;
+                },
+              data() {
+                return {
+                  childData:'我是children02的数据'
+                }
+              },
+            }
+          },
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

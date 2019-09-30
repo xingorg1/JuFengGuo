@@ -1,0 +1,13 @@
+// myModule
+var a = 10, b = 20;
+
+// 加法运算
+console.log('小石头',30 === a + b);
+// 减法运算
+// console.log(-10 === a - b);
+// // 乘法运算
+// console.log(200 === a * b);
+// // 除法运算
+// console.log(0.5 === a / b);
+// // 取余运算
+// console.log(10 === a % b);

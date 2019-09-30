@@ -1,0 +1,45 @@
+/*
+ * @Author: @Guojufeng 
+ * @Date: 2019-04-29 17:48:10 
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2019-04-30 16:58:12
+ */
+ html,body{
+   min-height: 100vh;
+ }
+body{
+  position: relative;
+  height: 3000px;
+  margin: 0;
+  background: #adf;
+}
+h1{
+  margin: 0;
+  color: #fb7b54;
+}
+img{
+  display: block;
+  width: 300px;
+  height: 300px;
+  transform: rotate(20deg);
+}
+
+i.icon{
+  width: 20px;
+  height: 20px;
+  background: url(../img/icon.png) no-repeat center center / 100% 100%;
+}
+.fixed{
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: block;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: tomato;
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}

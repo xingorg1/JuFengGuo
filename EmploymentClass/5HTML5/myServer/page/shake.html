@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>摇一摇</title>
+</head>
+
+<body>
+  <h3>
+    devicemotion：震感，加速度获取
+  </h3>
+  <h3 id="txt"></h3>
+  <script>
+    window.addEventListener('devicemotion', function (event) {
+      console.log(event.acceleration);
+      myLog(event);
+    });
+
+    function myLog(e) {
+      let oX = 0,
+        oY = 0,
+        oZ = 0;
+      if (e && e.acceleration) {
+        oX = Math.abs(e.acceleration.x);
+        oY = Math.abs(e.acceleration.y);
+        oZ = Math.abs(e.acceleration.z);
+      }
+      document.getElementById('txt').innerHTML = `
+        x轴加速度: ${oX}°
+        <br/>
+        y轴加速度: ${oY}°
+        <br/>
+        z轴加速度: ${oZ}°
+      `;
+      if(oX > 12 || oY > 12 || oZ > 12) alert(`
+        摇一摇了！！！
+        x轴加速度: ${parseInt(oX)}°
+        y轴加速度: ${parseInt(oY)}°
+        z轴加速度: ${parseInt(oZ)}°
+      `);
+    }
+  </script>
+</body>
+
+</html>

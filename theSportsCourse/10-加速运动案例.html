@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>加速运动案例</title>
+  <style>
+    ul {
+      list-style: none;
+      font-size: 0;
+      margin: 150px auto;
+      padding: 0;
+      display: block;
+      text-align: center;
+      position: relative;
+      width: 808px;
+    }
+
+    li {
+      font-size: 14px;
+      border: 1px solid #dae;
+      width: 200px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .hover {
+      opacity: 0.5;
+      background: #dae;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<body>
+  <ul id="list">
+    <li class="item">1</li>
+    <li class="item">2</li>
+    <li class="item">3</li>
+    <li class="item">4</li>
+    <li class="hover"></li>
+  </ul>
+  <script>
+    var oUl = document.getElementById('list');
+    var oLi = document.getElementsByClassName('item');
+    var dom = document.getElementsByClassName('hover')[0];
+    for (var i = 0; i < oLi.length; i++) {
+      (function (i) {
+        oLi[i].onmouseenter = function () {
+          startMove(this,dom, this.offsetLeft, 'left');
+        }
+      })(i);
+    }
+    function startMove(curDom,dom, target, site) {
+      var timer = null,
+        speed = 1,
+        addSpeed = 1,
+        u = 0.8;
+      var curSite = null;
+      clearInterval(curDom.timer);
+      curDom.timer = setInterval(function () {
+        if (site === 'left') {
+          curSite = dom.offsetLeft;
+        } else {
+          curSite = dom.offsetTop;
+        }
+        addSpeed = (target - curSite) / 16;
+        speed += addSpeed;
+        speed *= u;
+        console.log(speed, curSite,Math.abs(target - curSite) < 1)
+        if (Math.abs(speed) < 1 && Math.abs(target - curSite) < 1) {
+          console.log('停止');
+          dom.style[site] = target + 'px';
+          clearInterval(curDom.timer);
+          curDom.timer = null;
+        } else {
+            dom.style[site] = curSite + speed + 'px';
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

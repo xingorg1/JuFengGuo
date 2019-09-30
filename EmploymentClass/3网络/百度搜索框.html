@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>跨域获取百度接口数据</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body{
+      padding: 30px;
+    }
+    .input{
+      width: 300px;
+      padding: 10px;
+      border: 1px solid #eae;
+      outline: none;
+      transition: all 2s;
+    }
+    .input:focus{
+      border-color: skyblue;
+    }
+    .list{
+      list-style: none;
+      border: 1px solid #333;
+      width: 300px;
+      display: none;
+    }
+    li{
+      padding: 5px;
+      border-bottom: 1px solid #f1f1f1;
+      cursor: pointer;
+    }
+    li:hover{
+      background: #f1f1f1;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="text" class="input">
+  <ul class="list">
+    <li>1</li>
+    <li>2</li>
+  </ul>
+  <script src="http: //baike.baidu.com/api/openapi/BaikeLemmaCardApi?scope=103&format=json&appid=379020&bk_key=关键字&bk_length=600">
+  </script>
+  <script>
+    // 事先 定义好回调函数被调用时要执行的函数。
+    function jsonpTest(data) {
+      console.log('数据返回结果' + data);
+    }
+  </script>
+</body>
+
+</html>

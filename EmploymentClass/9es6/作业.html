@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta 'name'="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>作业</title>
+</head>
+
+<body>
+  <script>
+    const {
+      log
+    } = console;
+  </script>
+  <h3>尝试用你所学过的知识解决一下，以下回调地狱的问题</h3>
+  <script>
+    function text1() {
+      fs.readFile('./number.txt', 'utf-8', function (err, data) {
+        fs.readFile(data, 'utf-8', function (err, data) {
+          fs.readFile(data, 'utf-8', function (err, data) {
+            console.log(data);
+          });
+        });
+      });
+      // 方案一：promise
+      function readFile(data) {
+        return new Promise((res, rej) => {
+          fs.readFile(data, 'utf-8', function (err, data) {
+            if (data) {
+              res(data)
+            } else {
+              rej(data);
+            }
+          })
+        });
+      }
+      readFile('./number.txt')
+        .then((data) => {
+          return readFile(data)
+        })
+        .then((data) => {
+          return readFile(data)
+        })
+        .then((data) => {
+          log('最终结果', data);
+        })
+        .catch((err) => {
+          log('错误信息', err);
+        });
+      /* 方案二：promise + generator + co */
+      // promise
+      function readFile(data) {
+        return new Promise((res, rej) => {
+          fs.readFile(data, 'utf-8', function (err, data) {
+            if (data) {
+              res(data)
+            } else {
+              rej(data);
+            }
+          })
+        });
+      }
+      // generator
+      function* generator(data) {
+        let val1 = readFile(data);
+        let val2 = readFile(val1);
+        let val3 = readFile(val2);
+        return val3;
+      }
+      // co
+      function myCo(iteratorObj) {
+        return new Promise((res, rej) => {
+          let next = (data) => {
+            let {
+              value,
+              done
+            } = iteratorObj.next(data);
+            if (done) {
+              return res(value);
+            }
+            value.then((rst) => {
+              next(rst);
+            }, rej);
+          }
+          next();
+        });
+      }
+      // 调用
+      myCo(generator('./number.txt'))
+        .then((data) => {
+          log('最终结果', data);
+        })
+        .catch((err) => {
+          log('错误信息', err);
+        });
+    }
+  </script>
+  <h3>
+    以下代码为并发3个异步请求，请用较优雅的方式，统一得到所有的结果。
+  </h3>
+  <script>
+    function text2() {
+      fs.readFile('./number.txt', 'utf-8', function (err, data) {
+        return {
+          number: data
+        };
+      });
+
+      fs.readFile('./name.txt', 'utf-8', function (err, data) {
+        student.name = data;
+      });
+
+      fs.readFile('./des.txt', 'utf-8', function (err, data) {
+        student.des = data;
+      });
+
+      function readFile(txtName) {
+        return new Promise((res, rej) => {
+          fs.readFile(`'./${txtName}.txt'`, 'utf-8', function (err, data) {
+            return {
+              [txtName]: data
+            };
+          });
+        });
+      }
+      Promise.all([readFile('number'), readFile('name'), readFile('des')])
+        .then((arr) => {
+          let student = arr.reduce((pre, cur) => {
+            return Object.assign(pre, cur);
+          }, {});
+          log(student)
+        })
+        .catch((err) => {
+          log('错误信息', err);
+        });
+    }
+  </script>
+  <h3>
+    仿写promise:请把实现一个自己的Promise，要求具备then方法，和catch方法
+  </h3>
+  <script>
+    function text3() {
+      function MyPromise(exec) {
+        if (!(this instanceof MyPromise)) {
+          throw new TypeError('undefined is not a promise');
+        }
+        if (!exec || typeof (exec) !== 'function') {
+          throw new TypeError("Promise resolver undefined is not a function");
+        }
+        this.status = 'pending';
+        this.resolveValue = null;
+        this.rejectValue = null;
+        this.resolveStack = [];
+        this.rejectStack = [];
+        var self = this;
+
+        function resolve(data) {
+          if (self.status === 'pending') {
+            self.status = 'fulfilled';
+            self.resolveValue = data;
+            self.resolveStack.forEach(element => {
+              element();
+            });
+          };
+        }
+
+        function reject(err) {
+          if (self.status === 'pending') {
+            self.status = 'rejected';
+            self.rejectValue = err;
+            self.rejectStack.forEach(element => {
+              element();
+            });
+          };
+        }
+        try {
+          exec(resolve, reject);
+        } catch (e) {
+          reject(`promise同步错误捕获：${e}`);
+        }
+      }
+      MyPromise.prototype.dealReturnPromise = function (returnValue, resol, rejec) {
+        if (returnValue instanceof MyPromise) {
+          // 当上一个then的返回值是promise时，我们这里来调用他的then
+          returnValue.then(function (value) {
+            resol(value);
+          }, function (reason) {
+            rejec(reason);
+          });
+        } else {
+          resol(returnValue);
+        }
+      };
+      MyPromise.prototype.then = function (onFulfilled, onRejected) {
+        if (typeof (onFunfilled) !== 'function') {
+          onFunfilled = function (val) {
+            return val;
+          }
+        }
+        if (typeof (onRejected) !== 'function') {
+          onRejected = function (err) {
+            throw err;
+          }
+        }
+        var self = this;
+        return new MyPromise(function (resFun, rejFun) {
+          if (self.status === 'fulfilled') {
+            setTimeout(function () {
+              try {
+                let resReturnVal = onFulfilled(self.resolveValue);
+                // resFun(resReturnVal);
+                self.dealReturnPromise(resReturnVal, resFun, rejFun);
+              } catch (e) {
+                rejFun(`链式then错误捕获：${e}`);
+              }
+            }, 0);
+          }
+          if (self.status === 'rejected') {
+            setTimeout(function () {
+              try {
+                let rejReturnVal = onRejected(self.rejectValue);
+                // resFun(rejReturnVal);
+                self.dealReturnPromise(rejReturnVal, resFun, rejFun);
+              } catch (e) {
+                rejFun(`链式then错误捕获：${e}`);
+              }
+            }, 0);
+          }
+          // exec中异步代码
+          if (self.status === 'pending') {
+            self.resolveStack.push(function () {
+              setTimeout(function () {
+                try {
+                  let resReturnVal = onFulfilled(self.resolveValue);
+                  // resFun(resReturnVal);
+                  self.dealReturnPromise(resReturnVal, resFun, rejFun);
+                } catch (e) {
+                  rejFun(`链式then错误捕获：${e}`);
+                }
+              }, 0);
+            });
+            self.rejectStack.push(function () {
+              setTimeout(function () {
+                try {
+                  let rejReturnVal = onRejected(self.rejectValue);
+                  // resFun(rejReturnVal);
+                  self.dealReturnPromise(rejReturnVal, resFun, rejFun);
+                } catch (e) {
+                  rejFun(`链式then错误捕获：${e}`);
+                }
+              }, 0);
+            });
+          }
+        });
+      }
+      MyPromise.prototype.catch = function (onRejected) {
+        return this.then(null, onRejected);
+      }
+      let pr1 = new MyPromise((res, rej) => {
+        // throw "错误捕获";
+        // res(1);
+        // rej(2);
+        setTimeout(() => {
+          res(3);
+          // rej(4);
+        }, 1000);
+      });
+      pr1.then((data) => {
+          // throw "then错误捕获";
+          log(data);
+          setTimeout(() => {
+            log(5)
+            // res(6);
+            // rej(7);
+          }, 1000);
+          return '第一个data返回值';
+        }, (err) => {
+          log('log-err', err);
+        })
+        .then((data) => {
+          // throw "then错误捕获";
+          log('log-data2', data);
+          return new MyPromise((res, rej) => {
+            // res(8);
+            rej(9);
+          });
+        }, (err) => {
+          log('log-err2', err);
+        })
+        .then((data) => {
+          throw "then to catch";
+          log('log-data3', data);
+        }).catch((data) => {
+          log('cccc', data);
+          return '哈哈222'
+        }, (err) => {
+          log('catch-', err);
+        }).then((data) => {
+          log('log-data4', data);
+        }).catch((err) => {
+          log('catch-', err);
+        });
+    }
+    // text3();
+    // test31();
+    function test31() {
+      var pr2 = new Promise((res, rej) => {
+        setTimeout(() => {
+          res(3);
+          // rej(4);
+        }, 1000);
+      });
+      pr2.then((data) => {
+          // throw "then错误捕获";
+          log(data);
+          setTimeout(() => {
+            log(5)
+            // res(6);
+            // rej(7);
+          }, 1000);
+          return '第一个data返回值';
+        }, (err) => {
+          log('log-err', err);
+        })
+        .then((data) => {
+          // throw "then错误捕获";
+          log('log-data2', data);
+          return new Promise((res, rej) => {
+            // res(8);
+            rej(9);
+          });
+        }, (err) => {
+          log('log-err2', err);
+        })
+        .then((data) => {
+          throw "then to catch";
+          log('log-data3', data);
+        }).catch((data) => {
+          log('cccc', data);
+          return '哈哈222'
+        }, (err) => {
+          log('catch-', err);
+          return '哈哈'
+        }).then((data) => {
+          log('log-data4', data);
+        }).catch((err) => {
+          log('catch-', err);
+        });
+    }
+  </script>
+  <h3>
+    仿写class:模拟ES6 Class 的实现
+  </h3>
+  <script>
+    function text4() {
+      function _checkIsNew(son, father) {
+        log(son,father)
+        // 检测是否new调用
+        if (!(son instanceof father)) {
+          throw new TypeError("Class constructor Person cannot be invoked without 'new'");
+        }
+      }
+      function _addCommonFun(target, keysArr) {
+        // object.defineProperty代理添加对象属性
+        keysArr.forEach((ele, i) => {
+          Object.defineProperty(target, ele.key, {
+            value: ele.value,
+            enumerable: false, // 原型上的方法是不可枚举的（以前构造函数中的时候能枚举出来，现在class不能了）
+            configurable: true,
+            writable: true
+          })
+        });
+      }
+      function _judgeTarget(target, proto, static){
+        // 判断是添加原型方法还是添加静态方法
+        if(proto){
+          _addCommonFun(target.prototype, proto);
+        }
+        if(static){
+          _addCommonFun(target, static);
+        }
+      }
+      function _inherit(Father,Son){
+        // 继承
+        if (typeof Son !== "function" && Son !== null) {
+          throw new TypeError("Super expression must either be null or a function");
+        }
+        Son.prototype.__proto__ = Father.prototype;
+      }
+      let Person = function () {
+        function Person(name, age) {
+          _checkIsNew(this, Person);
+          // constructor内部代码
+          this.name = name;
+          this.age = age;
+          this.say = function () {
+            log(this.name);
+          }
+        }
+        // 添加共有方法 - 代码拦截
+        _judgeTarget(Person, [{
+          key: 'eat',
+          value: function () {
+            log(this.name + ' - i can eating');
+            return 'eat function'
+          }
+        }, {
+          key: 'eat2',
+          value: function () {
+            log(this.name + ' - i can eating2');
+            return 'eat2 function'
+          },
+        }]);
+        // 添加静态方法 - 代码拦截
+        _judgeTarget(Person, null, [{
+          key: 'lastName',
+          value: function () {
+            log(this.name + ' - i am lastName');
+            return 'lastName function'
+          }
+        }, {
+          key: 'lastName2',
+          value: function () {
+            log(this.name + ' - i am lastName2');
+            return 'lastName2 function'
+          },
+        }]);
+        return Person;
+      }();
+      let person = new Person('xingorg1', 18);
+      log(person);
+      for (var item in person) {
+        console.log(item)
+      }
+      Person.lastName();
+      // 继承写法
+      let Man = function(_Father){
+        // 原型继承
+        // Man.prototype.__proto__ = _Father.prototype;
+        _inherit(_Father,Man);
+        
+        // 静态属性
+        _judgeTarget(Man, null, [{
+          key: 'manName',
+          value: function() {
+            log('my name is'+ this.name);
+            return '郭';
+          }
+        }]);
+        function Man(name , age, sex){
+          var _that = this;
+          // 防止不new就调用
+          _checkIsNew(this, Man);
+          // 私有属性继承（super）
+          // 原理是_that = _Father.call(this);
+          // 先把this对象改变一下，改成new Person，然后再添加新的东西
+          _that = _Father.call(this,name, age);
+          log('继承后的this',_that);
+
+          // 私有属性
+          this.sex = sex;
+        }
+        // 公有属性和方法
+        _judgeTarget(Man, [{
+          key: 'sleep',
+          value: function() {
+            log(this.name + ' - i can sleeping');
+            return 'sleep function'
+          }
+        }]);
+
+        return Man;
+      }(Person);
+      let man = new Man('小石头', 22, 'male');
+      log('man-', man);
+      Man.manName();// 静态方法使用
+      // 公有属性和方法使用
+      man.sleep();
+      log(man.sex);
+      // 原型方法继承
+      man.eat();
+      // 私有方法继承（super的功能，Person.call(this)）
+      log(man.name)
+    }
+    text4();
+    // text41();
+
+    function text41() {
+      class Person {
+        // 私有属性-es7写法
+        // hobby = [1, 2];
+        // 静态属性（Person.lashName)
+        static lastName() {
+          return '郭';
+        }
+        // 私有属性
+        constructor(name, age) {
+          this.name = name;
+          this.age = age;
+          this.say = function () {
+            log(this.name);
+            return 'say'
+          }
+        }
+        // 公有方法 - prototype的方法
+        eat() {
+          log(this.name + ' - i can eating');
+          return 'eat function'
+        }
+      }
+      class Man extends Person {
+        constructor(name, age, sex) {
+          super(name, age); //没有super报错
+          this.sex = sex;
+        }
+        sleep() {
+          log(this.name + ' - i can sleeping');
+          return 'sleep function'
+        }
+      }
+      let person = new Person('gjf', 19);
+      log(person)
+      log(Person.lastName());
+      Person.lastName = function () {
+        return '修改';
+      }
+      log(Person.lastName());
+      let man = new Man('胡杨', 21);
+      person.eat();
+      man.eat();
+      man.sleep();
+      for (const key in man) {
+        // if (man.hasOwnProperty(key)) {
+        log(man[key]);
+
+        // }
+      }
+    }
+  </script>
+  <h3>
+    6.Let obj = {name: ‘duyi’，age: 10}，请给该对象部署迭代接口，使其可以被for of遍历。
+  </h3>
+  <script>
+    function text6() {
+      let obj = {
+        name: "xing.org1^",
+        age: 10,
+        sex: 'female'
+      };
+      let objLength = Object.keys(obj);
+      console.log(objLength)
+
+      function objIterator(obj) {
+        obj[Symbol.iterator] = function () {
+          let arr = Object.keys(obj), // 利用keys方法，获取obj身上可迭代属性的集合，得到一个数组，有名字串和长度可供后期使用
+            len = 0,
+            element = null;
+          let next = () => {
+            return {
+              value: obj[arr[len]], // 利用arr的字符串集合和下标获取obj的对应属性值。
+              done: len++ === arr.length // 如果先自增，obj的最后一位获取不到
+            }
+          }
+          return {
+            next
+          }
+        }
+        return obj;
+      }
+      let canIteObj = objIterator(obj);
+      for (const iterator of canIteObj) {
+        log(iterator);
+      }
+    }
+    // text6();
+  </script>
+
+</body>
+
+</html>

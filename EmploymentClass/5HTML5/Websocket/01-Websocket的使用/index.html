@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>websocket - 连接</title>
+  <style>
+    #rst {
+      width: 300px;
+      height: 300px;
+      padding: 25px;
+      box-sizing: border-box;
+      background-color: #ddf;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo">
+    <input type="text" placeholder="请输入要发送的内容" id="ipt">
+    <button id="btn">发送请求</button>
+    <p>
+      响应结果如下：
+    </p>
+    <div id="rst"></div>
+
+    <button id="closeBtn">断开连接</button>
+  </div>
+  <script>
+    // open：建立连接
+    // var websocket = new WebSocket('ws://echo.websocket.org');// 使用ws官方提供的服务器
+    var websocket = new WebSocket('ws://localhost:8080'); // 使用我自己配置的服务器,前提要去websocketServer文件夹中把服务启动一下
+
+    websocket.addEventListener('open', function (e) {
+      console.log(e, websocket.readyState);
+      // websocket.send('发送一个方法')
+      // websocket.send('xing.org1^')
+      btn.onclick = function (a) {
+        // console.log(a)
+        websocket.send(ipt.value);
+      }
+    });
+
+    // 接收返回值：
+    websocket.addEventListener('message', (e) => {
+      console.log(e);
+      rst.innerHTML = e.data;
+    });
+
+    closeBtn.onclick = function (e) {
+      console.log(e);
+      websocket.close(3000,'主动请求断开连接吧');//断开连接
+    }
+    websocket.addEventListener('close', function (e) {
+      console.log('连接断开了', e);
+    });
+  </script>
+</body>
+
+</html>

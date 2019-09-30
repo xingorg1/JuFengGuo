@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="./jquery.min.js"></script>
+</head>
+
+<body>
+  <script>
+    var a = 123;
+    var b = 234;
+    a = a + b;
+    b = a - b;
+    a = a - b;
+
+
+    </script>
+  <style>
+    li {
+      list-style: none;
+      padding: 20px;
+      border: 1px solid;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+  </style>
+  <h3>需求，点击li，打印li的顺序序号</h3>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+  </ul>
+  <script>
+    /* 第1种写法 */
+    /* var ul = document.getElementsByTagName('ul')[0];
+    var li = ul.getElementsByTagName('li');
+    console.log(li)
+    for(var i = 0; i< li.length; i++){
+      // 利用立即执行函数形成闭包，利用闭包建立私有变量。然后输出每一个i
+      (function(i){
+        li[i].addEventListener('click',function(){
+          console.log(i+1)
+        },false)
+      })(i)
+    } */
+    /* 第二种写法 */
+    /* var ul = document.getElementsByTagName('ul')[0];
+    var li = ul.getElementsByTagName('li');
+    console.log(li)
+    for (var i = 0; i < li.length; i++) {
+      // 利用addEventListener给每一个元素执行一个事件回调函数。改种写法。
+      // 利用立即执行函数形成闭包，利用闭包建立私有变量。然后输出每一个i
+      li[i].addEventListener('click', (function (i) {
+        return function () {
+          console.log(i + 1)
+        }
+      })(i), false)
+    } */
+    /* 第三种写法 */
+    /* var ul = document.getElementsByTagName('ul')[0];
+    var li = ul.getElementsByTagName('li');
+    console.log(li);
+    for (var i = 0; i < li.length; i++) {
+      addEvent(i);
+    }
+    function addEvent(i){
+      li[i].addEventListener('click', function () {
+          console.log(i + 1)
+        }, false);
+    } */
+    /* 第四种写法 - 利用forEach遍历li */
+    /* var ul = document.getElementsByTagName('ul')[0];
+    var li = ul.getElementsByTagName('li');
+    console.log(li);
+    Array.prototype.forEach.call(li,function(ele,i){
+      ele.addEventListener('click', function () {
+          console.log(i + 1 +'hah')
+        }, false);
+    }) */
+   
+    /* 事件委托时，this指的谁
+      js绑定的方法，指的是ul
+      jq绑定的方法指的是li
+    */
+    /* var ul = document.getElementsByTagName('ul')[0];
+    ul.onclick = function(e){
+      var e = e || window.event;
+      var target = e.target || e.srcElement;
+      console.log(this)
+    } */
+    /* $('ul').on('click','li',function(){
+      console.log($(this).text())
+    }) */
+    $('li').each((i,el)=>{
+      console.log(i,el)
+    });
+  </script>
+  <script>
+    // 事件2
+    
+  </script>
+</body>
+</html>

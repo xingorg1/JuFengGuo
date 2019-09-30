@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js收官</title>
+</head>
+
+<body>
+  <label for="name">haha </label>
+  <input type="text" id="name" data-name="inputs" gjf="888">
+  <h1>测试用代码</h1>
+  <div class="demo" id='demo'>
+    <div class="ad gjf xing org1">1</div>
+    <div class="  demo   org1    ">2</div>
+    <h1>第一行</h1>
+    <h2>第二行</h2>
+    <div class="ad gjf    org1">3</div>
+    <div class="ad   author    xing   ">4</div>
+    <div class=" gjf">5</div>
+    <h3>第三行</h3>
+    <div class="qjf  xing  ">6</div>
+    <div class="ad   gjf     org1">7</div>
+    <h1>第一行</h1>
+    <div class="  ad   gif   xing    org1   ">8</div>
+  </div>
+  <script>
+    /* url格式化 */
+    var str = 'https://www.baidu.com/s?ie=utf-8&f=8#gjf'
+    var str = 'https://www.baidu.com/s#gjf?ie=utf-8&f=8'
+    var str = 'https://www.baidu.com:8080/s/path/name/index?ie=utf-8&f=8#xing.org1^'
+    var reg = /:[\d]+/g;
+    console.log(str.match(reg));
+    console.log(window.location.href.match(/[\w.]+/g));
+
+    function formatCurrentUrl(str) {
+      /*
+       * @Author: guojufeng@ 
+       * @Date: 2019-01-11 13:27:32
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2019-01-11 17:31:55
+       * 格式化当前页面的url
+       * formatCurrentUrl('https://www.baidu.com:8080/s/path/name/index?ie=utf-8&f=8#xing.org1^')
+       */
+      var L = str || window.location,
+        searchStr = '',
+        obj = {};
+      if (!str) {
+        /* 使用当前页面url */
+        obj = {
+          hash: L.hash,
+          host: L.host,
+          hostname: L.hostname,
+          href: L.href,
+          origin: L.origin,
+          pathname: L.origin,
+          port: L.port,
+          protocol: L.protocol,
+        };
+        searchStr = L.search;
+      } else {
+        //这么写还是有问题，如果是不规范的url，获取出来的数组可能会错位，进而导致结果有问题。
+        obj = {
+          hash: '',
+          host: str.match(/[\w.]+/g) ? str.match(/[\w.]+/g)[1] : '',
+          hostname: str.match(/[\w.]+/g) ? str.match(/[\w.]+/g)[1] : '',
+          href: str,
+          origin: str.match(/^[\w]+:\/\/[\w.]+/g) ? str.match(/^[\w]+:\/\/[\w.]+/g)[0] : '',
+          pathname: str.match(/\/[\w\/]+/g) ? str.match(/\/[\w\/]+/g)[1] : '',
+          port: str.match(/:[\d]+/g) ? str.match(/:[\d]+/g)[0].slice(1) : '',
+          protocol: str.match(/^[\w]+:/g) ? str.match(/^[\w]+:/g)[0] : '',
+        };
+        /* 检测 - 传入的字符串是否有类似search或类似hash */
+        var start = str.indexOf('?'),
+          end = str.indexOf('#');
+        if (start !== -1) {
+          if (end !== -1 && start > end || end === -1) {
+            searchStr = str.substring(start);
+          } else {
+            searchStr = str.substring(start, end);
+          }
+        }
+        if (end !== -1) {
+          if (start !== -1 && end > start || start === -1) {
+            obj.hash = str.substring(end + 1);
+          } else {
+            obj.hash = str.substring(end + 1, start);
+          }
+        }
+      }
+      obj.search = {};
+      if (searchStr) {
+        var searchArr = searchStr.slice(1).split('&');
+        searchArr.forEach(function (el) {
+          var arr = el.split('=');
+          obj.search[arr[0]] = arr[1]
+        });
+      }
+      console.log(obj);
+      return obj;
+    }
+    formatCurrentUrl('https://www.baidu.com:8080/s/path/name/index?ie=utf-8&f=8#xing.org1^')
+
+    function formatUrl(str) {
+      /*
+       * @Author: guojufeng@ 
+       * @Date: 2019-01-11 13:27:32
+       * 格式化url为一个对象类型（二、传参型）
+       * @param {string} str: 需要格式化的url
+       */
+      var obj = {};
+
+      return obj;
+    }
+    console.log('=========================')
+    /* getClassName 封装 */
+    function getDom(str) {
+      /*
+       * @Author: @Guojufeng 
+       * @Date: 2019-01-11 14:51:39 
+       * @Last Modified by:   @Guojufeng 
+       * @Last Modified time: 2019-01-11 15:45:09 
+       * @param {string} str: 需要查找的元素特征
+       * 1、'#id'：   此参数为根据id名称选择dom，
+       * 2、'.Class'：此参数为根据类名选择dom，
+       * 3、'tag'：   此参数为根据标签名称获取dom。
+       */
+      var result = [],
+        getStr = str.slice(1);
+      var ele = Array.prototype.slice.call(document.getElementsByTagName('*')),
+        len = ele.length;
+
+      function trimStr(str) {
+        return str.match(/\w+/g);
+      }
+      if (str.indexOf('#') !== -1) {
+        /* id获取 */
+        for (let i = 0; i < len; i++) {
+          if (ele[i].getAttribute('id') == getStr) {
+            result = ele[i];
+            break; //页面中多个id，返回第一个id元素。后边的不再检测
+          }
+        }
+      } else if (str.indexOf('.') !== -1) {
+        /* class名字获取 */
+        ele.forEach(function (el1) {
+          if (el1.className) {
+            var clsName = trimStr(el1.className);
+            clsName.forEach(function (el2) {
+              if (el2 === getStr) {
+                result.push(el1);
+              }
+            });
+          }
+        });
+      } else {
+        /* 标签获取 */
+        getStr = str;
+        for (let i = 0; i < len; i++) {
+          if (ele[i].nodeName.toLowerCase() == getStr) {
+            result.push(ele[i]);
+          }
+        }
+      }
+      console.log(result);
+      return result;
+    }
+    getDom('#demo');
+    getDom('.gjf')
+    getDom('h1')
+
+    /* 模拟getElementsByClassName */
+    Element.prototype.getDomByClass = Document.prototype.getDomByClass = document.getElementsByClassName || function (
+      clsName) {
+      /*
+       * @Author: @Guojufeng 
+       * @Date: 2019-01-11 15:58:45 
+       * @Last Modified by:   @Guojufeng 
+       * @Last Modified time: 2019-01-11  17:01:35 
+       * 模拟getElementsByClassName - function getDomByClass
+       * 给Element.prototype和Document.prototype上添加方法getDomByClass，模拟getElementsByClassName功能。
+       * 如果支持原生方法，使用原生，如果不支持就执行我们自己的function
+       */
+      if (clsName !== undefined) {
+        /* 第一步，格式化clsName */
+        clsName += '';
+        var reg = /\w+/g,
+          getClsArr = clsName.length > 0 && clsName.match(reg),
+          ele = Array.prototype.slice.call(document.getElementsByTagName('*')),
+          result = []; //原生方法里，返回值始终是类数组。即使只有一个结果、或没有结果
+        // 遍历所有元素，获取各元素上的类名。
+        ele.forEach(function (tag) {
+          if (tag.className) {
+            //没有类名就不执行下边了。
+            var haveCls = 0, //准备一个计数器
+              tagClsArr = tag.className.match(reg); //将每个标签上的类名都格式化成数组
+            // 遍历这个单个标签上的所有类名组成的数组
+            tagClsArr.forEach(function (cls) {
+              // 遍历所有类名，和参数进行匹配。
+              if (getClsArr.length <= 1) { // 参数中，只查找一个类名的时候
+                if (cls === clsName) {
+                  result.push(tag);
+                }
+              } else {
+                getClsArr.forEach(function (getCls) {
+                  if (cls === getCls) {
+                    haveCls++;
+                  }
+                });
+                if (haveCls == getClsArr.length) {
+                  // 当这个标签达到要求时，插入到结果中。
+                  result.push(tag);
+                }
+              }
+            });
+          }
+        });
+        return result; //遗憾，返回结果是一个数组，而非节点类数组
+      } else {
+        throw new TypeError('你还没传参呢，我又不知道你想要什么！',
+          'Failed to execute \'getElementsByClassName\' on \'Document\': 1 argument required, but only 0 present.')
+      }
+    };
+
+    var ele = document.getDomByClass('gjf');
+    console.log(111, ele);
+    var ele1 = document.getDomByClass('gjf ad');
+    console.log(222, ele1);
+    var a = document.getElementsByClassName('gjf ad');
+    console.log(333, a); //0 : div.ad.gjf.xing.org1
+    var b = document.getElementsByClassName('author');
+    console.log(444, b);
+
+    var length = 10;
+    function fn(){
+      console.log('fn中的this',this)
+      console.log(this.length)
+    }
+    var obj = {
+      length: 5,
+      method: function(fn){
+        fn();
+        arguments[0]();
+        console.log(arguments[0])
+        // this.a = arguments[0];
+        // this.a();
+        // console.log('obj中的this',this)
+      }
+    }
+    obj.method(fn,1);
+    // var innn = document.getElementsByTagName('input')[0];
+    // innn.onclick = function () {
+    //   console.log('关联后，点击label也能触发input事件');
+    // }
+    // console.log(innn.id)
+    // console.log(innn.type)
+    // innn.type = 'date'
+    // console.log(innn.type)
+    // console.log(innn.gjf)
+    // console.log(innn.data - name)
+    // console.log(innn['gjf'])
+    // console.log(innn['data-name'])
+    // console.log(innn.getAttribute('gjf'))
+    // console.log(innn.getAttribute('data-name'))
+    // var oUl = document.getElementById('ul');
+    // var oF = document.createDocumentFragment('ul');
+    // for (let i = 0; i < 1000; i++) {
+    //   var newLi = document.createElement('li');
+    //   newLi.innerText = i + '';
+    //   oF.appendChild(newLi)
+    // }
+    // oUl.appendChild(oF);
+
+    // var htmlStr = '';
+    // var oUl = document.getElementById('ul');
+    // for (let i = 0; i < 1000; i++) {
+    //   htmlStr += '<li>' + i + '</li>';
+    // }
+    // oUl.innerHTML = htmlStr;
+    /* 预加载 */
+  </script>
+</body>
+
+</html>

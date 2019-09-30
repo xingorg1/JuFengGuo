@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>may</title>
+  <style>
+    body {
+      font: bold 14px 黑体;
+    }
+
+    #markEare {
+      margin-top: 1200px;
+      padding-bottom: 200px;
+      border: 1px solid;
+    }
+
+    .borderTop {
+      height: 300px;
+      background: #edf;
+      border-bottom-left-radius: 50% 12%;
+      border-bottom-right-radius: 50% 12%;
+      overflow: hidden;
+    }
+
+    /* 伪类 权重值测试 */
+    .test li.cls {
+      color: #00f7f9;
+    }
+
+    li:hover {
+      color: black;
+    }
+
+    li:not(p) {
+      color: green;
+    }
+
+    .test .cls.cls2:hover {
+      color: #f547ff;
+    }
+
+    .test .cls:hover {
+      color: blue;
+    }
+
+    .test li:hover {
+      color: red;
+    }
+
+    .right-float span {
+      float: right;
+      width: 120px;
+      height: 120px;
+      border: 1px solid tomato;
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    window.onload = function () {
+      var img1 = document.getElementById('img1');
+      var b = 1;
+      var b = 2;
+      img1.onclick = function () {
+        if (b) {
+          img1.src =
+            "https://img01.sogoucdn.com/v2/thumb/resize/w/333.3333333333333/h/250/crop/w/333.3333333333333/h/250/xy/center?t=2&appid=200549&url=https%3A%2F%2Fimg04.sogoucdn.com%2Fapp%2Fa%2F100520091%2F20190517094839";
+          b--;
+        } else {
+          img1.src = "https://ww4.sinaimg.cn/thumb150/6942e234gy1g33atg3c9kj20hs0brqi0.jpg";
+          b = 1;
+        }
+      }
+    };
+  </script>
+  <img id='img1'
+    src="https://img01.sogoucdn.com/v2/thumb/resize/w/333.3333333333333/h/250/crop/w/333.3333333333333/h/250/xy/center?t=2&appid=200549&url=https%3A%2F%2Fimg04.sogoucdn.com%2Fapp%2Fa%2F100520091%2F20190517094839" />
+
+  <div class="borderTop" id="opacity">
+    border-radius实现曲线效果
+  </div>
+  <h1>class选择器not</h1>
+  <p>cs3选择器not - color继承</p>
+  <a href="http://www.baidu.com" target="_self">点击在自身页面打开目标地址</a>
+  <a href="#markEare" target="_self">点击在自身页面打开锚点</a>
+  <input type="text" placeholder="聚焦后文字会上下移动？">
+  <div id="markEare" style="display:none">目标锚点</div>
+  <div class="test">
+    <ul>
+      <li>test1</li>
+      <li class="cls cls2">test2</li>
+    </ul>
+  </div>
+  <div class="right-float">
+    <span>4</span>
+    <span>3</span>
+    <span>2</span>
+    <span>1</span>
+  </div>
+  <div class="form">
+    <label for="请输入密码">
+      <input type="password" placeholder="请输入密码" class="onePass">
+
+    </label>
+    <br>
+    <label for="请确认密码">
+      <input type="password" name="" placeholder="请确认密码" id="" class="twoPass">
+    </label>
+    <button class="passBtn">确认</button>
+    <span class="rest">结果：</span>
+  </div>
+  <button class="btnsss">123123</button>
+  <script src="http://www.jq22.com/jquery/jquery-1.7.1.js"></script>
+  <script>
+    $('.onePass').on('input', function () {
+      console.log(this.value);
+    });
+    $('.passBtn').on('click', () => {
+      $('.rest').text(`结果：${$('.onePass').val() === $('.twoPass').val()}`)
+    })
+    var btnsss = document.querySelector('.passBtn');
+    btnsss.onkeydown = function (e) {
+      console.log(e.keyCode)
+    }
+
+    var aa = 10;
+    var fooa = {
+      aa: 20,
+      bar: function () {
+        var aa = 30;
+        console.log(this.aa);
+      }
+    }
+    console.log(fooa.bar());
+  </script>
+  <script>
+    opacity.style.opacity = '.83'; //opacity的属性值填字符串
+    // var promptVal = parseInt(window.prompt('tian'))//Window大写就报错了，Window当变量用了，js严格区分大小写的。
+    // // var promptVal = parseInt(window.prompt('tian'))
+    // console.log(promptVal)
+
+    // 20190511引号里边可以加多个class吗？可以，要用逗号隔开
+    $("div, p").click(function () {
+      console.log('多个元素绑定click')
+    });
+    // 行参与实参映射 - 对应的形参和实参值个数不匹配时，多余位置的数将不再映射
+    function mapDemo(a, b) {
+      console.log("长度为" + (arguments.length == 1 ? "1,对应的形参和实参值个数不匹配" :
+        "2,形参实参个数匹配,将要双宿双飞")); //arguments长度为1，但行参列表的长度为2.多余的第二位的参数将不再映射。
+      console.log(b, arguments[1]); //undefined,undefined;
+      arguments[1] = 2;
+      console.log(b, arguments[1]); //undefined,2
+      b = 3;
+      console.log(b, arguments[1]); // 3,2
+    }
+    mapDemo(1);
+    console.log('===个数匹配、双宿双飞分割线===');
+    mapDemo(1, 4);
+    // 预编译、作用域与变量递增
+    var dizeng = 1,
+      toNumber = 'a1';
+    console.log(dizeng++); // 1,将变量转成数字并+1，返回没+1前的结果
+    console.log(toNumber++); // NaN,将变量转成数字并+1，返回没+1前的结果
+
+    // 函数声明还能被重新赋值吗？
+    console.log('函数声明还能被重新赋值吗？');
+    // debugger;
+    var smA = 0,
+      smB = 0;
+
+    function shengmingFun(smA) { // 1 
+      console.log(shengmingFun);
+      shengmingFun = function (smB) { // 2
+        console.log(smA + smB++); // 0 + 2++ 错了
+        // 这里是闭包，smA此时已经从传参的1++变成2了。但奇怪是函数shengmingFun初始是定义在window上的，即使这里被修改成了新的表达式，其作用域怎么就从window变成了shengmingFun了呢？
+      }
+      console.log(smA++); //1++
+    }
+    shengmingFun(1);
+    shengmingFun(2);
+    console.log(smA, smB, shengmingFun, window.shengmingFun);
+
+    // 仿造instanceof - 实例的__proto__指向构造函数的prototype
+    var strings = '字符串';
+    console.log(strings.__proto__);
+    console.log(String.prototype);
+
+
+    // 任务队列
+    setTimeout(function () {
+      console.log(0);
+    });
+    new Promise(function (a, b) {
+      console.log(1);
+      for (let index = 0; index < 10; index++) {
+        index == 9 && a();
+      }
+      console.log(2);
+    }).then(function () {
+      console.log(3);
+    });
+    console.log(4);
+    setTimeout(function () {
+      console.log(5);
+    });
+
+    // 
+    let x = 1;
+    let y = 2;
+
+    function show() {
+      var x = 3;
+      return {
+        x: x,
+        fun: function (a, b) {
+          x = a + b;
+        }
+      }
+    }
+    var obj = show();
+    obj.fun(x, y);
+    console.log('作用域、闭包问题', obj.x, x);
+    window.onload = function () {
+
+    }
+
+    // 老师，我想问一下今天的这个题目，既然是闭包，为什么打分号和打点不一样呢? 打分号执行了一个函数，再执行下一个是，前面的那个为什么没影响后面的这个
+    //  - 打分号后重开一个函数,不同的函数之间有自己的作用域，不相互影响。但是.号是链式调用，还是用同一个作用域的
+    // 但是这个为什么还是用上一个执行完了的函数的执行期上下文
+    function fun(n, o) { //n=0,o=unde.//n=m=1,o=n=0 //n=m=2,o=n=0 //n=m=3,o=n=0
+      console.log('--', o);
+      return {
+        fun: function (m) { //m=1,n=闭包0 //m=2,n=闭包0 //m=3,n=闭包0
+          return fun(m, n); //坑在这里又调了fun(),还是全局的fun。问题是外层fun里n都变成2了，这里闭包的为啥还是0
+        }
+      }
+    }
+    var a = fun(0); //闭包保留的n=0,o=unde.
+    console.log(a);
+    a.fun(1);
+    a.fun(2);
+    a.fun(3);
+    /* // 这样写和下边b的链式调用一致，但是分号和.号完全不一样的效果，究竟是以为什么？没想明白
+    var a1 = a.fun(1);
+    var a2 = a1.fun(2);
+    console.log(a,a1,a2)
+    var a3 = a2.fun(3); */
+    function bibao() {
+      var num = 100;
+
+      function b() {
+        num++;
+        console.log(num);
+
+      }
+      return b;
+    }
+    var demo = bibao();
+    demo();
+    demo();
+
+    function aoObj() {
+      var arr = [],
+        ff = function (num) {
+          console.log(num)
+        };
+      for (var i = 0; i < 10; i++) {
+        ff();
+        (function (j) {
+          arr[j] = function () {
+            console.log('闭包索引 = ' + j);
+          }
+        })(i);
+      }
+      console.log(arr[3]());
+      console.log(arr[8]());
+      return 'ao对象中有立即执行函数，那ao对象长啥样测试'
+    }
+    aoObj();
+
+    // 没有var 会找父作用域？而不是直接找全局？
+    var count = 10;
+
+    function add() {
+      var count = 1;
+      return function () {
+        count += 1;
+        console.log(count);
+      }
+    }
+    var bibao = add();
+    bibao();
+    bibao();
+
+
+    // ccc
+    var mul = 1;
+    // var n = parseInt(window.prompt('input'));
+    var n = 4;
+    for (let i = 0; i < n; i++) {
+      mul *= 2;
+      console.log('---', mul);
+      document.write(mul + " ")
+    }
+
+    // this的核心是谁调用指向谁,跟他所处调用环境的this无关，因为函数有自己的执行上下文
+    // arguments上有自己的length属性,同函数上有name一样，这种关键字的面试题真的坑爹
+    var length = 10;
+    var notLength = 10;
+
+    function fn() {
+      console.log('this指向谁？', this.length);
+      console.log('length关键字换掉后', this.notLength);
+    }
+    var obj = {
+      length: 5,
+      notLength: 'not length',
+      mt: function (fn) {
+        fn();
+        console.log(arguments);
+        console.log(arguments[0].call(obj));
+        arguments[0]();
+      }
+    }
+    obj.mt(fn, 222);
+
+    // bind的二次绑定考察
+    var bindA = 10,
+      objBind = {
+        a: 'bind被绑定后，不能再通过其他方法改变this指向（new 除外）'
+      },
+      objBind1 = {
+        a: 3
+      };
+
+    function bindFn(a = '') {
+      console.log(a)
+      console.log('bind用法 - ', this.a);
+    }
+    var newFn = bindFn.bind(objBind);
+    var newFn1 = newFn.bind(objBind1);
+    newFn1();
+    new newFn1('new还能改变bind绑定过后的this指向');
+
+
+
+
+    // 函数声明变成表达式后，名字无意义。
+    var f = function g() {
+      return 23;
+    }
+    console.log('函數表达式的名字', typeof g); //typeof 一个不存在的变量，得到undefined
+    console.log('函數表达式的名字 - 函数调用', typeof g()); //typeof 一个不存在的变量，得到undefined
+
+    // keycode
+  </script>
+</body>
+
+</html>

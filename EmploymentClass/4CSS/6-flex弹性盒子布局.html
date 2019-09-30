@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>弹性盒子布局</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-size: 40px;
+    }
+
+    .flex {
+      border: 1px solid;
+    }
+
+    .flex1 {
+      display: flex;
+    }
+
+    .flex2 {
+      width: 200px;
+      min-height: 300px;
+      /* display: inline-flex;
+      align-items: center; */
+      display: inline-block;
+      vertical-align: text-top;
+    }
+
+    .bg {
+      background: rgba(255, 122, 22, 0.8)
+    }
+
+    h1 {
+      border-top: 12px solid #eee;
+    }
+
+    .demo1 {
+      width: 400px;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid;
+      margin: 20px auto;
+    }
+
+    .demo1-1 {
+      width: 200px;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #efd;
+    }
+
+    .demo2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fed
+    }
+
+    li {
+      padding: 5px 10px;
+      border: 1px solid tomato;
+      border-radius: 5px;
+      list-style: none;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+    }
+
+    .demo3 {
+      display: flex;
+
+      height: 300px;
+    }
+
+    .demo3 li {
+      flex: 1;
+    }
+
+    .demo4 {
+      display: flex;
+      height: 300px;
+    }
+
+    .demo4 li:nth-of-type(1) {
+      flex: 2;
+    }
+
+    .demo4 li:nth-of-type(2) {
+      flex: 1;
+      background-color: #efd;
+    }
+
+    .demo5 {
+      display: flex;
+      height: 300px;
+      flex-wrap: wrap;
+      align-content: flex-start;
+    }
+
+    .demo5 li {
+      width: 300px;
+      flex-basis: 100px;
+    }
+    .demo6{
+      background: #f1f1f1;
+      height: 500px;
+      display: flex;
+      /* 关键 - 修改主轴的方向 */
+      flex-direction: column;
+      align-content: space-between;
+    }
+    .demo6 div{
+      text-align: center;
+    }
+    .header,.footer,.container{
+      /* width: 100%;这里不设置宽度百分比也可以，因为有一个align-items，她的默认值是stretch，能够把元素的交叉轴方向拉伸盛满父元素交叉轴方向的长度。这里header和footer的交叉轴是左右水平的，所以，没有width100%也会充满demo6宽度的长度。同理left、content和right也是，其交叉轴是垂直方向，所以三者的高度也盛满了container的高度。 */
+    }
+    .header,.footer{
+      /* height: 20%; */
+      flex-basis: 20%;
+      background: #edf;
+    }
+    .container{
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+    }
+    .left,.right{
+      flex-basis: 20%;
+      background: #efd;
+    }
+    .content{
+      flex: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>flex的效果观察</h1>
+  <div class="flex flex1">flex</div>adfasf
+  <h1>inline-flex的效果观察</h1>
+  <div class="flex flex2">inline-flex，fakhfiahfaeuhafoaefadfj超出的内容没有被截断，而是在后边兄弟元素的下边。</div>
+  <div class="flex flex2 bg">afoaefadfj</div>afadsfa
+  <h1>flex作用，居中</h1>
+  <div class="demo1">
+    <div class="demo1-1">居中</div>
+  </div>
+  <h1>可动态增加的导航栏</h1>
+  <ul class="demo2">
+    <li>导航1</li>
+    <li>导航2</li>
+    <li>导航3</li>
+    <li>导航4</li>
+  </ul>
+  <h1>等分布局</h1>
+  <ul class="demo3">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  <h1>两边固定，中间自适应,或左右不等比例伸缩</h1>
+  <ul class="demo4">
+    <li>left</li>
+    <li>center</li>
+    <li>right</li>
+  </ul>
+  <h1>流式布局</h1>
+  <ul class="demo5">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+    <li>6</li>
+    <li>7</li>
+    <li>8</li>
+  </ul>
+  <h1>圣杯布局</h1>
+  <div class="demo6">
+    <div class="header">header</div>
+    <div class="container">
+      <div class="left">left</div>
+      <div class="content">content</div>
+      <div class="right">right</div>
+    </div>
+    <div class="footer">footer</div>
+  </div>
+</body>
+
+</html>

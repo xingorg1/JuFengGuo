@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>生命周期</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+    {{ val }}
+  </div>
+  <script>
+    const {log} = console;
+    const vm = new Vue({
+      el: '#app',
+      /* beforeCreate(){
+        log('1 - beforeCreate',)
+        log(this)
+        log('this.$data',this.$data)
+      },
+      created(){
+        log('2 - created',)
+        log(this)
+        log('this.$data',this.$data)
+      },
+      beforeMount(){
+        log('3 - beforeMount',)
+        log(this)
+        log('this.$el',this.$el)
+      }, */
+      mounted(){
+        log('4 - mounted',)
+        log(this)
+        log('this.$el',this.$el)
+        // setTimeout(()=>{
+        //   this.val = '2019'
+        // },3000);
+      },
+      beforeUpdate(){
+        log('5 - beforeUpdate',)
+        log(this)
+        log('this.$data',this.$data)
+        log('$data.val',this.val)
+      },
+      updated(){
+        log('6 - updated',)
+        log(this)
+        log('this.$data',this.$data)
+        log('$data.val',this.val)
+      },
+      beforeDestroy(){
+        log('7 - beforeDestroy',)
+        log(this)
+        log('this.$data',this.$data)
+        log('$data.val',this.val)
+      },
+      destroy(){
+        log('8 - destroy',)
+        log(this)
+        log('this.$data',this.$data)
+        log('$data.val',this.val)
+      },
+      data: {
+        val: '生命周期学习'
+      },
+      methods:{
+        
+      }
+    })
+  </script>
+</body>
+
+</html>

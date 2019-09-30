@@ -1,0 +1,29 @@
+{
+  "name": "aaa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^9.5.1",
+    "browser-sync": "^2.26.5",
+    "cssnano": "^4.1.10",
+    "gulp": "^3.9.1",
+    "gulp-base64": "^0.1.3",
+    "gulp-connect": "^5.7.0",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-open": "^3.0.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-pug": "^4.0.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-strip-debug": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "node-sass": "^4.12.0",
+    "postcss": "^7.0.14"
+  }
+}

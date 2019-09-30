@@ -1,0 +1,32 @@
+{
+  "name": "html5music",
+  "version": "1.0.0",
+  "description": "this is html5 music ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "html5",
+    "music"
+  ],
+  "author": "lilei",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^8.1.0",
+    "cssnano": "^3.10.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.5.0",
+    "gulp-deporder": "^1.1.0",
+    "gulp-htmlclean": "^2.7.20",
+    "gulp-imagemin": "^4.1.0",
+    "gulp-less": "^4.0.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-strip-debug": "^3.0.0",
+    "gulp-uglify": "^3.0.0"
+  },
+  "dependencies": {
+    "jquery": "^3.3.1"
+  }
+}

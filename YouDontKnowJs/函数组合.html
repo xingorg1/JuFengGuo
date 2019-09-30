@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 左倾函数
+    function compose(f, g) {
+      return function (x) { //此函数只关心参数
+        return f(g(x)); //此函数只关心组合函数的执行顺序
+      }
+    }
+
+    function add(str) { //组合函数一号
+      return str += '!';
+    }
+
+    function toUpCase(str) { //组合函数二号
+      return str.toUpperCase();
+    }
+    var rst1 = compose(add, toUpCase); //组合函数使用示例
+    console.log(rst1('xing.org1^'));
+
+    /* 左倾函数封装 */
+    function gjfCompose() {
+      // 参数：a,b,c,d
+      var args = Array.prototype.slice.call(arguments);
+      var len = arguments.length;
+      return function (str) {
+        while (len--) {
+          console.log(args[len](str))
+          // 举例是这么调用a(b(c(d())))  => d()调用，结果给 c()调用，结果给 b()调用，结果给 a()调用 
+          // 形象的理解：就是倒着调用arguments的每一个函数，后一个参数函数调用的结果再当参数传给前一个参数函数。
+          str = args[len](str);
+        }
+        return str;
+      }
+    }
+    /* 调用示例 */
+    var rest = gjfCompose(a, b, c, d);
+    console.log(rest(20));
+
+    function a(x) {
+      console.log('a', x)
+      return 1 + x;
+    }
+
+    function b(x) {
+      console.log('b', x)
+      return 2 + x;
+    }
+
+    function c(x) {
+      console.log('c', x)
+      return 3 + x;
+    }
+
+    function d(x) {
+      console.log('d')
+      return 4 + x;
+    }
+    /* 调用示例 */
+    var result = gjfCompose(join, reverse, split, toUpperCase);
+    console.log(result('xing.org1^'));
+
+    function join(arr) {
+      return arr.join('-');
+    }
+
+    function reverse(arr) {
+      return arr.reverse();
+    }
+
+    function split(x) {
+      return x.split('');
+    }
+
+    function toUpperCase(x) {
+      return x.toUpperCase();
+    }
+    /* 左倾函数封装 - 用reduce优化*/
+    function gjfCompose() {
+      var args = Array.prototype.slice.call(arguments),
+        len = args.length;
+      return function (str) {
+        return args.reduceRight(function (pre, cur, i) { //从右向左遍历
+          console.log(cur)
+          // pre = args[i](pre);
+          pre = cur(pre)
+          return pre;
+        }, str);
+      }
+    }
+    /* es6写法 */
+    // const compose2 = (...args) => x => args.reduceRight((res, cb) => cb(res), x);
+
+    /* 通道 */
+    function pipe() {
+      var args = Array.prototype.slice.call(arguments);
+      return function (str) {
+        return args.reduce(function (pre, cur) {
+          return cur(pre);
+        }, str);
+      }
+    }
+    var piperesult = pipe(toUpperCase, split, reverse, join);
+    console.log(222,piperesult('xing.org1^'));
+  </script>
+</body>
+
+</html>

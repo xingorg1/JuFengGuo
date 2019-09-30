@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>异步与回调的问题</title>
+</head>
+
+<body>
+  <p>高阶函数</p>
+  <button id="btn1">按钮1</button>
+  <button id="btn2">按钮2</button>
+  <button id="btn3">按钮3</button>
+  <script>
+    var btn1 = document.getElementById('btn1'),
+      btn2 = document.getElementById('btn2'),
+      btn3 = document.getElementById('btn3');
+    // 模拟，异步并发 - 三个btn都点击后再触发一个回调函数
+    btn1.onclick = function (e) {
+      /* 此函数的目的是监听第几次触发，如果是第三个，就会调用cb函数。下同 */
+      allCb(this.innerHTML);
+    }
+    btn2.onclick = function (e) {
+      allCb(this.innerHTML);
+    }
+    btn3.onclick = function (e) {
+      allCb(this.innerHTML);
+    }
+    // 点过三个按钮后，触发这个函数
+    function cb(rst) {
+      console.log('点击顺序', rst);
+    }
+    // 监听函数精髓，有点像观察者，是一个高阶函数。
+    function after(nums, callback) { //触发次数、回调函数。
+      let rst = [];
+      return function () {
+        rst.push(arguments[0]);
+        --nums === 0 && (nums = 3, callback.call(window, rst), rst = []); //千言万语汇成一句话
+        /* 复杂写法
+        --nums;
+        if(nums === 0){
+          nums = 3;
+          callback.call(window,rst);
+          rst = [];
+        } */
+      }
+    }
+    var allCb = after(3, cb);
+  </script>
+  <script>
+    /* 异步代码执行报错，try catch无法捕获 */
+    try {
+      setTimeout(() => {
+        try {
+          throw '异步。出错了！'
+        } catch (asyncErr) {
+          console.log(asyncErr)
+        }
+      }, 2000);
+      throw '同步。出错了！';
+    } catch (e) {
+      console.log(e, '错误被捕获~');
+    }
+  </script>
+  <script src="">
+    /* 封装随心所欲的发布订阅 */
+    var subscriber = {
+      // 目的，对回调进行很好的管理 
+      list: [], //存储被订阅的函数
+      times: 3, //计数
+      subscribe(func) {
+        // 订阅一些函数
+        this.list.push(func);
+      },
+      fire(...args) {
+        // 触发时，调用订阅的所有函数。
+        if (--this.times === 0)
+          this.list.forEach((ele) => {
+            ele.apply(null, args); //依次触发所有函数
+          })
+      }
+    }
+    }
+  </script>
+</body>
+
+</html>

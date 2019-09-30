@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>兄弟组件互传数据</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+    <gege>哥哥组件</gege>
+    <didi>弟弟组件</didi>
+  </div>
+  <script>
+    Vue.prototype.bus = new Vue();
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        name: '父组件的data属性',
+      },
+      components: {
+        gege: {
+          template: `<div class="children01"><h3 >{{ childData }}</h3></div>`,
+          data() {
+            return {
+              childData: '我是children01的数据'
+            }
+          },
+          created(){
+            this.bus.$on('fun2', val => {
+              console.log('fun2触发后的参数是：', val)
+            })
+          },
+          mounted(){
+            // setTimeout(()=>{
+              console.log(this.bus)
+              this.bus.$emit('fun1','A->B的数据传输')
+            // },0)
+          }
+        },
+        didi: {
+          template: `<div class="children02"><p> {{ childData }} </p></div>`,
+          data() {
+            return {
+              childData: '我是children02的数据'
+            }
+          },
+          created(){
+              this.bus.$on('fun1',data => {
+              console.log(data)
+            })
+          },
+          mounted(){
+            // setTimeout(()=>{
+              this.bus.$emit('fun2','B -> A的数据传输')
+            // },0)
+          }
+        }
+      },
+    })
+  </script>
+</body>
+
+</html>

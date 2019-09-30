@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>geolocation</title>
+</head>
+
+<body>
+  <h3>获取地理位置</h3>
+  <h3 id="txt">等待結果...</h3>
+  <script src="./js/Vconsole.js"></script>
+  <script>
+    let vconsole = new VConsole();
+    // 需要https协议
+    window.navigator.geolocation.getCurrentPosition(function (position) {
+      console.log(position);
+      myLog(position); //w3c的也不行。可以放到手机上试试
+      
+    }, function (err) {
+      console.log(err);
+      myLog(err);
+    });
+    function myLog(data){
+      document.getElementById('txt').innerHTML = JSON.stringify(data);
+    }
+
+    // position信息
+    // Position: {
+    //   coords: Coordinates,
+    //   timestamp: 1231239129830
+    // }
+
+    // coords内部信息
+    
+  </script>
+</body>
+
+</html>

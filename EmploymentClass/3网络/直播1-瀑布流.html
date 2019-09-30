@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>瀑布流效果</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrapper {
+      width: 860px;
+      padding: 25px;
+      margin: 20px auto;
+      background: #f8fafb;
+    }
+
+    .wrapper h3 {
+      text-align: center;
+    }
+
+    .list {
+      width: 880px;
+      overflow: hidden;
+    }
+
+    .item a {
+      margin-bottom: 20px;
+      color: #333;
+      text-decoration: none;
+      display: block;
+      background: #fff;
+      box-shadow: 4px 5px 8px #eee;
+      overflow: hidden;
+    }
+
+    .item {
+      float: left;
+      list-style: none;
+      width: 200px;
+      margin-right: 20px;
+      overflow: hidden;
+      /* border: 1px solid #222; */
+    }
+
+    .img-box {
+      background: #eee;
+      font-size: 0;
+    }
+
+    .img-box img {
+      width: 100%;
+    }
+
+    .txt {
+      color: #333;
+      font-size: 20px;
+      margin: 20px 10px;
+      word-break: break-word;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper" id="wrapper">
+    <ul class="list" id="list">
+      <li class="item"></li>
+      <li class="item"></li>
+      <li class="item"></li>
+      <li class="item"></li>
+    </ul>
+    <h3>加载中...</h3>
+  </div>
+  <script src="../../gjfUtils/xingorg1Utils.js"></script>
+  <script>
+    var wrapper = document.getElementById('wrapper'),
+      oUl = document.getElementById('list'),
+      oLi = document.getElementsByClassName('item'),
+      len = oLi.length,
+      key = true,//加锁，防止window.onscroll重复触发多次
+      pageH = 0,
+      windowH = 0,
+      page = 1;
+
+    // http://www.wookmark.com/api/json/popular?page=2
+    function getData(page) {
+      console.log(page)
+      var url = 'https://easy-mock.com/mock/5c637662438f894664f80852/waterfallFlow/data?page=' + page;
+      xingorg1Utils.getAjax({
+        url: url,
+        type: 'get',
+        success: function (rst) {
+          console.log(rst);
+          var data = rst.data;
+          if (data && data.length > 0) {
+            renderDom(data);
+          }
+        },
+        error: function (e) {
+          console.log(e);
+        }
+      });
+
+    }
+
+    function getMiniLi() {
+      // 获取最短的列
+      var minIndex = 0; //默认最短的是第0个li
+      var minHeight = oLi[minIndex].offsetHeight; //默认最短高度是minHeight
+      for (var i = 0; i < len; i++) {
+        var height = oLi[i].offsetHeight;
+        if (height <= minHeight) {
+          minIndex = i;
+          minHeight = height;
+        }
+      }
+      return minIndex;
+    }
+
+    function renderDom(data) {
+      data.forEach((e, i) => {
+        // 待完善，检测img.load或者img.error的加载，设置img的height
+        var oA = document.createElement('a');
+        oA.setAttribute('href', e.url)
+        oA.innerHTML = '<div class="img-box">\
+            <img src="' + e.image + '" alt="' + e.title +
+          '">\
+          </div>\
+          <p class="txt">\
+              ' + e.title + ' \
+          </p>';
+        var minIndex = getMiniLi();
+        oLi[minIndex].appendChild(oA);
+      });
+      key = true;
+      pageH = wrapper.offsetHeight;
+      windowH = xingorg1Utils.getViewPortOffset().h;
+    }
+    getData(page);
+    window.onscroll = function () {
+      var oH = window.pageYOffset;
+      if (oH >= pageH - window.innerHeight & key) {
+        console.log('触底')
+        // xingorg1Utils.throttle(getData, 3000)
+        getData(++page);
+        key = false;
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>构造函数</title>
+</head>
+
+<body>
+  <script>
+    function Person(name, age, sex) {
+      // 注释掉的内容均为构造函数内部的隐式动作：
+      // var this = {};
+      var a = 0;
+
+      function sss() {
+        a++;
+        document.write(a + " ");
+      }
+      this.name = name;
+      this.age = age;
+      this.sex = sex;
+      this.say = sss; //妈的，这是一个闭包，这个函数拿走了Person内部的a属性
+      // this = {
+      // name: name,
+      // age: age,
+      // sex: sex,
+      // say: function(){
+      // a++;
+      // document.write(a + " ");
+      // }
+      // }
+      // return this;//因为这个return，闭包say被扔出去了。
+    }
+    var person1 = new Person();
+    console.log(person1)
+    person1.say();
+    person1.say();
+    var person2 = new Person();
+    console.log(person2); //但是这里返回还是1开始，跟闭包没多大关系，是因为第二个构造函数形成新的全新的执行上下文。和person1的不重复。我不理解，这里a不应该是他们公用的Person AO作用域里边的公有变量吗
+    person2.say();
+    // 预测结果： 1 2 3
+    // 实际结果： 1 2 1
+
+    function liandeng(x) {
+      var a = b = c = 2;
+      console.log(a)
+      console.log(arguments)
+    }(1, 2, 3, 4, 5)
+    liandeng(1, 2, 3, 4, 5)
+    console.log("a在函数内部用了var声明，是var的私有变量", window.a)
+    console.log("暗示全局变量", window.b)
+    console.log("连等后边因为没有var，是一个暗示全局变量属于window", window.c)
+    /* 阿里题目 */
+    // 下边谁返回1，2，3，4，5
+    function liandeng1(x) {
+      console.log("正常函数", arguments)
+      return x;
+    }
+    liandeng1(1, 2, 3, 4, 5)
+
+    function liandeng2(x) {
+      console.log(arguments)
+      return x;
+    }(1, 2, 3, 4, 5);
+    // 这种现象会把函数和后边（1，2，3，4，5）分开执行，不报错但是也没结果
+
+    (function liandeng3(x) {
+      console.log("立即执行函数", arguments);
+      return x;
+    })(1, 2, 3, 4, 5)
+
+    function liandeng4(){
+      liandeng5.apply(null,arguments);
+    }
+    function liandeng5(x){
+      console.log("apply指针",arguments);
+    }
+    liandeng4(1,2,3,4,5)
+  </script>
+</body>
+
+</html>

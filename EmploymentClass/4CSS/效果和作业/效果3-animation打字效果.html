@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>打字效果</title>
+  <style>
+    .demo {
+      position: relative;
+      border: 1px solid #eee;
+      padding: 20px;
+      min-height: 63px;
+      box-sizing: border-box;
+    }
+
+    .demo::before {
+      content: " ";
+      
+      -webkit-animation: dazi 6s steps(1, end) forwards;
+      animation: dazi 6s steps(1, end) forwards;
+    }
+
+    .demo::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 3px;
+      border-right: 2px solid #666;
+      height: 18px;
+      margin: auto 2px;
+      animation: guangbiao 1.1s steps(2, end) infinite forwards;
+    }
+    
+    @keyframes dazi {
+      0% {
+        content: ""
+      }
+/*       
+      16% {
+        content: "郭"
+      }
+      
+      32% {
+        content: "郭菊"
+      }
+      
+      48% {
+        content: "郭菊锋"
+      }
+      
+      64% {
+        content: "郭菊锋加"
+      }
+      
+      80% {
+        content: "郭菊锋加油"
+      } */
+
+      100% {
+        content: "郭菊锋加油！"
+      }
+    }
+    @keyframes guangbiao {
+      0% {
+        visibility: hidden;
+      }
+   
+      100% {
+        visibility: visible;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo"></div>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "gluttonoussnake",
+  "version": "1.0.0",
+  "description": "开个服务器本地测试用",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "贪吃蛇"
+  ],
+  "author": "guojufeng",
+  "license": "ISC"
+}

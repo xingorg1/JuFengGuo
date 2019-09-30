@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>计算属性+侦听器</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <!-- 侦听器 - 是一个对象，对象中的每一个方法侦听一个属性，方法的名字和要被侦听的属性名字一致。当对应属性的值被改变的时候，就会触发和属性同名的侦听器方法。 -->
+  <div id="app">
+    {{ getVal }} 
+    <p>
+      {{ other }}
+    </p>
+    <p>
+      {{ comput }}
+    </p>
+  </div>
+  <script>
+   
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        other: '其他信息',
+        name: '侦听器',
+        val: 'vue的val属性',
+        computName: 'computed方法',
+        getVal: ``
+        // getVal: `val的值是： ${this.val}`
+      },
+      mounted(){
+      //  this.getVal =  this.getValFun();
+      },
+      methods:{
+        getValFun(){
+          console.log('methods')
+          return `val的值是： ${this.val}`;
+        },
+        noBody(){
+          console.log('nobody');
+        }
+      },
+      watch : {
+       /*  val(newVal){//接收更新后的数据（其实===this.val)
+          console.log('watch - val()')
+          this.getVal = `val的值是： ${newVal}`
+        }, */
+        val: {
+          handler(newVal){
+            console.log('watch - val()')
+            this.getVal = `val的值是： ${newVal}`
+          },
+          immediate: true
+        }
+        /* val(newVal){//接收更新后的数据（其实===this.val)
+          // 侦听val属性
+          console.log('watch - val()')
+          console.log('val属性被修改了，修改后的值是"' + this.val +'"')
+          this.getVal = `val的值是： ${this.val}`
+        } */
+      },
+      /* computed:{
+        // 通过某个值（本例的this.val）计算而来的属性
+        getVal(){
+          console.log('conputed')
+          return `val的值是： ${this.val}`;
+        },
+      } */
+      computed:{
+        comput: {
+          get(){
+            console.log('conputed')
+            return `get - comput的值是： ${this.computName}`;
+          },
+          set(changeVal){
+            // changeVal是要更改的值，没法通过get方法来修改值。
+            console.log('要修改的值是-'+ changeVal);
+            this.changeName = 'aaa'
+          }
+        },
+      }
+      
+    })
+    vm.$watch('name',()=>{
+      // handler
+      console.log('watch - name()')
+    },{
+      // options
+      immediate: true
+    });
+  </script>
+</body>
+
+</html>

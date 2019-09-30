@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Generator</title>
+</head>
+
+<body>
+  <h3>Generator生成器，用来生成迭代器</h3>
+  <script>
+    const {
+      log
+    } = console;
+
+    function* Generator() {
+      log('yield前');
+      yield 1;
+      log('yield后')
+      yield 2;
+      yield 3;
+      // return 'return返回值'
+    }
+    let gene1 = Generator();
+
+    for (let i = 0; i < 6; i++) {
+      // log(gene1.next());
+    }
+
+    log(gene1)
+    log(Generator);
+
+    // 蛇形走位
+    function * Generator2(){
+      const val1 = yield '1-a';
+      console.log(val1);
+      const val2 = yield '2-b';
+      console.log(val2);
+      const val3 = yield '3-c';
+      console.log(val3);
+      return '返回值return'
+    }
+    let gene2 = Generator2();
+
+    // 改写iterator函数 - 我的代码
+    let iteObj = {
+      0: '1a',
+      1: '2b',
+      2: '3c',
+      3: '4d',
+      length: 4,
+      [Symbol.iterator]: function *() {//中间加个*号变成生成器函数
+        for (let index = 0; index < iteObj.length; index++) {
+          yield iteObj[index];
+        }
+      }
+    }
+    for(var item of iteObj){
+      log(item)
+    }
+    // 改写iterator函数 - 老师的代码
+    let iteObjTeacher = {
+      0: '1a',
+      1: '2b',
+      2: '3c',
+      3: '4d',
+      length: 4,
+      [Symbol.iterator]: function *() {//中间加个*号变成生成器函数
+        let curIndex = 0;
+        while(curIndex != this.length){
+          yield this[curIndex++];
+          // curIndex++;//这句可以放到上边中括号里，利用后自增的特点。
+        }
+      }
+    }
+    for(var item of iteObjTeacher){
+      log(item +' - teacher s code')
+    }
+
+    // 生成器改写异步回调 - 见10-2-node.js
+    
+    
+  </script>
+
+  <script src="../a-babelInit/originFile/11-generator.js"></script>
+</body>
+
+</html>

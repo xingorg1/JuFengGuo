@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Proxy&Reflect</title>
+</head>
+
+<body>
+  <h1>Proxy</h1>
+  <p>问题</p>
+  <ol>
+    <li>
+      Proxy代理第一个参数是对象，就是会不用循环也可以把对象的直接属性全部代理一遍？
+      <p>做实验发现，是的，所有的属性就都会经过第二个参数设置的对象</p>
+    </li>
+    <li>
+      代理后对象.属性的方式会执行Proxy的get函数，值是get的返回值，那如果get是个固定值，则代理后对象的任何一个属性获取得到的结果都是这个固定值么？
+      <p>是的。</p>
+    </li>
+    <li>
+      我们怎么知道代理对象获取了不用的属性的值、并相应的给他做点拦截加上我们的自定义代码呢？
+      <p>get的三个参数决定了可以设置不同。target[key]</p>
+      <p>更高级的写法：Reflect.get(target,key)</p>
+    </li>
+    <li>
+      可以代理数组，具体是怎么代理的？get和set的参数key返回的是数组索引吗
+    </li>
+    <li>
+      深层对象怎么代理？递归？怎么写？
+    </li>
+    <li>
+      新增的属性也可以代理，比Object.defineProperty，符合开闭原则设计思想
+    </li>
+    <li>
+      其他一些属性的学习
+    </li>
+  </ol>
+  <div id="comment_ul_2">
+  </div>
+  <input type="button" id="addFun" value="click me" />
+  <script>
+    var obj = {
+      name: 'proxy学习',
+      age: 21,
+      eduExpe: {
+        name: '教育经历',
+        primary: {
+          name: '小学名字',
+          horizon: [2000, 2006]
+        }
+      },
+      hobby: ['FE', 'painting', 'ukelele']
+    };
+
+    Object.defineProperty(obj, 'defineKey', {
+      value: '我不能枚举',
+      writable: true, // 如果是不可写，set就不起作用了
+      configurable: true,
+      enumerable: false
+    });
+    var getProxy = new Proxy(obj, {
+      get(target, key, receiver) {
+        console.log('get: ', target, key, receiver)
+        // return target[key];
+        return Reflect.get(target, key);
+      },
+      set(target, key, value, receiver) {
+        console.log('set: ', target, key, value, receiver)
+        // target[key] = value;
+        Reflect.set(target, key, value);
+      },
+      has(target, key) {
+        console.log('has: ', key, key.indexOf('__'));
+        // return key in target;
+        return key.indexOf('__') == 0 ? false : key in target;
+        //如果不为-1表明要查的参数名的开头有带下划线
+      },
+      deleteProperty(target, key) {
+        console.log('deleteProperty: 想要删除？', target, key);
+        return typeof target[key] === 'object' ? false : (delete target[key], true);
+      }
+    });
+    console.log('！！访问源对象', obj.name)
+    console.log('has、deleteProperty')
+    /* has 、deleteProperty*/
+    // 删除原始值类型属性
+    delete getProxy.age;
+    console.log(getProxy.age)
+    // 删除对象类型属性
+    delete getProxy.hobby;
+    console.log(getProxy.hobby);
+
+    console.log('name' in getProxy); // 注意属性名用引号
+    console.log('__a' in getProxy); // 注意属性名用引号
+    console.log('get、set')
+    console.log(getProxy.name)
+    getProxy.name = 'xing.org1^'
+    console.log('！！访问源对象', obj.name)
+    console.log(getProxy.name)
+    console.log(getProxy.age)
+    console.log(getProxy.defineKey);
+    getProxy.defineKey += '我可写'
+    console.log(getProxy.defineKey);
+
+    console.log('==嵌套对象的代理映射==')
+    console.log(getProxy.eduExpe.name);
+    getProxy.eduExpe.name = getProxy.name + '的教育经历'
+    console.log(getProxy.eduExpe.name);
+
+    console.log(getProxy.eduExpe.primary.teacher);
+    getProxy.eduExpe.primary.teacher = '我的老师是个好老师'
+    console.log(getProxy.eduExpe.primary.teacher);
+
+    /* 新增属性 */
+    console.log(getProxy.newProperty);
+    getProxy.newProperty = '我是新增属性'
+    console.log(getProxy);
+    /* 递归调用 */
+    var obj2 = {
+      name: 'proxy学习',
+      age: 21,
+      eduExpe: {
+        name: '教育经历',
+        primary: {
+          name: '小学名字',
+          horizon: [2000, 2006]
+        }
+      },
+      hobby: ['FE', 'painting', 'ukelele']
+    };
+    console.log('=====递归递归=====')
+    var rstObj = {};
+
+    function diguiProxy(oldObj) {
+      console.log(1, oldObj)
+      var objProxy = {};
+      for (const key in oldObj) {
+        if (oldObj.hasOwnProperty(key)) {
+          if (typeof oldObj[key] == 'object' && oldObj[key] !== null) {
+            console.log(key)
+            var rst = diguiProxy(oldObj[key]);
+            console.log(rst)
+            objProxy[key] = rst;
+          } else {
+            objProxy[key] = oldObj[key]
+          }
+        }
+      };
+      console.log(2, objProxy);
+      return new Proxy(oldObj, {
+        get(target, key, receiver) {
+          console.log('get ', key)
+          return Reflect.get(target, key);
+        },
+        set(target, key, value, receiver) {
+          console.log('set ', key)
+          Reflect.set(target, key, value);
+        }
+      });
+    }
+    var test = diguiProxy(obj2);
+    console.log('----试验----', rstObj)
+    console.log(test.eduExpe.primary.teacher);
+    test.eduExpe.primary.teacher = '我的老师是个好老师'
+    console.log(test.eduExpe.primary.teacher);
+    console.log(test.hobby);
+    test.hobby.push('mySelf')
+    console.log(test.hobby);
+  </script>
+  <script>
+    // 20190626-递归代理深层对象【亲测有效】
+    var mydata = {
+      title: 'mvvm模拟',
+      count: 1.0,
+      info: {
+        name: 'guo',
+        study: {
+          a: 'vue',
+          b: 'react'
+        }
+      }
+    };
+    let newData = DeepProxyDealData(mydata)
+
+    function DeepProxyDealData(obj) {
+      /* 递归代理 */
+      // 思路，迭代对象，若发现key值是对象，则递归调用代理函数，将key的值传进去做代理
+      for (const objKey in obj) {
+        if (obj.hasOwnProperty(objKey)) {
+          const el = obj[objKey];
+          if (el && typeof el === 'object') { //非null时的object类型
+            //拿到代理后的对象，赋值给val为对象的key
+            obj[objKey] = DeepProxyDealData(el);
+          }
+        }
+      }
+      let proxy = new Proxy(obj, {
+        get(target, key, proxy) {
+          log('proxy-Getter', key)
+          return Reflect.get(target, key)
+        },
+        set(target, key, val, proxy) {
+          log('proxy-Setter', key)
+          Reflect.set(target, key, val)
+        }
+      });
+      log(proxy);
+      return proxy; //递归的出口，返回代理后的对象
+    }
+
+    log('====嵌套 - proxy====')
+    // log(newData)
+    log(newData.title)
+    log(newData.info.name)
+    log(newData.info.study.a)
+    newData.info.study.a = 'aaa'; //实现深层代理
+    newData.info.study.c = 'ccc'; //新增属性
+  </script>
+  <script>
+    /* 代理數組 */
+    console.log('--代理數組--')
+    var targetArr = [1, true, 'ghah', undefined, null, 3];
+    var proxyArr = new Proxy(targetArr, {
+      get(a, b, c) {
+        console.log('get arr: ', a, b, c);
+        return 1;
+      },
+      set(a, b, c, d) {
+        console.log('set arr: ', a, b, c, d);
+      }
+    });
+    console.log(proxyArr[3])
+    console.log(proxyArr[2] = false);
+    // proxyArr.push(12)
+  </script>
+  <script>
+    // 代理深层数组
+    // 深层数组的代理
+    let deepArr = [
+      [10, 11],
+      ['a', [
+        'guo',
+        '小石头'
+      ]]
+    ];
+    deepArrProxy(deepArr);
+
+    function deepArrProxy(data) {
+      data.forEach((el, i) => {
+        if (Object.prototype.toString.call(el) === '[object Array]') {
+          data[i] = deepArrProxy(el);
+        }
+      })
+      let proxy = new Proxy(data, {
+        get(target, key, proxy) {
+          log('Array-proxy-Getter', key)
+          return Reflect.get(target, key)
+        },
+        set(target, key, val, proxy) {
+          log('Array-proxy-Setter', key)
+          Reflect.set(target, key, val)
+        }
+      });
+      log(proxy);
+      return proxy; //递归的出口，返回代理后的对象
+    }
+    log('输出：', deepArr[1][1][1])
+  </script>
+  <script>
+    // 深层代理数组 + 对象
+    let deepData = [{
+        name: '嵌套对象',
+        grandFa: {
+          name: 'grandFa-name',
+          father: {
+            name: 'father-name',
+            son: {
+              name: 'son-name'
+            }
+          }
+        }
+      },
+      [10, {
+        name: 'guo',
+        age: 20
+      }],
+      ['a', [
+        'guo',
+        '小石头'
+      ]]
+    ];
+    let deepDataRst = ProxyDeepData(deepData);
+
+    function ProxyDeepData(data) {
+      let toStr = Object.prototype.toString,
+        UnableProxy = {
+          // 整理proxy不可以代理的数据类型，用于后期
+          'string': true,
+          'number': true,
+          'boolean': true,
+          'null': true,
+          'undefined': true,
+          'symbol': true
+        };
+      if (UnableProxy[typeof (data)]) {
+        // 不能被代理的数据，直接返回。
+        return data;
+      }
+      if (toStr.call(data) === '[object Array]') {
+        data.forEach((el, i) => {
+          data[i] = ProxyDeepData(el);
+        })
+      } else if (toStr.call(data) === '[object Object]') {
+        // 这里可以后期考虑Set、Map数据,改成用(for...of)迭代
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            const el = data[key];
+            data[key] = ProxyDeepData(el);
+          }
+        }
+      }
+      let proxy = new Proxy(data, {
+        get(target, key) {
+          log('深劫持-get', key);
+          return Reflect.get(target, key)
+        },
+        set(target, key, val) {
+          log('深劫持-set', key);
+          Reflect.set(target, key, val)
+        }
+      })
+      return proxy;
+    }
+    log('劫持数据：', deepDataRst)
+    log('深劫持数组结果：', deepDataRst[2][1][1])
+    log('深劫持对象结果：', deepDataRst[0].grandFa.father.son.name)
+    log('set结果：', deepDataRst[1][1].name = '小小小石头')˝
+  </script>
+  <script>
+    console.log('代理后访问源对象会有什么表现？没有任何经过get和set的表现，毕竟代理不是加在源对象上的。')
+    console.log('但是代理对象和源对象是映射的，在代理对象上新增的值，也会加到源对象上。所以我怀疑vue中是把data函数中return的那个对象给代理了。')
+    var target = {
+      name: '源对象'
+    }
+    var handler = {
+      get(oldObj, key) {
+        console.log('get: ', oldObj, key);
+        return Reflect.get(oldObj, key);
+      },
+      set(oldObj, key, val) {
+        console.log('set: ', oldObj, key, val, Reflect.set(oldObj, key, val))
+        return Reflect.set(oldObj, key, val);
+      }
+    }
+    console.log(target.name)
+    var proxyO = new Proxy(target, handler);
+    console.log(target.name)
+    console.log(proxyO.name)
+    proxyO.newName = '代理对象上新增值';
+    console.log(target.newName);
+  </script>
+  <script>
+    // Object.create,所以有时候通过这个方法实现原型链继承。如果第一个参数和Proxy构造函数的实例化对象挂钩，那就实现了原型链拦截
+    var obj2 = Object.create({
+      a: 1
+    }, {
+      one: {
+        value: 'haha'
+      },
+      two: {
+        value: 'writable',
+        writable: true
+      }
+    });
+    console.log(obj2);
+  </script>
+  <script>
+    // 代理函数
+    var handler = {
+      get: function (target, name) {
+        console.log('函数get')
+        if (name === 'prototype') {
+          return Object.prototype;
+        }
+        return 'Hello, ' + name;
+      },
+      apply: function (target, thisBinding, args) {
+        console.log('调用函数，会执行apply？？？！')
+        return args[0];
+      },
+      construct: function (target, args) {
+        console.log('new会经过 - 函数construct')
+        return {
+          value: args[1]
+        };
+      }
+    };
+    var fproxy = new Proxy(function (x, y) {
+      return x + y;
+    }, handler);
+    console.log(fproxy(1, 2)) // 1，而不是x+y=3，因为apply那里拦截了
+    console.log(new fproxy(1, 2)) // {value: 2}，正常应该是一个空对象，结果也被拦截了
+    console.log(fproxy.prototype === Object.prototype) // true，获取函数对象上的属性，被get拦截
+    console.log(fproxy.foo === "Hello, foo") // true
+  </script>
+
+  <script type="text/html" id="js_temp">
+    <div>
+      哈哈哈
+    </div>
+  </script>
+  <script>
+    var temp = document.getElementById('js_temp');
+    console.log(document.body, temp.innerHTML);
+    var div = document.createElement('div');
+    div.innerHTML = temp.innerHTML;
+
+    document.body.appendChild(div)
+  </script>
+  <script id="commentTemplate" type="text/html">
+    <li>
+      <div class="photo">
+        <a href="#">
+          <img src="[UserImg]" /></a></div>
+      <p>
+        <a href="#">[UserName]：</a><span class="time">[CreateDate]</span></p>
+      <div class="clear">
+      </div>
+    </li>
+  </script>
+  <script src="https://image.bitautoimg.com/das/fe/cdnJs/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript">
+    var reg = new RegExp("\\[([^\\[\\]]*?)\\]", 'igm'); //i g m是指分别用于指定区分大小写的匹配、全局匹配和多行匹配。
+    $("#addFun").click(function () {
+      var html = document.getElementById("commentTemplate").innerHTML;
+      var source = html.replace(reg, function (node, key) {
+        return {
+          'UserImg': '1',
+          'UserName': 'zhang',
+          'CreateDate': '2011-1-1'
+        } [key];
+      });
+      $("#comment_ul_2").append(source);
+    });
+
+    var zzl = "name:[name]";
+    zzl = zzl.replace(reg, function (node, key) {
+      return {
+        'name': '占占'
+      } [key];
+    });
+    console.log(zzl);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>匀速运动</title>
+  <style>
+    .demo,
+    .demo1 {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: tomato;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    .demo1 {
+      left: 710px;
+    }
+
+    #start,
+    #end,
+    #start1,
+    #end1 {
+      margin-top: 130px;
+    }
+
+    .line,
+    .line1 {
+      position: absolute;
+      top: 0;
+      left: 300px;
+      width: 1px;
+      height: 150px;
+      border-left: 1px solid #333;
+    }
+
+    .two {
+      position: relative;
+      margin-top: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo" id="demo">
+  </div>
+  <div class="line" id='line'>一睹墙</div>
+  <button id="start">开始</button>
+  <button id="end">结束</button>
+  <div class="two">
+    <div class="demo1" id="demo1">
+    </div>
+    <div class="line1" id='line1'>一睹墙</div>
+    <button id="start1">开始</button>
+    <button id="end1">结束</button>
+  </div>
+  <script>
+    // 第二遍
+    var demo1 = document.getElementById('demo1'),
+      timer = null,
+      start1 = document.getElementById('start1');
+    start1.onclick = function () {
+      startMove(demo1, 300)
+    }
+    function startMove(dom, target) {
+      // 为了也能从右向左走，把速度值的正负值根据出发点和目标点之间差值的正负号来调整
+      var speed = target - dom.offsetLeft > 0 ? 5 : -5;
+      clearInterval(timer); //防抖，防止触发多个定时器，这次点击时，把上次开的定时器关闭。
+      timer = setInterval(function () {
+        // if (target - dom.offsetLeft < speed) {这么写，出发值在目标值右边时，左边差值算出来永远是负的。这里是算距离，不用正负限制。为了不考虑正负值的问题，
+        if (Math.abs(target - dom.offsetLeft) <= Math.abs(speed)) {
+          // 当下一步要走的小于speed（速度或距离）,就直接等于目标点
+          console.log(Math.abs(target - dom.offsetLeft))
+          dom.style.left = target + 'px';
+          clearInterval(timer);
+          timer = null;
+        } else {
+          dom.style.left = dom.offsetLeft + speed + 'px';
+        }
+      }, 40);
+    }
+    demo1.onclick = function () {
+      clearInterval(timer);
+      timer = null;
+    }
+  </script>
+
+  <script>
+    // var demo = document.getElementById('demo'),
+    //   start = document.getElementById('start'),
+    //   line = document.getElementById('line'),
+    //   end = document.getElementById('end');
+    // // 老师代码优点一，把速度（每次要增加的值）拿出来了。
+    // var speed = 5,
+    //   timer = null;
+    // start.onclick = function (e) {
+    //   clearInterval(timer); //每次点击清空上一个定时器，停止上一个运动
+    //   timer = setInterval(() => {
+    //     if (parseInt(demo.style.left) + demo.clientWidth >= line.offsetLeft) {
+    //       // 老师思路if (line - offsetLeft - parseInt(demo.style.left) + demo.clientWidth < speed)
+    //       // demo.style.left = demo.offsetLeft + 'px';优化
+    //       demo.style.left = line.offsetLeft - demo.clientWidth + 'px';
+    //       clearInterval(timer);
+    //       timer = null;
+    //     } else {
+    //       demo.style.left = demo.offsetLeft + speed + 'px';
+    //     }
+    //   }, 60);
+    // }
+    // end.onclick = function (e) {
+    //   clearInterval(timer);
+    //   timer = null;
+    // }
+  </script>
+</body>
+
+</html>

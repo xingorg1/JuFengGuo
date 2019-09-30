@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>iterator</title>
+</head>
+
+<body>
+  <h4>iterator迭代接口</h4>
+  <p>
+
+  </p>
+  <script>
+    const {
+      log
+    } = console;
+    // 部署iterator
+    let noIteObj = {
+      a: '1a',
+      b: '2b'
+    }
+    // let arr = [...noIteObj];
+    // for (let item of noIteObj) {
+    //   log(item)
+    // }
+    // log(arr);
+
+    // 给obj【确切的说老师这个是伪数组】加迭代函数
+    let iteObj = {
+      0: '1a',
+      1: '2b',
+      2: '3c',
+      3: '4d',
+      length: 4,
+      [Symbol.iterator]() {
+        let curIndex = 0;
+        let next = () => {
+          return {
+            value: this[curIndex++],
+            done: curIndex > this.length // 为true停止调用，为false就会一直进行下一个next调用
+            /* // 老师的写法，改进，将前置自增改为后置自增，否则会少迭代最后一个
+            value: this[curIndex],
+            done: this.length == curIndex++ */
+          }
+        }
+        return {
+          next
+        }
+      }
+    }
+    let arr = [...iteObj];
+    log(arr);
+    for (let iterator of iteObj) {
+      log(iterator);
+    }
+  </script>
+
+  <script>
+    // 自己研究的給真对象加迭代器。难点在于对象没有length属性，所以这里利用Object.keys获取到说有属性的集合数组，同时得到一个长度。
+    const {
+      log
+    } = console;
+    let obj = {
+      name: "xing.org1^",
+      age: 10,
+      sex: 'female'
+    };
+    let objLength = Object.keys(obj);
+    console.log(objLength)
+
+    function text6(obj) {
+      obj[Symbol.iterator] = function () {
+        let arr = Object.keys(obj),// 利用keys方法，获取obj身上可迭代属性的集合，得到一个数组，有名字串和长度可供后期使用
+          len = 0,
+          element = null;
+        let next = () => {
+          return {
+            value: obj[arr[len]],// 利用arr的字符串集合和下标获取obj的对应属性值。
+            done: len++ === arr.length // 如果先自增，obj的最后一位获取不到
+          }
+        }
+        return {
+          next
+        }
+      }
+      return obj;
+    }
+    let canIteObj = text6(obj);
+    for (const iterator of canIteObj) {
+      log(iterator);
+    }
+    
+  </script>
+
+</body>
+
+</html>

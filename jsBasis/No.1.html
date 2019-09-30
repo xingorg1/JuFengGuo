@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>数组的遍历方法</title>
+</head>
+<body>
+  <script>
+    var i = 1;
+    var count = 0;
+    for(; i; ){
+      console.log(count);
+      count++;
+      if(count == 10){
+        i = 0
+      }
+    }
+    // 作用域
+    var length = 10;
+    function fn(){
+      console.log(this.length)
+      console.log('this指向',this)
+    }
+    var obj = {
+      length : 5,
+      method : function(fn){
+        console.log(fn)
+        fn();//结果为全局的length变量 - 变量值 10
+        arguments[0]();//结果为arguments伪数组内部的lenth属性 - 长度 1
+        console.log(arguments)
+      }
+    }
+    console.log(fn)
+    obj.method(fn)
+    function aa(){
+      console.log("aa")
+    }
+    var ab = aa;
+    console.log(ab);
+    ab();
+    var name = "window";
+    var obj = {
+      name: 'obj',
+      getName: function(){
+        return function(){
+          return this.name
+        }
+      }
+    }
+    var a = obj.getName();
+    console.log(a);
+    
+  </script>
+</body>
+</html>

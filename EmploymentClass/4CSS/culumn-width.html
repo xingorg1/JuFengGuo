@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div {
+      column-width: 200px;
+      column-count: 3;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='demo'>
+    column-width 属性允许您通过指定列宽度值将元素的内容放置在多个列中，浏览器随后使用该值创建多个列来放置内容。
+
+    列的确切数目取决于可用空间，或取决于您可以使用 column-count 属性指定的特定数目。
+    将列宽和列数两个值都设置并不总是有意义，允许浏览器根据可用空间计算列数，这样更灵活，从而使响应式多列布局更容易。
+    例如，以下将列的宽度设置为“200px”。实际上，这意味着列将至少 “200px” 宽。因为它们可能将会更宽，这取决于可用空间。如果可用空间小于 “200px”，则只有一列的宽度限制为可用空间。
+    啥意思？我们来试试先。
+
+    作者：Hushaby丶
+    链接：https://www.jianshu.com/p/050c90be82e3
+    来源：简书
+    简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+  </div>
+  <script>
+    function getStyle(ele, attr) {
+      if (window.getComputedStyle) {
+        return window.getComputedStyle(ele, null)[attr];
+      } else {
+        return ele.currentStyle[attr];
+      }
+    }
+    var a = getStyle(demo,'columnWidth');
+    var b = getStyle(demo,'columnCount');
+    console.log(a,b)
+  </script>
+</body>
+
+</html>

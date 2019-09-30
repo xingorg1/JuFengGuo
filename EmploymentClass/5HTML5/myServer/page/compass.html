@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>指南针</title>
+  <style>
+    body{
+      margin: 0;
+    }
+    div{
+      text-align: center;
+    }
+    .compass,.scale,.scale span{
+      position: relative;
+      width: 250px;
+      height:250px;
+      border-radius: 50%;
+    }
+    .compass{
+      margin: 100px auto 25px;
+      border: 2px solid #ffee25;
+    }
+    .compass::before{
+      position: absolute;
+      content: "";
+      display: block;
+      width: 4px;
+      height: 35px;
+      left: 50%;
+      margin-top: -35px;
+      margin-left: -2px;
+      background: #000;
+    }
+    /* 十字准星 */
+    .cross{
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+    .cross::before,.cross::after{
+      content: "";
+      display: block;
+      border-top: 1px solid #fff;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      width: 50px;
+      height: 0;
+    }
+    .cross::after{
+      transform: rotate(90deg);
+      margin-left: -25px;
+    }
+    .scale{
+      transform: rotate(0deg);
+      color: #fff;
+      background: rgba(0, 0, 0, 0.86);
+    }
+    .scale span{
+      position: absolute;
+      display: block;
+    }
+    .sp0{
+      transform: rotate(0deg);
+    }
+    .sp0::before{
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -16px;
+      transform: translateX(-50%);
+      display: block;
+      width: 0;
+      border: 8px solid transparent;
+      border-bottom-color: red;
+    }
+    .sp30{
+      transform: rotate(30deg);
+    }
+    .sp60{
+      transform: rotate(60deg);
+    }
+    .sp90{
+      transform: rotate(90deg);
+    }
+    .sp120{
+      transform: rotate(120deg);
+    }
+    .sp150{
+      transform: rotate(150deg);
+    }
+    .sp180{
+      transform: rotate(180deg);
+    }
+    .sp210{
+      transform: rotate(210deg);
+    }
+    .sp240{
+      transform: rotate(240deg);
+    }
+    .sp270{
+      transform: rotate(270deg);
+    }
+    .sp300{
+      transform: rotate(300deg);
+    }
+    .sp330{
+      transform: rotate(330deg);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="compass">
+    
+    <div class="scale" id="scale">
+      <span class="sp0">
+        0
+        <p>北</p>
+      </span>
+      <span class="sp30">30</span>
+      <span class="sp60">60</span>
+      <span class="sp90">
+        90
+        <p>东</p>
+      </span>
+      <span class="sp120">120</span>
+      <span class="sp150">150</span>
+      <span class="sp180">
+        180
+        <p>南</p>
+      </span>
+      <span class="sp210">210</span>
+      <span class="sp240">240</span>
+      <span class="sp270">
+          270
+          <p>西</p>
+      </span>
+      <span class="sp300">300</span>
+      <span class="sp330">330</span>
+    </div>
+    <div class="cross"></div>
+  </div>
+  <div id="txt">
+
+  </div>
+
+  <script src="./js/Vconsole.js"></script>
+  <script>
+    let vconsole = new VConsole();
+    window.addEventListener('deviceorientation',function(e){
+      // 事件名不需要区分大小写。
+      if(e.alpha){
+        console.log(e.alpha);
+      }
+      myLog(e);
+    });
+
+    function myLog(e){
+      let rst = (e.alpha && e.alpha.toFixed(5)) || '0';
+      document.getElementById('txt').innerHTML = `
+        角度: ${rst}°
+      `;
+      document.getElementById('scale').style.transform = `rotate(${ - rst}deg)`
+    }
+  </script>
+</body>
+
+</html>

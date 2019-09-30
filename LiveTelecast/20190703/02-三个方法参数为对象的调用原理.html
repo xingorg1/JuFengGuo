@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			const data=[
+				{type:'数字',value:10},
+				{type:'字符串',value:'kaivon'},
+				{type:'布尔值',value:true},
+				{type:'数组',value:[1,2]},
+				{type:'函数',value:function(){}},
+				{type:'对象',value:{a:10,b:20}}
+			]
+
+			/* 
+				valueOf		返回对象对应的原始值
+				toString	返回对象的字符串的表现形式
+			*/
+
+			// console.dir(Function);
+
+
+			/*
+1、数字、字符串、布尔值
+	valueOf		数据本身（原始值形式）
+	toString	数据转成字符串的形式
+2、数组
+	valueOf		数据本身（对象形式）
+	toString	去掉中括号，外面加个引号（本质为调用数组join(',')后的结果）
+3、函数
+	valueOf		数据本身（对象形式）
+	toString	在数据外面加了个引号
+4、对象
+	valueOf		数据本身（对象形式）
+	toString	"[object Object]" 
+			*/
+			for(var i=0;i<data.length;i++){
+				console.log(data[i].type+'的valueOf的结果为',data[i].value.valueOf());
+				console.log(data[i].type+'的toString的结果为',data[i].value.toString());
+			}
+
+
+
+/* 
+Number方法
+1、调用对象的valueOf方法。如果返回原始类型的值，再使用Number函数，不再进行后续步骤
+2、如果valueOf方法返回的还是对象，则调用toString方法
+3、如果toString方法返回原始类型的值，则对该值使用Number方法，不再进行后续步骤
+4、如果toString方法后返回的是还是对象，就报错（一般不会出现） 
+*/
+			var obj={a:12};
+			obj.valueOf=function(){
+				// alert('你调用了valueOf方法了！');
+				//return 88;	//Number(88)=88
+				//return '88';	//Number('88')=88
+				return {a:12};
+			};
+			obj.toString=function(){
+				// alert('你调用了toString方法了');
+				// return 60;	//Number(60)=60
+				//return '60';	//Number('60')=60
+				return "[object Object]";
+			}
+			console.log(Number(obj));	//NaN
+
+
+			//String
+			/*
+String参数为对象的转换原理
+1、调用对象的toString方法。如果返回原始类型的值，再使用String函数，不再进行后续步骤
+2、如果toString方法返回的还是对象，再调用对象的valueOf方法
+3、如果valueOf方法返回原始类型的值，则对该值使用String函数，不再进行以下步骤
+4、如果valueOf方法返回的是还是对象，就报错（一般不会出现）  
+			 */
+			var obj1={a:12};
+			obj1.toString=function(){
+				//alert('你调用了toString方法了');
+				return "[object Object]";		//String(90)='90'
+			}
+			obj1.valueOf=function(){
+				alert('你调用了valueOf方法了！');
+				return 'kaivon';//String('kaivon');
+			};
+			
+			console.log(String(obj1));	//[object Object]
+		</script>
+	</body>
+</html>

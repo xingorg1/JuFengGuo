@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  color: #333;
+  font-family: 'Microsoft YaHei';
+  min-height: 100vh;
+}
+
+li {
+  list-style: none;
+}
+
+.wrapper {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  padding: 20px;
+  transform: translateX(-50%);
+  min-width: 380px;
+  /* border: 1px dotted #eee; */
+  border-radius: 8px;
+  box-shadow: 0px 2px 14px 2px #f6f3fd;
+}
+
+/* 头部 */
+.title {}
+
+.input {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+input[type='text'] {
+  padding: 8px 16px 7px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  outline: none;
+}
+
+input[type='text']:focus,
+input[type='text']:hover {
+  border-color: #3780f7;
+}
+
+.btns {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.btn {
+  display: inline-block;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn.active {
+  color: #fff;
+  background: #3780f7;
+}
+
+/* 内容列表 */
+.cont {
+  /* margin-top: 20px; */
+}
+
+ul.list {
+  overflow: hidden;
+}
+
+li.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -1px;
+  padding: 20px 0;
+  border-top: 1px dashed #eee;
+  cursor: pointer;
+}
+li.item:hover{
+  background: #faf9fe;
+}
+
+.head {
+  display: inline-block;
+  vertical-align: middle;
+  width: 65px;
+  height: 65px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.head img {
+  width: 100%;
+  display: block;
+}
+
+.info {
+  flex: 1;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 10px;
+}
+
+.name {
+  font-weight: 600;
+  margin-bottom: 10px;
+}

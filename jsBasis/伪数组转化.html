@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <embed wmode="transparent" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_wh.swf"
+    quality="high" bgcolor="#ffffff" width="160" height="70" name="honehoneclock" align="center"
+    allowscriptaccess="always" type="application/x-shockwave-flash"
+    pluginspage="http://www.macromedia.com/go/getflashplayer">
+  <script>
+    window.onload = function(){
+      if (location.protocol == 'https') {
+        document.getElementById('hamster').style.display = 'none';
+        // document.getElementById('myTime').getAttributeNames('object')[0].style.display = 'none';
+        document.getElementById('myTime').innerHTML('<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=b85e23dab24b7eb4a2572d47526e2536d08b1e986f5b1ca6caf31e069f6cfa07"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="IT前端自学交流群" title="IT前端自学交流群"></a>')
+      }
+    }
+  </script>
+  <script charset="Shift_JIS" src="https://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_wh.js"></script>
+  <script>
+    function args() {
+      console.log(arguments);
+      let newArr = [...arguments];
+      let newArr2 = Array.from(arguments);
+      console.log(newArr);
+      console.log(newArr2);
+    }
+    args(1, 2, 3, 23, 2, 42, 34);
+  </script>
+</body>
+
+</html>

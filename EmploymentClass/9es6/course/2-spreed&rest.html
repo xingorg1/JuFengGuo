@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>扩展运算符</title>
+</head>
+
+<body>
+  <script>
+    /* var arg2 = [1,2,3,4,5];
+console.log(...arg2);// 读，展开数组成散列的项
+function test(...args){
+  console.log(args);//写，把散列的项写入到一个数组中
+}
+test(1,2,3,4,5); */
+
+    function test(a, b, ...args) {
+      console.log(a, b, args); //写，把散列的项写入到一个数组中
+    }
+    test(1, 2, 3, 4, 5);
+
+    // 求和函数
+    function getSum() {
+      let len = arguments.length,
+        sum = 0;
+      for (let i = 0; i < len; i++) {
+        sum += arguments[i];
+      }
+      return sum;
+    }
+
+    function getSum() {
+      let arr = Array.prototype.slice.call(arguments);
+      return arr.reduce((pre, cur) => {
+        return pre += cur;
+      }, 0);
+    }
+
+    function getSum(...arr) {
+      // let arr = Array.prototype.slice.call(arguments);
+      return arr.reduce((pre, cur) => {
+        return pre += cur;
+      }, 0);
+    }
+    console.log(getSum(1, 2, 3, 4, 6));
+
+    // 读操作 - 数组合并
+    let arr1 = [1, 2, 3, 4],
+      arr2 = [6, 7, 8, 9],
+      newArr = [...arr1, ...arr2];
+    console.log(newArr);
+    // 相当于下边的写法：
+    let concatArr = [].concat(arr1, arr2);
+    console.log(concatArr);
+
+    // es7 - 扩展运算符
+    var obj = {
+      name: 'xing.org1',
+      age: 18,
+      IDCard: {
+        num: 123123812412,
+        address: 'BeiJing CHINA'
+      }
+    }
+    var obj2 = {
+      ...obj,
+      sex: 'female'
+    }
+    console.log(obj2);
+    obj2.IDCard.address = 'HangZhou CHINA';
+    console.log(obj.IDCard.address, obj2); // 浅拷贝
+
+    // es6扩展运算符浅克隆
+    var arrA = [{
+      a: 1,
+      b: 1
+    }, 'b', {
+      a: 2,
+      b: 2
+    }];
+    var arrB = [...arrA]; //相当于[].concat(arrA);
+    console.log(arrB)
+    arrB[0].a = '浅克隆？';
+    arrB[1] = '浅克隆！';
+    console.log('arrA：', arrA, 'arrB', arrB);
+
+
+    // JSON.parse(JSON.stringify());实现深克隆
+    var jsonTest = {
+      bool: false,
+      a: 1,
+      b: '2',
+      c: [1, 2],
+      d: function () {
+        console.log(this.d)
+      },
+      e: undefined,
+      f: null,
+      g: new Date(),
+      h: /\d/g,
+      i: new String('a'),
+      k: new Number(1),
+      l: new Boolean(true),
+      m: new Object(),
+      n: {
+        bool: true,
+        a: 1,
+        b: '2',
+        c: [1, 2],
+        d: function () {
+          console.log(this.d)
+        },
+        e: undefined,
+        f: null,
+        g: new Date(),
+        h: /\d/g,
+        i: new String('a'),
+        k: new Number(1),
+        l: new Boolean(true),
+        m: new Object(),
+        n: {
+          a: 1
+        }
+      }
+    };
+    var jsonObj = JSON.parse(JSON.stringify(jsonTest));
+    console.log(jsonObj)// 查看克隆丢失
+    jsonObj.c.push(3);
+    jsonObj.n.a = '深拷贝';
+    console.log(jsonTest.c,jsonTest.n.a);
+    console.log(jsonObj.c,jsonObj.n.a);
+
+
+    // Object.assign
+
+    // Object.assign(目标对象,克隆对象1，克隆对象2);
+    // 会以浅克隆的方式，将后边对象的值复制到目标对象里边去。
+    var assign1 = {
+      a : 1,
+      b: {c: 2}
+    }
+    var assign2 = {
+      aa : 1,
+      bb: {cc: 2}
+    };
+
+    var newObj = Object.assign({},assign1,assign2);
+    console.log(newObj);
+    newObj.aa = 3;
+    newObj.b.c = '浅拷贝';
+    console.log(assign1,assign2,newObj);
+  </script>
+</body>
+
+</html>

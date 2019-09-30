@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>选项卡效果</title>
+  <style>
+    *{
+      margin: 0;
+    }
+    html,body{
+      height: 100%;
+      overflow: hidden;
+    }
+    .btns{
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1;
+    }
+    .btns a{
+      padding: 20px;
+      background: #717171;
+      border-radius: 8px;
+      margin-right: 10px;
+      color: #000;
+      text-decoration: none;
+      display: inline-block;
+      /* border: 1px solid tomato; */
+      box-shadow: 0px 0px 13px 2px rgba(164, 138, 226, 0.52);
+    }
+    .pages{
+      height: 100%;
+    }
+    a[href='#page1']{
+      background: #efd;
+    }
+    a[href='#page2']{
+      background: #dfe;
+    }
+    a[href='#page3']{
+      background: #fde;
+    }
+    .pages div{
+      height: 100%;
+      font-size: 40px;
+      font-weight: 800;
+      text-align: center;
+      transition: all 1s linear;
+      opacity: 0;
+    }
+    #page1{
+      background: #efd;
+    }
+    #page2{
+      background: #dfe;
+    }
+    #page3{
+      background: #fde;
+    }
+    .pages div:first-child,
+    .pages div:target{
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="btns">
+    <a href="#page1">1111</a>
+    <a href="#page2">2222</a>
+    <a href="#page3">3333</a>
+  </div>
+  <div class="pages">
+    <div id="page1">page1</div>
+    <div id="page2">page2</div>
+    <div id="page3">page3</div>
+  </div>
+</body>
+</html>

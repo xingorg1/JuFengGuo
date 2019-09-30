@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <button onclick="aaa()">点击</button>
+  <div id="up">up</div>
+  <div id="down">down</div>
+    <script src="http://www.jq22.com/jquery/jquery-1.7.1.js"></script>
+  <script>
+    function aaa(){
+      console.log(this);
+    }
+    $("#up").on('click',function(){
+      console.log('upupupup')
+    });
+    $("#down").on('click',function(){
+      console.log('ddddd')
+    });
+    $(document).keydown(function (event) {
+      console.log(event,event.keyCode)
+        if(event.keyCode == 38){
+            $("#up").click();
+        }
+        if(event.keyCode == 40){
+            $("#down").click();
+        }
+    })
+    var aa = 4;
+    aa ++;
+    console.log(aa)
+    if (aa==5) {aa=0;}
+    console.log(aa);
+    // 字面量对象属性的修改
+    var obj = {
+      name: 'xiaoming',
+      age: 18
+    }
+    obj.age++;
+    console.log(obj)
+    console.log(Object.getOwnPropertyDescriptors(obj))
+    //Object.create创建对象的修改
+    var obj2 = {
+
+    }
+    obj2 = Object.create(obj, {
+      sex: {
+        // writable: true,//注释后sex将不能修改
+        value: 'male'
+      },
+      name: {
+        value: 'xiaozhang'
+      }
+    })
+    console.log(obj2)
+    console.log(Object.getOwnPropertyDescriptors(obj2))
+    obj2.sex = 'female';
+    console.log(obj2)
+    // 修改引用类型
+    var obj3 = {
+    }
+    obj3 = Object.create(obj, {
+      hobby: {
+        value: ['swim', 'pingpang']
+      }
+    })
+    console.log(obj3);
+    console.log(Object.getOwnPropertyDescriptors(obj3))
+    obj3.hobby[0] = 'shopping';//但是这种的就能直接修改，这属于数组内容的修改，不是对象属性的修改
+    console.log(obj3);
+    //  实例对象怎么改原型链上的属性啊
+    var Father = function (){
+      this.laseName = 'guo';
+      this.money = 1000000;
+      this.hobby = ['work','reading','eating'],
+      this.asset = {
+        card1: '中国农业银行',
+        card2: '中国建设银行',
+      }
+    }
+    Father.prototype = {
+      sayName: function (){
+        alert(this.laseName);
+      }
+    }
+    var father = new Father();
+    // father.sayName();
+    var Son = function(){
+      this.name = '丫头';
+    }
+    Son.prototype = father;
+    var son = new Son();
+    son.money = 12312;//修改不了原型的原始属性值
+    son.hobby = ['shopping','reading','eating','movie'],//修改不了原型的引用类型值
+    console.log(son,son.asset);
+    // debugger;
+    // *特殊，这种做法，就能修改对象里属性card1的值
+    son.asset.card1 = '招商银行'
+    console.log(son.asset);
+    // 什么乱七八糟的写法
+    function mrDeng(){
+      var name = 'hah',
+      age = 40,
+      sex = 'male',
+      health = 100
+    }
+    mrDeng();
+    console.log(mrDeng.name);
+    // 函数的name属性修改
+    mrDeng.name = 'guojufeng'
+    console.log(mrDeng.name);
+    var obj = {
+      a: 1,
+      c: function(){
+        return this.a
+      }
+    }
+    console.log(obj.c())
+    console.log(obj)
+  </script>
+</body>
+
+</html>

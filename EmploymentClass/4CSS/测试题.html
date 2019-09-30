@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>css3测试题</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>自适应圆形</h1>
+  <div class="circle"></div>
+  <h1>背景色渐变方向</h1>
+  <div class="bg bg1">0deg垂直</div>
+  <div class="bg bg2">90deg水平</div>
+  <h1>如果去掉图片之间的默认空隙</h1>
+  <div class="img-box">
+    <img src="bdImg.jpg" alt="">
+    <img src="bdImg.jpg" alt="">
+    <img src="bdImg.jpg" alt="">
+  </div>
+  <h1>实现一个上三角形</h1>
+  <div class="triangle"></div>
+  <h1>文字溢出打点</h1>
+  <div class="one">一行文字溢出打点文字溢出打点文字溢出打点文字溢出打点文字溢出打点文字溢出打点</div>
+  <div class="two">一行文字溢出打点文字溢出打点文字溢出打点文字溢出打点文字溢出打点文字溢出打点</div>
+  <div class="box box1">
+    <div class="red"></div>
+    <div class="green"></div>
+  </div>
+  <div class="box box2">
+    <div class="red"></div>
+    <div class="green"></div>
+  </div>
+  <div class="box box3">
+    <div class="red"></div>
+    <div class="green"></div>
+  </div>
+  <div class="box box4">
+    <div class="red"></div>
+    <div class="green"></div>
+  </div>
+  <div class="wrapper">
+    <div class="box"></div>
+  </div>
+  <div class="qubie">
+    <div class="dis" id="dis">display:none;</div>
+    <div class="visi" id="visi">visibility: hidden;</div>
+    <div class="opc" id="opc">opacity: 0;</div>
+  </div>
+  <div class="center-box">
+
+    <div class="center center1">center1</div>
+    <div class="center center2">center2</div>
+    <div class="center center3">center3</div>
+    <div class="center center4">center4</div>
+  </div>
+  <h1>连续的长字符串自动换行</h1>
+  <div class="word-wrap">ahfkadjfhiquhefkhufiqhwefjasfihwief</div>
+  <table border="1">
+    <tbody>
+      <tr>
+        <td colspan="2" width="200">1</td>
+        <td width="100">3</td>
+      </tr>
+      <tr>
+        <td id="a">11</td>
+        <td>22</td>
+        <td>33</td>
+      </tr>
+    </tbody>
+
+  </table>
+  <div class="trans" id="trans">hover</div>
+  <button id="btn">click</button>
+  <h1>实现一个倒影效果</h1>
+  <div class="reflect">倒影</div>
+  <script>
+    dis.onclick = function () {
+      console.log('display:none');
+    }
+    visi.onclick = function () {
+      console.log('visibility:hidden');
+    }
+    opc.onclick = function () {
+      console.log('opacity: 0');
+    }
+    trans.addEventListener('transitionend', function (e) {
+      console.log('事件完毕', e);
+      var event = document.createEvent('MouseEvents');
+      // 事件类型，是否冒泡，是否阻止浏览器的默认行为
+      event.initEvent("click", true, true);
+      btn.dispatchEvent(event);
+    });
+
+    btn.onclick = function () {
+      console.log('Panda‘s biggest hope is to own a color photo!!!')
+    }
+  </script>
+</body>
+
+</html>

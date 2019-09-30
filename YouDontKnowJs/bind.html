@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>bind</title>
+</head>
+
+<body>
+  <input type="file">
+  <ul id="oUl">
+    <li>
+      bind作用：改变函数内部this指向
+    </li>
+    <li>与call或apply的区别：call和apply是直接调用函数，bind则是返回一个新的函数，新函数调用执行函数里的内容，只不过this发生改变。可以理解成，bind就是一个方法过滤器，把函数内部的内容拿出来给了新函数，并把this改变。然后把新函数再返回出来。</li>
+    <li>被bind改变过一次this指向的函数，其this不能再用call和apply甚至bind改变了</li>
+    <li>那被bind过的函数，再次执行new还会改变this指针吗？毕竟new构造函数也是改变this的一种方法啊！测试结果是，new可改变被bind绑定过的函数的this指向。其指向按照new的原则走</li>
+
+    <li>bind独特特性：函数柯里化</li>
+    <li>bind的第一个参数会被当做this指针的对象传进去。第二个乃至第n个参数，就是调用bind的函数要接受的参数了。</li>
+    <li>bind实现柯里化的特点也就是，假如一个函数需要5个参数，我第一次使用bind调用函数时除了this指针对象以外，还传入了2个参数。那么调用bind返回的函数体再次被调用时，可以再传入后3个参数。</li>
+
+  </ul>
+  <script>
+    var str = 'window';
+    var obj = {
+      str: 'obj'
+    }
+    var test = {
+      str: 'test'
+    }
+
+    function testCall() {
+      console.log(this.str);
+    }
+
+    function testBind() {
+      console.log(this.str);
+    }
+    var callResult = testCall.call(obj);
+    var bindResult = testBind.bind(test);
+    /* 控制台中只打印出了testCall执行的结果。testBind并没有被执行。看bind的颜色都是不对的 */
+    console.log(callResult);
+    console.log(bindResult)
+    // 因为两个函数内部都没有写返回值，所以callResult返回undefined
+    // 但是因为bind的原理机制，函数调用bind是返回一个新函数。而这个新函数的函数体依旧是调用bind的函数，即testBind。但是函数体内部的this指向已经改变，只是我们看不出来。
+    bindResult()
+    // 因为此时bindResult拿到的就是新的函数体，所以他可以被调用。我们调用他相当于调用testBind的双胞胎妹妹。执行结果也就是输出this.str，此时this被bind绑定给test了，所以str也就是‘test’
+
+    /* 使用bind转换过后还不满意，想用call或apply再次转换this试试 */
+    bindResult.call(obj);
+    // 结果发现，并没有卵用，this依旧指向test。这就是被bind调用后的函数，内部this不能再被call或apply改变了。
+
+    /* 使用new测试 */
+    var myNew = {
+      str1: 'new构造函数的影响'
+    }
+
+    function forNewBind() {
+      this.str2 = 'new构造函数准备的'
+      console.log(this.str1, this.str2);
+    }
+    var forNew = forNewBind.bind(myNew);
+    console.log(forNew);
+    forNew(); //this指向myNew，正常bind作用
+    console.log(myNew);
+    var newFornew = new forNew(); //this指向new时产生的this对象，str1为undefine，str2为自身属性被输出
+    console.log(newFornew)
+    console.log(myNew)
+
+    // 说明，new能继续改变bind过后的函数的this指向。这里可以打断点查看scope就知道了，this指向改变的很明显。
+
+
+    // bind实现柯里化
+    var bindThis = {
+      name: 'xing.org1^',
+      age: 18
+    }
+
+    function bindCurry(a, b, c, d, e) {
+      console.log('this指针', this);
+      console.log(a, b, c, d, e);
+    }
+
+    /* 柯里化传参 */
+    var newBindRst = bindCurry.bind(bindThis, '我是对应参数a的', '我是对应参数b的');
+
+    //调用bind的返回结果，再次传入剩下的参数
+    newBindRst('我是对应参数c的', '我是对应参数d的', '我是对应参数e的');
+
+    /* bind仿写 */
+    console.log('==========bind仿写===========')
+    // 返回一个函数
+
+    function testMyBindF(a, b) {
+      console.log(this.str, a, b);
+    }
+    Function.prototype.xingorgBind = function (obj) {
+      var thisObj = Array.prototype.shift.call(arguments);
+      var _self = this,
+        _arg1 = arguments;
+      /*
+        1、利用shift切出第一个参数用来指向this；
+        2、然后因为shift的原理会改变原数组，所以切换走第一个参数后，后边的参数都可以传到原函数调用的时候。
+        3、arguments是伪数组，想要使用array的方法需要call改变shift内部的this指针。不用把他换成真数组。这样以后你想要DOMContent伪数组使用array的forEach方法时，可以也这么做：Array.prototype.forEach.call(DOMContent)
+      */
+      return function () {
+        var _args = _arg1.concat(arguments);
+        /* 
+          提前储存一下this,防止this隐式丢失。
+          然后利用concat把两次函数的arguments合并到一起。因为_arg1已经被第一步的shift切割出来了用于this指向的thisObj。所以这里直接合并即可。
+         */
+        _self.apply(thisObj, _args); //利用apply把合并后的伪数组传进去。
+      }
+    }
+    var testMyBind = testMyBindF.bind(obj, 1);
+    testMyBind(2); //'obj'
+
+    var oLi = document.getElementsByTagName('li');
+    console.log(oLi);
+    Array.prototype.forEach.call(oLi, element => {
+      console.log(element);
+    });
+    /* 第三步实现new的时候使用new的this */
+    // 问题，如何知道一个函数经过new了？
+    /* 第四步实现call和apply不能再改变this */
+
+
+    /* 单对象编程 */
+    var list = {
+      init: function () {
+        this.ms = 'xing.org1^';
+        this.dom = document.getElementById('oUl'); //dom成了list的属性
+        this.bindEvent();
+      },
+      bindEvent: function () {
+        this.dom.onclick = this.showMessage.bind(2, 'a', 'b', 's', 'w');
+      },
+      showMessage: function (a, b, s, w, e) {
+        console.log(a, b, s, w, e);
+        console.log(this.ms); //this是2，2.ms就是数字上的属性，中间经历构造类创建ms属性又delete删除。再次获取构造类对象上的属性，找不到就是undefiend。
+      }
+    }
+    list.init();
+    /* 总结 */
+    function A() {
+
+    }
+    var o = {};
+    var x = 1;
+    var y = 2;
+    var z = 3;
+    var B = A.bind(o, x, y);
+    B('c');
+
+    var newB = A.bind(o);
+    // var newBRst = new newB(otherObj);
+    // 1. 函数A调用bind方法时，需要传递的参数o,x,y,z...
+    // 2. 返回新的函数B
+    // 3. 函数B在执行的时候，具体的功能实际上还是使用A的，只不过this指向变成了第一个参数，这里是o
+    // 4. 函数B在执行的时候，传递的参数会拼接到x,y,z的后边，一定在内部把这些参数会传递给A执行。
+    // 5. 当new执行bind返回的函数时，构造函数依旧是A，bind调用传递的第一个参数o将不再起到改变this的作用。
+
+    Function.prototype.gjfBind = function (target) {
+      // target用于改变调用gjfBind方法的函数的this指向
+      var self = this,
+        _args = Array.prototype.slice.call(arguments, 1);
+      var temp = function () {}; // * 圣杯模式，缓冲函数。
+      var f = function () {
+        // 当用new调用f的时候，里边的this就是以f为构造函数创建的对象，那么沿着作用域链往上找，一定是temp。所以可以判断this的原型上是不是有temp，如果有就是用new的方式执行的，那么返回当前函数内的this即可，否则返回bind的。
+        // * instanceof 用法是前边是对象，后边是构造函数。要看前边的对象在原型链上能不能找到后边构造函数的原型。
+        //* 合并时转成真数组
+        var _arg = Array.prototype.slice.call(arguments);
+        // 内部真正指向调用bind的函数 self
+        return self.apply(this instanceof temp.prototype ? this : (target || window), _args.concat(_arg));
+        //* 如果没有填第一个参数的话，就让函数内部this指向window。防止隐式丢失还是写一下吧。
+        //* 返回原函数执行后的返回值。
+      }
+      temp.prototype = self.prototype;
+      f.prototype = new temp(); //* 返回的新函数f和原函数self形成继承关系，让返回的f在被new执行构造函数的时候，能够顺着原型找到temp。进而找到self原函数。那么new f()时创建的实例对象能找到constructor - self原函数。也就是self是f的constructor。这样用new方式执行，内部this就不执行。
+      return f;
+    }
+    var gjfB = A.gjfBind(o, 12, 2, 3, 4);
+
+    Function.prototype.gjfBind = function (target) {
+      // target用于改变调用gjfBind方法的函数的this指向
+      var self = this,
+        _args = Array.prototype.slice.call(arguments, 1);
+      var temp = function () {}; // * 圣杯模式，缓冲函数。
+      var f = function () {
+        // 当用new调用f的时候，里边的this就是以f为构造函数创建的对象，那么沿着作用域链往上找，一定是temp。所以可以判断this的原型上是不是有temp，如果有就是用new的方式执行的，那么返回当前函数内的this即可，否则返回bind的。
+        // * instanceof 用法是前边是对象，后边是构造函数。要看前边的对象在原型链上能不能找到后边构造函数的原型。
+        //* 合并时转成真数组
+        var _arg = Array.prototype.slice.call(arguments);
+        // 内部真正指向调用bind的函数 self
+        return self.apply(this instanceof temp.prototype ? this : (target || window), _args.concat(_arg));
+        //* 如果没有填第一个参数的话，就让函数内部this指向window。防止隐式丢失还是写一下吧。
+        //* 返回原函数执行后的返回值。
+      }
+      temp.prototype = self.prototype;
+      f.prototype = new temp(); //* 返回的新函数f和原函数self形成继承关系，让返回的f在被new执行构造函数的时候，能够顺着原型找到temp。进而找到self原函数。那么new f()时创建的实例对象能找到constructor - self原函数。也就是self是f的constructor。这样用new方式执行，内部this就不执行。
+      return f;
+    }
+    
+    
+    Function.prototype.gjfBind = function (target) {
+      console.log(target)
+      var self = this,
+        _args = Array.prototype.slice.call(arguments, 1);
+      var temp = function () {};
+      var f = function () {
+        var _arg = Array.prototype.slice.call(arguments);
+        console.log(this instanceof temp, this, (target || window))
+        return self.apply(this instanceof temp ? this : (target || window), _args.concat(_arg));
+      }
+      temp.prototype = self.prototype;
+      f.prototype = new temp();
+      return f;
+    }
+    var name = 'widow';
+    function show(a,b){
+      // this.name = 'in show';
+      console.log(this,this.name,a,b);
+    }
+    var obj = {
+      name: 'obj'
+    };
+    var obj2 = {
+      name: 'obj2'
+    };
+ 
+    var ns = show.bind(obj);
+
+    ns('aaa1','aaa2');
+
+    show.call(obj2,'ad','e');
+    // var shili = null;
+    // shili = new ns('aaa1','aaa2');//bind以后再new一下，this不改变
+
+    // console.log(shili);
+
+
+  </script>
+</body>
+
+</html>

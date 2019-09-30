@@ -1,0 +1,300 @@
+/*
+ * @Author: @Guojufeng 
+ * @Date: 2019-01-17 20:40:26 
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2019-01-20 20:17:13
+ */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Microsoft YaHei';
+}
+
+margin-right: 10px;
+
+img {
+  display: block;
+
+}
+
+.hide {
+  display: none;
+}
+
+.wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+/* header */
+.header {
+  line-height: 70px;
+  height: 70px;
+  background: #004646;
+  padding: 0 20px;
+}
+
+/* logo */
+.header-img {
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: #f2f2f2;
+}
+
+/* logo-img */
+.header-img img {
+  width: 100%;
+}
+
+/* span */
+.header-txt {
+  color: #fff;
+  /* display: inline-block; */
+  vertical-align: middle;
+}
+
+.container {
+  position: absolute;
+  top: 70px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+/* nav */
+.nav {
+  position: absolute;
+  width: 200px;
+  height: 100%;
+  /* top: 0;
+  bottom: 0; */
+  background: teal;
+
+}
+
+.nav-list {}
+
+.nav-list dt {
+  font-size: 16px;
+  color: #eee;
+  padding: 15px 10px;
+
+}
+
+.nav-list dd {
+  color: #eee;
+  margin-bottom: 5px;
+  padding: 15px 0;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+.nav-list dd:hover,
+.nav-list dd.cur {
+  background: #31bfbf;
+  color: #fff;
+}
+
+/* article */
+.cont {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  left: 200px;
+}
+
+.cont-items {
+  /* padding-top: 50px; */
+}
+
+form.form {
+  width: 300px;
+  margin: 50px auto 0;
+  color: #004646;
+}
+
+label {
+  cursor: pointer;
+}
+
+.row {
+  margin-bottom: 15px;
+}
+
+.row input[type='text'] {
+  padding: 7px 5px;
+  border-radius: 2px;
+  border: 1px solid #31bfbf;
+  outline: none;
+}
+
+.row input[type='text']:focus {
+  border-color: #004646;
+}
+
+input#male {
+  cursor: pointer;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+input#female {
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.left {
+  display: inline-block;
+  margin-right: 10px;
+  text-align: right;
+  min-width: 75px;
+}
+
+input[type='submit'],
+input[type='reset'] {
+  padding: 7px 10px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+input[type='submit'] {
+  background: #3adc6d;
+  margin-left: 90px;
+  margin-right: 10px;
+}
+
+input[type='submit']:hover {
+  background: #2fc35e;
+}
+
+input[type='reset'] {
+  background: #f56850;
+}
+
+input[type='reset']:hover {
+  background: #e45840;
+}
+
+/* table页面 */
+
+table.user-table {
+  width: 96%;
+  margin: 50px 20px;
+  border-spacing: 0;
+}
+
+thead.table-head {}
+
+.table-head tr {
+  background: #f1f1f1;
+  border-bottom: 1px dotted #eff;
+}
+
+.table-head th {
+  padding: 10px 5px;
+  border-right: 1px solid #e0e0e0;
+}
+
+.table-head th:last-child {
+  border-right: 0;
+}
+
+tbody.table-body {
+  font-size: 12px;
+}
+
+.table-body tr {}
+
+.table-body tr:nth-child(even) {
+  background: #fbfbfb;
+}
+
+.table-body td {
+  padding: 10px 5px;
+  text-align: center;
+  border-right: 1px solid #f1f1f1;
+}
+
+.table-body td:last-child {
+  border-right: 0;
+}
+
+.edit {
+  background: #31bfbf;
+}
+
+.edit,
+.del {
+  /* font-size: 12px; */
+  opacity: 0.85;
+  color: #fff;
+  padding: 4px 5px;
+  border-radius: 4px;
+}
+
+.del {
+  background: #f40;
+}
+
+.edit:hover,
+.del:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+/* 编辑弹窗 */
+.layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.layer .close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-weight: 600;
+  border-radius: 50%;
+  border: 1px solid;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  color: #808080;
+  cursor: pointer;
+}
+.layer .close:hover{
+  color: #333;
+}
+
+.edit-student {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 380px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 14px 0px #004646;
+  background: #fff;
+}
+
+.edit-student h3 {
+  text-align: center;
+}

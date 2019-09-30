@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="xingorg1Utils.js"></script>
+  <script>
+    function log(str) {
+      console.log(str)
+    }
+    /* this指向 */
+    var myObj = {
+      foo: "bar",
+      func: function () {
+        var self = this;
+        document.write("outer Fun - this：", this.foo, "<br/>");
+        document.write("outer Fun - self：", self.foo, "<br/>");
+        (function () {
+          document.write("inner Fun - this：", this.foo, "<br/>");
+          document.write("inner Fun - self：", self.foo, "<br/>");
+        }())
+      }
+    }
+    myObj.func();
+    /* 深浅拷贝 */
+    // 不拷贝
+    var obj = {
+      a: {
+        b: 10
+      }
+    }
+    var obj2 = obj;
+    obj2.a.b = 20;
+    console.log(obj.a);
+    // 浅拷贝
+    var qObj = {
+      a: 10,
+      b: 20,
+      c: ["1", "2"]
+    }
+
+    function copy(obj) {
+      var newObj = {};
+      for (const key in obj) {
+        // console.log(key)
+        // console.log(obj[key])
+        newObj[key] = obj[key]
+      }
+      console.log("拷贝完的newObj", newObj)
+      return newObj
+    }
+    var qCopy = copy(qObj);
+    console.log("拷贝前的原qObj", qObj);
+    console.log("请赶紧展开上边两个结果，静待更新!");
+    setTimeout(() => {
+      qCopy.a = 123;
+      qCopy.c.push(2);
+      console.log("修改了拷贝的对象后，再看拷贝前的原qObj", qObj)
+      console.log("总结：原始值被拷贝了一遍，但是引用值只是拷贝了一个地址，修改拷贝的东西，原有的引用部分也会被修改")
+    }, 3000);
+    console.log("...........拷贝数组...........")
+    /* 深度克隆 */
+    var obj = {
+      a: 1,
+      b: null,
+      c: {
+        d: [1, 2, 3, 4],
+        e: {
+          f: "str",
+          i: function () {
+            var a = 2;
+            console.log(this.a)
+            console.log(a)
+          }
+        }
+      },
+      g: undefined,
+      h: false,
+      k: ["郭", "菊", "锋"]
+    }
+    /*
+     * @Author: guojufeng@ 
+     * @Date: 2018-10-30 20:48:44 
+     * @purpose 深度克隆
+     * @param {variateName} origin: 要克隆的对象变量名
+     * @output {对应值} 根据origin的类型返回的具体值
+     */
+    function deepCloneOrigin(origin) {
+      /* 思路 */
+      // 查值的类型
+      //   三种方法：1、instanceof 2、Object.prototype.toString.call(target) 3、target.constuctor
+      // 如果是原始值
+      //   就直接复制
+      // 如果是引用值，
+      //   则进行遍历,查看每一项的具体类型  
+      //     如果是数组，新建一个数组，forEach时把每一项抛进去新数组
+      //     如果是对象，新建一个对象，for in时让新旧对象键值一一对应
+      // 遍历过程中，再次判断引用类型值的每一项，
+      //   如果是原始值，就直接复制
+      //   如果是引用值，就继续看具体类型、新建对应类型、一一遍历
+      //   遍历过程中，再次判断引用类型值的每一项，
+      //     如果是原始值，就直接复制
+      //     如果是引用值，就继续看具体类型、新建对应类型、一一遍历
+      //       遍历~~~【->-> 递归】
+      let type = getType(origin),
+        target;
+      if (type == "array") {
+        target = [];
+        /* 数组 */
+        origin.forEach(el => {
+          console.log("ele", el)
+          target.push(deepClone(el));
+        });
+      } else if (type == "object") {
+        /* 对象 */
+        target = {};
+        for (const key in origin) {
+          if (origin.hasOwnProperty(key)) {
+            /* 注意，只拷贝元素身上的，而不拷贝其原型上的值 */
+            const el = origin[key];
+            target[key] = deepClone(el);
+          }
+        }
+      } else if (type == "function") {
+        /* 函数 */
+        target = function () {};
+        target = origin;
+      } else {
+        /* 原始值 */
+        target = origin;
+      }
+      return target;
+    }
+    var test = [1, 2, null, undefined, false, [3, 4]];
+    var res = xingorg1Utils.deepClone(test);
+    console.log(res, xingorg1Utils.getType(res))
+    res.push(222);
+    console.log("res修改值", res)
+    console.log("test原始值", test)
+    var test1 = {
+      a: 1,
+      b: 2,
+      c: [1, 2],
+      d: function () {
+        console.log(this.d)
+      }
+    };
+    console.log("++++++++++++拷贝对象+++++++++++++")
+    var res1 = xingorg1Utils.deepClone(test1);
+    console.log(res1, xingorg1Utils.getType(res1))
+    res1.b = 3;
+    res1.c.push('test');
+    console.log("res1修改值", res1);
+    console.log("test1原始值", test1);
+    res1.d = null;
+    console.log("res1修改值", res1);
+    console.log("test1原始值", test1);
+
+    // 
+    /*
+     * @Author: guojufeng@ 
+     * @Date: 2017-12-20 15:07:06
+     * @purpose 获取一个值的类型
+     * @param {variateName} target: 要获取类型的变量名或对象
+     * @output {string} result || "null": 返回的参数 - result或者null,为字符串形式的
+     */
+    function getType(target) {
+      if (target === null) {
+        console.log("getType: " + target)
+        return "null";
+      }
+      let result = typeof (target);
+      if (result == "object") {
+        if (target instanceof Array) {
+          result = "array";
+        } else if (target instanceof Object) {
+          result = "object";
+        }
+      }
+      console.log("getType: " + result)
+      return result; //返回类型值的字符串形式
+    }
+    // 类型获取测试
+    // var a = function(){}
+    // var b  = [];
+    // var c = new Array;
+    // var d = {};
+    // var e = new Object;
+    // var s = "123";
+    // var bl = false;
+    // var n = 123;
+    // var nan = parseInt("req");
+    // var nu= null;// null 怎么算
+    // var un= undefined;
+    // getType(a)
+    // getType(b)
+    // getType(c)
+    // getType(d)
+    // getType(e)
+    // getType(s)
+    // getType(bl)
+    // getType(n)
+    // getType(nan)
+    // getType(nu)
+    // getType(un)
+    // var m = un;
+    // console.log(m === null);
+    // console.log(nu === null);
+
+    // JSON.parse(JSON.stringify());实现深克隆
+    var jsonTest = {
+      bool: false,
+      a: 1,
+      b: '2',
+      c: [1, 2],
+      d: function () {
+        console.log(this.d)
+      },
+      e: undefined,
+      f: null,
+      g: new Date(),
+      h: /\d/g,
+      i: new String('a'),
+      k: new Number(1),
+      l: new Boolean(true),
+      m: new Object(),
+      n: {
+        bool: true,
+        a: 1,
+        b: '2',
+        c: [1, 2],
+        d: function () {
+          console.log(this.d)
+        },
+        e: undefined,
+        f: null,
+        g: new Date(),
+        h: /\d/g,
+        i: new String('a'),
+        k: new Number(1),
+        l: new Boolean(true),
+        m: new Object(),
+        n: {
+          a: 1
+        }
+      }
+    };
+    var jsonObj = JSON.parse(JSON.stringify(jsonTest));
+    console.log(jsonObj) // 查看克隆丢失
+    jsonObj.c.push(3);
+    jsonObj.n.a = '深拷贝';
+    console.log(jsonTest.c, jsonTest.n.a);
+    console.log(jsonObj.c, jsonObj.n.a)
+
+    // Object.assign
+
+    // Object.assign(目标对象,克隆对象1，克隆对象2);
+    // 会以浅克隆的方式，将后边对象的值复制到目标对象里边去。
+    var assign1 = {
+      a : 1,
+      b: {
+        c: 2
+      }
+    }
+    var assign2 = {
+      aa : 1,
+      bb: {
+        cc: 2
+      }
+    };
+
+    var newObj = Object.assign({},assign1,assign2);
+    newObj.aa = 3;
+    console.log(newObj);
+  
+  
+  
+  </script>
+</body>
+
+</html>

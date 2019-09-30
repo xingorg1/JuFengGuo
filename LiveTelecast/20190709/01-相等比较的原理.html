@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+
+<body>
+	<script>
+		//转数字
+		console.log(
+			12 == '12', 		//true	12==12
+			0 == '', 				//true	0==0
+			1 == true, 			//true	1==1
+			2 == false,		  //false	2==0
+			'true' == true, //false	NaN==1
+			' ' == false,	  //true	//0==0
+		);
+
+
+		console.log(
+			// undefined只等于自身和null，其他一概不等于
+			undefined == 0, 				//false
+			undefined == '', 				//false
+			undefined == false,			//false
+			undefined == undefined, //true 
+			null == 0,						 	//false
+			null == '',						 	//false
+			null == false,					//false
+			null == undefined, 			//true
+		);
+
+
+		console.log(
+			[1] == 1, 							//true	'1'==1	1==1
+			[] == 0, 								//true	''==0	0==0
+			[1] == true, 						//true	'1'==true	1==1
+			[1, 'a', 3] == '1,a,3', //true	'1,a,3'=='1,a,3'
+			{a: 1} == 1, 						//false	 '[object Object]'==1	NaN==1	
+			[] == undefined,			  //false  undefined只等于自身和null
+			[null] == null, 				//false  null只等于自身和undefined
+		);
+
+
+
+		console.log(
+			[] == [], //false 地址不同
+			{} == {}, //false 地址不同
+		);
+
+		var fn1 = function () {
+			return 1;
+		}
+		var fn2 = function () {
+			return 1;
+		}
+		var fn3 = fn1;
+
+		console.log(fn1 == fn2); //false 地址不同
+		console.log(fn1 == fn3); //true  地址相同
+
+
+
+		/* 
+			相等比较
+				1、不同类型的原始类型数据，把所有的数据转成数字后进行对比
+				2、null与undefined除了它们自己与自己、自己与对方相等，与其它的任何数据都不相等
+				3、对象与原始类型数据比较时，把对象转成原始值，再进行比较
+				4、对象与对象类型比较时，比较的是他们的引用地址，除非引用地址相同，否则都不相等
+			
+			总结：
+				1、原始类型对比，转成数字对比
+				2、对象类型对比，把对象转成字符串，然后看对方的类型，如果不一样，都转成数字对比。对象与对象比较，比较引用地址
+				3、null与undefined，自己与自己、自己与对方相等。与其它任何数据都不相等
+		 */
+	</script>
+</body>
+
+</html>

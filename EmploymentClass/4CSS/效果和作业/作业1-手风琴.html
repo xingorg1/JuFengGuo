@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>手风琴效果</title>
+  <style>
+    body {
+      text-align: center;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: #eee;
+    }
+
+    .pages {
+      width: 450px;
+      padding: 20px 0;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 0px 0px 7px 3px #e8eff1;
+      border-radius: 10px;
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+      line-height: 50px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    .pages a:not(:last-of-type) {
+      border-bottom: 1px solid #e2e2e2;
+    }
+
+    a:hover,
+    a:active {
+      background: #e8eff1;
+    }
+
+    .pages .page {
+      /* display: none; */
+      height: 0;
+      opacity: 0;
+      line-height: 175px;
+      overflow: hidden;
+      background: #f1f1f1;
+      transition: all .35s ease-in-out;
+      border-top: 1px solid #e2e2e2;
+      border-bottom: 1px solid #e2e2e2;
+    }
+
+    .pages .page:target {
+      /* display: block; */
+      height: 175px;
+      opacity: 1;
+    }
+
+    .accordion {
+      width: 860px;
+      margin: 20px auto;
+      padding: 20px 0 0;
+      background: #fff;
+      box-shadow: 0px 0px 7px 3px #e8eff1;
+      border-radius: 10px;
+      font-size: 0;
+    }
+
+    .accordion h2 {
+      font-size: 18px;
+      margin: 0 20px;
+      padding: 20px 0;
+    }
+
+    .wrap {
+      border-top: 1px solid #e2e2e2;
+      display: inline-block;
+    }
+
+    .wrap a {
+      border-right: 1px solid #e2e2e2;
+    }
+
+    .wrap a:first-of-type {
+      border-left: 1px solid #e2e2e2;
+    }
+
+    .wrap a,
+    .wrap .page {
+      display: inline-block;
+      vertical-align: middle;
+      font-size: 14px;
+      width: 75px;
+      height: 200px;
+      /* line-height: 200px; */
+      padding-top: 78px;
+      box-sizing: border-box;
+    }
+
+    .wrap .page {
+      width: 0;
+      opacity: 0;
+      overflow: hidden;
+      background: #f1f1f1;
+      transition: all .35s ease-in-out;
+      border-right: 1px solid #e2e2e2;
+    }
+
+    .wrap .page:target {
+      width: 175px;
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Accordion List</h1>
+  <div class="accordion">
+    <h2>横版手风琴</h2>
+    <div class="wrap">
+      <a href="#page11">11</a>
+      <div class="page" id="page11">三等奖</div>
+      <a href="#page22">22</a>
+      <div class="page" id="page22">一等奖</div>
+      <a href="#page33">33</a>
+      <div class="page" id="page33">谢谢参与</div>
+      <a href="#page44">44</a>
+      <div class="page" id="page44">二等奖</div>
+      <a href="#page55">55</a>
+      <div class="page" id="page55">特等奖</div>
+      <a href="#page66">66</a>
+      <div class="page" id="page66">四等奖</div>
+      <a href="#page77">77</a>
+      <div class="page" id="page77">阳光普照奖</div>
+    </div>
+  </div>
+  <div class="pages">
+    <h2>竖版手风琴</h2>
+    <a href="#page1">1111</a>
+    <div class="page" id="page1">page1</div>
+    <a href="#page2">2222</a>
+    <div class="page" id="page2">page2</div>
+    <a href="#page3">3333</a>
+    <div class="page" id="page3">page3</div>
+    <a href="#page4">4444</a>
+    <div class="page" id="page4">page4</div>
+    <a href="#page5">5555</a>
+    <div class="page" id="page5">page5</div>
+    <a href="#page6">6666</a>
+    <div class="page" id="page6">page6</div>
+    <a href="#page7">7777</a>
+    <div class="page" id="page7">page7</div>
+  </div>
+
+</body>
+
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>拖拽</title>
+  <style>
+    .list {
+      padding: 20px;
+      list-style: none;
+      width: 300px;
+      margin: 30px;
+      float: left;
+    }
+
+    .list li {
+      cursor: pointer;
+      width: 100%;
+      height: 45px;
+      margin-top: 20px;
+      background: #fae;
+      text-align: center;
+      line-height: 45px;
+    }
+
+    .list li:first-child {
+      margin: 0;
+    }
+
+    .list1 {
+      background: #edf;
+      border: 1px solid #fae;
+    }
+
+    .list2 {
+      background: #dfe;
+      border: 1px solid #afe;
+    }
+
+    .list2 li {
+      background: #afe;
+    }
+  </style>
+</head>
+
+<body>
+  <ul class="list list1" id="list1">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+  </ul>
+  <ul class="list list2" id="list2">
+
+  </ul>
+  <script>
+    var dragDom = null;
+    var list1 = document.getElementById('list1');
+    var list2 = document.getElementById('list2');
+    list1Li = document.getElementsByTagName('li');
+    for (let i = 0; i < list1Li.length; i++) {
+      list1Li[i].setAttribute('draggable', true)
+      list1Li[i].ondragstart = function (e) {
+        console.log(e, 'ondragstart');
+        e.dataTransfer.effectAllowed = 'move';
+        dragDom = this;
+        // e.preventDefault();
+      }
+      list1Li[i].ondrag = function (e) {
+        // console.log(e,'ondrag');
+        // e.preventDefault();
+      }
+      list1Li[i].ondragend = function (e) {
+        console.log(e, 'ondragend');
+        // e.preventDefault();
+      }
+    }
+    list2.ondragenter = function (e) {
+      console.log(e, 'ondragenter');
+      // e.preventDefault();
+    }
+    list2.ondragover = function (e) {
+      // console.log(e, 'ondragover');
+      e.preventDefault();
+    }
+    list2.ondragleave = function (e) {
+      console.log(e, 'ondragleave');
+      // e.preventDefault();
+    }
+    list2.ondrop = function (e) {
+      console.log(e, 'ondrop');
+      // e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      list2.append(dragDom);
+    }
+    /* 回拽 */
+    list1.ondragover = function (e) {
+      e.preventDefault();
+    }
+    list1.ondrop = function (e) {
+      console.log(e, 'ondrop');
+      // e.preventDefault();
+      list1.append(dragDom);
+    }
+  </script>
+</body>
+
+</html>

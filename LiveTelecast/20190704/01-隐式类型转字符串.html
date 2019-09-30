@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+
+<body>
+	<script>
+		/*
+隐式转字符串出现场景
+	1、有字符串的加法运算
+	2、有对象的加法运算
+	3、某些比较运算符
+	4、调用alert、document.write方法 
+		 	*/
+
+		console.log(
+			'1' + 2,          //'12'
+			'20' + 'k', 			//'20k'
+			'1' + undefined,  //'1undefined'
+			'1' + [], 				//'1'+'' = '1'
+			'1' + {}, 				//'1[object Object]'
+		);
+
+		console.log(
+			2 + [2, 3], 				//'2'+'2,3' = 22,3
+			2 + function () {}, //'2'+'function(){}'='2function(){}'
+			2 + {}, 						//'2[object Object]'
+		);
+
+		console.log(
+			[] + {}, 				//'[object Object]'
+			{} + null,			//'[object Object]null'
+			[] + undefined, //""+'undefined' = 'undefined'
+		);
+
+
+
+		// alert({a:12});
+		// alert(function(){});
+
+		document.write({
+			a: 12
+		});
+
+
+
+		console.log(
+			++[[]][+[]] + [+[]], //'10'
+		
+			++[[]][+[]] + [+[]], //'10'
+
+			++[[]][+[]] + [+[]], //'10'
+			++[[]][+[]] + [+[]], //'10'
+			++[[]][0] 	+ [+[]], //'10'
+			// ++[]			  +	[+[]],
+			// ++0				  +	[+[]],
+			// 1			    	+	[+[]],
+			// 1						+	[0],
+			// '1'					+	'0' // '10'
+		)
+	</script>
+</body>
+
+</html>

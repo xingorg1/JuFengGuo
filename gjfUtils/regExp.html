@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>正则表达式学习笔记</title>
+</head>
+
+<body>
+  <div class="demo"></div>
+  <style>
+    .demo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+      background: #eee;
+    }
+  </style>
+  <div id="target">
+    <span>郭菊锋</span>
+    <ul>
+      <li>'fasfasdf
+        adfafsdaf'</li>
+      <li>2</li>
+      <li>3</li>
+    </ul>
+  </div>
+  
+  <script src="xingorg1Utils.js"></script>
+  <script>
+    // var str = '成哥很帅';
+    // str.length = 3;
+    // console.log(str);
+    // var str = 'aaaaaaadddddddswwwwwwwweeeeewwwwg'
+    // var reg = /(\w)\1*/g;
+    // console.log(str.replace(reg,'$1'))
+    // var name = '222';
+    // var a = {
+    //   name: '111',
+    //   say: function(){
+    //     console.log(1,this);
+    //     console.log(this.name);
+    //   }
+    // }
+    // var fun = a.say;
+    // fun();
+    // a.say();
+    // var b = {
+    //   name: '333',
+    //   say: function(fun){
+    //     console.log(2,this);
+    //     fun();
+    //   }
+    // }
+    // b.say(a.say);
+    // b.say = a.say;
+    // b.say();
+    // var oLi = document.getElementsByTagName('li');
+    // var len = oLi.length;
+    // for (var i = 0; i < len; i++) {
+    //   (function(i){
+    //     oLi[i].addEventListener('click',function(e){
+    //       console.log(i)
+    //     },false)
+    //   })(i)
+    // }
+    // var obj = {
+    //   a: 1,
+    //   b: [1,2,[23,3]],
+    //   c: function(){},
+    //   d: {
+    //     aa: 1,
+    //     bb: 2
+    //   }
+    // }
+    // function deepClone(obj){
+    //   var type = typeof(obj);
+    //   var result;
+    //   if(obj == null){
+    //     return null;
+    //   }
+    //   if(type == 'object'){
+    //     if(Object.prototype.toString.call(obj) == '[object Array]'){
+    //       result = [];
+    //       obj.forEach(function(el){
+    //         result.push(deepClone(el));
+    //       });
+    //     }else{
+    //       result = {};
+    //       for (const key in obj) {
+    //         if (obj.hasOwnProperty(key)) {
+    //           result[key] = deepClone(obj[key]);
+    //         }
+    //       }
+    //     }
+    //   }else if(type == 'function'){
+    //     result = function(){};
+    //     result = obj;
+    //   }else{
+    //     result = obj;
+    //   }
+    //   return result;
+    // }
+    // var newObj = deepClone(obj);
+    // console.log(newObj)
+    // newObj.b[2] = 888;
+    // console.log(obj)
+    // var a = null;
+    // var b = deepClone(a)
+    // console.log(b)
+    // -------------  以上 - 开班考试题
+    // function getDom(target,callback){
+    //   callback(target);
+    //   var list = target.children,
+    //      len = list.length;
+    //   for (let i = 0; i < len; i++) {
+    //     getDom(list[i],callback)
+    //   }
+    // }
+    // getDom(target,function(el){
+    //   console.log("当前访问",el)
+    // })
+    // if(" " == !!" "){
+    //   console.log(1);
+    // }else{
+    //   console.log(2," ",!!" ");
+    // }
+    // if(true == !!" "){
+    //   console.log(1);
+    // }else{
+    //   console.log(2," ",!!" ");
+    // }
+    // // ([][[]]+[])[+!![]]+([]+{})[!+[]+!![]] 
+    // // (!(~+[])+{})[--[~+""][+[]]*[~+[]] + ~~!+[]]+({}+[])[[~!+[]]*~+[]]
+    // if(0){
+    //   console.log("" == true)
+    // }
+    // if(" "){
+    //   console.log("" == true)
+    // }
+    // console.log('字符串换行符\\n：', "zifuc\nhuan")
+    // console.log('回车符\\r：', "zifuc\rhuan")
+    // console.log('正经回车符\\r\\n：', "zifuc\r\nhuan")
+    // console.log('制表符\\t：', "zifuc\thuan")
+    // console.log('垂直制表符\\v：', "zifuc\vhuan")
+    // console.log('换页符\\f：', "zifuc\fhuan")
+    // document.write('字符串换行符\\n：', "zifuc\nhuan</br>")
+    // document.write('回车符\\r：', "zifuc\rhuan</br>")
+    // document.write('正经回车符\\r\\n：', "zifuc\r\nhuan</br>")
+    // document.write('制表符\\t：', "zifuc\thuan</br>")
+    // document.write('垂直制表符\\v：', "zifuc\vhuan</br>")
+    // document.write('换页符\\f：', "zifuc\fhuan</br>");
+    // var str = 'absdewet';
+    // var reg = /sD/ig;
+    // console.log(str.match(reg))
+    // var str1 = '15127145529';
+    // var reg = /^1[34578]\d{9}$/g
+    // console.log(reg.test(str1))
+    // var str2 = '15127w-2-12145529';
+    // var reg2 = /[-]/g
+    // console.log('表达式中匹配中横线', str2.match(reg2))
+    // var str3 = 'abc2de';
+    // var reg3 = /[\w][\d][de]/g
+    // console.log('表达式中匹配中横线', str3.match(reg3))
+    // str4 = "abc23bcd12"
+    // reg4 = /(abc|bcd)[\w]{2}/g
+    // console.log(str4.match(reg4))
+
+    // str6 = "abc23bcd"
+    // reg6 = /(^ab)/g
+    // console.log(str6.match(reg6))
+
+
+    // str7 = "%ab3_w￥e2"
+    // reg7 = /[\w]/g
+    // console.log(str7.match(reg7))
+    // str8 = "%ab3_w￥e2"
+    // reg8 = /[\W]/g
+    // console.log(str8.match(reg8))
+    // str9 = "%ab3_w￥e2"
+    // reg9 = /[\d]/g
+    // console.log(str9.match(reg9))
+    // str10 = "%ab3_w￥e2"
+    // reg10 = /[\D]/g
+    // console.log(str10.match(reg10))
+    // str11 = "%ab3_w-22-2.323.34￥e2"
+    // reg11 = /\d-\d/g
+    // console.log(str11.match(reg11))
+    // str12 = "4.114125wef"
+    // reg12 = /^\d\.\d+/g
+    // console.log(str12.match(reg12))
+
+    // str13 = "1 2\n3\t4\f5\r6\v7\r\n8"
+    // reg13 = /\s/g
+    // console.log(str13.match(reg13))
+    // str14 = "1 2\n3\t4\f5\r6\v7"
+    // reg14 = /\S/g
+    // console.log(str14.match(reg14))
+    // str15 = "1 248"
+    // reg15 = /\b\w/g
+    // console.log('\\b', str15.match(reg15))
+    // str16 = "1 2438"
+    // reg16 = /\B\w/g
+    // reg1602 = /\B\w\B/g
+    // console.log('\\B', str16.match(reg16))
+    // console.log('\\B', str16.match(reg1602))
+    // str17 = "1  我的左边是按了一下键盘上的制表符"
+    // reg17 = /\t/g
+    // console.log('\\t', str17.match(reg17))
+    // str18 = '郭菊锋2019要加油！！！';
+    // reg18 = /\u90ed\u83ca\u950b\u0032\u0030\u0031\u0039\u8981\u52a0\u6cb9\uff01\uff01\uff01/g;
+    // console.log(str18.match(reg18))
+    // str1802 = '2019郭菊锋加油！！';
+    // reg1802 = /2019郭菊锋加油！！/g;
+    // console.log(str1802.match(reg1802))
+
+
+    // str19 = '2019\v3郭菊锋d s\t加油！\f';
+    // reg19 = /./g;
+    // console.log(str19.match(reg19))
+    // // 量词
+    // strL1 = 'ab_ds23￥d';
+    // regL1 = /\w+/g;
+    // console.log(strL1.match(regL1))
+
+    // strL2 = 'ab_ds23￥d';
+    // regL2 = /\w*/g;
+    // console.log(strL2.match(regL2))
+    // strL202 = 'absd';
+    // regL202 = /\d*/g;
+    // console.log(strL202.match(regL202))
+    // strL3 = 'ab_ds23￥d';
+    // regL3 = /\w?/g;
+    // console.log(strL3.match(regL3))
+    // strL4 = 'abcdefgh';
+    // regL4 = /\w{3}/g;
+    // console.log(strL4.match(regL4))
+    // strL5 = 'abcdefgh3';
+    // regL5 = /\w{3,5}/g;
+    // console.log(strL5.match(regL5))
+    // strL502 = '123456789';
+    // regL502 = /\w{2,4}/g;
+    // console.log(strL502.match(regL502))
+
+    // strL6 = '1\.123456789';
+    // regL6 = /\w{2,}/g;
+    // console.log(strL6.match(regL6))
+    // strL7 = '$a$ab$ab$ab$';
+    // regL7 = /a+/g;
+    // console.log(strL7.match(regL7))
+
+    // strQ1 = 'afa\nafe afe eaf';
+    // regQ1 = /^af+/;
+    // console.log(strQ1.match(regQ1))
+    // strQ2 = 'afa\nafe afe eaf';
+    // regQ2 = /af$/;
+    // console.log(strQ2.match(regQ2))
+    // reg = /a/g,
+    // str = 'aarqwrweeewqwaaweraaaaweweaaweweaaeeeeee';
+    // console.log(str.match(reg),str.match(reg).length);
+    // reg = /^\d(\s|\S)+\d$/g,
+    // str = '1aarqee2';
+    // console.log(reg.test(str));
+    // var str = 'ababab';
+    // var reg = /ab/g
+    // console.log(reg.lastIndex,'不中断-第一次打印',reg.exec(str))
+    // console.log(reg.lastIndex,'不中断-第二次打印',reg.exec(str))
+    // console.log('lastIndex来捣乱：')
+    // reg.lastIndex = 0;
+    // console.log('捣乱完毕后的现象：')
+    // console.log(reg.lastIndex,'不中断-第三次打印',reg.exec(str))
+    // console.log(reg.lastIndex,'不中断-第四次打印',reg.exec(str))
+    // console.log(reg.lastIndex,'不中断-第五次打印',reg.exec(str))
+    // console.log(reg.lastIndex,'不中断-第六次打印',reg.exec(str))
+    // console.log(reg.lastIndex,'不中断-第七次打印',reg.exec(str))
+    // console.log(reg.lastIndex,'不中断-第八次打印',reg.exec(str))
+    // console.log(reg.lastIndex,'找以上的规律');
+    // var reg1 = /(\w)(\w)\2\1/g;
+    // var reg = /(\d)/g;
+    // var str = 'aabb23wwqq323edde';
+    // console.log('replace:',str.replace(reg,reg1))
+    // console.log('replace:',str.replace('dd','锋'))
+    // console.log('replace:',str.replace(reg,'锋'))
+    // console.log('split:',str.split(reg))
+    // console.log(str.search(reg))
+    // console.log('match:',str.match(reg))
+    // console.log('exec:',reg.exec(str))
+    // var str = 'xxyy';
+    // var reg = /(\w)\1(\w)\2/g;
+    // console.log('$2$2$1$1：', str.replace(reg, '$2$2$1$1'))
+    // console.log('$2$2-$1$1：', str.replace(reg, '$2$2-$1$1'))
+    // console.log('回调：', str.replace(reg, function (a, b, c) {
+    //   console.log(arguments)
+    //   return (c + c).toUpperCase() + '-' + (b + b).toUpperCase();
+    // }))
+    // var str2 = 'xyexye';
+    // var reg2 = /(\w)(\w)(\w)\1\2\3/g;
+    // console.log('222', str2.replace(reg2, function (a, b, c, d) {
+    //   console.log(arguments, a)
+    //   // 配合字符串的转换大小写等方法，可以自由发挥
+    //   return (c + c + c + c).toUpperCase()
+    // }))
+
+    // String.prototype.smallHump = function (str) {
+
+    // }
+    // str.smallHump(str)
+    // var str = 'the-first-child';
+    // var reg = /[^-]+/g;
+    // // console.log(str.match(reg));
+    // var arr = str.match(reg);
+    // var result = '';
+    // arr.forEach((el,i)=>{
+    //   if(i>0){
+    //     el = el.charAt(0).toUpperCase() + el.substring(1)
+    //   }
+    //   console.log(el)
+    //   result+=el
+    // })
+    // console.log(result)
+    // str = 'the-first-child';
+    // var reg1 = /-(\w)/g;
+    // console.log('变为空：',str.replace(reg1,''))
+    // console.log('变为空格：',str.replace(reg1,' '))
+    // console.log('变为_：',str.replace(reg1,'_'))
+    // console.log('变为第一个表达式：',str.replace(reg1,'$1'))
+    // console.log('变为去掉中横线：',str.replace(reg1,' $1'))
+    // console.log('变为第一个表达式的大写形式：',str.replace(reg1,function($,$1){
+    //   console.log(arguments)
+    //   return $1.toUpperCase();
+    // }))
+    // 正向预查
+    // var str = 'aaabaea';
+    // var reg = /a(?=b)/;
+    // var reg1 = /a(?!b)/g;
+    // console.log(str.match(reg))
+    // console.log(str.match(reg1))
+    // 贪婪匹配
+    // var str = 'aaabaaeaaaa';
+    // var reg = /a{2,5}/g;
+    // console.log(str.match(reg))
+    // // 非贪婪匹配
+    // var reg1 = /a{2,5}?/g;
+    // console.log(str.match(reg1))
+
+    // var str = 'aaabaaeaaaa';
+    // var reg2 = /a??/g; //同 /a*?/g 的结果
+    // console.log(str.match(reg2))
+
+    // var str = 'aa?abaaeaaaa';
+    // var reg3 = /\?/g;
+    // console.log(str.match(reg3))
+    // 连续字符串去重
+    var str = 'aaaaaaaabbbbbbbbbbbbbbbccccccccccccdde';
+    var reg = /(\w)\1+/g
+    console.log("str变成abc看效果：", str.match(reg));
+    console.log("str变成abc的结果：", str.replace(reg, '$1'));
+    var str1 = 'aaaaaaaabbbbbbbbbbbbbbbccccccccccccdde';
+    var reg1 = /(\w)\1*/g
+    console.log("str变成abc看效果：", str1.match(reg1));
+    console.log("str变成abc的结果：", str1.replace(reg1, '$1'));
+    // 非连续字符串去重
+    var str = 'annnnbksndadsnasd';
+    var reg = /(\w)\1*/g
+    console.log("str变成abc看效果：", str.match(reg));
+    console.log("str变成abc的结果：", str.replace(reg, '$1')); //anbksndadsnasd
+    var newStr = str.replace(reg, '$1');
+    console.log(newStr.split(''))
+    var arr1 = newStr.split(''); //或者用match方法，复用正则切割：
+    var arr2 = newStr.match(reg);
+    console.log(arr1, arr2);
+    var obj = {};
+    arr2.forEach(el => {
+      if (!obj[el]) {
+        obj[el] = true;
+      }
+    });
+    console.log(obj);
+    var resuStr = '';
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        resuStr += key;
+      }
+    }
+    console.log(resuStr);
+    console.log(xingorg1Utils.uniqContiStr('aaaaavvvvvvvaaaaabbbbbbbbbbbbccccccccccddddddeeeee'))
+    console.log(xingorg1Utils.uniqStr('annnnbksndadsnasd'))
+    console.log('num2', xingorg1Utils.appointStrNum2('annnnbksndadsnasd', 'a'))
+    console.log('num3', xingorg1Utils.appointStrNum3('annnnbksndadsnasd', 'a'))
+    console.log('num1', xingorg1Utils.appointStrNum1('annnnbksndadsnasd', 'a'))
+    var reg = /^\d|\d&/g,
+      str = '12';
+    console.log(reg.test(str));
+    var reg = /^\d(\s|\S)*\d$/g,
+      str = '21';
+    console.log(reg.test(str));
+
+    var reg = /a/g,
+      str = 'aarqwrweeewqwaaweraaaaweweaaweweaaeeeeee';
+    console.log(str.match(reg), str.match(reg).length);
+    console.log('++++++++++++++++++')
+    /* function testRandom(){
+      for (let i = 0; i < 100000; i++) {
+        var m = Math.random();
+        if(m == 0){
+          console.log('出现一次0')
+        }else if(m == 1){
+          console.log('出现一次1')
+        }
+      }
+      console.log("检测Math Random")
+    }
+    setInterval(testRandom,3000);
+    testRandom(); */
+    //  给数字科学计数法
+    // 方法1，最笨的：
+    var str = '10000000000';
+    var arr = str.split('').reverse();
+    // reverse修改原数组
+    var resultStr = '';
+    arr.forEach((el, i) => {
+      if (i % 3 == 0 && i != 0) {
+        resultStr += ',' + el;
+      } else {
+        resultStr += el
+      }
+    })
+    /* 翻转字符串？
+      字符串切割成数组，数组翻转，再粘合成字符串：str.split('').reverse().join('')
+     */
+    console.log(arr, resultStr, resultStr.split('').reverse().join(''))
+    // var reg = //g;
+    // console.log()
+    console.log('给数字科学计数法scienceNote', xingorg1Utils.scienceNote(2345647623000))
+    // 方法2，既然需要替换，使用正则和replace可以否
+    // 问题是怎么翻过来？这么直接用正则取不到啊：
+    var reg = /\d{1,3}/g;
+    console.log(str.match(reg))
+    // 目前学到的翻转只有reverse，只能是切割反转了，但是替换的时候可以不用数组：
+    var str = '10000000000'.split('').reverse().join('');
+    var reg = /\d{1,3}/g;
+    var arr = str.match(reg);
+    var result = arr.join().split('').reverse().join('');
+    console.log(str, '\n', arr, '\n', result)
+    console.log('给数字科学计数法scienceNote', xingorg1Utils.scienceNote2(2345647623000))
+    console.log('给数字科学计数法scienceNote', xingorg1Utils.scienceNote2(2345647623000, '.'))
+    console.log('给数字科学计数法scienceNote3', xingorg1Utils.scienceNote3(2345647623000, '-'))
+    // 方法三，遍历字符串并且字符串replace替换方法
+    var str = '100000000000';
+    var result = '';
+    for (let index = str.length - 1; index >= 0; index--) {
+      // 倒着遍历就是翻转啊~
+      result += str.charAt(index)
+      if (index % 3 == 0 && index != 0) {
+        result += ','
+      }
+      console.log(result, str.charAt(index))
+    }
+    var str = '1000000000000';
+    var reg = /(?=(\B)(\d{3})+$)/g;
+    var str1 = '1000000000000';
+    var reg1 = /(?=(\B)(\d{3})+$)/g;
+    console.log(str1.match(reg1),'====222=====')
+    console.log(str1.replace(reg1, ','))
+    console.log(str.match(reg),'=========')
+    console.log(str.replace(reg, ','))
+    var result = '';
+    
+    console.log(result)
+    
+
+    function testReg(reg, str) {
+      return reg.test(str);
+    }
+    var reg = /^[a-zA-Z][\.a-zA-Z\s,0-9]*?[a-zA-Z]+$/;
+    var str = 'No.8,ChangAn Street,BeiJing,China';
+    var str2 = '8.No,ChangAn Street,BeiJing,China';
+    var str3 = 'No.8,ChangAn Street,BeiJing,China88';
+    console.log(testReg(reg, str) + '<br />')
+    console.log(testReg(reg, str2) + '<br />')
+    console.log(testReg(reg, str3) + '<br />')
+
+    console.log('表达式实战')
+
+    // 拿出结尾的数字
+    var str = '2019xing.org1^888';
+    var reg = /\d+$/g;
+    console.log(str.match(reg));
+    /* \d匹配一个数字，+匹配一个或多个数字，$要求这个数字是结尾 */
+
+    // 判断一个字符串是不是纯数字组成
+    var str = '1';
+    var str = '1015';
+    var str1 = 'padding1015';
+    var reg = /^\d+$/g;
+    console.log(str.match(reg));
+    console.log(str1.match(reg));
+    console.log(reg.test(str), reg.test(str1));
+    /* 首先必须是数字开头^\d，然后中间应该是1到多个数字\d+，最后需要数字结尾\d$,合并三条条件后得到如上： */
+
+    // 电话号验证 
+    var str = '010-1234-5678'
+    var reg = /^\d{3}-\d{4}-\d{4}$/g;
+    console.log(str.match(reg));
+    console.log('是否正确电话号？', reg.test(str));
+    /* 010-1234-5678 || 400-8888-8898 这种，找规律：数字分三段，第一段三位纯数字，后两段四位纯数字，中间两个横线分割。开头结尾都是数字。*/
+
+    // 手机号正则
+    var str = '15127145529';
+    var str = '151271455292';
+    var str = '151271e45529';
+    var str = '11111111111';
+    var reg = /^1[345678]\d{9}$/g;
+    console.log(str.match(reg));
+    console.log('是否正确手机号？', reg.test(str));
+    /* 首先必须是纯数字，^\d$,然后第一位开头应该是1（按照现有市面上的规律），其次中间第二位按照我的眼界，只见过这几位数字的[345678]，所以设个区间任选其一。后边9位纯数字即可\d{9}，且应该数字结尾$。结合如上： */
+
+    // 统一空格个数
+    var str = '2019 guo    ju  feng 8   8 8 ';
+    var reg = /(\s)+/g;
+    console.log(str, str.match(reg));
+    console.log(str.replace(reg, ' '));
+    /* \s匹配一个空格，+匹配1到多个，()形成子表达式，记住每次匹配到的内容（打印出来就是str.match(reg)的数组结果项），然后把这些都在字符串中替换成一个空格。replace执行多次，match找到多少项、换句话说，match结果的数组长度是几，replace的函数就被调用了几次。然后把第一个参数reg匹配到的内容全部同一替换成第二个内容中的空格符号。 */
+    /* 删除字符串中的空格 - 系列 */
+    // 删除首尾空格
+    var str = '  2019 guo    ju  feng 8   8 8  ';
+    var reg = /^\s* | \s*$/g;
+    console.log(str.match(reg))
+    console.log(str.replace(reg, '-')); //这里应该换成空串，但是看不明显我就换成-了
+    console.log(str.replace(reg, '')); //这里应该换成空串，但是看不明显我就换成-了
+    console.log('删除首尾空格', str)
+    /* 匹配首有空格或者尾有空格，因为是全局g匹配，从左开始扫描字符串的时候，首有空格条件就会成立，下一轮检测到尾有空格时，条件也会成立。因此就会把首尾的空格都匹配上，replace替换成空串（替换的理念，就是你想换成什么就换成什么了） */
+    // 删除中间空格
+    var str = '2019 guo    ju  feng 8   8 8 '; //两头没空格
+    var str = '  2019guoju   feng888 '; //两头有空格
+    var reg = /^\s+/g; //先选出头部的空格
+    var reg = /\s+$/g; //再选出尾部的空格
+    var reg = /^\s* | \s*$/g; //同时选中首尾（见上边）
+    var reg = /^[^\s*]| ^[\s*$]/g; //取反，不取两边是成功了，但是中间的也取不上【失败】
+    // 转换思路，不从首尾^$上下手，而是正向预查，找两边都有内容的空格不就行了
+    var reg = / +/g; //选中所有的一个或多个空格
+    var reg = / +(?=\w)/g; //选中后边有字符的一个或多个空格
+    var reg = /(?=\w) +(?=\w)/g; //选中前后都有字符的一个或多个空格【失败】
+    // 所谓正向预查，这样才可以：
+    var reg = /o(?=j)/g;
+    // 放前边就选不到东西了
+    var reg = /(?=u)o/g;
+    // 再换思路，结尾的空格用正向预查，开头的用取反，查找那些不是空格开头、且后边有字符链接的多个空格
+    var reg = /^[^\s*]/g; //排除开头的空格
+    // 再再换思路 - 字符边界
+    var reg = /\b\s+\b/g; //选择左右都是单词边界的一个或多个空白字符
+    // var reg = /^[^\s]\s+^[\s$]/g;
+    console.log(str.match(reg));
+    console.log(111, str.replace(reg, ''), str);
+
+    // 删除所有空格
+    var str = '  2019 guo    ju  feng 8   8 8   ';
+    var reg = /\s+/g;
+    console.log(str.match(reg))
+    console.log(str.replace(reg, ''))
+    // 非负数、小数点后最多两位 - 正则匹配价格
+    var str = '-23.3';
+    var str = '0.32';
+    var str = '130.32';
+    var str = '23.3233';
+    var str = '0.2';
+    var str = '0';
+    var str = '0.0'; //0.0居然也可以
+    var str = '0.00'; //0.0居然也可以
+    var str = '0000000'; //对于0000和0这种情况，再写一个正则匹配
+    var str = '1111';
+    var str = '130.43';
+    var str = '130';
+    var reg = /((^\d*\.?\d{1,2}$)|^\d*$)/g;
+    // var reg = /^\d*(\.)?\d{0,2}$/g;
+    console.log(str.match(reg));
+    console.log("是否正确：", reg.test(str));
+    if (str.match(reg)) {
+      var newReg = /^[0]*(\.)?[0]*$/g;
+      console.log(str.match(newReg));
+      console.log("是否不符合第二个条件，如果true就是错的", newReg.test(str));
+    }
+    //限制输入框只能输入数字和小数点数（这个适合价格input填）
+    var str = '23kj3k23'
+    var str = '23kj.3k23'
+    var str = '23.2sd3'
+    var str = '2323'
+    var str = '23.23'
+    var str = '.23'
+    var str = '0.'
+    var str = '2'
+    var reg = /^\d+\.?\d+$|^\d*$/g;
+    console.log(str.match(reg), reg.test(str));
+    /* 匹配数字开头，必须1到多个数字，中间点可以0到1个，之后是数字必须1-多个^\d+\.?\d+$ 
+      问题是一个字符的纯数字就不行了，所以加个或，匹配一个数字的时候/^\d+\.?\d+$|^\d*$/g;*/
+    // 替换小数点前的内容为指定内容
+    var str = '23.34';
+    var reg = /\w+(?=\.)/g
+    console.log(str.match(reg))
+    console.log(str.replace(reg, '@'))
+    /* 利用正向预查，匹配小数点前边的字符，查到这些字符直接replace */
+    // 替换指定符号（或单词）为指定内容（比如把小数点替换为逗号）
+    var str = 'fkafdaeoaefhaksdfjkafjd';
+    var reg = /a/g; //随心情，将a字符换成@
+    console.log(str.replace(reg, '@'));
+    /* 很随意很心不在焉的解释 */
+    // 只匹配中文的正则表达式子
+    var str = '郭菊锋'
+    var str = '2郭0菊1锋9'
+    var str = '郭菊xing.org锋'
+    var reg = /^[\u4e00-\u9fa5]*$/g;
+    console.log(str.match(reg));
+    /* 汉字的区间写在中括号中。必须是以中文开头、以中文结尾，且中间有0-多个中文 */
+    // 表单验证 - 只支持中文或者字母
+    var str = "郭菊锋"
+    // var str = "xing.org1"
+    var str = "xingorg"
+    var reg = /^([A-z]|[\u4e00-\u9fa5])+$/g;
+    console.log('中文或字母名字：', str.match(reg));
+    // 表单验证 - 用户名正则（中、英、数字、下划线、4-16位
+    var str = 'gjf2018' //正常
+    // var str = 'gjf.2018'//包含特殊字符
+    // var str = 'gjf郭菊锋_18'//包含下划线正常
+    // var str = 'gjfxingorg1郭菊锋19888'//超出16位
+    var str = 'gjf' //不够4位
+    var reg = /^(\w|[\u4e00-\u9fa5]){4,16}$/g;
+    console.log(str.match(reg));
+    console.log('用户名是否符合条件？', reg.test(str));
+    var str = 'Aa_1'
+    var reg = /\w+/g
+    console.log(str.match(reg))
+    /* 匹配中文或者字符（\w自己就是字母、数字和下划线了）4-16位,开头或结尾， */
+    // 把字符串中的汉字调出来
+    var str = '2郭0菊1锋9xi加ng.o油啊rg';
+    var reg = /[\u4e00-\u9fa5]+/g;
+    console.log(str.match(reg));
+    /* 中文1到多个，这样匹配，如果中文是连在一起的也是直接将连在一起的取出来 */
+    // 返回字符串的中文字符个数
+    var str = '2郭0菊1锋9xi加ng.o油啊rg';
+    var reg = /[\u4e00-\u9fa5]/g;
+    console.log(str.match(reg));
+    /* 因是要计算个数，所以不能匹配出来的文字是连着的，所以每次只匹配一个汉字， */
+    // 匹配ip地址的前三段
+    var str = '198.121.001.88';
+    // var str = '198.121.002.0';
+    // var str = '198.121.003.883';
+    // 三种思路，
+    // 第一是根据.直接取出前三个
+    var reg = /(\d{1,3})(?=\.)/g;
+    console.log(str.match(reg));
+    var result = str.match(reg).join('.');
+    console.log(result)
+    /* 结果不尽人意，最后一段匹配出来的是一个点，后来改成直接取出前三段的数字，然后join('.')成一个字符串也可以 */
+    // 第二是将最后一段替换成空
+    var reg = /\.\d{1,3}$/g;
+    console.log(str.match(reg))
+    console.log(str.replace(reg, ''))
+    /* 取出最后一段，规律是点后边跟着1-3个数字，并且数字是结尾的。然后将其替换成空串 */
+    // 第三种，我自己想的办法，利用正向预查：
+    var reg = /^\S+(?=\.\d{1,3}$)/g;
+    console.log(str.match(reg));
+    /* 正向预查，后边跟着.123的字符。一开始我选择的\w+(正向预查)，但是发现选不中.，于是改成非空白字符 */
+    // 匹配<ul></ul>内部的内容
+    var str = '<ul><li>1</li><li>2</li><li>3</li></ul>'
+    // var reg = /[<ul>-</ul>]/g;
+    /* 难点在于，怎么匹配标签？上边这么写，直接报错 */
+    var reg = /<ul>[\s\S]+?<\/ul>/ig;
+    console.log(str.match(reg));
+    /* 变态 */
+    // 用正则表达式获取文件名 
+    var str = 'G:/999git/jsStudy/base64/images/demo.jpg';
+    var str = 'G:/999git/jsStudy/base64/images/示例.jpg';
+    var str = 'G:/999git/images/示例demo.jpg';
+    var reg = /[^\\\/]*[\\\/]+/g;
+    console.log(str.match(reg))
+    console.log(str.replace(reg, ''))
+    /* 思路是获取每一段的路径，然后将他们都替换成空串 */
+    // 获取文件后缀
+    var reg = /\.\w+$/g;
+    console.log(str.match(reg));
+    /* 获取点后的所有字符 */
+    // 如果想要没有点的后缀
+    var reg = /\w+$/gi
+    console.log(str.match(reg))
+    /* 获取一到多个字母， 因为.和\和/这些都不包含在\w中，所以直接使用了。*/
+
+    // 去掉文件后缀，只获取文件名字
+    var reg = /\w+(?=\.)/gi; //匹配纯英文（字母）名字
+    var reg = /(\w+|[\u4e00-\u9fa5]+)(?=\.)/gi; //匹配中文或者字母名字
+    var reg = /(\w|[\u4e00-\u9fa5])+(?=\.)/gi; //匹配中英混合的名字
+    console.log(str.match(reg));
+    /* 正向预查，后边跟着点的那一段单词，后来考虑到中文字符，改成或者中文的情况 */
+    // 绝对路径换成相对路径 G:/999git/images/示例demo.jpg -> ../../images/示例demo.jpg
+    var reg = /[^\\\/]*[\\\/]+/g;
+    console.log(str.match(reg))
+    console.log(str.replace(reg, '../'))
+    /* [^\\\/]*表示非/或\的字符0到多个，后边[\\\/]+至少1到多个非/或\字符，匹配出来的就是路径名字了，最后再替换成../即可 */
+    // 【不会】配英文地址
+    var str = 'No.8,ChangAn Street,BeiJing,China';
+    var reg = /[A-z]+\.[0-9]+|[A-z]+/g;
+    var reg = /^[A-z][\.\s,A-z0-9]*?[A-z]$/g;
+    console.log(str.match(reg));
+    /* 匹配开头结尾都是字母，中间可能是逗号点数字和字母组成的0到多个串，非贪婪匹配 */
+    // 身份证号 
+    var str = '120145123012123433'; //【瞎编的身份证号，如有雷同，那就是缘分】
+    var str1 = '12014512301212343x'; //【瞎编的身份证号，如有雷同，那就是缘分】
+    var str2 = '120145123012123433x'; //【瞎编的身份证号，如有雷同，那就是缘分】
+    var reg = /^\d{17}[\dx]$/g;
+    var reg = /^(\d{14}|\d{17})(\d|[xX])$/g; //优化
+    console.log(str2.match(reg))
+    console.log(str1.match(reg))
+    console.log(str.match(reg))
+    /* 匹配18位数字或者17位数字+一位x，优化后包括15位的身份证号和末尾包含大写X的号码 */
+
+    // 要求文本有指定行数(比如两行)
+    var str = 'jkajflaj\r\nalkdfjladfjl';
+    var reg = /\S+(?=[^.]$)/g; //匹配非空字符，正向预查后边有换行符的非空字符。因为“.”是除了换行和行结束符以外的符号，所以匹配非.
+
+    console.log(str.match(reg))
+    /* 思路，行数从正则里匹配，就只能通过匹配换行符来检测。且单纯只有换行还不行，即每一行必须有文字 */
+
+
+    // 单词首字母大写：
+    // 将单词blue idea || BLUE IDEA 变成首字母大写，形如Blue Idea
+    // 思路，获取单词的第一个字母，替换方法中，使用字符串的大写方法转换一下。
+    var str = 'guo ju feng';
+    var str2 = 'GUO JU FENG';
+    var reg = /^(\w)/g; //只能获取到G/g，拿不到后边几个单词的,并且还能拿到数字，所以改[A-z]
+    // 所谓首字母，除了行开头（^匹配）以外，还有空格后的第一个
+    var reg = /^([A-z]) | \s([A-z])/g; //又犯了同一个错误，正则里边用空格，是有空格的特殊用意的，你打个空格他就匹配空格了，这里并不需要你按前端规范写作
+    var reg = /^([A-z])|\s([A-z])/g;
+    console.log(str.match(reg));
+    console.log(str.replace(reg, function ($1) {
+      // console.log($1);
+      return $1.toUpperCase();
+    }))
+    console.log(str2.match(reg));
+    console.log(str2.toLowerCase().replace(reg, function ($1) {
+      //这样，对于全是大写的字符串不适合，同样也不适合。所以需要把全是大写的字符串，使用字符串的toLowerCase转换成全是小写的。
+      // console.log($1);
+      return $1.toUpperCase();
+    }))
+    // 封装，首字母大写
+    function capitalize(str) {
+      str = str.toLowerCase(); //先全部小写
+      var reg = /^[A-z]|\s[A-z]/g;
+      console.log(str.match(reg))
+      return str.replace(reg, ($1) => {
+        console.log('1', $1)
+        return $1.toUpperCase();
+      })
+    }
+    var rst = capitalize(str2);
+    console.log(rst);
+
+
+    // 封装 - 大驼峰
+    function upperCamelCase(str) {
+
+    }
+    // 封装 - 小驼峰
+    function lowerCamelCase(str) {
+
+    }
+
+
+    //验证日期格式 形如：yyyy-mm-dd格式
+    var str1 = '2018-08-09';
+    var str2 = '18-08-09';
+    var str3 = '2018-8-09';
+    var str4 = '2018-08-9';
+    var str5 = '2018-8-9';
+    var reg1 = /\d{4}-\d{2}-\d{2}/g; //严格yyyy-mm-dd格式
+    var reg2 = /^(\d{2}|\d{4})-\d{1,2}-\d{1,2}$/g; //非严格模式，即可以yy-m-d的格式
+    // console.log(1,reg2.test(str1))
+    // console.log(2,reg2.test(str2))
+    // console.log(3,reg2.test(str3))
+    // console.log(4,reg2.test(str4))
+    console.log(5, reg2.test(str5))
+
+    // 第二种日期格式：yyyy/mm/dd || yy/m/d这样不严格匹配的。
+    // 在原来的基础上，把横线换成斜线即可
+    var reg = /^(\d{2}|\d{4})(-|\/)\d{1,2}(-|\/)\d{1,2}$/g;
+    console.log(reg.test('2018/09/08'))
+    // console.log(reg.test('2018/9/8'))
+    // console.log(reg.test('2018/09-08'))
+    // console.log(reg.test('2018-09-08'))
+    // console.log(reg.test('18/09/08'))
+    // 封装
+    function isDateFormat(str) {
+      var reg = /^(\d{2}|\d{4})(-|\/)\d{1,2}(-|\/)\d{1,2}$/g;
+      return str === undefined ? reg : reg.test(str);
+    }
+    console.log(isDateFormat(str1))
+    console.log(isDateFormat(str2))
+    console.log(isDateFormat(str3))
+    console.log(isDateFormat(str4))
+    console.log(isDateFormat(str5))
+
+    //去掉文件的后缀名：https://www.baidu.com/index/images/img.jpg
+    // 如果文件名已知，直接替换为空串，如果不已知，进行匹配然后替换：
+    // 已知：'.jpg'
+    var str = 'https://www.baidu.com/index/images/img.jpg';
+    var reg = /.jpg/g;
+    console.log(str.replace(reg, ''));
+    // 不已知
+    var reg = /\.[A-z]{1,}$/g; //这里，用[A-z]是因为，\w还会包括数字和下划线，但是文件名中一般都没有这两项，所以用[A-z]进行匹配。
+    //改进:其中{1,}是为了匹配1到多个字母，其实可以用+号，就是匹配1到正无穷的
+    var reg = /\.[A-z]+$/g;
+    console.log(str.match(reg));
+    console.log(str.replace(reg, ''))
+
+
+    // 验证邮箱格式是否正确： xing.org1@outlook.com / 702004176@qq.com / 1515235252@163.com
+    /* 规律研究：@符号前边有1到无穷个字符，⚠️是字符，不是光有字母，也就是数字和符号也可以，比如我第一个例子的xing.org就可以有.。其他两个例子就是数字了，然后@后边多个字符，再之后是.，.之后是com或其他字符 */
+    var reg = /^[\s\S]+@[\w]+\.[\w]+$/g;
+    var reg = /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/;// 每日一题答案
+    var str1 = 'xing.org1@outlook.com'
+    var str2 = '702004176@qq.com'
+    var str3 = '1515235252@163.com'
+    console.log(str1.match(reg));
+    console.log(str2.match(reg));
+    console.log(str3.match(reg));
+
+    // 匹配源代码中的链接：
+    /* 这个不会，直接摘抄
+    能够匹配HTML代码中链接的正则，
+    正则1: /<a href = ".+?"> .+?<\/a>/g 其中.代表除了换行和行结束符的一切字符。一个到多个，非贪婪匹配。
+    上面的正则不适用于a标签上还有类似id、class等属性的时候。
+    */
+    var reg = /<a\s(\s*\w*?=".+?")*(\s*href=".+?")(\s*\w*?=".+?")*\s*>[\s\S]*?<\/a>/g;
+    /* 思路：
+     1、要有<a和一个空格 /<a\s/
+     2、第一个括号(\s*\w*?=".+?")*  可以匹配至少一个属性，属性前面可能有或者没有多余的空格，用\s*匹配。
+       属性名肯定是单词字符，用\w*?匹配  // 这里区分正向预查，(?=\w)
+       =“.+?” 就是匹配了属性值，非换行符任意个，即可以没有属性值。且非贪婪匹配。
+       整个括号外边一个*，表示在href之前有任意多个属性
+     3、(\s*href=".+?")匹配href关键字样，href前边要有一个空格，href后边一个=号。
+       href属性值匹配非换行符1到正无穷个。
+     4、(\s*\w*?=".+?")* 重复第一个表达式，即href后边还有可能有几个属性值设置。
+     5、\s*> 匹配标签结束符号
+     6、[\s\S]*? 匹配标签中间的内容，
+       [\s\S] 匹配任意符号，甚至是换行符等。 *匹配0-正无穷个，？非贪婪匹配
+     7、<\/a> 匹配闭合标签
+     */
+
+    // 然后，再进行补充，即属性名和=之间，也可以有空格，所以再加几个\s*
+    // 完整如下：跟上边那一版比，就是=号左右都加了\s*
+    var reg = /<a\s(\s*\w*?\s*=\s*".+?")*(\s*href\s*=\s*".+?")(\s*\w*?\s*=\s*".+?")*\s*>[\s\S]*?<\/a>/g;
+
+
+    // 匹配链接的文字
+    /* 
+    <a href='ww.bad.com/index.html' class="links"> 里边是要截取的文字 </a>
+    拿到 “里边是要截取的文字” 这段文本
+    获取两个标签之间的文本0-正无穷
+    “?:”非获取匹配，匹配冒号后的内容但不获取匹配结果，不进行存储供以后使用
+    */
+    var str = "<a href='ww.bad.com/index.html' class='links'> 里边是要截取的文字 </a>";
+    var reg = /(?:>)/g;
+    var reg = /<a\s(?:\s*\w*?\s*=\s*".+?")*(?:\s*href\s*=\s*".+?")(?:\s*\w*?\s*=\s*".+?")*\s*>([\s\S]*?)<\/a>/g;
+    console.log(22, str.match(reg))
+
+    // 正则判断标签是否闭合 <img xxx='xxx' 没闭合，<p>p的内容，没闭合
+    var reg = /<([a-z]+)(\s*\w*?\s*=\s*".+?")*(\s*?>[\s\S]*?(<\/\1>)+|\s*\/>)/i
+
+    // 验证是否为数字和字母的混合 12位数字和字母的组合
+    /* 难点是，怎么验证必须既有数字又有字母呢？
+      验证字符串包含数字
+      验证字符串包含字母
+      验证字符串不包含其他字符
+      验证字符串长度不少于12位
+      怎么把这几个合起来？
+    */
+    var reg = /[\dA-z]{12,}/g;
+    var reg = /^([a-z]+(?=\d)|\d+(?=[a-z]))[a-z0-9]+$/ig;
+    var str = 'fkjak12jfoiowajeofjo';
+    var str = '123123123123';
+    console.log(str.match(reg));
+    /* 思路讲解：
+    [a-z]+(?=\d) - 一到多个,后边有数字、的字母 开头
+    或者
+    \d+(?=[a-z]) - 一到多个，后边有[a-z]任意字母、的数字 开头
+
+    这段字母或者数字，后边跟着一到多个a-z|0-9中的其中任意一个字符，且以他们结尾。
+    */
+    //  不用正向预查
+    var reg = /^([a-z]+[0-9]+|[0-9]+[a-z]+)[a-z0-9]+$/ig;
+    var str = 'fjaoi23jo'
+    console.log(str.match(reg));
+    // 不能小于12位 - 从正则上没有思路，所以只能字符串再判断length了
+
+    // 空格和英文同时存在
+    // 即有英文字母，又有空格存在
+    var reg = /[a-z]+[ ]+[a-z]+/g;
+    var str = 'ajfo aejo';
+    var str = '  ajwfo aejo';
+    var reg = /([a-z]+\s+|\s+[a-z]+)[a-z\s]*/g; //一到多个a-z和一到多个空格，或者一到多个空格和一到多个a-z。后边又有0到多个字母
+    var str = ' akjdfa';
+    console.log(str.match(reg));
+
+    // getClass需要 - 获取这个元素上的class类名
+    console.log('====getClass=====')
+    var str = '   guo       ju   feng   '; //假设这是class类名
+    // var reg = /^\w[\s\S*]\w$/g;
+    var reg = /^\s+ | \s+$/g; //去除前后空格
+    console.log(str.match(reg))
+    console.log(str.replace(reg, ''))
+    var reg = /\s+/g;
+    console.log(str.match(reg))
+    console.log(str.replace(reg, ' '))
+    var reg = /[^\s]+/g;
+    console.log(str.match(reg));
+
+    // 显示后保存正则表达式匹配的部分内容
+    // 只匹配135开头的电话，匹配结果只保留135后边几位
+    var str1 = '13512412231';
+    var str2 = '13812412231';
+    var str3 = '13512982331';
+    var str4 = '13912412231';
+    var str5 = '15132412231';
+    var reg = /^(135)(\d{8})/g;
+    // 因为手机号都是11位的，排除前边三位，后边还应该有8位数字。
+    console.log(str1.match(reg));
+    // 这里，因为反向引用只是查找ab这种形式的a，即后边跟着b的a，但是不能查找ab里边的b，就是前边跟着a的b。于是这里我们也不能用来查找135后边的其他8位数字。所以我们巧妙利用replace，拿到子表达式，然后返回即可：
+    // 匹配成功
+    console.log(str1.replace(reg, function (rst, $1, $2) {
+      // $1 是第一个子表达式
+      // $2 是第二个子表达式
+      // rst 是整个匹配成功的字符串
+      console.log($1, $2, rst);
+      return $2;
+    }));
+    // 匹配没成功 - 不走function
+    console.log(str2.replace(reg, function (rst, $1, $2) {
+      console.log($1, $2, rst);
+    }));
+
+    // 引申 - 敏感信息加工处理
+    var phone = '15123529434';
+    var cardNum = '130235200201282345';
+    var phoneReg = /^(\d{3})\d{4}(\d{4})$/g;
+    console.log(phone.match(phoneReg))
+    console.log(phone.replace(phoneReg, '$1****$2'))
+    var cardNumReg = /^(\d{6})\d{8}(\d{4})$/g;
+    console.log(cardNum.match(cardNumReg))
+    console.log(cardNum.replace(cardNumReg, '$1********$2'))
+    /* 思路：获取不需要替换的字符串，得到两段表达式，replace里拼接表达式，中间用对应数量的*号拼接 */
+
+    // 替换变量 - 一道题，获得一些这类型题目的思路
+    /* 如 
+      var a = ['A','B','C','D'];
+      var b = '<ul><li>$0$</li><li>$1$</li><li>$2$</li><li>$3$</li></ul>'
+      换成<ul><li>A</li><li>B</li><li>C</li><li>D</li></ul>这样
+    */
+    var a = ['A', 'B', 'C', 'D'];
+    var b = '<ul><li>$0$</li><li>$1$</li><li>$2$</li><li>$3$</li></ul>'
+    var reg = /$/g;//$有特殊语意，表示以什么结尾，直接这么写，得到的是ul>后边的那个空串
+    var reg = /\$(\d)\$/g;//对$进行转义
+    console.log(b.match(reg));
+    console.log(b.replace(reg,(rst,$1)=>{
+      console.log(rst,$1);
+      return a[$1];//每次执行匿名函数，都把当前匹配的字符串替换成return的返回值。这里就是改成a里边根据下标获取的值。为了获取两个$之间的数字，我用了一个字表达式，在匿名函数里，$1对应这个字表达式子。
+    }));
+
+    // 将阿拉伯数字替换为中文大写形式：
+    var str = '1203981294';
+    var arr = ['零','一','二','三','四','五','六','七','八','九',]
+    var reg = /\d/g;
+    console.log(str.replace(reg,(rst)=>{
+      return arr[rst];
+    }));
+
+    // 替换文本中的url为一个链接
+    /* 匹配网址，返回网址或将其替换为a标签可跳转状态 */
+    var str = '百度的网址为https://www.baidu.com';
+    var str = '百度的网址为ftps://www.bai123-du.org';
+    // var str = '百度的网址为http://www.baidu.cn';
+    var reg = /http[\s\S]+\.com/g;//匹配http和com之间的一到多个任意字符
+    //以上做法简单粗暴，但是如果我写httpfoaeofaosf.com你也会匹配成功，这显然是不科学的。
+    var reg = /[a-z]+:\/\/w{3}\.[\w-]+\.[\w]+/g;//横线匹配横线字符串
+    console.log(str.match(reg));
+    console.log(str.replace(reg,function(rst){
+      return '<a href="'+rst+'">'+rst+'</a>';
+    }));
+
+    // 从html中删除指定标签及其内容：
+
+    // 获取h标签
+    var str = '<h1 id="aaa">h1内容</h1>中间<h2 id="bbb">h2内容2</h2><h1 id="ccc">h1内容2</h1>'
+    var str = '<h1qwe id="aaa">h1内容</h1>中间<h2 id="bbb">h2内容2</h2><h1 id="ccc">h1内容2</h1>'
+    /* 
+      得到结果：
+      <h1 id="aaa">h1内容</h1>
+      <h2 id="bbb">h2内容2</h2>
+      <h1 id="ccc">h1内容2</h1>
+    */
+   
+   // 匹配到</h\d>之前的内容：再用反向引用补全
+   var reg = /<(h\d) [\s\S]+?(?=<\/\1>)/g;
+   var arr = [];
+   var result = str.replace(reg,function(rst,$1,$2){
+     console.log('结果：',rst + '</' + $1 + '>')
+     arr.push(rst + '</' + $1 + '>');
+     return rst + '</' + $1 + '>';
+    });
+    console.log(arr);
+    console.log(result);
+    console.log(str.match(reg));
+    
+    var reg = /^<(h\d) [\s\S]+>[^<]+?<\/\1>$/g;//这样直接就把整个字符串截取出来了，得换种思路。
+    console.log(str.match(reg));
+
+    // 判断一个字符串是不是回文
+    function isPalindrome(str){
+      str = str.replace(/\W/g,'').toLowerCase();//大写，把所有非正规字符过滤掉并且转小写
+      return str === str.split('').reverse().join('');
+      return (str === str.split('').reverse().join(''));//括和不括这个就是为了明显点，没啥区别
+    }
+    console.log(isPalindrome('lEv-el'));
+
+    // 使abab变成baba
+    var str = 'abab';
+    var reg = /\w/g;
+    console.log(str.match(reg));
+    console.log(str.match(reg).reverse().join(''));
+
+    var str = 'abab';
+    var reg = /(\w)(\w)(\w)(\w)/g;
+    console.log(str.match(reg));
+    console.log(str.replace(reg,'$4$3$2$1'));
+    
+    var reg = /(\w)(\w)+/g;
+    console.log(str.match(reg));
+    console.log(str.replace(reg,'$2$1$2$1'));
+    // console.log(str.match(reg).reverse().join(''));
+
+    // 时间补零
+    var str = '16'
+    var str1 = '6'
+    var reg = /^(\d)$/;//^\d&只能匹配到单独一个数字的情况
+    console.log(str.match(reg));
+    console.log(str.replace(reg,'0$1'));//利用反向引用，
+    console.log(str1.match(reg));
+    console.log(str1.replace(reg,'0$1'));
+    
+
+    // 一个字符串[a-z]组成，请找出该字符串第一个只出现1次的字母
+    var str = 'afaielajsdflajfdoaei';
+    var reg = /^[a-z]$/g;
+    console.log(str.match(reg));
+
+    // 使用正则来限制prompt只能输入1~12月份应该怎么样写呢
+    var str = '09';
+    var reg = /^([0-9]|[0-1][1-2])$/g;
+    console.log(str.match(reg));
+    
+    // replace里边填parseInt
+    var str = '1 2 4 3 4 0';
+    var reg = /\d/g;
+    console.log(str.match(reg));
+    str.replace(reg,function(a,b,c){
+      // 这个函数传递3个参数：模式的匹配项、模式匹配项在字符串中的位置和原始字符串
+      console.log(`当前匹配项a:${a},索引值b:${b},原始字符串c:${c}`);
+    })
+    console.log(str.replace(reg,parseInt));
+    
+    // 匹配空,然后替换空
+    var str = '2341423';
+    var reg = /(?=(\B)(\d{3})+$)/g;///(?=(\B)(\d{3})+$)/g;
+    var reg = /()/g;//匹配空
+    var reg = /(?=(\d{3})+$)/g;//匹配，后边有3数字的空
+    
+    console.log(str.replace(reg,'a'));
+    var str = '122341423';
+    var reg = /(?=(\B)(\d{3})+$)/g;//匹配，后边有3数字的空,三个数字前边为非单词边界
+    console.log(str.match(reg));
+    console.log(str.replace(reg,','));
+
+    // 如何获取一个字符串中的数字字符，并按数组形式输出
+    var str = 'aoa234osfjiua142sjgo23iasdug12apwe';
+    var reg = /\d+/g;
+    console.log(str.match(reg))
+  </script>
+  
+</body>
+
+</html>

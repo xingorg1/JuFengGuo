@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <meta name="viewport" content="width=500px, initial-scale=1.0, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css" media="screen and (max-width: 375px)">
+  <style>
+    @import 'style.css' screen and (max-width: 375px);
+  </style>
+  <style>
+    body{
+      margin: 0;
+    }
+    .wrap{
+      /* width: 50%; */
+      border: 1px solid;
+    }
+    @media screen and (max-width: 375px){
+      body{
+        background: red;
+      }
+    }
+    body{
+      background: #def;
+    }
+    @media screen and (min-width: 600px) and (max-width: 100px){
+      /* 小于600并且大于300的情况 */
+    }
+    @media screen and (max-width: 375px) , (min-width: 600px){
+      /* 表示大于600px、或小于375px的情况 */
+    }
+    @media not screen and (max-width: 375px){
+      /* 除了小于375px以外，也就是大于375的条件成立 */
+    }
+    .dmo{
+      /* float: left; */
+      border: 1px tomato solid;
+    }
+    .box{
+      /* float: left; */
+      border: 1px sienna solid;
+      background: #efd;
+    }
+    span{
+      float: left;
+      /* 浮动元素脱离文档流 */
+      border: 1px solid;
+      width: 100px;
+      height: 100px;
+    }
+    .dmo span{
+      float: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="dmo">
+      <span>1</span>
+      <span>2</span>
+    </div>
+    <div class="box">
+      <span>3</span>
+      <span>4</span>
+      <span>5</span>
+    </div>
+  </div>
+</body>
+</html>

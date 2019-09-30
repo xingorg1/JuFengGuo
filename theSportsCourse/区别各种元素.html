@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    .demo-parent{
+      /* position: relative; */
+      top: 100px;
+      left: 100px;
+      height: 200px;
+      overflow: scroll;
+    }
+    .demo{
+      position: relative;
+      top: 20px;
+      left: 20px;
+      width: 500px;
+      height: 500px;
+      margin-top: 1300px;
+      /* padding: 20px; */
+      /* border: 10px solid; */
+      /* overflow: scroll; */
+      background: red;
+    }
+  </style>
+</head>
+<body>
+    
+  <div class="demo-parent" id="parent">
+    <div class="demo" id="demo">我是demo</div>
+  </div>
+  <h1>scroll、client、offset的区别</h1>
+  <h2>是否包含滚动条</h2>
+  <script>
+    console.log(demo,document,Element);
+    console.log(demo.offsetTop,demo.offsetLeft,demo.offsetWidth,demo.offsetHeight);
+    console.log(demo.clientTop,demo.clientLeft,demo.clientWidth,demo.clientHeight);
+    window.onscroll = function(){
+      console.log(document.documentElement.scrollTop)
+    }
+    parent.onmousewheel = function(){
+      console.log(demo.scrollTop)
+    }
+    
+  </script>
+</body>
+</html>

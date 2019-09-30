@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>预编译</title>
+</head>
+
+<body>
+  <ul>
+    <li></li>
+  </ul>
+  <script>
+    /* 函数和变量同名怎么办？ 执行变量*/
+    console.log(a); //函数声明被提到最前边
+    function a() {
+      return 'function';
+    }
+    var a = 123; //a被重新赋值
+    console.log(a);
+    // 预编译时期研究
+    function yubianyi(x) {
+      // debugger;
+      console.log(x); //只有这里异常，打出来的不是形参值而是function x3,因为函数声明提升
+      var x = 2;
+      console.log(x);
+
+      function x() {
+        return 3;
+      }
+      console.log(x); //x3提升上边，这里的x还是被x2重新赋值了的变量2
+      console.log(y); //因为函数声明提升，y5先出
+      var y = function () {
+        return 4;
+      }
+      console.log(y); //y被y4重新赋值了
+      function y() {
+        return 5;
+      }
+      console.log(y); //y5提升上边，这里的y还是被y4重新赋值了的y
+      function z() {
+        return 6;
+      }
+      console.log(z)
+    }
+    yubianyi(1);
+
+    global = 100;
+
+    function fn() {
+      console.log(global)
+      global = 200;
+      console.log(window.global)
+      console.log(global)
+      var global = 300;
+    }
+    fn();
+    var global;
+    // 1.预编译
+    // go{
+    // global: undefined
+    // }
+    // 2. go{
+    // global: function(){};
+    // }
+    // 3.执行
+    // go{
+    // global: 100;
+    // }
+    // 1.预编译
+    // ao{
+    // global: undefined
+    // }
+    // 2. 执行fn()
+    // 输出undefined
+    // ao{
+    // global: 200
+    // }
+    // 输出200
+    // 3. ao{
+    // global: 300
+    // }
+
+    /* 作业 - 百度笔试题 */
+    function bar() {
+      return foo;
+      foo = 10;
+
+      function foo() {
+        console.log(1)
+        // body
+      }
+      var foo = 11;
+    }
+    document.write(bar());
+
+    document.write(bar2());
+
+    function bar2() {
+      foo = 10;
+
+      function foo() {
+        console.log(2);
+        //body
+      }
+      var foo = 11;
+      return foo;
+    }
+
+
+    /* 新题型 */
+    a = 100;
+
+    function demo() {
+      function e() {}
+      arguments[0] = 2;
+      console.log(e);
+      if (a) {
+        var b = 123;
+
+        function c() {
+          //body
+        }
+      }
+      var c;
+      a = 10;
+      var a;
+
+      console.log("b", b)
+      f = 123;
+      console.log("c", c)
+      console.log("a", a)
+
+    }
+    var a;
+    demo(1)
+    console.log(a)
+    console.log(f)
+    /* 好玩的题 */
+    var x = 1;
+    // console.log(fff)
+    console.log(typeof (window.fff))
+    if (function fff() {}) {
+      console.log(typeof (fff))
+      x += typeof (fff)
+    }
+    console.log(x);
+
+    /* 2 */
+    var m = (
+      function m() {
+        console.log("m")
+        return "1";
+      },
+      function n() {
+        console.log("n")
+        return 2;
+      }
+    )();
+    console.log(typeof m)
+    console.log(m)
+    /* 命名函数表达式 */
+    var bb = function aa(){
+      return 2;
+    }
+    // console.log(typeof aa())
+    function qq(){
+      var a = 1;
+      function ee(){
+        var w = 2;
+      }
+      var a = function (){
+        console.log(3)
+      }
+      console.log(a)
+    }
+    console.log(qq)
+    
+    
+  </script>
+</body>
+
+</html>

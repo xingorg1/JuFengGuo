@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var putong = {
+      myName: 'gjf'
+    }
+    Object.defineProperty(putong, 'myName', {
+      value: 'xing.org1^',
+      /* 定义一个对象上已有的属性时，默认都为true */
+      // writable: true,
+      // configurable: true,
+      // enumerable: true
+    });
+    for (const key in putong) {
+      console.log(key); //myName
+    }
+    putong.myName = 'MS.Guo'; //myName: MS.Guo
+    console.log(delete putong.myName) //true
+
+    Object.defineProperty(putong, 'age', {
+      // 数据描述符
+      value: 12,
+      writable: true,
+      /* 公用描述符 */
+      configurable: true,
+      enumerable: true
+    });
+    var address = '北京';
+    Object.defineProperty(putong, 'address', {
+      // 存取描述符
+      get() { //访问属性时，调用这个方法。属性值就是函数的返回值
+        console.log('拦截 - 调用了get，要获取这个属性的数据')
+        return address;
+      },
+      set(params) { //修改属性时，调用这个方法。修改目标作为参数的params传入。
+        console.log('拦截 - 调用了set，要重置这个属性的数据')
+        address = params; //这里注意得借助一个全局变量。把值存到全局变量上进行操作
+        console.log('重置完毕。');
+      },
+      configurable: true,
+      enumerable: true
+    });
+    Object.defineProperty(putong, 23, {
+      value: 122
+    });
+    for (const key in putong) {
+      console.log(key);
+    }
+    console.log(putong);
+    console.log(delete putong[23])
+    console.log(putong.address)
+    // putong.address = 
+    // console.log(putong.myName.value)
+    // console.log(putong.myName.writable)
+    // console.log(putong.myName.configurable)
+    // console.log(putong.myName.enumerable)
+
+    // get、set的写法
+    var myName = 'gjf';
+    var zimianliang = {
+      tempMyName : '?',
+      get myName() {
+        console.log('get myName ~')
+        return this.tempMyName;
+      },
+      set myName(params) {
+        this.tempMyName = params;
+        console.log('set myName end')
+      }
+    }
+
+    console.log(zimianliang.myName);
+    zimianliang.myName = 'xing.org1';
+    console.log(zimianliang.myName);
+  </script>
+</body>
+
+</html>

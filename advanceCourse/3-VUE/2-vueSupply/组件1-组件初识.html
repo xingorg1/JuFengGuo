@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>组件使用</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+    <comp-name1></comp-name1>
+    <comp-name3></comp-name3>
+    <comp-name2></comp-name2>
+  </div>
+  <script>
+    // 利用Vue构造函数上的方法component
+    Vue.component('CompName1', {
+      template: '<div class="comp01">{{ name }}</div>', //组件模板
+      data() {
+        return {
+          name: 'compName1-data'
+        }
+      },
+      created() {},
+    })
+
+    const vm = new Vue({
+      el: '#app',
+      components: {
+        compName2: {
+          template: '<div class="comp02">{{ name }}</div>', //组件模板
+          data() {
+            return {
+              name: 'compName2222222-data'
+            }
+          },
+          created() {},
+        },
+        compName3: {
+          template: '<div class="comp03">{{ name }}</div>', //组件模板
+          data() {
+            return {
+              name: 'compName3！！！！！-data'
+            }
+          },
+          created() {},
+        },
+      },
+      data: {
+
+      },
+      methods: {
+
+      }
+    })
+  </script>
+</body>
+
+</html>

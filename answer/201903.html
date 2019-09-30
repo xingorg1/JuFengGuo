@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>三月答疑问题</title>
+  <style>
+    #p1 {
+      text-indent: 25px;
+    }
+
+    #p2 {
+      text-indent: 45px;
+    }
+
+    #p3 {
+      text-indent: 65px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div id="demo1">点击div没有反应,想法应该是事件只触发一次就失效</div>
+  <h4>首行缩进</h4>
+  <p>不缩进</p>
+  <p id="p1">缩进25px</p>
+  <p id="p2">缩进45px</p>
+  <p id="p3">缩进65px</p>
+  <script>
+    // 
+    demo1.addEventListener('click', test, false);
+
+    function test() {
+      alert('test')
+      demo.removeEventListener('click', test, false);
+    }
+    // 这样写，点击div没有反应,想法应该是事件只触发一次就失效，问题是这样直接就没有触发
+    // demo.removeEventListener('click', test, false);
+    // 原因：你把事件移除了啊,可以把移除的代码写到test函数里、执行test的时候，再移除
+    var obj = {
+      toString: function(){
+        return '成哥最帅';
+      }
+    };
+    console.log(obj)
+    console.log(obj.toString());
+
+    var a = {n:1}
+    console.log('a1',a,'b1',b);
+    var b = a;
+    console.log(b);
+    a.x = a = {m:2}
+    console.log('a2',a,'b2',b);
+  </script>
+   <h1 id="text1">
+
+    </h1>
+    <h1 id="text2">
+  
+    </h1>
+    <script>
+      // 求1234秒是多少分多少秒怎么写 求余数 
+      // 1000ms = 1s
+      // 1m = 60s
+      // 1h = 60m
+      // 1d = 24h
+      var date1 = new Date('2019/03/05,00:00:00');
+      /*
+        上边那一段可以这么写：
+        var s1 = '2014-02-01';
+        s1 = new Date(s1.replace(/-/g, "/"));
+        s2 = new Date(); //当前日期：2017-04-24 
+      */
+  
+      function getTime(date1) {
+        var date2 = new Date();
+        var time = parseInt((date2.getTime() - date1.getTime()) / 1000); //得到的是秒数
+        var day = parseInt(time / 3600 / 24);
+        var hour = parseInt((time / 3600) % 24);
+        var min = parseInt((time / 60) % 60);
+        var sec = parseInt(time % 60);
+        text1.innerText = add0(day) + '天' + add0(hour) + '时' + add0(min) + '分' + add0(sec) + '秒';
+      }
+      getTime(date1);
+      setInterval(function () {
+        getTime(date1);
+      }, 1000)
+      //时间补零
+      function add0(time){
+        time += '';
+        var reg = /^(\d)$/g;
+        return time.replace(reg,'0$1');
+      }
+  
+      var s1 = '2014-02-01';
+      s1 = new Date(s1.replace(/-/g, "/"));
+      s2 = new Date(); //当前日期：2017-04-24
+      var days = s2.getTime() - s1.getTime();
+      var time1 = parseInt(days / (1000 * 60 * 60 * 24));
+      text2.innerText = time1 + '天';
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var b = new Number();
+    console.log(b)
+    b.__proto__.toString = function(){
+      console.log(2222)
+      return 'aaaaa'
+    }
+    var c = b.toString();
+    console.log(c)
+    new Number().prototype.toString = function(){
+      console.log(1111)
+      return 'afdaf'
+    }
+    var a = 23;
+    a.toString()
+  </script>
+</body>
+</html>

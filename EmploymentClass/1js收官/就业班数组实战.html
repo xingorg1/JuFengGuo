@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>条件筛选组件-就业班数组实战</title>
+  <link rel="stylesheet" href="arrStyle.css">
+  <script>
+    var origin = [{
+        name: "郭菊锋",
+        age: 18,
+        sex: "Female",
+        word: "我站在清晨的窗口，观看飞动的生命",
+        userHead: "http://q1.qlogo.cn/g?b=qq&nk=702004176&s=100&t=1547103209"
+      }, {
+        name: "xing.org1^",
+        age: 23,
+        sex: "Female",
+        word: "前端界的小学生",
+        userHead: "https://img01.sogoucdn.com/net/a/04/link?appid=100520040&url=https://i02picsos.sogoucdn.com/3c28af542f2d49f7-9e7c5d699eaea93e-deaf9230ba246bb1bf9af913a0aac479_qq"
+      },
+      {
+        name: "郭沫若",
+        age: 127,
+        sex: "Male",
+        word: "我喜欢文学",
+        userHead: "https://i03piccdn.sogoucdn.com/e0b8e1b989093d68"
+      },
+      {
+        name: "郭德刚",
+        age: 54,
+        sex: "Male",
+        word: "相声界的小学生",
+        userHead: "https://i02piccdn.sogoucdn.com/57d2a404f7e49494"
+      },
+      {
+        name: "郭麒麟",
+        age: 20,
+        sex: "Male",
+        word: "我不仅是郭德纲的儿子",
+        userHead: "https://img03.sogoucdn.com/net/a/04/link?appid=100520040&url=https://i01picsos.sogoucdn.com/3c28af542f2d49f7-9e7c5d699eaea93e-0a56dee26260de08b633403a367221d8_qq"
+      }
+    ]
+  </script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="title">
+      <div class="input">
+        <input type="text" placeholder="输入查找~" id="txt">
+      </div>
+      <div class="btns" id="btns">
+        <span class="btn">Male</span>
+        <span class="btn">Female</span>
+        <span class="btn active">All</span>
+      </div>
+    </div>
+    <div class="cont">
+      <ul class="list" id="list">
+        <li class="item">
+          <div class="head">
+            <img src="http://q1.qlogo.cn/g?b=qq&nk=702004176&s=100&t=1547103209" alt="">
+          </div>
+          <div class="info">
+            <div class="name">郭菊锋</div>
+            <div class="word">我站在清晨的窗口，观看飞动的生命</div>
+          </div>
+        </li>
+        <li class="item">
+          <div class="head">
+            <img src="http://q1.qlogo.cn/g?b=qq&nk=702004176&s=100&t=1547103209" alt="">
+          </div>
+          <div class="info">
+            <div class="name">郭菊锋</div>
+            <div class="word">我站在清晨的窗口，观看飞动的生命</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+
+</html>

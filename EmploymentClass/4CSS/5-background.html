@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>background</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+
+      padding-top: 300px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    .bg1 {
+      float: left;
+      width: 300px;
+      height: 300px;
+      background-color: azure;
+      background-image: url(./bdImg.jpg), url(./bgImg2.jpg);
+      background-size: 30%, 50%;
+      background-position: top left, bottom right;
+      background-repeat: no-repeat, no-repeat;
+    }
+
+    .bg2 {
+      float: left;
+      width: 600px;
+      height: 200px;
+      font-size: 80px;
+      font-weight: bold;
+      text-align: center;
+      -webkit-text-fill-color: transparent;
+      -text-fill-color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-color: azure;
+      background-image: url(./bgImg2.jpg);
+      background-size: cover;
+    }
+
+    .size {
+      width: 600px;
+      height: 300px;
+      border: 1px solid red;
+      background-image: url(./bgImg2.jpg);
+      /* background-size: cover; */
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .size.cover {
+      background-size: cover;
+    }
+
+    .gradi {
+      float: left;
+      width: 200px;
+      height: 200px;
+      border: 1px solid;
+      margin: 0 20px;
+    }
+
+    .linear {
+      background-image: linear-gradient(#ff0, #0ff);
+      /* 从下向上 */
+      background-image: linear-gradient(0deg, #ff0, #0ff);
+      /* 从左到右 */
+      background-image: linear-gradient(90deg, #ff0, #0ff);
+      /* 从上到下 */
+      background-image: linear-gradient(180deg, #ff0, #0ff);
+      /* 从右到左 */
+      background-image: linear-gradient(270deg, #ff0, #0ff);
+      /* 花式用法 */
+      background-image: linear-gradient(to top right, #ff0, #0ff);
+      width: 350px;
+      background-image: linear-gradient(to right, #ff0, 20%, #0ff);
+      background-image: linear-gradient(to right, #ff0, #0ff);
+      background-image: linear-gradient(to right, #ff0 40px, #0ff 90%);
+    }
+
+    .radial {
+      background-image: radial-gradient(#ff0, #0ff);
+      background-image: radial-gradient(#ff0 20%, #0ff);
+      background-image: radial-gradient(at top, #ff0 20%, #0ff 80%);
+      background-image: radial-gradient(circle at top right, #ff0 20%, #0ff 80%);
+      background-image: radial-gradient(ellipse, #ff0 10%, #0ff 20%);
+      background-image: radial-gradient(ellipse closest-corner at 20% 10%, #ff0 10%, #0ff 20%);
+      background-image: radial-gradient(ellipse at 20% 10%, #ff0 10%, #0ff 20%);
+    }
+
+    .attachment {
+      width: 100%;
+      height: 500px;
+      margin-bottom: 120px;
+      background: url(bdImg.jpg) no-repeat;
+      background-size: 100% auto;
+      background-attachment: fixed;
+    }
+
+    .attachment h1 {
+      color: #0ff;
+      text-align: center;
+      padding: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div style="overflow: hidden;">
+    <div class="bg1">多图效果</div>
+    <div class="bg2">郭菊锋加油！</div>
+  </div>
+  <div class="attachment">
+    <h1>实现屏幕上滑，里边有一张背景图一直在</h1>
+  </div>
+  <div style="overflow: hidden;">
+    <div class="gradi linear"></div>
+    <div class="gradi radial"></div>
+  </div>
+  <h1>contain</h1>
+  <div class="size">郭菊锋加油</div>
+  <h1>cover</h1>
+  <div class="size cover">郭菊锋加油</div>
+
+  <script>
+    function myFunction() {
+      console.log('12')
+      var age, voteable;
+      age = document.getElementById("age").value;
+      voteable = (age < 18) ? "年龄太小" : "年龄已达到";
+      document.getElementById("demo").innerHTML = voteable;
+    }
+  </script>
+</body>
+
+</html>

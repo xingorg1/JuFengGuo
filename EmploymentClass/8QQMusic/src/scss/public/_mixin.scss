@@ -1,0 +1,295 @@
+/*
+ * @Author: matianye@ 
+ * @Date: 2018-03-14 15:56:00 
+ * @Last Modified by: matianye@
+ * @Last Modified time: 2018-05-31 20:32:23
+ */
+// _mixin.scss
+// @import "../../node_modules/yi-yiche-ui/m-widget/src/scss/modules/layout.scss";
+
+// reset
+$inputSelectTextareaPlaceholder:			#B7B7B7;
+$linkAColor:								#333;
+
+// 字体大小
+$fs24:				24px;
+$fs26:				26px;
+$fs28:				28px;
+$fs30:				30px;
+$fs32:				32px;
+$fs34:				34px;
+$fs36:				36px;
+
+
+// 主色[＃508CEE（高亮色／链接色）/#A4C6FF（辅助色）]
+$link:					#2E85FF;
+$linkHover:				#1f70db;
+$linkVisited:			#2E85FF;
+// $linkVisited:			#2f4f7a;
+// 主色 end
+
+
+$primary:				$link;
+$success:				#2DDAC6;
+$danger:				#E74C3C;
+$stress:				#FC6E51;
+$warning:				#FFB624;
+$info:					#999;
+// 辅色 end
+
+
+$base:					#333B48;
+$gray:					#5E6E87;
+$grayer:				#9FACBF;
+$disa:					#B6B4B4;
+$white:					#FFF;
+// 文本色 end
+
+
+$bg-base:               #FAFBFC;
+$bg-white:              $white;
+// 背景色 end
+
+$border:				#F5F7FB;
+// 边框色 end
+
+
+// 简写			 = 原值
+// *Padd 		= padding
+// *Pt 			= padding-top
+// *Pr 			= padding-right
+// *Pb 			= padding-bottom
+// *Pl 			= padding-left
+// *W 			= width
+// *H 			= height
+// *MinW 		= min-width
+// *MinH 		= min-height
+// *MaxW 		= max-width
+// *MaxH 		= max-height
+// *Color 		= color
+// *Fsize 		= font-size
+// *LineH 		= line-height
+// *Bor 		= border-color
+// *BgC 		= background-color
+// *BgImg 		= background: url(...)
+
+$yiBtnValueMap: (
+	// 基础
+	btnPadd: 18px 30px,
+	btnMinW: 188px,
+	btnColor: $base,
+	btnFsize: 28px,
+	btnLineH: 1.5,
+	btnBor: #dedede,
+	btnBgC:white,
+
+	// 大小
+	btnLgPadd: 22px 30px,
+	btnLgMinW: 210px,
+	btnLgFsize: 32px,
+	btnSmPadd: 12px 24px,
+	btnSmMinW: 130px,
+	btnSmFsize: 26px,
+	btnXsPadd: 6px 16px,
+	btnXsMinW: 90px,
+	btnXsFsize: 24px,
+
+	
+
+	// 禁用
+	btnDisaColor: rgba($white, $alpha: .7),
+	btnDisaBor: $disa,
+	btnDisaBgC: $disa,
+
+	// 圆角
+	btnRadius: 100px,
+
+	// 加载
+	btnLoadW: 24px,
+	btnLoadH: 24px,
+	btnLoadBgImg: url(https://img1.bitautoimg.com/das/fe/yi-widget/m-widget/other/load.gif),
+);
+
+// $yiAlertValueMap
+$yiAlertValueMap: (
+	// 常规：内边距、字号、行高
+	yiAlertPadd: 10px 20px,
+	yiAlertFsize: 24px,
+	yiAlertLineH: 1.5,
+	
+	// 关闭：内边距、字号、行高、宽度、高度、背景图、文字距离、icon距离
+	yiAlertCloPadd: 12px 10px,
+	yiAlertCloFsize: 22px,
+	yiAlertCloLineH: 1.5,
+	yiAlertCloW: 32px,
+	yiAlertCloH: 32px,
+	yiAlertCloBgImg: url(https://img1.bitautoimg.com/das/fe/yi-widget/m-widget/other/close.gif) no-repeat center center / 24px 24px,
+	yiAlertCloText: 100px,
+	yiAlertCloTextI: 40px,
+
+	// 消息系列
+	yiAlertInfoColor: #999,
+	yiAlertInfoBgC: #f4f4f5,
+
+	// 成功系列
+	yiAlertSuccessColor: #67c23a,
+	yiAlertSuccessBgC: #f0f9eb,
+
+	// 警告系列
+	yiAlertWarningColor: #e6a23c,
+	yiAlertWarningBgC: #fdf6ec,
+
+	// 错误系列
+	yiAlertErrorColor: #f56c6c,
+	yiAlertErrorBgC: #fef0f0,
+);
+
+// 单选&多选
+$yiChoiceValueMap: (
+	// icon： 宽度、高度、边框色、圆角值
+	ChcIconW: 26px,		
+	ChcIconH: 26px,
+	ChcIconBor: #999,
+	ChcIconRadius: 100px,
+
+	// 文字： 左边距、默认颜色、字号、行高、
+	ChcTextMl: 16px,
+	ChcTextColor: #666,
+	ChcTextFsize: 26px,
+	ChcTextLineH: 30px,
+
+	// 选中项：icon边框色、icon背景色、文字颜色
+	ChcActIconBor: #508CEE,
+	ChcActIconBgC: #508CEE,
+	ChcActTextColor: #333,
+	
+	// 禁用：icon边框色、文字颜色
+	ChcDisaIconBor: #dedede,
+	ChcDisaTextColor: #999,
+
+	// 选中项禁用：icon边框色、icon背景色、文字颜色
+	ChcDisaActIconBor: #8fb5f2,
+	ChcDisaActIconBgC: #8fb5f2,
+	ChcDisaActTextColor: #999,
+);
+
+// input&forms
+$yiInputValueMap: (
+	// 基础：宽度、高度、边框色
+	iptW: 100%,
+	iptH: 80px,
+	iptBor: #dedede,
+
+	// 圆角：圆角左内边距、圆角值
+	iptRadiusPl: 30px,
+	iptRadius: 100px,
+
+	// 禁用：文字颜色、边框色、背景色
+	iptDisaColor: #666,
+	iptDisaBor: #dedede,
+	iptDisaBgC: #f9f9f9,
+
+	// 点击：文字颜色、边框色
+	iptFocusColor: #f00,
+	iptFocusBor: #f00,
+);
+
+// forms
+$yiInputGroupValueMap: (
+	iptGrpBor: #dedede,
+	iptGrpInputW: 100%,
+	iptGrpInputH: 70px,
+	iptGrpTitMr: 20px,
+	iptGrpTitMinW: 100px,
+	iptGrpTitFsize: 32px,
+	iptGrpYzmLineH: 80px,
+	iptGrpYzmImgW: 160px,
+	iptGrpYzmImgH: 60px,
+);
+
+// tabs
+$yiTabsValueMap: (
+	// 基础：底边框颜色、li宽度、li高度、字号、行高、颜色
+	tabsBorb: #dedede,
+	tabsLiW: 100%,
+	tabsLiH: 88px,
+	tabsFsize: 30px,
+	tabsLineH: 88px,
+	tabsColor: #333,
+
+	// 选中项：文字颜色、边框左侧距离、边框右侧距离、边框颜色
+	tabsActColor: #508CEE,
+	tabsActBorL: 15%,
+	tabsActBorR: 15%,
+	tabsActBor: #508CEE,
+
+	// li中间间隔竖线
+	tabsHr: #dedede,
+);
+
+// yi-mask 背景色
+$mask-bg:               rgba(0, 0, 0, .7);
+
+// modal
+$yiModalValueMap: (
+	// 基础：宽度、背景色、定位值
+	mdlW: 540px,
+	mdlBgC: $white,
+	mdlTXY: translate(-50%, -50%),
+	
+	// 关闭：右侧边距、顶部边距、宽度、高度
+	mdlCloR: 16px,
+	mdlCloT: 16px,
+	mdlCloW: 30px,
+	mdlCloH: 30px,
+
+	// 标题：内边距、字号、行高
+	mdlTitPadd: 40px 30px 0,
+	mdlTitFsize: 34px,
+	mdlTitLineH: 1.3,
+
+	// 内容：内边距、颜色、行高
+	mdlContPadd: 50px 40px 30px,
+	mdlContColor: $gray,
+	mdlContLineH: 1.4,
+
+	// 兄弟相邻边距：有标题内容内上边距、有标题无内容按钮距离标题外边距、有关闭内容内上边距
+	mdlTitPlusContPt: 20px,
+	mdlTitPlusFontMt: 40px,
+
+	// 按钮：高度、第二个按钮颜色、行高、上边框颜色、左边框颜色、第一个按钮颜色
+	mdlBtnH: 88px,
+	mdlBtnNoColor: $gray,
+	mdlBtnLineH: 88px,
+	mdlBtnBorT: #dedede,
+	mdlBtnBorL: #dedede,
+	mdlBtnOkColor: $link,
+);
+
+// select
+$yiSelectValueMap: (
+	selPl: 10px,
+    selPr: 10px,
+    selW: 100%,
+    selH: 70px,
+    selBor: #999,
+);
+
+
+
+// toast
+$yiToastValueMap: (
+	// 基础：内边距、最大宽、文字颜色、背景色、XY值、Icon间距
+	toastPadd: 20px 30px,
+	toastMaxW: 540px,
+	toastColor: $white,
+	toastBgC: rgba(0, 0, 0, .7),
+	toastTXY: translate(-50%, -50%),
+	toastIconM: 10px auto,
+
+	// 文本：最大宽、字号、行高、文字Icon间距
+	toastTextMaxW: 300px,
+	toastTextFsize: 30px,
+	toastTextLineH: 1.6,
+	toastIconPlusTextMt: 10px,
+);

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>纯函数</title>
+</head>
+
+<body>
+  <script>
+    var num = 18;
+
+    function f(x, num) {
+      return x > num;
+    }
+    f(20, num);
+    console.log(num)
+    
+    var obj = {
+      name: 'gjf',
+      age: 18
+    }
+
+    function f(x, num) {
+      return x > obj.num;
+    }
+    f(20, obj);
+    console.log(num)
+    // \ 引用了外部变量num，不是纯函数。
+    console.log(
+      '\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n'
+    )
+  </script>
+</body>
+
+</html>

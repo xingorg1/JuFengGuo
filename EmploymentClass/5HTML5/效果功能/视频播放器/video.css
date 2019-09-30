@@ -1,0 +1,210 @@
+/*
+ * @Author: @Guojufeng 
+ * @Date: 2019-04-08 17:16:28 
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2019-04-09 19:49:26
+ * 视频播放控件样式表
+ */
+html,body{
+  height: 100%;
+  margin: 0;
+  background: #f1f1f1;
+}
+ul{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.video-box{
+  position: relative;
+  width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.box{
+  font-size: 0;
+}
+.video{
+  width: 100%;
+}
+/* 控件 */
+.control-box{
+  transition: all .35s linear;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  line-height: 75px;
+  height: 0;
+  padding: 0 25px;
+  overflow: hidden;
+  color: #fff;
+  background: rgba(0,0,0,0.5);
+}
+.btn{
+  display: inline-block;
+  width: 70px;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 25px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 15px;
+  border: 1px solid #fff;
+  text-align: center;
+  background: rgba(255,255,255,0.5);
+
+}
+/* 播放按钮 */
+.player{
+  margin-right: 15px;
+}
+
+/* 进度条 */
+.prog-box{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: rgba(255,255,255,0.5);
+  transition: all .15s linear;
+}
+.prog-box:hover{
+  height: 12px;
+  cursor: pointer;
+}
+.prog-box:hover .cur-site{
+  width: 12px;
+  height: 12px;
+  top: -4px;
+  left: -10px;
+}
+.progress{
+  display: block;
+  width: 0px;
+  height: 100%;
+  background: tomato;
+  opacity: 0.8;
+  transition: all .35s linear;
+}
+.cur-site{
+  position: absolute;
+  top: -6px;
+  left: -8px;
+  width: 10px;height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  background-clip: padding-box;
+  border: 4px solid rgba(255, 255, 255, 0.4);
+  transition: all .15s linear,left .35s linear;
+}
+
+
+/* 时间 */
+.timer{
+  display: inline-block;
+  width: 160px;
+  line-height: 35px;
+}
+
+/* 音频 */
+.audio-box{
+  display: inline-block;
+  width: 200px;
+  height: 30px;
+  line-height: 30px;
+  margin-left: 20px;
+  color: #fff;
+}
+.decrease{
+
+}
+.audio-progress{
+  display: inline-block;
+  width: 100px;
+  height: 10px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+}
+/* 音量条 */
+.audio-p{
+  display: block;
+  height: 100%;
+  background: #fff;
+  border-radius: 15px;
+  width: 20px;
+  transition: width .35s linear;
+}
+.font{
+  font-size: 20px;
+  cursor: pointer;
+}
+.font:hover{
+  color: tomato;
+}
+.add{
+
+}
+.vol{
+  font-size: 12px;
+}
+.audio-site{
+
+}
+
+
+/* 倍速 */
+.multiple{
+  position: relative;
+  float: right;
+  margin-right: 25px;
+}
+.multiple span{
+  display: block;
+}
+
+.multiple-list{
+  display: none;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  border: 1px solid #70767c;
+  background: rgb(255, 255, 255);
+  color: #70767c;
+  border-radius: 5px;
+}
+.multiple-list::after{
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: #fff;
+  margin: 0px auto 0;
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+}
+.multiple-list li{
+  width: 100%;
+  border-radius: 5px;
+}
+.multiple-list li:hover{
+  background-color: #f1f1f1;
+}
+.multiple:hover .multiple-list{
+  display: block;
+}
+/* 全屏 */
+.scale{
+  float: right;
+  display: inline-block;
+}
+.btn:hover{
+  background: rgba(255,255,255,0.75);
+}

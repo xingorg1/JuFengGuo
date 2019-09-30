@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>过滤器</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+    <div>人民币：{{ inputVal | scientific | unit('￥')}}</div>
+    <div>美元：{{ inputVal | scientific | unit('$')}}</div>
+  </div>
+  <script>
+    // 全局过滤器
+    /* Vue.filter('scientific', oldVal =>{
+      return Number(oldVal).toLocaleString();
+    });
+
+    Vue.filter('unit',(oldVal, params)=>{
+      return params + oldVal
+    }); */
+
+    const vm = new Vue({
+      el: '#app',
+      filters: {
+        'scientific' : oldVal =>{
+          return Number(oldVal).toLocaleString();
+        },
+         unit : (oldVal, params)=>{//名字加不加引号不强制
+          return params + oldVal
+        }
+      },
+      data: {
+        inputVal: 10000000
+      },
+      methods: {
+      }
+    });
+  </script>
+</body>
+
+</html>

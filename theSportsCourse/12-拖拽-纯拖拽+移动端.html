@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>拖拽</title>
+  <title>拖拽</title>
+  <style>
+    body{
+      height: 1000px;
+    }
+    #demo {
+      width: 100px;
+      height: 100px;
+      background: tomato;
+      /* position: absolute; */
+      position: fixed;
+      left: 0;
+      border-radius: 50%;
+      opacity: 0.85;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    span {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: black;
+      border-radius: 50%;
+      opacity: 0.65;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>底部文字，查看效果。底部文字，查看效果。底部文字，查看效果。底部文字，查看效果</h1>
+  <div id="demo"></div>
+  <script>
+    function getViewPortOffset() {
+    /*
+     * @Author: @Guojufeng 
+     * @Date: 2019-01-31 11:17:24 
+     * 获取页面可视窗口的尺寸，兼容现代浏览器、ie及标准模式、怪异模式
+     */
+    if (window.innerWidth) {
+      // ie9及以上
+      return {
+        w: window.innerWidth,
+        h: window.innerHeight
+      }
+    } else {
+      console.log('we2')
+      if (document.compatMode == 'CSS1Compat') {
+        // ie8及以下+标准模式
+        return {
+          w: document.documentElement.clientWidth,
+          h: document.documentElement.clientHeight
+        }
+      } else {
+        // ie8及以下+怪异模式 - backCompat - 向后兼容
+        return {
+          w: document.body.clientWidth,
+          h: document.body.clientHeight
+        }
+      }
+    }
+  };
+    console.log(getViewPortOffset())
+    /* 拖拽 */
+    var { w: bodyW, h: bodyH } = getViewPortOffset(),
+      maxW = bodyW - demo.clientWidth;
+      maxH = bodyH - demo.clientHeight;
+   
+    demo.onmousedown = demo.ontouchstart = function (e) {
+      //鼠标按下触发事件
+      e.preventDefault();
+      var e = e || window.event,
+        self = this, //this指向小球元素
+        mouseX = e.clientX,
+        mouseY = e.clientY;
+      if (e.type === 'touchstart') {
+        mouseX = e.touches[0].clientX;
+        mouseY = e.touches[0].clientY;
+      }
+      var disX = mouseX - this.offsetLeft, //鼠标按下元素时，鼠标在元素身上x方向的哪个位置
+        disY = mouseY - this.offsetTop; //鼠标按下元素时，鼠标在元素身上y方向的哪个位置
+      document.onmousemove = document.ontouchmove = function (e) { 
+        // e.preventDefault();
+        //鼠标移动要加在body元素上，通过冒泡来同时加到demo身上。
+        var e = e || window.event, 
+          mouseX = e.clientX,
+          mouseY = e.clientY;
+        if (e.type === 'touchmove') {
+          mouseX = e.touches[0].clientX;
+          mouseY = e.touches[0].clientY;
+        }
+        var curX = mouseX - disX;
+        var curY = mouseY - disY;
+        
+        // 碰撞检测
+        curX = curX <= 0 ? 0 : curX;
+        curY = curY <= 0 ? 0 : curY;
+        curX = curX >= maxW ? maxW : curX;
+        curY = curY >= maxH ? maxH : curY;
+
+        //给元素赋值
+        self.style.left = curX + 'px'; 
+        self.style.top = curY + 'px';
+        
+      }
+      document.onmouseup = document.ontouchend = function (e) {
+        //停止拖拽 - 清除所有绑定的事件
+        // e.preventDefault();
+        document.onmouseup = document.ontouchend = null; 
+        document.onmousemove = document.ontouchmove = null;
+      }
+    }
+
+    </script>
+</body>
+
+</html>

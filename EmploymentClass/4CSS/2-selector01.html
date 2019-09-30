@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>introduction</title>
+  <style>
+    div[class*='-']{
+      background: red;
+    }
+    input::-webkit-input-placeholder,
+    input::-moz-input-placeholder,
+    input::-ms-input-placeholder,
+    input::-o-input-placeholder{
+      background: red;
+      color: yellow;
+    }
+    input::placeholder{
+      background: greenyellow;
+      color: tomato;
+      text-shadow: 1px 1px 3px black;
+    }
+   
+    /* 完整兼容写法 */
+    input::-webkit-input-placeholder,
+    input::-ms-input-placeholder, /* IE10 +*/
+    input:-moz-placeholder, /* Firefox4-18*/
+    input::-moz-placeholder, /* Firefox19+*/
+    input::placeholder{
+      background: greenyellow;
+      color: tomato;
+      text-shadow: 1px 1px 3px black;
+    }
+    .selector{
+      line-height: 35px;
+    }
+    .selector::selection{
+      /* 只有以下三个可以修改 */
+      /* color: ;
+      background-color: ;
+      text-shadow: ; */
+      color: blueviolet;
+      background: tomato;
+      text-shadow: 1px 2px 3px #8a2be2c7;
+    }
+  </style>
+</head>
+<body>
+  <div class="atest">1</div>
+  <div class="a">2-2</div>
+  <div class="a-test">2</div>
+  <div class="a test">3</div>
+  <div class="test a b">4</div>
+  <div class="b-test a">2</div>
+  <div class="test">5</div>
+  <input type="text" placeholder="默认提示内容">
+  <p class="selector">
+      渡一科技教育公司成立于 2007 年，后经历几轮兼并收购，成立渡一信息技术开发有限公司，下设渡一教育品牌。公司核心业 务包含科技类外包，IT 教育培训等业务。企业开展教育业务至今已有7年整，市场辐射区域已达整个哈尔滨市，是国内首家开设专业web前端培训的机构。
+  </p>
+</body>
+</html>

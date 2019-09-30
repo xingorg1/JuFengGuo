@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Observer</title>
+</head>
+<body>
+  <h4>
+    模拟双向数据绑定
+  </h4>
+  姓名：<input type="text" id="data1">
+  <br>
+  年龄：<input type="text" id="data2">
+  <br>
+  性别：<input type="text" id="data3">
+  <hr>
+  <div id="show"></div>
+  <hr>
+  <p>
+    总结：以前是input输入事件发生时，回调里直接操作div的视图内容改变。这次是转而修改oData数据，然后给数据绑定监听，监听数据修改再去改变视图内容。
+    这样做的好处，在小项目一丁点的改动中，可以不用这么绕。但是vue这种框架级别的代码里这么设计就有自己的道理，比如vue里是数据修改后更新虚拟dom，然后再从虚拟dom上渲染新
+  </p>
+  <div id="showArr"></div>
+  <script>
+    
+    var oInput1 = document.getElementById('data1'),
+    oInput2 = document.getElementById('data2')
+    oInput3 = document.getElementById('data3')
+      oDiv = document.getElementById('show');
+    var oData = {
+      name: 'xing.org1',
+      age: 12,
+      sex: 'female'
+    };
+
+    /* 视图修改时，通知修改数据 */
+    oInput1.oninput = function(e){
+      Watcher.call(this,1);
+    }
+    oInput2.oninput = function(e){
+      Watcher.call(this,2);
+    }
+    oInput3.oninput = function(e){
+      Watcher.call(this,3);
+    }
+    function Watcher(o){
+      switch(o){
+        case 1: 
+          // oData.name = this.value;
+          oData2.info.name = this.value;//嵌套函数的监听 oData2
+        break;
+        case 2: 
+          // oData.age = this.value;
+          oData2.info.age = this.value;
+        break;
+        case 3: 
+          // oData.sex = this.value;
+          oData2.sex = this.value;
+        break;
+      }
+    }
+    /* 视图根据数据修改 */
+    function Compile(params){
+      oDiv.innerText = params;
+    }
+    /* 监听对象的属性是否发生改变 */
+    function Observer(oData){
+      // 遍历，给整个对象的所有属性添加get和set
+      if(oData && typeof oData == 'object'){
+        // 本来可以用for in遍历的。
+        // for (const key in oData) {}
+        // 但是这里借助另一个方法Object.keys得到关于属性值的数组，然后枚举这个数组。
+        /* 
+          Object.keys():使用Object.keys将返回一个由对象内部属性名组成的数组，便于我们循环地去使用Object.defineProperty这个方法给每个属性分别添加getter和setter监听函数。
+          但是对于嵌套对象，他不能拿到第二级以内的属性名。Object.keys(oData2)
+        */
+        var arr = Object.keys(oData);// 会得到如下：["name", "age", "sex"]
+        arr.forEach((el)=>{
+          // 给每个属性添加监听函数
+          defineProp(oData,el,oData[el]);//传递目标对象、属性名、对应属性值
+        });
+      }else{
+        return oData;
+      }
+    }
+    /* 数据劫持 */
+    function defineProp(oData,el,val){
+      // 这样的好处，是可以形成闭包。val是每一次调用defineProp的私有变量，代替之前使用Object.defineProperty时需要定义的临时变量的角色。
+      Object.defineProperty(oData, el, {
+        get: function(){
+          console.log('get data of ' + el);
+          return val;
+        },
+        set: function(params){
+          console.log('set data of '+ el +'~');
+          if(params && params !== val){
+            val = params;//如果传过来的参数有意义、且是一个新值，再做修改。
+            // 数据修改，更新视图 - 简易实现，不知道怎么让三个input输入的值对应填到三个div中。
+            Compile(val)
+            console.log(el + ' has be setted by ' + val);
+          }
+          console.log('set data end~');
+        }
+      })
+    }
+    /* 初始化监听 */
+    // Observer(oData);
+
+
+
+    
+    
+    // 难题一、嵌套对象怎么监听？怎么给对象的每个属性加监听？
+    // 难题二、数组怎么监听？数组不能用Object.defineProperty了啊
+    
+    // 对于嵌套对象：
+    var oData2 = {
+      info: {
+        name: 'xing.org1',
+        age: 12
+      },
+      sex: 'female'
+    };
+    console.log(Object.keys(oData2));
+    Observer(oData2);
+    // 使用递归调用
+    function defineProp(oData,el,val){
+      Observer(val);//很精妙的处理方法，传进去后，如果不是对象就会被返回回来了。会继续执行下边的，就像这行没存在。
+      console.log(el,val);
+      Object.defineProperty(oData, el, {
+        get: function(){
+          console.log('get data of ' + el);//这里还有个问题是get的el这里，打印的还是第一层属性名，但是set就是正确的。
+          return val;
+        },
+        set: function(params){
+          console.log('set data of '+ el +'~');
+          if(params && params !== val){
+            val = params;
+            Compile(val)
+            console.log(el + 'has be setted by ' + val);
+          }
+          console.log('set data end~');
+        }
+      });
+    }
+
+    // 我的第二种写法：
+    // ProxyData(oData2);
+    function ProxyData(copyData) {
+      if (copyData && typeof copyData == 'object') {
+        for (let key in copyData) {
+          // debugger;
+          let a = ProxyData(copyData[key]);
+          log(a, copyData);
+          if (copyData.hasOwnProperty(key)) {
+            let val = copyData[key];//和之前老师封装的，就差这一句话。
+            Object.defineProperty(copyData, key, {
+              get() {
+                log('getter：' + key);
+                return val;
+              },
+              set(value) {
+                log('setter' + key + '，value' + value)
+                val = value;
+              }
+            });
+          }
+        }
+      } else {
+        return copyData;
+      }
+    }
+    // 我的第二种写法 - 整理
+    // ProxyData(oData2);
+    function ProxyData(copyData) {
+      if (copyData && typeof copyData == 'object') {
+        for (let key in copyData) {
+          // if (copyData.hasOwnProperty(key)) {}
+          define(copyData, key, copyData[key])
+        }
+      } else {
+        return copyData;
+      }
+    }
+    function define(copyData, key,val) {
+      ProxyData(copyData[key])
+      Object.defineProperty(copyData, key, {
+        get() {
+          log('getter：' + key);
+          return val;
+        },
+        set(value) {
+          log('setter' + key + '，value' + value)
+          val = value;
+        }
+      });
+    }
+    
+    function upDate(params){
+      showArr.innerText = [...params]
+    }
+
+
+    // 对于数组对象：vue中的处理方法是重写了arr的push等原型prototype上的方法，在里边加了监听的函数，并再次调用原来的代码
+    var oArr = [1,23,4];
+    var arrFunStr = ['push','pop','slice','shift','unshift'];//...等，把数组的要监听的方法全列出来。就像Object.keys拿到所有对象上的属性集合一样。
+    // Object.defineProperty定义的是对象，所以我们也改数组的对象 -- 数组的原型对象：
+
+    /* 实现准备一个数组存放Array.prototype里边的native code 本地代码。不要太优秀 */
+    var arrFunCode = arrFunStr.map((el)=>{
+      // 再利用这个定义好的数组，得到一个相关方法在Array.prototype上边的源代码
+      console.log(Array.prototype[el]);
+      return Array.prototype[el];
+    });
+    console.log(arrFunCode);
+    arrFunStr.forEach((el,i)=>{
+      Object.defineProperty(/* Array.prototype */oArr.__proto__,el,{
+        // 比如el现在是push，我们就是要修改Array.prototype上边push方法
+        // 不用get和set了，直接修改value
+        value: (function(){//修改value值,以重写这个方法
+          return function(...args){//利用解构赋值，把传过来的参数集合到数组中。
+            console.log(`实现数据劫持，执行了${el}方法`);
+            /* 再执行原来的方法。 */
+            arrFunCode[i].apply(oArr, args);//这里this指向有疑问,哦对，让oArr用这些方法，this指向oArr。
+            upDate(oArr);//比如这个函数用来修改数据
+          }
+        })()
+      });
+    });
+    console.log(oArr)//观察oArr原型上边的push已被修改。
+
+    
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>学生管理系统</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- 数据的增删改查、表单验证、数组的操作 -->
+  <div class="wrapper">
+    <header class="header">
+      <div class="header-img">
+        <img src="http://q1.qlogo.cn/g?b=qq&nk=702004176&s=100&t=1547103209" alt="">
+      </div>
+      <span class="header-txt">渡一教育</span>
+    </header>
+    <section class="container">
+      <nav class="nav" id="nav">
+        <dl class="nav-list">
+          <dt>学生管理</dt>
+          <dd class="cur">学生列表</dd>
+          <dd>新增学生</dd>
+        </dl>
+      </nav>
+      <article class="cont" id="container">
+        <!-- 学生功能列表 -->
+        <div class="cont-items">
+          <table class="user-table">
+            <thead class="table-head">
+              <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>邮箱</th>
+                <th>年龄</th>
+                <th>手机号</th>
+                <th>住址</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody class="table-body" id="tbody">
+              <tr>
+                <td>xing.org1^</td>
+                <td>115</td>
+                <td>女</td>
+                <td>702004176@qq.com</td>
+                <td>18</td>
+                <td>14121425235</td>
+                <td>中国 北京</td>
+                <td>
+                  <span class="edit">编辑</span>
+                  <span class="del">删除</span>
+                </td>
+              </tr>
+              <tr>
+                <td>xing.org1^</td>
+                <td>115</td>
+                <td>女</td>
+                <td>702004176@qq.com</td>
+                <td>18</td>
+                <td>14121425235</td>
+                <td>中国 北京</td>
+                <td>
+                  <span class="edit">编辑</span>
+                  <span class="del">删除</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- 弹窗 -->
+          <div class="layer" id="editLayer">
+            <div class="edit-student">
+              <div class="close" id="close">x</div>
+              <h3>
+                编辑信息
+              </h3>
+              <form action="" class="form" onsubmit="submitForm2()">
+                <div class="row">
+                  <span class="left">
+                    <label for="name1">姓名：</label>
+                  </span>
+                  <span class="right">
+                    <input type="text" id="name1" name="name1" autocomplete="off">
+                  </span>
+                </div>
+                <div class="row">
+                  <span class="left">
+                    <label for="">性别：</label>
+                  </span>
+                  <span class="right">
+                    <input type="radio" id="male1" name="sex1" value="0">
+                    <label for="male1">男</label>
+                    <input type="radio" id="female1" name="sex1" value="1">
+                    <label for="female1">女</label>
+                  </span>
+                </div>
+                <div class="row">
+                  <span class="left">
+                    <label for="userNum1">学号：</label>
+                  </span>
+                  <span class="right">
+                    <input type="text" id="userNum1" name="userNum1">
+                  </span>
+                </div>
+                <div class="row">
+                  <span class="left">
+                    <label for="email1">邮箱：</label>
+                  </span>
+                  <span class="right">
+                    <input type="text" id="email1" name="email1">
+                  </span>
+                </div>
+                <div class="row">
+                  <span class="left">
+                    <label for="brithYear1">出生年：</label>
+                  </span>
+                  <span class="right">
+                    <input type="text" id="brithYear1" name="birthYear1">
+                  </span>
+                </div>
+                <div class="row">
+                  <span class="left">
+                    <label for="userPhone1">手机号：</label>
+                  </span>
+                  <span class="right">
+                    <input type="text" id="userPhone1" name="userPhone1">
+                  </span>
+                </div>
+                <div class="row">
+                  <span class="left">
+                    <label for="userSite1">住址：</label>
+                  </span>
+                  <span class="right">
+                    <input type="text" id="userSite1" name="userSite1">
+                  </span>
+                </div>
+                <div class="row">
+                  <input type="submit" value="编辑完成" class="submit" id="submit1">
+                  <input type="reset" value="取消编辑" class="reset" id="resetLayer">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- 新增 -->
+        <div class="cont-items hide">
+          <form action="" class="form" onsubmit="submitForm()">
+            <div class="row">
+              <span class="left">
+                <label for="name">姓名：</label>
+              </span>
+              <span class="right">
+                <input type="text" id="name" name="name">
+              </span>
+            </div>
+            <div class="row">
+              <span class="left">
+                <label for="">性别：</label>
+              </span>
+              <span class="right">
+                <input type="radio" id="male" name="sex" value="0">
+                <label for="male">男</label>
+                <input type="radio" id="female" name="sex" checked value="1">
+                <label for="female">女</label>
+              </span>
+            </div>
+            <div class="row">
+              <span class="left">
+                <label for="userNum">学号：</label>
+              </span>
+              <span class="right">
+                <input type="text" id="userNum" name="userNum">
+              </span>
+            </div>
+            <div class="row">
+              <span class="left">
+                <label for="email">邮箱：</label>
+              </span>
+              <span class="right">
+                <input type="text" id="email" name="email">
+              </span>
+            </div>
+            <div class="row">
+              <span class="left">
+                <label for="brithYear">出生年：</label>
+              </span>
+              <span class="right">
+                <input type="text" id="brithYear" name="birthYear">
+              </span>
+            </div>
+            <div class="row">
+              <span class="left">
+                <label for="userPhone">手机号：</label>
+              </span>
+              <span class="right">
+                <input type="text" id="userPhone" name="userPhone">
+              </span>
+            </div>
+            <div class="row">
+              <span class="left">
+                <label for="userSite">住址：</label>
+              </span>
+              <span class="right">
+                <input type="text" id="userSite" name="userSite">
+              </span>
+            </div>
+            <div class="row">
+              <input type="submit" value="提交" class="submit" id="submit">
+              <input type="reset" value="重置" class="reset">
+            </div>
+          </form>
+        </div>
+
+      </article>
+    </section>
+  </div>
+  <script src="ajax.js"></script>
+  <!-- <script src="myAjax.js"></script> -->
+  <script src="main.js"></script>
+</body>
+
+</html>

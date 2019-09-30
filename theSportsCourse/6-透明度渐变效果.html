@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>透明度效果</title>
+  <style>
+    #demo {
+      width: 300px;
+      height: 300px;
+      background: green;
+      opacity: 1;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="demo">
+    鼠标移上来看效果
+  </div>
+  <script>
+    var demo = document.getElementById('demo');
+    demo.onmouseenter = function () {
+      opacityTrasition(this, 0.3, 40);
+    }
+    demo.onmouseleave = function () {
+      opacityTrasition(this, 1, 40);
+    }
+
+    function getStyle(dom, attr) {
+      if (window.getComputedStyle) {
+        return window.getComputedStyle(dom, null)[attr];
+      } else {
+        return dom.currentStyle[attr];
+      }
+    }
+    function opacityTrasition(dom, target, mySpeed) {
+      var timer = null,
+        speed = null;
+      clearInterval(timer);
+      target = target * 100; //100应该是用户传入时计算，这里帮用户计算一下
+      timer = setInterval(function () {
+        // var dis = target - this.style.opacity;//想要获取opacity不能用offset那一套了，要想获取css上的样式，就得封装一个方法。
+        var curOpa = parseFloat(getStyle(dom, 'opacity')) * 100;
+        // 速度的计算没有改变。
+        speed = (target - curOpa) / mySpeed;
+        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+        if (Math.abs(target - curOpa) <= Math.abs(speed)) {
+          // 如果这里用老师的，直接清除定时器，会永远使得真正的oapcity值与target相比，少0.01
+          dom.style['opacity'] = target / 100;
+          clearInterval(timer);
+        } else {
+          dom.style['opacity'] = (curOpa + speed) / 100;
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

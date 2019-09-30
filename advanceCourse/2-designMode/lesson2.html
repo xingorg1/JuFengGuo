@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- <button id="demo">show</button> -->
+    <script>
+        // 没有迎合单例模式
+
+
+        // 理解代理模式很重要
+
+
+        var mrDeng = {
+            sendFlower: function (target) {
+                var flower = 'sunflower';
+                target.receiveFlower(flower);
+            }
+        }
+
+
+        // 代理人   代理   利用原有对象的功能 加上 自己额外的部分 去和 要访问对象互动
+
+        var cheng = {
+            proxyFlower: function (target) {
+                this.listenMood(target, function () {
+                    mrDeng.sendFlower(target);
+                })
+            },
+            listenMood: function (target, func) {
+                var timer = setInterval(function () {
+                    if(target.mood) { 
+                        func();
+                        clearInterval(timer);
+                    }
+                }, 500);
+            }
+        }
+
+
+
+        var goddness = {
+            mood: null,
+            receiveFlower: function (flower) {
+                console.log(this.mood ? 'ok' : 'get out');
+            },
+            changeMood: function () {
+                this.mood = Math.random() > 0.8 ? true : false;
+            },
+            createMood: function () {
+                this.changeMood();
+                var self = this;
+                setInterval(function () {
+                    self.changeMood();
+                }, 300)
+            }
+        };
+        goddness.createMood();
+
+
+        // 不保准 
+        // mrDeng.sendFlower(goddness);
+        cheng.proxyFlower(goddness);
+
+
+
+
+
+
+
+
+
+        // 单例模式使用场景
+        // var createAlert = function (text) {
+        //     var oDiv = document.createElement('div');
+        //     oDiv.innerText = text;
+        //     oDiv.style.display = 'none';
+        //     document.body.appendChild(oDiv);
+        //     return oDiv;
+        // }
+
+        // // var createIframe = function () {
+
+        // // }
+        // // ....
+        // var singleAlert = (function () {
+        //     var oDiv = null;
+        //     return function (text) {
+        //         if (oDiv) {
+        //             return oDiv;
+        //         }
+        //         oDiv = document.createElement('div');
+        //         oDiv.innerText = text;
+        //         oDiv.style.display = 'none';
+        //         document.body.appendChild(oDiv);
+        //         return oDiv;
+        //     }
+        // })();
+
+
+        // // 高级的方法  可以使一个非单例的函数变成一个单例的函数
+
+        // var getSingleFunc = function (func) {
+        //     var result = null;
+        //     return function () {
+        //         if (!result) {
+        //             result = func.apply(this, arguments);
+        //         }
+        //         return result;
+        //     }
+        // }
+
+        // var singleAlert = getSingleFunc(createAlert);
+        // var singleFrame = getSingleFunc(createFrame);//其他应用
+
+
+        // var oButton = document.getElementById('demo');
+        // oButton.onclick = function () {
+        //     var thisDiv = singleAlert('duyi');
+        //     thisDiv.style.display = 'block';
+        // }
+
+        // 单例
+
+        // Test 变量  存 函数引用值  ==> 对象
+        // Function
+
+        // var arr = []; new Array()
+
+        // 
+
+        // var a = 10;
+    //     function Test (name) {
+    //         // c = 10;
+    //         //this
+    //         if (typeof Test.instance == 'object') {
+    //             return Test.instance;
+    //         }
+    //         this.name = name;
+    //         Test.instance = this;
+    //         // return this;
+    //     }
+    //     // 
+
+    //     var a = new Test('a');
+
+    //     var b = new Test('a');
+
+    //    console.log( a == b );
+
+
+
+        // function Test () {
+        //     // AO -> GO
+        //     var name = 20;
+        //     function a () {
+        //         console.log(name)
+        //     }
+        //     return a
+        // }
+
+
+        // function Test (name) {
+        //     var instance = this;
+        //     this.name = name;
+        //     Test = function () {
+                
+        //         return instance;
+        //     }
+        //     // return this;
+        // }
+
+        // var a = new Test('a');
+        // Test.prototype.say = function () {
+        //     alert(0)
+        // }
+        // var b = new Test('a');
+        // console.log(a == b);
+
+
+        // 完美单例模式
+        //  var Test = (function () {
+        //      //AO 
+        //      var instance = null;
+        //      return function (name) {
+        //          if (instance) {
+        //             return instance;
+        //          }
+        //         this.name = name;
+        //         instance = this;
+        //         // return this;
+        //      }
+        //  })();
+
+        //  var a = new Test('a');
+        //  var b = new Test('a');
+        //  Test.prototype.say = function () {
+        //     alert(0)   
+        //  }
+        //  var c = new Test('a');
+        //  console.log(a == b, b == c);
+
+
+
+        //  Test = function => new Test()
+
+    </script>
+</body>
+</html>

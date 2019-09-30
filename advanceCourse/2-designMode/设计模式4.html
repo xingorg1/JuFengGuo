@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // //1. 原始模式创建对象 - 刀耕火种
+        // var smallPlane = {
+        //     width: 100,
+        //     height: 100,
+        //     blood: 100,
+        //     touch: function () {
+        //         this.blood -= 50;
+        //         if (this.blood == 0) {
+        //             console.log('die');
+        //         }
+        //     }
+        // }
+
+        // var smallPlane = {
+        //     width: 100,
+        //     height: 100,
+        //     blood: 100,
+        //     touch: function () {
+        //         this.blood -= 50;
+        //         if (this.blood == 0) {
+        //             console.log('die');
+        //         }
+        //     }
+        // }
+
+        // // 2- 构造函数 -又是通过类的方式创建对象
+        // function SmallPlane () {
+        //     this.width = 100;
+        //     this.height = 100
+        //     this.name = 'smallPlane';
+        //     this.blood = 100;
+        //     this.touch = function () {
+        //         this.blood -= 100;
+        //         if (this.blood == 0) {
+        //             console.log('die');
+        //         }
+        //     }
+        // }
+
+        // new SmallPlane();
+
+
+        // function BigPlane () {
+        //     this.width = 150;
+        //     this.height = 200;
+        //     this.blood = 200;
+        //     this.name = 'bigPlane';
+        //     this.touch = function () {
+        //         this.blood -= 50;
+        //         if (this.blood == 0) {
+        //             console.log('die');
+        //         }
+        //     }
+        // }
+
+        // function AttackPlane () {
+        //     this.width = 125;
+        //     this.height = 100;
+        //     this.blood = 100;
+        //     this.name = 'AttackPlanea'
+        //     this.touch = function () {};
+        //     this.attack = function () {
+        //         console.log('bultt');
+        //     }
+        // }
+
+        // 3- 工厂模式 
+        // function PlaneFactory (type) {
+        //     var newPlane = null;
+        //     switch (type) {
+        //         case 'SmallPlane':
+        //             newPlane = new SmallPlane();
+        //             break;
+        //         case 'BigPlane':
+        //             newPlane = new BigPlane();   
+        //             break;
+        //         case 'AttackPlane':
+        //             newPlane = new AttackPlane();
+        //             break;
+        //     }
+        //     newPlane.die = function () {
+        //         console.log('boomb');
+        //     }
+        //     return newPlane;
+        // }
+
+        /* // 工厂方法模式  
+        // 创建一个父类工厂
+        function PlaneFactory () {
+            this.decorate_list = [];//资源池，进行搜集
+        }
+        // 提供一个接口，用于创建对象用。(不在原型上加的理由：原型上加了以后，就需要通过new一个对象的方式来引用，不太符合真正的现实生活中的场景。我们给工厂上添加一个方法，这个工厂的create方法来查到对应的子工厂。才更符合我们生活中的理解、代码可读性也更强。有时候代码中的可读性要和现实生活相映射，更容易被理解。)
+        PlaneFactory.create = function (type) {
+            // 判断一下是否存在该类型的子类工厂，如果不是一个函数，就没办法后期通过new构造了。
+            if (PlaneFactory.prototype[type] == undefined) {
+                throw 'no this constructor';
+            }
+            // 继承 子类工厂继承父类工厂
+            if (PlaneFactory.prototype[type].prototype.__proto__ !== PlaneFactory.prototype) {
+                // new的话就会创建对象，js引擎就要开辟空间，所以判断一下，如果没必要就不用new了，为了性能考虑。
+                PlaneFactory.prototype[type].prototype = new PlaneFactory();
+            }
+            var arg = [].slice.call(arguments, 1);
+            // 有的话就真正的创建子工厂对象。
+            var newPlane = new PlaneFactory.prototype[type](...arg);
+            return newPlane;
+        }
+
+        // 子类工厂都可以使用的的公共方法，保证在原型上添加的方法能够影响所有的子类工厂，利用了继承的思想。
+        PlaneFactory.prototype.touch = function () {
+            this.blood -= 50;
+            if (this.blood == 0) {
+                this.die();
+            }
+        }
+
+        PlaneFactory.prototype.die = function () {
+            alert('boomb');
+        }
+
+        // 真正定义子类工厂（每个子工厂都有自己独特的方法，公共的方法如touch、die等都放到父工厂原型上）
+        // 子类工厂SmallPlane
+        PlaneFactory.prototype.SmallPlane = function (x, y) {
+            this.x = x;
+            this.y = y;
+            this.width = 100;
+            this.height = 100;
+            this.blood = 100;
+            this.name = 'SmallPlane';
+        }
+        // 子类工厂BigPlane
+        PlaneFactory.prototype.BigPlane = function (x, y) {
+            this.x = x;
+            this.y = y;
+            this.width = 150;
+            this.height = 200;
+            this.blood = 200;
+            this.name = 'BigPlane';
+        }
+        // 子类工厂AttackPlane
+        PlaneFactory.prototype.AttackPlane = function (x, y) {
+            this.x = x;
+            this.y = y;
+            this.width = 100;
+            this.height = 125;
+            this.blood = 100;
+            this.name = 'AttackPlane';
+            this.attack = function () {
+                console.log(' biu~ biu~ biu!');
+            }
+        }
+
+        // 父类工厂去调用不同的子工厂来构造不同类型的对象
+        var oAp = PlaneFactory.create('AttachPlane',10,20);
+        var oSp = PlaneFactory.create('SmallPlane',20,30);
+        var oBp = PlaneFactory.create('BigPlane',30,50);
+ */
+
+
+
+
+    /*         
+        // 工厂方法模式   + 装饰者模式
+        function PlaneFactory () {
+            this.decorate_list = [];//资源池，进行搜集
+        }
+
+        PlaneFactory.create = function (type) {
+            if (PlaneFactory.prototype[type] == undefined) {
+                throw 'no this constructor';
+            }
+            if (PlaneFactory.prototype[type].prototype.__proto__ !== PlaneFactory.prototype) {
+                PlaneFactory.prototype[type].prototype = new PlaneFactory();
+            }
+            var arg = [].slice.call(arguments, 1);
+            var newPlane = new PlaneFactory.prototype[type](...arg);
+            return newPlane;
+        }
+
+        // // 集合所有装饰方法
+        PlaneFactory.prototype.decorators = {
+            // 运行时添加的装饰方案s
+            eatOneLife: function (obj) {
+                obj.blood += 100;
+            },
+            eatTwoLife: function (obj) {
+                obj.blood += 200;
+            },
+            eatShrinkLife: function (obj) {
+                obj.blood -= 50;
+            }
+        }
+        // // 搜集对某对象的装饰描述
+        PlaneFactory.prototype.decorate = function (decorator) { 
+            this.decorate_list.push(decorator);
+        }
+
+        // // 让装饰方法作用在该对象的身上
+        PlaneFactory.prototype.update = function () {
+            for (var i = 0; i < this.decorate_list.length; i++) {
+                this.decorators[ this.decorate_list[i] ] && this.decorators[ this.decorate_list[i] ](this);
+            }
+        } 
+
+        PlaneFactory.prototype.empty = function () {
+            this.decorate_list = [];
+        }
+
+        PlaneFactory.prototype.remove = function (type) {
+            // eatOneLife
+            this.decorate_list =  this.decorate_list.filter(function (eleType) {
+                return !(eleType == type);
+            })
+        }
+
+        //子类工厂的公共方法
+        PlaneFactory.prototype.touch = function () {
+            this.blood -= 50;
+            if (this.blood == 0) {
+                this.die();
+            }
+        }
+
+        PlaneFactory.prototype.die = function () {
+            alert('boomb');
+        }
+
+        //真正定义子类工厂
+        PlaneFactory.prototype.SmallPlane = function (x, y) {
+            this.x = x;
+            this.y = y;
+            this.width = 100;
+            this.height = 100;
+            this.blood = 100;
+            this.name = 'SmallPlane';
+        }
+        PlaneFactory.prototype.BigPlane = function (x, y) {
+            this.x = x;
+            this.y = y;
+            this.width = 150;
+            this.height = 200;
+            this.blood = 200;
+            this.name = 'BigPlane';
+        }
+        PlaneFactory.prototype.AttackPlane = function (x, y) {
+            this.x = x;
+            this.y = y;
+            this.width = 100;
+            this.height = 125;
+            this.blood = 100;
+            this.name = 'AttackPlane';
+            this.attack = function () {
+                console.log(' biu~ biu~ biu!');
+            }
+        }
+
+        var oAp1 = PlaneFactory.create('AttackPlane', 10, 20);
+        var oAp2 = PlaneFactory.create('AttackPlane', 20, 70);
+
+        var oSp = PlaneFactory.create('SmallPlane', 20, 30);
+        var oBp = PlaneFactory.create('BigPlane', 30, 40);
+
+
+        // 装饰者模式 - 将装饰方法作用到单个指定的实例化对象上
+        oAp1.decorate('eatOneLife');
+        oAp1.decorate('eatTwoLife');
+        oAp1.remove('eatOneLife'); */
+
+
+
+        // 观察者模式- - 发布-订阅模式
+        // Event DOM节点上绑定的事件函数，就相当于观察者模式（发布-订阅）
+        // 1. 面试题：实现一个Event模块 （要求具备如下功能：on emmit empty remove once
+        // 2. 有助于了解 观察者模式 
+        // 3. node 模块中经常会使用到
+
+        function Event () {
+            // 存储 不同事件类型对应的不同处理函数
+            this.cache = {};
+        }
+
+        // 订阅代码
+        Event.prototype.on = function (type, handle) {
+            if (!this.cache[type]) {
+                this.cache[type] = [handle];
+            }else {
+                this.cache[type].push(handle);
+            }
+        }
+
+        // 发布代码
+        Event.prototype.emmit = function () {
+            var type = arguments[0];
+            var arg = [].slice.call(arguments, 1);
+            for (var i = 0; i < this.cache[type].length; i++) {
+                this.cache[type][i].apply(this, arg);
+            }
+        }
+
+        // 清空代码（取消全部订阅）
+        Event.prototype.empty = function (type) {
+            this.cache[type] = [];
+        }
+        
+        // 取消单一类型的订阅（就像取关某个公众号）
+        Event.prototype.remove = function (type, handle) {
+            this.cache[type] = this.cache[type].filter(function (ele) {
+                return ele != handle;
+            })
+        }
+
+        // 只订阅一次
+        Event.prototype.once = function (type, handle) {
+          //emmit的时候，如果是once的就调用后删除
+        }
+
+        // 使用demo
+        var oE = new Event();
+        function deal1(time) {
+            console.log('overtime1:' + time);
+        }
+        oE.on('over', deal1);
+        function deal2(time) {
+            console.log('overtime2:' + time);
+        }
+        oE.on('over', deal2);
+
+        oE.emmit('over', '2018-9-25');
+
+        oE.remove('over', deal2);
+
+        oE.emmit('over', 'second-2018-9-25');
+
+
+        // 在其他构造函数上的应用
+        OtherFunction.prototype = new Event();//通过重新指向构造函数的prototype实现
+        function OtherFunction (name) {
+            this.name = name;
+        }
+        OtherFunction.prototype.otherFun = function(){
+            // 其他构造函数的原型自身方法
+            console.log(this.name);
+        }
+
+        var obj1 = new OtherFunction('郭')
+        var obj2 = new OtherFunction('ju')
+        var obj3 = new OtherFunction('锋')
+
+        obj1.on('test', test);// 订阅一个名为test的任务
+
+        obj1.emmit('test', 'hah');//发布名为test的任务。
+
+        function test (canshu) {
+            // 触发回调函数，受到发布消息后触发该函数
+            console.log('?',canshu)
+            this.otherFun();
+        }
+
+    </script>
+</body>
+</html>

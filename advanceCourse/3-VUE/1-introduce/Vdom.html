@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <section class="main">
+    <header class="header">我是标题</header>
+    <div class="cont" id="container">
+      <nav class="nav-box" style="float: left;">
+        侧边栏
+      </nav>
+      <article data-articleId="12">
+        我是正文
+      </article>
+    </div>
+    <footer>我是尾巴</footer>
+  </section>
+  <script>
+    // 虚拟DOM - js模拟DOM
+    var vnode = {
+      //tag（字符串）表示标签的名字
+      tag: 'section',
+      // attrs（对象）用于存放标签上的属性键值对
+      attrs: {
+        class: 'main',
+      },
+      // children（数组）表示对当前tag内部每一个子元素的模拟
+      children: [{
+          tag: 'header',
+          attrs: {
+            class: 'header',
+          },
+          children: ['我是标题'] //标签内文本在attrs的children数组中存放？？？还是老师写错了
+        },
+        {
+          tag: 'div',
+          attrs: {
+            class: 'cont',
+            id: 'container'
+          },
+          children: [{
+            tag: 'nav',
+            attrs: {
+              class: 'nav-box',
+              style: 'float: left;'
+            },
+            children: [' 侧边栏']
+          }, {
+            tag: 'article',
+            attrs: {
+              "data-articleId": '12' //是因为虚拟dom的原因，这种横线格式的属性名会变成小驼峰？
+            },
+            children: ['我是正文']
+          }]
+        },
+        {
+          tag: 'footer',
+          children: ['我是尾巴']
+        }
+      ]
+    }
+  </script>
+</body>
+
+</html>

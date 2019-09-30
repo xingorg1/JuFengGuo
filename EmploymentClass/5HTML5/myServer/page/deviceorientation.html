@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>device-orientation</title>
+</head>
+<body>
+  <h3>体感事件，可以捕获到陀螺仪里边运动的轨迹</h3>
+  <h3 id="txt">等待結果...</h3>
+  <script src="./js/Vconsole.js"></script>
+  <script>
+    let vconsole = new VConsole();
+    window.addEventListener('deviceorientation',function(e){
+      // 事件名不需要区分大小写。
+      console.log(e.alpha,e.beta,e.gamma);
+      myLog(e);
+    });
+
+    function myLog(e){
+      document.getElementById('txt').innerHTML = `
+        alpha: ${e.alpha && e.alpha.toFixed(5)}°
+        <br/>
+        beta: ${e.beta && e.beta.toFixed(5)}°
+        <br/>
+        gamma: ${e.gamma && e.gamma.toFixed(5)}°
+      `;
+    }
+  </script>
+</body>
+</html>

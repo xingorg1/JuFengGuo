@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>箭头函数</title>
+</head>
+
+<body>
+  <span id="button" style="border: 1px solid; padding: 10px"> + 1</span>
+  <script>
+    // 箭头函数不用写function了
+    // 但是箭头函数声明的时候一定要赋值给一个变量、对象属性、数组项、函数形参等，必须有个东西接收他。
+    let arrow01001 = () => { //存给变量
+      return false;
+    }
+    console.log(arrow01001());
+    let arrow01002 = [() => { //存给数组
+      return false;
+    }]
+    console.log(arrow01002[0]());
+
+    let arrow01003 = {
+      fn: () => { //存给对象
+        return () => {
+          // 箭头函数里边返回箭头函数
+        };
+      }
+    }
+    console.log(arrow01003.fn());
+    // 函数可以省略return。直接去掉大括号的return关键字就行
+    let arrow02 = () => false;
+    console.log(arrow02())
+
+    // 返回一个数组或对象格式的值时需要怎么写？？
+    let arrow03 = () => [false, true];
+    //这么写就报错了 - Uncaught SyntaxError: Unexpected token :
+    // let arrow04 = () => {'false': true};
+    // 因为大括号会被识别成一个代码块，所以需要把箭头后边的额内容变成表达式，比如用圆括号包裹
+    let arrow04 = () => ({
+      'false': true
+    });
+
+    // 高阶函数：（参数或返回值是函数的函数）如果一个函数的返回值是一个函数、或者一个函数的参数是另一个函数，这种函数就叫高阶函数。
+    function arrow05(x) {
+      return function (y) {
+        return function (z) {
+          return z + y + x;
+        }
+      }
+    };
+    var arrow0501 = arrow05(1);
+    var arrow0502 = arrow0501(2);
+    arrow0502(3);
+
+    // 修改如下
+    let arrow06 = (x) => {
+      return (y) => {
+        return (z) => {
+          return z + y + x;
+        }
+      }
+    }
+    // 简化版本 - 去掉大括号和return
+    let arrow0601 = (x) => (y) => (z) => z + y + x;
+    // 极简版本 - 一个参数时，可以不需要括号。两个及以上参数必须加括号
+    let arrow0602 = x => y => z => x + z + y;
+    arrow06(1)(2)(3);
+    console.log(arrow0601(11)(2)(3));
+
+    // 箭头函数里形参不能重名，就好像箭头函数里的参数是用let声明的一样。。
+    function arrow07es5(x, x) {
+      console.log(x, x)
+    }
+    arrow07es5(1, 2); //2,2
+    // let arrow07 = (x,x) => x + x; // 报错
+
+    // 只能作为函数使用使用，不能new，没有原型
+    // 他的功能很单一，es5中的函数还能构造对象用，他不能，他就是一个最最普通的函数而已。不是一个构造函数，也就不能new、更就没有原型了。
+    let arrow08 = () => {
+      this.aaa = 'this也是window的';
+    }
+    arrow08();
+    console.log(window.aaa); //this也是window的
+    // new arrow08();
+
+
+
+
+    /* new */
+    // 箭头函数里的arguments不是箭头函数的形参列表，而是箭头函数外部最近一层包裹的arguments
+    function arg(a, b, s, de) {
+      let args = arguments;
+      let arrow09 = (c, d) => {
+        console.log(args);
+        console.log(arguments);
+        return '箭头函数里直接打印arguments，值的是外部包裹函数作用域的arguments';
+      }
+      return arrow09;
+    }
+    console.log(arg(1, 2, 3, 4)(5, 6));
+    // 最近一层的普通包裹函数的arguments
+    function arg2(a) {
+      let arrow10 = (a, b, s, de) => {
+        let arrow09 = (c, d) => {
+          console.log(arguments);
+          return '不是最近外层的函数arguments，而是最近外层普通函数的，如果外层还是箭头函数，就继续向上查找。直到找到全局，还没有普通函数包裹，那就找全局的名叫arguments的变量';
+        }
+        return arrow09;
+      }
+      return arrow10;
+    }
+    console.log(arg2('普通函數的參數')(1, 2, 3, 4)(5, 6));
+    // 如果箭头函数没有普通函数包裹，指向window里名叫arguments变量
+    let arrow011 = (c, d) => {
+      // console.log(arguments);
+      return '如果箭头函数没有普通函数包裹，指向作用域里名叫arguments变量';
+    }
+    arrow011(1, 2)
+
+    window.arguments = '我是window里名叫arguments变量'
+
+    // 如果箭头函数外部函数也是一个箭头函数，同上，相当于没有普通函数包裹，找作用域中的arguments变量
+    let arrow10 = (a, b, s, de) => {
+      let arrow09 = (c, d) => {
+        console.log(arguments);
+        return '箭头函数里直接打印arguments，值的是外部包裹函数作用域的arguments';
+      }
+      return arrow09;
+    }
+    console.log(arrow10(1, 2, 3, 4)(5, 6));
+
+
+    /* 箭头函数中的 this */
+    let this01 = () => {
+      console.log('this01', this);
+    }
+    this01();//window
+    console.log('=========')
+    window.name = 'window de this';
+    let thisObj = {
+      name: 'thisObj',
+      say() {
+        console.log('普通函数，this追随this绑定规则', this.name);
+        setTimeout(function () {
+          console.log('普通函数里边普通定时回调', this.name);
+        }, 0);
+        setTimeout(() => {
+          console.log('普通函数里边,箭头回调。this一开始就绑定好了', this.name);
+        }, 0);
+      },
+      sayThis: () => {
+        // 在函数定义的时候，this已经被绑定了，后期没法改，即便是回调函数
+        console.log('箭头函数里边，this一开始就绑定好了，是函数定义时所处上下文的this', this.name);
+        setTimeout(function () {
+          console.log('箭头函数里边普通定时回调', this.name);
+        }, 0);
+        setTimeout(() => {
+          console.log('箭头函数里边箭头定时回调', this.name);
+        })
+      }
+    }
+    var thisObj2 = {
+      name: 'thisObj2222222',
+      a: 'thisObj2'
+    }
+    // thisObj.say();//谁调用指向谁、回调指window、箭头绑定到定义时函数的this
+    // thisObj.say.call(thisObj2);//call强绑定给了obj2、回调指window、箭头绑定到定义时函数的this,跟随定义函数也受call的影响
+    // thisObj.say.apply(thisObj2);//同call，试一个就行
+    // thisObj.sayThis();//查找最近层作用域的this，回调指window、箭头绑定定义时的函数内部，沿作用域链找到window
+    // thisObj.sayThis.apply(thisObj2); //居然不受强绑定的影响，全是定义时的函数内部this
+    // thisObj.sayThis.bind(thisObj2)(); //居然不受强绑定的影响，全是定义时的函数内部this
+
+    /* 箭头函数中this受new影响吗？ */
+    function This03() {
+      // 那就是this在定义时就决定了。
+      this.a = '箭头函数中this受new影响吗？';
+      this.testThis = function () {
+        console.log(this.a);
+      };
+      this.testArrow = () => {
+        console.log(this)
+        console.log(this.a)
+      }
+    }
+    var thisObj3 = new This03();
+    thisObj3.testThis();
+    thisObj3.testArrow();
+    thisObj3.testArrow.call(thisObj2);
+
+    // this的实际应用：
+    function Add(){
+      this.button = document.getElementById('button');
+      this.count = 0;
+      /* this.button.onclick = function(){
+        console.log(this);//普通函数中，this指向button这个dom对象本身
+      } */
+      this.button.onclick = () => {
+        this.count ++;//箭头函数中，this指向实例化对象add
+        console.log(this.count);
+      }
+    }
+    let add = new Add();
+
+    // 处理一个数组
+    let thisArr = [1,2,3,4];
+    // 旧的写法
+    thisArr.filter(function (el){
+      return el > 2;
+    });
+    // 新的写法
+    var newThisArr = thisArr.filter(el => el > 2);
+    console.log(newThisArr)
+
+    // es6入门文档阅读
+    
+
+  </script>
+</body>
+
+</html>

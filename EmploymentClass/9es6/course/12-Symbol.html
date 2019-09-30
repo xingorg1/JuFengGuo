@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Symbol</title>
+</head>
+
+<body>
+  <h3>用Symbol.iterator来自定义for…of在对象上的行为</h3>
+  <script>
+    const {
+      log
+    } = console;
+    let o = new Object; //直接这样new，后边不加括号调用也可以得到一个实例化对象啊！
+    log(o);
+
+    o[Symbol.iterator] = function () {
+      // 给o对象上加一个迭代器
+      let v = 0;
+      return {
+        next: function () {
+          return {
+            value: v++ + ' - value值，哈哈哈',
+            done: v > 3 //当v大于3时条件不成立，就没有next了
+          }
+        }
+      }
+    }
+    for (let item of o) {
+      log(item)
+    }
+
+    Symbol.prototype.sayHello = function (name) {
+      return 'hello! ' + name;
+    }
+
+    let mySymbolObj = Symbol('mySymbol');
+    log(mySymbolObj.sayHello('xing.org1^'));
+
+    // 利用装箱操作，得到一个Symbol对象：
+    let symbolObj = (function () {
+      return this;
+    }.call(Symbol()));
+    log(symbolObj)
+    log(typeof symbolObj)
+    log(symbolObj instanceof Symbol) //true！
+    log(symbolObj instanceof Symbol) //true！
+    log(symbolObj.constructor === Symbol) //true！
+    log(symbolObj.__proto__ === Symbol.prototype) //true！
+    log(Object.prototype.toString.call(symbolObj)) //[object Symbol]
+
+
+    // 利用Object显示进行装箱操作
+    let symbolObj2 = Object(Symbol());
+
+    log(symbolObj2)
+    log(typeof symbolObj2)
+    log(symbolObj2 instanceof Symbol) //true！
+    log(symbolObj2 instanceof Symbol) //true！
+    log(symbolObj2.constructor === Symbol) //true！
+    log(symbolObj2.__proto__ === Symbol.prototype) //true！
+    log(Object.prototype.toString.call(symbolObj2)) //[object Symbol]
+
+    // Symbol里传对象
+    let arr1 = [1],
+      num = 666,
+      str = 'abcsd',
+      bool = false,
+      obj1 = {
+        name: '我是对象',
+      },
+      reg1 = /\d+/g,
+      date1 = new Date(),
+      set = new Set('我是Set结构'),
+      map = new Map([
+        ['name', '我是Map结构']
+      ]),
+      fn = function fn1() {},
+      err1 = new Error('我是错误文案');
+
+    function changePrototype() {
+
+
+      Object.prototype.toString = function () {
+        return "哈哈哈Object"
+      }
+      Function.prototype.toString = function () {
+        return "哈哈哈Function"
+      }
+      Array.prototype.toString = function () {
+        return "哈哈哈Array"
+      }
+      Number.prototype.toString = function () {
+        return "哈哈哈Number"
+      }
+      String.prototype.toString = function () {
+        return "哈哈哈String"
+      }
+      Boolean.prototype.toString = function () {
+        return "哈哈哈String"
+      }
+      Map.prototype.toString = function () {
+        return "哈哈哈Map"
+      }
+      Set.prototype.toString = function () {
+        return "哈哈哈Set"
+      }
+      Date.prototype.toString = function () {
+        return "哈哈哈Date"
+      }
+      RegExp.prototype.toString = function () {
+        return "哈哈哈RegExp"
+      }
+      Error.prototype.toString = function () {
+        return "哈哈哈Error"
+      }
+    }
+    // changePrototype()
+    let sm1 = Symbol(obj1),
+      sm2 = Symbol(arr1),
+      sm3 = Symbol(num),
+      sm4 = Symbol(str),
+      sm5 = Symbol(fn),
+      sm6 = Symbol(bool),
+      sm7 = Symbol(map),
+      sm8 = Symbol(set),
+      sm9 = Symbol(date1),
+      sm10 = Symbol(reg1),
+      sm11 = Symbol(err1),
+      sm12 = Symbol(null),
+      sm13 = Symbol(undefined);
+    log(sm1);
+    log(sm2);
+    log(sm3);
+    log(sm4);
+    log(sm5);
+    log(sm6);
+    log(sm7);
+    log(sm8);
+    log(sm9);
+    log(sm10);
+    log(sm11);
+    log(sm12);
+    log(sm13);
+
+    // es6中的对象
+    let objKey = 'name',
+      i = 2;
+    let es6Obj = {
+      name: '第一种形式',
+      [objKey + i]: '第二种形式',
+      fun() {
+
+      }
+      // Symbol('a'): '第三种形式'
+    };
+    es6Obj[Symbol('IamObj')] = '第三种形式';
+    log(es6Obj);
+
+
+    // Symbol做对象的健名，防止属性重复而被覆盖
+    let key1 = Symbol('key');
+    let key2 = Symbol('key');
+    let keyNum = 0;
+    let obj2 = {
+      [key1]: '第一个以Symbol(key)为键名的属性',
+      [key2]: '第二个以Symbol(key)为键名的属性'
+    }
+    log(obj2);
+
+    // Symbol身上的静态属性iterator
+    log(Symbol.iterator)
+    log(Symbol('Symbol.iterator'))
+
+    // for( let item of obj1){
+    //   log(obj1[item]);
+    // }
+  </script>
+</body>
+
+</html>

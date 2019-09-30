@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="author" content="xing.org1^">
+  <title>小石头的贪吃蛇</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+  <div class="main">
+    <!-- header -->
+    <div class="header">
+      <div class="pause-btn off" id="pause">开始</div>
+      <!-- <div class="pause-btn on active">暂停</div> -->
+      <div class="help" id="help"></div>
+      <h2 class="score">
+        分数：
+        <span class="playing-score" id="score">0</span>
+      </h2>
+    </div>
+    <!-- 游戏区 -->
+    <div class="content" id="cont">
+      <!-- 食物 -->
+      <div class="food" id="food">
+        <span id="foodBody" class="food-body"></span>
+      </div>
+      <!-- 蛇 -->
+      <div class="snake-box" id="snake">
+        <!-- <div class="head right">
+          <span class="eyes">
+            <span class="eye eye-left"></span>
+            <span class="eye eye-right"></span>
+          </span>
+        </div>
+        <div class="body"></div>
+        <div class="body"></div>
+        <div class="body"></div> -->
+      </div>
+
+    </div>
+    <!-- 开始按钮 -->
+    <div class="start" id="start">
+      开始游戏
+    </div>
+    <!-- 方向手柄 -->
+    <div class="direction" id="direction">
+      <span class="left" data-dir='37'></span>
+      <span class="top" data-dir='38'></span>
+      <span class="right" data-dir='39'></span>
+      <span class="bottom" data-dir='40'></span>
+    </div>
+    <!-- 倒计时效果 -->
+    <div class="count-down" id="countDownBox">
+      3
+    </div>
+    <!-- 计分板蒙层 -->
+    <div class="layer hide" id="layer">
+      <div class="end-layer">
+        <!-- <span class="close">X</span> -->
+        <h2 class="game-over">
+          Game Over!!
+        </h2>
+        <div class="txt" id="txt">
+          <p class="count"><span id="count">0</span>分</p>
+          <p class="desc" id="desc">
+            你就是个天才！
+          </p>
+        </div>
+        <div class="reload" id='reload'>再来一局</div>
+        <p class="max-count" id="maxCountParent">历史最高<span id="maxCount">45</span>分</p>
+      </div>
+    </div>
+    <!-- 游戏说明 -->
+    <div class="layer info hide" id="helpLayer">
+      <div class="info-box end-layer">
+        <ul>
+          <li>点击“开始游戏”，倒计时结束后操纵蛇头，使蛇头和食物发生碰撞，就算吃到食物，计1分;</li>
+          <li>分数越高，蛇的运动速度越快;</li>
+          <li>可点击右下角的方向键操控蛇头移动方向;</li>
+          <li>电脑端可用上下左右键控制蛇头的移动方向;</li>
+          <li>手机端可用手势滑动控制蛇头的移动方向;</li>
+        </ul>
+      </div>
+    </div>
+    <!-- footer -->
+    <footer>
+      copyright @xing.org1^ guojufeng <br/>20181213-20181215-20190201-20190608
+    </footer>
+  </div>
+  <script src="./js/pluging.js"></script>
+  <script src="./js/main.js"></script>
+</body>
+
+</html>

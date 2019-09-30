@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  默认.就是中文汉字和英文标点配合了哈哈!!!
+  <script>
+    // 第一种写法,解构一个对象(先声明,后赋值;)
+    let obj = {
+      name: 'xing.org1^',
+      age: 12,
+      sex: 'female',
+      address: 'BeiJing·CHINA',
+      hobby: ['one', 'two', {
+        newObj: 'i am a Object'
+      }]
+    }
+    let name, age;
+    ({
+      name,
+      age
+    } = obj); //这里注意小括号的包裹，否则会有报错
+    console.log(name, age);
+
+    // 第二种写法，直接解构一个对象(连带着声明变量+赋值)
+    let {
+      sex,
+      address
+    } = obj;
+    console.log(sex, address);
+
+    // 第三种写法，解构对象时，声明的变量不必和对象属性同名
+    let {
+      name: myName,
+      sex: mySex
+    } = obj;
+    console.log(myName, mySex);
+
+    // 第四种写法，三的基础上，加入 默认赋值 做法
+    let {
+      age: myAge,
+      myPhone = 110
+    } = obj;
+    console.log(myAge, myPhone);
+
+    // 第五种写法，解构数组 - 把数组当对象解构
+    let {
+      0: myOne,
+      1: myTwo,
+      length: myLength
+    } = obj.hobby;
+    console.log(myOne, myTwo, myLength);
+    // 这里比较特殊，记下含义：因为数组也是一种特殊的对象，上边obj.hobby这个数组写成完全对象的格式时，形如下边这么写：
+    /* obj.hobby = {
+      0: 'one',
+      1: 'two',
+      length: 2
+    } */
+    // 所以按照第三种写法开始的那种键值对赋值的方式来写，就有了0、1、length对应新定义的myOne,myTwo,myLength三个变量这种写法了，实际上是把0，1，length当做数组里边对象的key值来获取的。
+
+
+    // 第六种写法，解构数组  - 数组就要数组的姿态，用数组的形式结构数组
+    let [myArrOne, myArrTwo] = obj.hobby;
+    console.log(myArrOne, myArrTwo)
+
+    // 第七种写法，解构数组中的对象
+    let [, , {
+      newObj
+    }] = obj.hobby;
+    console.log(newObj)
+    // 特殊一点，这里注意let后边数组里的前两个逗号","的写法，因为数组中的前两个并不是我们要结构的目标对象，所以定义两项空内容。
+
+    // 第八种写法，同样将数组中的对象key重命名并结构
+    let [, , {
+      newObj: myNewObj
+    }] = obj.hobby;
+    console.log(myNewObj)
+    // 在第七种写法的基础上，结合第三种写法，举一反三的写法。
+
+    // 常用场景，结构ajax请求返回来的数据
+
+    // 第九种写法，可以直接一次性新建多个对象，并对应赋值：
+    let [des01, des02, des03] = [1, true, null];
+    console.log(des01, des02, des03)
+
+
+    /* 第十种写法 函数形参的解构赋值*/
+    function add([x, y]) {
+      return x + y;
+    }
+
+    add([1, 2]); // 3
+
+    function move({
+      x = 0,
+      y = 0
+    } = {}) {
+      return [x, y];
+    }
+
+    move({
+      x: 3,
+      y: 8
+    }); // [3, 8]
+    move({
+      x: 3
+    }); // [3, 0]
+    move({}); // [0, 0]
+    move(); // [0, 0]
+
+    // 更多用法见 阮一峰ES6入门 文档
+  </script>
+</body>
+
+</html>

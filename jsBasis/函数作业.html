@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>20181019函数</title>
+</head>
+
+<body>
+  <script>
+    /* 告知你所选定的小动物的叫声 */
+    function work1(ani) {
+      let str = ani + "叫";
+      switch (ani) {
+        case "小狗":
+          console.log(str, "汪汪");
+          return;//还可以写return
+        case "小猫":
+          console.log(str, "喵");
+          break;
+        default:
+          console.log("请输入正确的动物名称");
+          break;
+      }
+    }
+    work1("小狗");
+    /* 加法计数器 */
+    function work2() {
+      var sum = 0;
+      for (let i = 0; i < arguments.length; i++) {
+        sum += arguments[i];
+      }
+      return sum;
+    }
+    console.log("累加和", work2(1242, 2643, 3643, 2623, 236));
+    // /* 输入数字，逆转并输出汉字形式 */
+    function work3(a) {
+      var arr = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"]
+      var initArr = a.toString().split("").reverse();
+      var str = "";
+      for (let i = 0; i < initArr.length; i++) {
+        str += arr[initArr[i]];
+      }
+      return str;
+    }
+    console.log("逆转并汉化20181019：", work3(20181019))
+    /* 实现n的阶乘 */
+    function work5(n) {
+      var x = 1;
+      for (var i = 1; i <= n; i++) {
+        x *= i;
+      }
+      return x;
+    }
+    console.log("4的阶乘：", work5(4));
+    // 递归阶乘
+    function digui(n) {
+      if (n === 1) {
+        return 1;
+      }
+      // debugger;
+      return n * digui(n - 1);
+    }
+    console.log(digui(4))
+    /* 斐波那契额 */
+    function work6(n) {
+      var a = 1,
+        b = 1,
+        count = 1,
+        str = "1-1-";
+      for (let i = 1; i <= n - 2; i++) {
+        if (i % 2 == 0) {
+          a = a + b;
+          count = a;
+        } else {
+          b = a + b;
+          count = b;
+        }
+        if (i == n - 2) {
+          str += count;
+
+        } else {
+          str += count + '-';
+        }
+      }
+      console.log(str, count)
+      return count;
+
+    }
+    work6(7)
+    /* 斐波那契额数列第二种思维 - 数字位移 */
+    function work8(n) {
+      var a = 1,
+        b = 1,
+        sum = 0,
+        str = "1-1-";
+      for (let i = 1; i <= n - 2; i++) {
+        sum = a + b;
+        a = b;
+        b = sum;
+        str += sum + "-";
+      }
+      if (n <= 2) {
+        sum = 1;
+        return;
+      }
+      console.log(str, sum)
+    }
+    work8(10);
+    /* 斐波那契额数列第三种思维 - 递归 */
+    function diguiF(n) {
+      if (n <= 2) return 1;
+      return diguiF(n - 2) + diguiF(n - 1);
+    }
+    console.log(diguiF(10));
+
+    function yingshe(a, b,c) {
+      arguments[2] = 3;
+      console.log(arguments);//1、2、3,新增了第三位的值
+      console.log('c的值',c);//undefined
+    }
+    yingshe(1, 2);
+  </script>
+
+</body>
+
+</html>

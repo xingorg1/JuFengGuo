@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>解答題</title>
+  <style>
+    body{
+      height: 3000px;
+      margin: 0;
+      background: #eee;
+      border: 1px solid;
+    }
+    .test1{
+      position: absolute;
+      height: 100px;
+      width: 100px;
+      background: tomato;
+    }
+  </style>
+</head>
+<body>
+
+
+<div class="test1"></div>
+<script src="http://www.jq22.com/jquery/jquery-1.7.1.js"></script>
+<!-- <script src="index.js"></script> -->
+<script>
+  $('.test1').css('transform','translateX(20px)');
+  $(function () {
+    $(window).scroll(function () {
+      var oW = $(window).width(),
+          oH = $(window).height(),
+          oT = $(window).scrollTop(),
+          oL = $(window).scrollLeft(),
+          divW = $('.test1').width(),
+          divH = $('.test1').height();
+      console.log(oT,oL,$(window).width(),$(window).height());
+      $('.test1').css({
+        left: oL + oW / 2 - divW / 2 + 'px',
+        top: oT + oH / 2 - divH / 2 + 'px'
+      });
+    })
+  });
+  $.ajax({
+    url: 'https://easy-mock.com/mock/5c637819438f894664f808a2/testMock/userInfo',
+    type: 'GET',
+    success: function(res){
+      console.log(res,this);
+    },
+    error: function(err){
+      console.log(err,this);
+    },
+    complete: function(a){
+      console.log(a);
+    },
+    context: $('.test1')//有他，会让ajax内部回调函数里边的this指向你设定的属性值
+  })
+</script>
+</body>
+</html>

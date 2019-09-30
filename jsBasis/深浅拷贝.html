@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>浅拷贝</h1>
+  <script>
+    var obj1 = {
+      a: 1,
+      b: 'test',
+      c: {
+        c1: 1,
+        c2: 2
+      },
+      d: [1, 2, 3],
+      e: null,
+      f: function (){
+        console.log(this.d)
+      },
+      g: undefined
+    }
+
+    function plainCopy(obj1) {
+      console.log('obj1', obj1)
+      var obj2 = {};
+      for (var i in obj1) {
+        console.log('obj1 - key', obj1[i])
+        obj2[i] = obj1[i];
+      }
+      /* 浅拷贝过后 */
+      console.log('obj2', obj2)
+      /* 改变对象上的原始类型值，旧对象不受影响 */
+      obj2.a++;
+      console.log(obj1.a, obj2.a)
+      /* 改变对象上的引用类型值，旧对象跟着改变 */
+      obj2.d.push(4);
+      console.log(obj1.d, obj2.d)
+    }
+    plainCopy(obj1);
+  </script>
+  <h1>深拷贝</h1>
+  <script>
+    /* 第一步，判断类型，
+      如果是普通类型，直接拷贝（null单独处理）
+      如果是引用类型，继续判断类型
+        如果是对象，创建一个对象，递归
+        如果是数组，创建一个数组，递归 */
+    function deepCopy(target) {
+      let result, type = getType(target);
+      if (type == 'array') {
+        result = [];
+        target.forEach(function (el) {
+          result.push(deepCopy(el))
+        })
+      } else if (type == 'object') {
+        result = {};
+        for (var i in target) {
+          result[i] = deepCopy(target[i]);
+        }
+      } else if (type == 'function') {
+        result = function () {};
+        result = target;
+      } else {
+        result = target;
+      }
+      return result;
+    }
+    var obj3 = deepCopy(obj1)
+    console.log('obj3', obj3)
+    obj3.d.push(5);
+    obj1.f();
+    obj3.f();
+    console.log(obj1, obj3)
+
+    function getType(target) {
+      /* 获取类型 */
+      var result = target === null ? 'null' : typeof (target);
+      if (result == 'object' && target != null) {
+        result = Object.prototype.toString.call(target).indexOf('Array') != -1 ? 'array' : 'object'
+      }
+      console.log(result);
+      return result;
+    }
+    /* 各种类型的测试 */
+    // getType(1)
+    // getType('1')
+    // getType(true)
+    // getType(undefined)
+    // getType(null)
+    // getType(function () {})
+    // getType([])
+    // getType({})
+  </script>
+</body>
+
+</html>

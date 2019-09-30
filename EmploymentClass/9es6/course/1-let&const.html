@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    /* let 与 const */
+
+    // var a = 21;
+    // console.log(a);ï
+    // var b = 13;
+    // console.log(b);
+
+    // let a2 = 1;
+    // let a2 = 3;
+
+    // var vared1 = '已经var过的变量';
+    // console.log(window.vared1)
+    // const vared2 = 'let已经var过的变量';
+    // console.log(window.vared2)
+
+    // console.log(myLet);
+    // let myLet = 'let不会进行变量提升'
+    // myLet = 'let变量修改'
+    // console.log(myLet);
+
+    // if(true){
+    //   var kuaijivar = '没有块级作用域，外边能拿到';
+    //   console.log(kuaijivar);
+    // }
+    // console.log(kuaijivar);
+
+    {
+      let hah = 'hah';
+      let temporal = '临时死区'; {
+        // console.log(hah,temporal);
+        // let temporal = '临时死区,称霸块级';
+        let other = "其他不重名的还ok";
+        // console.log(other)
+
+      }
+    }
+
+    {
+      let test = 1;
+      // console.log(test);
+      {
+        // console.log(test);
+        let test = 2; {
+          let test = 3;
+        }
+      }
+    }
+    var variable;
+    let bianliang;
+    const changliang = 2;
+    // changliang = 3
+    const arr = [1, 2]
+    const obj = {
+      name: 'before'
+    }
+    // obj = {
+    //   name: 'before'
+    // };
+    // arr = ['hah'];
+    // console.log(obj,arr);
+
+    function xingcan(a) {
+      // var a = "var重新修改行参值会覆盖";
+      // let a = '再用let声明与形参同名的变量会报错';
+
+      console.log(a);
+    }
+    xingcan('行参默认用var定义');
+    // 暂时性死区
+    // let xx = xx + '还没声明就想用？';
+    // console.log(xx);
+
+    console.log(varInIf);
+    // console.log(letInIf);
+    if(false){
+      // if条件根本进不来，但是预编译与变量声明提升都会导致可以提前使用
+      var varInIf = 'var in if';
+      let letInIf = 'let in if';
+      console.log(letInIf)
+    }
+
+    let letVariable;
+    const constVariable;
+
+  </script>
+
+</body>
+
+</html>

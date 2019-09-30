@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="../xingorg1Utils.js"></script>
+  <script>
+    console.log(xingorg1Utils)
+    // concat
+    var arr = [1];
+    var arr1 = [2];
+    console.log(arr.concat(arr1));
+    console.log(arr.concat('new'))
+    console.log(arr,arr1);
+    // 合并两个数组或者合并一个数组和一个值，返回一个新数组，不改变原数组，
+    // 扁平化
+    var originArr = [1, 2, [
+        [
+          [
+            [
+              [4, [5, 6], null]
+            ]
+          ], undefined
+        ]
+      ], 'gjf', {},
+      [
+        [
+          [
+            ['xing.org1^']
+          ],
+          [], {
+            name: 'gjf'
+          }
+        ]
+      ]
+    ]
+    console.log('测试封装：',xingorg1Utils.flatten(originArr))
+    // =>[1,2,4,5,6,null,undefined,gjf,{},'xing.org1^',{name:'gjf'}];这样的结果
+    /* 无意实现了一个浅拷贝 */
+    function flattening(arr) {
+      return arr.reduce(function (pre, cur, i) {
+        if (Object.prototype.toString.call(cur) === '[object Array]') {
+          pre.push(flattening(cur));
+        } else {
+          pre.push(cur);
+        }
+        return pre;
+      }, []);
+    }
+    var result = flattening(originArr);
+    console.log(result);
+    result[5][0][2].name = 'gjf666';
+    console.log(result, originArr);
+
+    function flattening1(arr) {
+      return arr.reduce(function (pre, cur, i) {
+        if (Object.prototype.toString.call(cur) === '[object Array]') {
+          // pre.push(flattening1(cur));//这样无意实现了一个浅拷贝
+          pre = pre.concat(flattening1(cur)); //核心，是数组时不进行push，而是进行合并。concat合并两个数组成为一个新数组，并且还不改变原数组。
+        } else {
+          pre.push(cur);
+        }
+        return pre;
+      }, []);
+    }
+    var result1 = flattening1(originArr);
+    console.log(result1);
+    var originArr2 = [1, 2, [
+        [
+          [
+            [
+              [4, [5, 6], null]
+            ]
+          ], undefined
+        ]
+      ], 'gjf', {},
+      [
+        [
+          [
+            ['xing.org1^']
+          ],
+          [], {
+            name: 'gjf'
+          }
+        ]
+      ]
+    ];
+    function isArray(arr){
+      /* 检测是不是数组 */
+      return Object.prototype.toString.call(arr) === '[object Array]';
+    }
+    function flattening2(arr){
+      var arr = arr || [];//防止不传参
+      var len = arr.length;//提前记录数组的长度而不是在遍历的时候记录，这样减少遍历时的数据计算，提高代码性能
+      var rst = [];//准备一个变量返回值
+      for(var i = 0; i < len; i++){//遍历当前传进来的数组
+        if(isArray(arr[i])){//如果该数组当前项也是一个数组，
+          // rst.concat(arr[i]) // 要把当前项合并到返回值数组中
+          rst = rst.concat(flattening2(arr[i]));//合并前需要看看这个对象里边是不是都是一维数组，如果不是的话也得进行展开。通过递归调用，把当前项当作参数传进扁平化函数内部进行检查、扩展元算。
+          // 当前项被传入扁平化函数中有两种情况，要么它是一维数组，数组内每一位都是非数组，值经过遍历后push到新数组中并返回回来和rst合并，要么他是二维甚至多维数组，其内部的数组再满足isArray条件，执行flatteing扁平函数再次递归调用，展开。
+        }else{
+          rst.push(arr[i]);//当前项非数组，直接推到返回值数组中。
+        }
+      }
+      return rst;//以此类推直到所有的arr[i]都不是数组时，return整个过程下来后的结果值。
+    }
+    var result2 = flattening2(originArr2);
+    console.log('ßrst2',result2);
+    // 以上写法，原型链变成
+    Array.prototype.flatten = function(){
+      // var arr = this || [],//数组才能调用这个方法，那么this肯定就是指向调用方法的数组，这一步不需要了
+        var len = this.length,
+          rst = [];
+      for (let i = 0; i < len; i++) {
+        if(Object.prototype.toString.call(this[i]) === '[object Array]'){
+          rst = rst.concat(this[i].flatten());
+        }else{
+          rst.push(this[i]);
+        }
+      }
+      return rst;
+    }
+    var result3 = originArr2.flatten();
+    console.log('ßrst3',result3);
+
+    // 以上写法，forEach循环
+    Array.prototype.flatten2 = function(){
+        var rst = [];
+      /* forEach遍历数组 */
+      this.forEach(function(el,i,arr){
+        /* 三目运算符 */
+        Object.prototype.toString.call(el) === '[object Array]' ? rst = rst.concat(el.flatten2()) : rst.push(el);
+      });
+      return rst;
+    }
+    var result4 = originArr2.flatten2()
+    console.log('ßrst4',result4)
+
+
+    // 以上写法，reduce实现 循环+累积操作：
+    Array.prototype.flatten3 = function(){
+      /* reduce遍历数组 */
+      return this.reduce(function(pre,cur,i,arr){
+        Object.prototype.toString.call(cur) === '[object Array]' ? pre = pre.concat(cur.flatten2()) : pre.push(cur);
+        return pre;
+      },[]);
+    }
+    var result5 = originArr2.flatten3()
+    console.log('ßrst5',result5);
+
+    originArr.reduce(function(pre,cur,i,arr){
+      console.log(pre,cur,i,arr)
+    })
+    // 以上写法，es6写法
+    // 用es6之前我们再来优化一下，上边reduce里边不是直接返回值，而是中转了一下，这样有点妨碍我们下边炫技。这里把它改一下：
+    // Array.prototype.flatten4 = function(){
+    //   return this.reduce((pre,cur,i,arr)=>{
+    //     return Object.prototype.toString.call(cur) === '[object Array]'? pre = pre.concat(cur.flatten4()) : pre = pre.concat(cur);//利用concat，合并数组和一个其他类型的值。
+    //   },[])
+    // }
+    Array.prototype.flatten4 = function(){
+      return this.reduce((pre,cur)=>{
+        return Object.prototype.toString.call(cur) === '[object Array]' ? pre.concat(cur.flatten()) : pre.concat(cur);
+      },[]);
+}
+    var result6 = originArr2.flatten4()
+    console.log('ßrst5-1',result6);
+
+    // 为了用es6，舍弃了原型链编程
+    const flatten6 = arr => arr.reduce((pre,cur) => Object.prototype.toString.call(cur) === '[object Array]'?pre = pre.concat(flatten6(cur)) :  pre = pre.concat(cur), []);
+    var result66 = flatten6(originArr2)
+    console.log('ßrst66',result66);
+    // Array.prototype.flatten4 => this.reduce((pre,cur) => Object.prototype.toString.call(cur) === '[object Array]' ? pre = pre.concat(cur.flatten2()) : pre.push(cur),[]);
+    // var result6 = originArr2.flatten4()
+    // console.log('ßrst6',result6)
+
+    var value = 1;
+    var obj = {
+      value: 2,
+      foo: function () {
+        console.log(this.value);
+      }
+    }
+    console.log((obj.foo)());
+    console.log((obj.foo = obj.foo)());
+    console.log((false || obj.foo)());
+    console.log((obj.foo, obj.foo)());
+
+  </script>
+</body>
+
+</html>

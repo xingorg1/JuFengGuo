@@ -1,0 +1,2 @@
+<!--component/test/cmp.wxml-->
+<text bindtap='setTestFun'>component/test/cmp.wxml</text>

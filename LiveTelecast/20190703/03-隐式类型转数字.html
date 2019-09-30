@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			/*
+隐式类型转换出现场景
+	1、不同类型的数据间运算、比较
+	2、对非布尔值类型的数据求布尔值
+	3、条件语句的括号里
+
+隐式转数字出现的场景
+	1、数学运算符（+ - * / %），但是加号运算里不能出现字符串或对象类型数据
+	2、一元+-（正负操作符）后的数据
+	3、某些比较运算符
+			 */
+
+			console.log(
+				1+undefined,		    // 1+NaN = NaN
+				1+null,				      // 1+0 = 1
+				null+undefined,		  // 0+NaN = NaN
+				true+false,			    // 1+0 = 1
+				2+[],			        	// 2+0 = 2
+				// +号左右两端有字符串时：
+				3+'6',			      	// '36'
+				2+[4],				      // 2+'4' = '24'
+				2+[4,[908,98],'l'], // 2+'4,908,98,l' = "24,908,98,l"
+				2+{a:12},			      // 2+'[object Object]' = '2[object Object]'
+				[]+{},				      // ""+'[object Object]' = '[object Object]'
+				{}+[],				      // '[object Object]'+"" = '[object Object]'
+				3+{},				        // 3+'[object Object]' = '3[object Object]'
+				{}+3,				        // '[object Object]'+3 = '[object Object]3'
+			);
+			
+			console.log(
+				[]-5,             	// -5
+				2-[4],				      // 2-'4' = -2
+				3-'6',			      	// -3
+
+				// -号两端有非数字字符串时
+				'a'-'b',	          //NaN-NaN=NaN
+				2-[4,[908,98],'l'], // NaN
+				2-{a:12},			      // NaN
+				[]-{},				      // NaN
+				{}-[],				      // NaN
+				3-{},				        // NaN
+				{}-3,				        // NaN
+			);
+
+			console.log(
+				'6'*[],		 // 6*0	
+				null%true, // 0%1=0		
+				true/[7],	 // 1/7=0.14285714285714285		
+				"A"-"A"+2, // NaN
+
+				1,2,3,		 // 1 2 3
+				(1,2,3)	   // 3
+			);
+		</script>
+	</body>
+</html>

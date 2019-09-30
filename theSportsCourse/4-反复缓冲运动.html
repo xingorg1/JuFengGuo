@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>缓冲运动</title>
+  <style>
+    .demo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: tomato;
+      position: absolute;
+      top: 10px;
+      left: 0;
+    }
+
+    .demo2 {
+      left: 510px;
+    }
+
+    #start,
+    #end {
+      margin-top: 130px;
+    }
+
+    .line {
+      position: absolute;
+      top: 0;
+      left: 300px;
+      width: 2px;
+      height: 150px;
+      border: 1px solid #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo" id="demo"></div>
+  <div class="demo demo2" id="demo2"></div>
+  <div class="line" id='line'>一睹墙</div>
+  <button id="start">开始</button>
+  <button id="end">结束</button>
+  <script>
+    var demo = document.getElementById('demo'),
+      demo2 = document.getElementById('demo2'),
+      start = document.getElementById('start'),
+      line = document.getElementById('line'),
+      end = document.getElementById('end');
+    start.onclick = function (e) {
+      var target = line.offsetLeft;
+      starMove(demo, line.offsetLeft, 30);
+      starMove(demo2, line.offsetLeft, 30);
+    }
+
+    function starMove(myDom, target, delay) {
+      timer = null;
+      clearInterval(timer);
+      var speed = null;
+      timer = setInterval(() => {
+        var curLeft = myDom.style.left;
+        var curWith = myDom.clientWidth;
+        var domR = myDom.offsetLeft + myDom.clientWidth;
+        var spd = (target - domR) / 20;
+        if (target - domR > 0) {
+          // 向左移动
+          speed = Math.ceil(spd);
+          console.log(parseInt(curLeft) + curWith, target)
+          if (target - domR <= speed) {
+            myDom.style.left = target - curWith + 'px';
+            clearInterval(timer);
+            timer = null;
+            start.innerText = '返回';
+          } else {
+            myDom.style.left = myDom.offsetLeft + speed + 'px';
+          }
+        } else {
+          speed = Math.floor(spd);
+          console.log(speed);
+          if (parseInt(curLeft) <= target) {
+            myDom.style.left = target + 'px';
+            clearInterval(timer);
+            timer = null;
+            start.innerText = '返回';
+          } else {
+            myDom.style.left = myDom.offsetLeft + speed + 'px';
+          }
+        }
+      }, delay);
+    }
+    end.onclick = function (e) {
+      clearInterval(timer);
+      timer = null;
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>一个物体的乱动</title>
+  <style>
+    .demo {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+      color: #fff;
+      background: tomato;
+      text-align: center;
+      line-height: 100px;
+      margin-bottom: 30px;
+    }
+
+    #demo {
+      opacity: 0.3;
+    }
+
+    #demo2 {
+      position: absolute;
+      top: 450px;
+      left: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo" id="demo">悬浮我看效果</div>
+  <div class="demo" id="demo2">点我看效果</div>
+  <script>
+    var demo = document.getElementById('demo');
+    var demo2 = document.getElementById('demo2');
+    demo.onmouseenter = function () {
+      console.log('onmouseenter');
+      startMove(this, {
+        'width': 300,
+        'height': 400,
+        'opacity': 1
+      }, function () {
+        console.log('over onmouseenter');
+      })
+    }
+    demo.onmouseleave = function () {
+      startMove(this, {
+        'width': 100,
+        'height': 100,
+        'opacity': 0.3
+      }, function () {
+        console.log('over onmouseleave');
+      })
+    }
+    demo2.onclick = function () {
+      console.log('12')
+      startMove(this, {
+        'width': 300,
+        'height': 400,
+        'left': 300,
+        'top': 550
+      }, function () {
+        demo2.onclick = function () {
+          startMove(this, {
+            'width': 100,
+            'height': 100,
+            'left': 30,
+            'top': 450
+          }, function () {
+            console.log('demo2 over');
+          })
+        }
+      })
+    }
+
+
+    function getStyle(dom, attr) {
+      if (window.getComputedStyle) {
+        return window.getComputedStyle(dom, null)[attr];
+      } else {
+        return dom.currentStyle(attr);
+      }
+    }
+    /* 第三步02 - 完善运动结束 */
+function startMove(dom, attrObj, callback) {
+  var speed = null,
+    dis = null;
+  clearInterval(dom.timer);
+  dom.timer = setInterval(function () {
+    var isEnd = true;//1、先假定运动可以停止
+    for (const key in attrObj) {
+      if (attrObj.hasOwnProperty(key)) {
+        var curAttr,
+          curTarget = attrObj[key],
+          isOpa = key == 'opacity' ? true : false;
+        if (isOpa) {
+          curAttr = parseFloat(getStyle(dom, key)) * 100;
+          curTarget *= 100;
+        } else {
+          curAttr = parseInt(getStyle(dom, key));
+        }
+        speed = (curTarget - curAttr) / 7;
+        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+        // 2、让物体直接运动，先不做停止判断。
+        if (isOpa) {
+          dom.style[key] = (curAttr + speed) / 100;
+        } else {
+          dom.style[key] = curAttr + speed + 'px';
+        }
+        // 3、在for循环中判断，只要有一个属性的当前所在点不等于设置的目标点，就把总的变量置否。
+        if(curAttr != curTarget){
+          isEnd = false;
+        }
+      }
+    }
+    // 最后在for循环的外边判断是否能够真正的停止了。如果可以，停止定时器
+    if (isEnd) {
+      clearInterval(dom.timer);
+      dom.timer = null;
+      typeof (callback) == 'function' ? callback(): new Error('你不用回调吗？');
+    }
+  }, 40);
+}
+    /* 第三步 - 运动结束检测callback */
+    /* function startMove(dom, attrObj, callback) {
+      var speed = null,
+        dis = null,
+        isEnd = true;
+      clearInterval(dom.timer);
+      dom.timer = setInterval(function () {
+        for (const key in attrObj) {
+          if (attrObj.hasOwnProperty(key)) {
+            var curAttr,
+              curTarget = attrObj[key],
+              isOpa = key == 'opacity' ? true : false;
+            if (isOpa) {
+              curAttr = parseFloat(getStyle(dom, key)) * 100;
+              curTarget *= 100;
+            } else {
+              curAttr = parseInt(getStyle(dom, key));
+            }
+            speed = (curTarget - curAttr) / 7;
+            speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+            
+            if (Math.abs(curTarget - curAttr) <= Math.abs(speed)) {
+              if (isOpa) {
+                dom.style['opacity'] = curTarget / 100;
+              } else {
+                dom.style[key] = curTarget + 'px';
+              }
+              isEnd = true;
+              clearInterval(dom.timer);
+              dom.timer = null;
+            } else {
+              isEnd = false;
+              if (isOpa) {
+                dom.style[key] = (curAttr + speed) / 100;
+              } else {
+                dom.style[key] = curAttr + speed + 'px';
+              }
+            }
+          }
+        }
+        if (isEnd) {
+          typeof (callback) == 'function' ? callback(): new Error('你不用回调吗？');
+        }
+      }, 40);
+    } */
+    /* 第二步 - opacity*/
+    /* function startMove(dom, attrObj, callback) {
+      var speed = null,
+          dis = null;
+      clearInterval(dom.timer);
+      dom.timer = setInterval(function () {
+        for (const key in attrObj) {
+          if (attrObj.hasOwnProperty(key)) {
+            var curAttr,
+              curTarget = attrObj[key],
+              isOpa = key == 'opacity' ? true : false;
+            if (isOpa) {
+              curAttr = parseFloat(getStyle(dom, key)) * 100;
+              curTarget *= 100;
+            } else {
+              curAttr = parseInt(getStyle(dom, key));
+            }
+            speed = (curTarget - curAttr) / 7;
+            speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+            if (Math.abs(curTarget - curAttr) <= Math.abs(speed)) {
+              if (isOpa) {
+                dom.style[key] = curTarget / 100;
+              } else {
+                dom.style[key] = curTarget + 'px';
+              }
+              clearInterval(dom.timer);
+              dom.timer = null;
+            } else {
+              if (isOpa) {
+                dom.style[key] = (curAttr + speed) / 100;
+              } else {
+                dom.style[key] = curAttr + speed + 'px';
+              }
+            }
+          }
+        }
+      }, 40);
+    } */
+    /* 第一步 - 简单框架*/
+    /* function startMove(dom, attrObj, callback) {
+      var speed = null,
+        dis = null;
+      clearInterval(dom.timer);
+      dom.timer = setInterval(function () {
+        for (const key in attrObj) {
+          if (attrObj.hasOwnProperty(key)) {
+            var curAttr = parseInt(getStyle(dom, key));
+            var curTarget = attrObj[key];
+            speed = (curTarget - curAttr) / 7;
+            speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+            if (Math.abs(curTarget - curAttr) <= Math.abs(speed)) {
+              dom.style[key] = curTarget + 'px';
+              clearInterval(dom.timer);
+              dom.timer = null;
+            } else {
+              dom.style[key] = curAttr + speed + 'px';
+            }
+          }
+        }
+      }, 40);
+    } */
+  </script>
+</body>
+
+</html>

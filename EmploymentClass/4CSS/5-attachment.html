@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>background-attachment</title>
+  <style>
+    .attach {
+      width: 800px;
+      height: 1000px;
+      border: 1px solid;
+      overflow: scroll;
+      padding: 20px;
+      font-size: 38px;
+      line-height: 2.5;
+      background: url(./bgImg2.jpg) no-repeat;
+      background-size: 380px 250px;
+      
+      /* background-position: 80px center; */
+      background-attachment: scroll;
+      background-attachment: local;
+      background-attachment: fixed;
+    }
+    .for-height{
+      margin: 20px 0;
+      padding: 20px;
+      font-size: 38px;
+      line-height: 2.5;
+      border: 1px solid tomato;
+      height: 1200px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="attach">
+    fixed：
+    背景图像相对于视口（viewport）固定。
+    scroll：
+    背景图像相对于元素固定，也就是说当元素内容滚动时背景图像不会跟着滚动，因为背景图像总是要跟着元素本身。但会随元素的祖先元素或窗体一起滚动。
+    local：
+    背景图像相对于元素内容固定，也就是说当元素随元素滚动时背景图像也会跟着滚动，因为背景图像总是要跟着内容。（CSS3）
+    <p>
+      fixed：
+      背景图像相对于视口（viewport）固定。
+      scroll：
+      背景图像相对于元素固定，也就是说当元素内容滚动时背景图像不会跟着滚动，因为背景图像总是要跟着元素本身。但会随元素的祖先元素或窗体一起滚动。
+      local：
+      背景图像相对于元素内容固定，也就是说当元素随元素滚动时背景图像也会跟着滚动，因为背景图像总是要跟着内容。（CSS3）
+    </p>
+    <p>
+      fixed：
+      背景图像相对于视口（viewport）固定。
+      scroll：
+      背景图像相对于元素固定，也就是说当元素内容滚动时背景图像不会跟着滚动，因为背景图像总是要跟着元素本身。但会随元素的祖先元素或窗体一起滚动。
+      local：
+      背景图像相对于元素内容固定，也就是说当元素随元素滚动时背景图像也会跟着滚动，因为背景图像总是要跟着内容。（CSS3）
+    </p>
+    <p>
+        fixed：
+        背景图像相对于视口（viewport）固定。
+        scroll：
+        背景图像相对于元素固定，也就是说当元素内容滚动时背景图像不会跟着滚动，因为背景图像总是要跟着元素本身。但会随元素的祖先元素或窗体一起滚动。
+        local：
+        背景图像相对于元素内容固定，也就是说当元素随元素滚动时背景图像也会跟着滚动，因为背景图像总是要跟着内容。（CSS3）
+      </p>
+  </div>
+  <div class="for-height">
+    为了撑开body的高度，让上边这个div的位置能在body里滑动
+  </div>
+</body>
+
+</html>

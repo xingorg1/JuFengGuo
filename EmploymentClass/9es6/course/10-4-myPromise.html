@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>promise原理及仿写实现</title>
+</head>
+
+<body>
+  <h4>promise原理及仿写实现</h4>
+  <h4>原生promise的特色分析</h4>
+  <ul>
+    <li>
+      必须用用new调用构造函数Promise
+    </li>
+    <li>Promise调用时不传参或传参不是函数会怎样？</li>
+    <li>
+      promise也是一个状态机，触发了一个Fulfilled状态，就没法再变回Rejected状态了。反之亦然。
+      <p>并根据状态来触发相应的回调</p>
+    </li>
+    <li>
+      promise调用后，参数函数executor里边抛出错误需要捕获并传给下一个then的错误回调。
+    </li>
+    <li>
+      promise有异步任务，then会被先调用。此时状态还是pending，所以检测then被调用了时，状态为pending时候被就把异步任务放到任务队列数组里
+    </li>
+  </ul>
+  <script>
+    const {
+      log
+    } = console;
+    function a(){
+      // 原生promise的测试用例及特色分析
+      var pr = new Promise((res, rej) => {
+        setTimeout(() => {
+          res('链式调用')
+        }, 4000);
+        return 22;
+      });
+      pr.then((data) => {
+        setTimeout(() => {
+          log('原promise - suc', data);
+        }, 1000);
+        return '普通值';
+      }, (err) => {
+        log('原promise - err', err);
+      }).then((data) => {
+        setTimeout(() => {
+          log('原promise - suc2', data);//普通值被接受
+          // throw '异步中抛出错误，不能捕获了。因为then是微任务，先于定时器触发了，并且后边链式调用的then的promise的状态也被修改、且回调也被执行过了'//
+        }, 500);
+        //没有返回值
+      }, (err) => {
+        log('原promise - err2', err);
+      }).then((data) => {
+        log('原promise - suc3', data);//没有返回值，接收不到参数
+        throw '抛出错误';//抛出错误
+      }, (err) => {
+        log('原promise - err3', err);
+      }).then((data) => {
+        log('原promise - suc4', data);
+      }, (err) => {
+        log('原promise - err4', err);//错误被reject函数接收
+        return '第四个then的返回值'
+      }).then(
+        //空then
+      ).then(null,(err) =>{
+        // then的传参不正常,成功的回调只传null
+        log('原promise - err5', err);
+      }).then(
+        // then的传参只传1，2，不是两个标准的函数
+        1,2
+      ).then((data) => {
+        log('看前边的不正常传参对我有影响吗？')
+        log('原promise - suc6', data);
+        return new GjfPromise((res,rej)=>{
+          res('promise对象的res调用 - 111');
+          rej('promise对象的rej调用 - 000')
+        });
+      }, (err) => {
+        log('原promise - err6', err);
+      }).then((data) => {
+        log('返回值是promise对象')
+        log('原promise - suc7', data);
+      }, (err) => {
+        log('原promise - err7', err);
+      }).catch((endErr)=>{
+        console.log('原promise - 捕获终极错误 - ',endErr);
+      });
+      /* Promise((res,rej)=>{
+        console.log('就不用new执行')
+      });
+      console.log(1, 'promise抛出错误"不"阻塞下边执行'); */
+      //不传参测试
+      // new Promise();
+      // 静态方法 - race和all 
+      var pr1 = new Promise((res,rej)=>{
+        res('前边的promise对象立即执行呢？');//race的参数列表中，前边的promise如果没有异步任务就会立即执行并触发then回调
+        setTimeout(()=>{
+          res(1);
+        },1000);
+      });
+      var pr2 = new Promise((res,rej)=>{
+        setTimeout(()=>{
+          res(2);
+        },1600);
+      });
+      var pr3 = new Promise((res,rej)=>{
+        setTimeout(()=>{
+          res(3);
+        },3000);
+      });
+      var pr4 = '原始值';
+        pr4 = 444;
+        pr4 = {name:12};
+        pr4 = [{name:12}];//race的参数列表中如果promise对象的参数都是异步任务，但是有一个不是promise对象而是原始或其他引用值，就会立即执行并触发then的成功回调。
+      function a2(){
+        Promise.race([pr1,pr2,pr4]).then((res)=>{
+          log(res)
+        },(rej)=>{
+          log('x',rej)
+        })
+      }
+      a2();
+      function a1(){
+        Promise.all([pr1,pr2,pr4]).then((res)=>{//当参数列表中不全是promise对象时，非promise对象会被原封不动的放到回调参数的数组中
+          log(res)
+        },(rej)=>{
+          log('x',rej)
+        })
+      }
+      a1();
+    }
+    // a();
+  </script>
+  <script>
+    log('--------------------------------------------------------')
+  </script>
+  <script src="../../../gjfUtils/xingorg1Rewrite.js"></script>
+  <script>
+    /* // 原理模型
+    function model(func) {
+      function a(aa) {
+        console.log('aa');
+      }
+
+      function b(bb) {
+        console.log('bb');
+      }
+      func(a, b);
+    }
+    model(function (a, b) {
+      // a();
+      b();
+    }); */
+
+    function b(){
+
+      // 仿写promise的测试用例
+      var pr2 = new GjfPromise((res, rej) => {
+        // log('GjfPromise立即执行');
+        // a // 遇到错误时流程走到then的错误回调，相当于触发rej，错误回调的参数是错误信息
+        // res('res-成功回调触发');//res状态触发
+        // rej('rej-失败回调');//rej状态触发
+        /* setTimeout(()=>{
+          a // 如果异步任务里有错误，不能被捕获
+          res('处理异步操作');
+        },2000); */
+        res('链式调用');
+      }); 
+      // log(pr);
+      pr2.then((data) => {
+        throw 'then中抛出错误';
+        setTimeout(() => {
+          log('suc', data);
+        }, 2000);
+        return '普通值';
+      }, (err) => {
+        log('err', err);
+      }).then((data) => {
+        setTimeout(() => {
+          log('suc2', data);//普通值被接受
+        }, 1000);
+      }, (err) => {
+        log('err2', err);
+        return '捕获错误后的链式调用';
+      }).then((data) => {
+        setTimeout(() => {
+          log('suc3', data);
+        }, 1200);
+        return 'a'
+      }, (err) => {
+        log('err3', err);
+        return 'then3的返回值被空then给过滤了'
+      })
+      .then(
+        // 空then
+        // (data)=>{
+        //   return data
+        // },(err)=>{
+        //   throw new Error(err)
+        // }
+      )
+      .then(null,(err) =>{
+        // then的传参不正常,成功的回调只传null
+        log('err4', err);
+        return 'then4的返回值'
+      })
+      .then(
+        // then的传参只传1，2，不是两个标准的函数
+        1,2
+      )
+      .then((data) => {
+        log('看前边的不正常传参对我有影响吗？')
+        log('suc5', data);
+        return new GjfPromise((res,rej)=>{
+          res('promise对象的res调用 - 111');
+          rej('promise对象的rej调用 - 000')
+        });
+      }, (err) => {
+        log('err5', err);
+      })
+      .then((data) => {
+        log('返回值是promise对象')
+        log('suc6', data);
+      }, (err) => {
+        log('err6', err);
+      });
+      // .catch((endErr)=>{
+      //   console.log('捕获终极错误 - ',endErr);
+      // });
+      /* GjfPromise((res,rej)=>{
+        log('就不用new执行');
+      });
+      console.log(2,'promise抛出错误"不"阻塞下边执行'); */
+      // 不传参测试
+      // new GjfPromise();
+    }
+    // b();
+  </script>
+  <script>
+    function d(){
+      // 静态方法 - race和all 
+      var pr1 = new GjfPromise((res,rej)=>{
+        res(11);
+        setTimeout(()=>{
+          res(1);
+        },1000);
+      });
+      var pr2 = new GjfPromise((res,rej)=>{
+        setTimeout(()=>{
+          res(2);
+        },1600);
+      });
+      var pr3 = new GjfPromise((res,rej)=>{
+        setTimeout(()=>{
+          res(3);
+        },3000);
+      });
+      var pr4 = '原始值';
+        pr4 = 444;
+        pr4 = {name:12};
+        pr4 = [{name:12}];//race的参数列表中如果promise对象的参数都是异步任务，但是有一个不是promise对象而是原始或其他引用值，就会立即执行并触发then的成功回调。
+      function d2(){
+        GjfPromise.race([pr1,pr2,pr3,pr4]).then((res)=>{
+          log(res)
+        },(rej)=>{
+          log('x',rej)
+        })
+      }
+      d2();
+      function d1(){
+        GjfPromise.all([pr1,pr2,pr3,pr4]).then((res)=>{
+          log(res)
+        },(rej)=>{
+          log('x',rej)
+        })
+      }
+      d1();
+    }
+    d();
+  </script>
+  <script>
+    function c(){
+      var pr3 = new Promise((s,e)=>{
+        e('第一个错误');
+      });
+      pr3.then((s)=>{
+        log(1,s)
+      },(e)=>{
+        log(10,e)
+        return '第二个'
+      })
+      .then((s)=>{
+        log(2,s)
+        return '第三个'
+      },(e)=>{
+        log(20,e)
+      })
+      .then((s)=>{
+        log(3,s)
+        log('没错')
+      },(e)=>{
+        log(30,e)
+      })
+    }
+    // c();
+  </script>
+</body>
+
+</html>

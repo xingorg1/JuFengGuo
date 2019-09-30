@@ -1,0 +1,86 @@
+/*
+ * @Author: @Guojufeng 
+ * @Date: 2019-06-02 20:45:58 
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2019-06-02 21:24:53
+ */
+ input{
+  width: 300px;
+  line-height: 30px;
+  outline: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  border: 1px solid #eee;
+  transition: all .35s;
+  border-radius: 5px;
+}
+
+input:focus{
+  color: #333;
+  /* border: 0; */
+  border: 1px solid #495488;
+}
+button{
+  border: 0;
+  background: #05bf44;
+  color: #fff;
+  
+  padding: 10px 28px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+  font-size: 14px;
+  transition: all .35s;
+}
+button:hover{
+  background: #00ab3a;
+}
+#closeBtn{
+  padding: 10px 12px;
+  background: tomato;
+}
+#closeBtn:hover{
+  background: #de452a;
+}
+#rst{
+  width: 450px;
+  height: 450px;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  border: 1px solid #f1f1f1;
+  background-color: #fdfdfd;
+  overflow: auto;
+}
+span.timer{
+  display: inline-block;
+  border-radius: 10px;
+  margin: 5px 0;
+  color: #fff;
+  background: #e6e6e6;
+  padding: 3px 5px 3px;
+}
+#rst p,#rst p.default{
+  color: #d6d6d6;
+  text-align: center;
+  font-size: 12px;
+}
+#rst p.leave{
+  color: #ddd;
+}
+#rst p.entry{
+  /* color: #afa; */
+}
+#rst p.speek{
+  color: #333;
+  font-size: 14px;
+}
+#rst p.speek .timer{
+  font-size: 12px;
+  text-align: center;
+}
+#rst p.speek .msg{
+  display: block;
+  text-align: left;
+}

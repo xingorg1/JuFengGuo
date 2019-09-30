@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    typeof(a) //'undefined'  未声明的不报错，得到undefined
+    typeof(typeof(a)) // 'string'  因为里边的得到字符串格式的'undefined',所以typeof一个字符串得到'string'
+    // typeof(undefined) //'undefined'
+    // typeof(NaN) //'number'
+    // typeof(null) //'object'
+    var a = '123abc';
+    typeof(+a) //+a => 123?(错！)，+一元正操作符，先执行Number('123abc');得到NaN，结果就是'number'
+    typeof(!!a) //优先执行Boolean(a)=> 报错，得到字符串？不对，最后报错。
+    typeof(a + "") //'undefined'?这涉及到执行顺序的问题，先执行typeof(a),然后结果undefined与字符串拼接呢还是a报了错后再和字符串拼接呢？
+    // 当然是先执行括号里，执行加法时，a找不到报错阻塞了
+    console.log(NaN == NaN) //false
+    console.log(NaN == undefined) //false，连自己都不相等，还能等于谁
+    parseInt('123absd') //123
+    var num = 123123.235412342;
+    num.toFixed(3) // '123123.235' //注意是字符串格式的。
+
+    // ++自增等符号的隐式类型转换
+    console.log('++自增等符号的隐式类型转换')
+    var myB = 1;
+    console.log('myB数字',myB++);
+    console.log('myB',myB);
+    var myA;
+    console.log('myA未定义',myA++);
+    console.log('myA',myA);
+    var myC = 'test';
+    console.log('myC字符串',myC++);
+    console.log('myC',myC);
+    var myD = {};
+    console.log('myD对象',myD++);
+    console.log('myD',myD);
+    var myE = true;
+    console.log('myE布尔',myE++);
+    console.log('myE',myE);
+    var myF = [];
+    console.log('myF数组',myF++);
+    console.log('myF',myF);
+    var myG = function(){};
+    console.log('myG函数',myG++);
+    console.log('myG',myG);
+    var myH = '20.3';
+    console.log('myH字符串类型数字',myH++);
+    console.log('myH',myH);
+    var myI = null;
+    console.log('myI - null',myI++);
+    console.log('myI',myI);
+    </script>
+</body>
+</html>

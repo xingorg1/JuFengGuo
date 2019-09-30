@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+
+<body>
+	<script>
+		/*
+Number()
+	1、undefined	NaN
+	2、null			0
+	3、布尔值		true为1，false为0
+	4、字符串
+		1、空字符串，空格字符串转为0
+		2、非空字符串，并且内容为纯数字（包含进制与科学表示法）转成对应的数字
+		3、其余都是NaN
+	5、数字		原来的数字
+	6、对象
+		1、对象、函数转成NaN
+		2、空数组转为0，数组里只有一个数据并且这个数据能转成数字，则转成对应的数字，其它都转成NaN 
+			*/
+		console.log(
+			Number(undefined), //NaN
+			Number(null), //0
+
+			Number(true), //1
+			Number(false), //0
+
+			Number(''), //0
+			Number(' '), //0
+
+
+			Number('12'), //12
+			Number('012'), //12
+			Number('0xff90'), //65424
+			Number('5e5'), //500000
+			Number('k'), //NaN
+
+			Number({}), //NaN
+			Number(function () {}), //NaN
+
+			Number([]), //0
+			Number(['']), //0
+			Number([2]), //2
+			Number(['2']), //2
+			Number([2, 3]), //NaN
+		);
+
+
+		/*
+String()
+	1、基本数据类型、null、undefined的结果就是给数据加上引号变成字符串
+	2、对象
+		1、数组的结果为把所有中括号去掉，外面加个引号.空数组就得到空串
+		2、对象的结果为'[object Object]'（除了日期对象）
+		3、函数的结果为在函数整体外面加个引号 
+			*/
+		console.log(
+			String('a'), //'a'
+			String(1), //'1'
+			String(true), //'true'
+			String(false), //'false'
+			String(undefined), //'undefined'
+			String(null), //'null'
+
+			String([]), //''
+			String([1, [2]]), //'1,2'
+			String(function a() {}), //'function a() {}'
+			
+			String({}), //'[object Object]'
+			String(new Date()), //'Thu Jul 11 2019 16:25:01 GMT+0800 (中国标准时间)'
+			String(new RegExp('\d+','g')), //'/d+/g'
+			String(new Error('asdf')),  //'Error: asdf'
+		);
+
+		/*
+Boolean()
+	1、undefined   false
+	2、null    false
+	3、数字
+		+0、-0、NaN转为布尔值的结果是false
+		其他的转为布尔值的结果是true
+	4、布尔值   转为对应的值
+	5、字符串
+		空字符串转为布尔值的结果为false，
+		其他非空字符串（包括【空格】字符串）的都转成true
+	6、对象转为布尔值都是true (包括数组、对象、字符串)
+			*/
+		console.log(
+			Boolean(undefined), //false
+			Boolean(null), //false
+			Boolean(+0), //false
+			Boolean(-0), //false
+			Boolean(NaN), //false
+			Boolean(1), //true
+			Boolean(-1), //true
+
+			Boolean(''), //false
+			Boolean(' '), //true - 空格字符串，非空字符串
+			Boolean('0'), //true
+
+			Boolean({}), //true
+			Boolean(new Error('asd')), //true
+			Boolean(function(){}), //true
+			Boolean([]) //true
+		);
+	</script>
+</body>
+
+</html>

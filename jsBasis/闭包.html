@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>闭包</title>
+</head>
+
+<body>
+  <h1>利用闭包解决闭包</h1>
+  <ul id="ul">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+  </ul>
+  <script>
+    window.onload = function () {
+      function gjfff() {
+        console.log("if内部可以定义函数");
+      }
+      if (true) {
+        function gjfff2() {
+          console.log("if内部可以定义函数");
+        }
+      }
+      console.log(gjfff2)
+      console.log(gjfff)
+      console.log(window);
+      return gjfff;
+      // gjfff这个函数是被定义在window.onload函数内部的，而不是window身上的。所以打印window.gjfff并不存在！！
+      /* 阿里笔试题，给每个li绑定事件，点击输出对应索引 */
+      var myUl = document.getElementById('ul');
+      var myLi = myUl.getElementsByTagName('li');
+      for (var li = 0; li < myLi.length; li++) {
+        // 第一种解决方法，也是学习tab选项卡时候的方法，for循环时给当前li对象添加一个index属性，该属性存储的就是对应下标值。
+        /* myLi[li]["index"] = li;
+        myLi[li].addEventListener('click', function () {
+          这也是一个闭包,把回调函数绑定到了外部的li对象身上。
+          console.log(this)
+          console.log(li)
+          console.log(this.index)
+        }, false); */
+        // 第二种解决方法，利用立即执行函数形成闭包，拿到每次for循环的i值当作立即执行函数这个闭包的私有变量。然后被立即执行函数内部的新的闭包所使用。
+        (function (j) {
+          myLi[j].addEventListener('click', function () {
+            console.log(j)
+          }, false);
+        }(li))
+      }
+    }
+    var waibu = window.onload();
+    console.log(waibu) //这个waibu函数的作用域内还保留着myLi这个变量，说明在onload函数内部，给myLi绑定事件的行为也是将这个变量抛出了作用域，形成了闭包效果。
+    console.log(window)
+    /* 立即执行函数生成新的局部作用域保存for循环变量 */
+    function bibao1() {
+      var arr = [];
+      var bibao1de = "bibao1作用域中的变量";
+      for (var i = 0; i < 10; i++) {
+        (function (j) { //立即执行函数是bibao1的闭包，拿了bibao1内部的arr和bibao1de变量
+          var aa = '立即执行函数内的变量';
+          var bb = bibao1de;
+          arr[j] = function () {
+            // arr的每一项的function又是立即执行函数的闭包，他拿了立即执行函数的形参j和aa变量
+            // var j = i;
+            console.log(j, aa)
+          }
+        }(i));
+      }
+      return arr;
+    }
+    var myArr = bibao1();
+    console.log(myArr)
+    for (var y = 0; y < myArr.length; y++) {
+      myArr[y]();
+    }
+    /* 与立即执行函数同理，只不过不用匿名函数而是改为命名函数，较繁琐，但简单直观 */
+    function test() {
+      var arr = [];
+      var myStr = "test的作用域";
+      for (var i = 0; i < 10; i++) {
+        function test4() {
+          /* 生成test4的作用域，i被存储 */
+          var test4Str = myStr;
+          var str = "test4的作用域";
+          var j = i;
+          console.log('test4-j', j)
+          arr[j] = function () {
+            var arrstr = str;
+            console.log(j);
+          }
+        }
+        test4();
+      }
+      return arr;
+    }
+
+
+    var test3 = test();
+    console.log(test3)
+    for (var a = 0; a < 10; a++) {
+      test3[a]();
+    }
+    test3.push(function () {
+      console.log(88)
+    })
+    console.log(test3)
+    /* 第三种利用闭包拿for循环变量的方法 - let块级作用域而非函数作用域 */
+    function test5() {
+      // 函数作用域
+      var arr = [];
+      for (let i = 0; i < 10; i++) {
+        // 块作用域
+        arr[i] = function () {
+          console.log("let生成块级作用域", i);
+        }
+      }
+      return arr;
+    }
+    var test6 = test5();
+    for (let b = 0; b < test6.length; b++) {
+      test6[b]();
+    }
+    document.write("利用闭包解决闭包。");
+    document.write("最终原理就是，在每次for循环的时候，生成一个局部的作用域来保存当前循环的i的值，可以不再使用for循环完毕后的i的定型值。这是第一层利用闭包，然后第二层，在闭包里边再用闭包把值拿出去。")
+
+    /* 利用闭包 */
+    // 累加器 - 充当全局变量
+    function counter() {
+      // 这里counter函数的感觉就像是一个window对象了
+      var count = 0;
+      // console.log("counter累加器")
+      function countAdd() {
+        count++;
+        console.log(count)
+      }
+      return countAdd;
+    }
+    var counter2 = counter();
+    counter2();
+    counter2();
+    counter2();
+    counter2();
+    counter2();
+    counter2();
+    counter2();
+    counter2();
+    // 作用 - 缓存数据
+    function scope() {
+      var food = "";
+      var obj = {
+        eat: function (str) {
+          food += str;
+        },
+        eated: function () {
+          console.log(food)
+        }
+      }
+      return obj;
+    }
+    var eating = scope();
+    eating.eat("面条")
+    eating.eated();
+    eating.eat("菠菜")
+    eating.eated();
+    eating.eat("黄瓜")
+    eating.eated();
+    eating.eat("苹果")
+    eating.eated();
+    console.log(eating)
+    document.write("eated和eat从操作的都是scope作用域中曾经创建的变量food，尽管后来scope销毁后，将指向自己ao的指针销毁了，但是内部的obj还是带着他的作用域，形成闭包")
+    // 作用 - 实现封装，属性私有化
+    // 模块化开发，防止污染全局变量
+  </script>
+  <script>
+    (function (x) {
+      // debugger;
+      (function (y) {
+        console.log(x,y);
+      })(2);
+    })(1);
+  </script>
+</body>
+
+</html>

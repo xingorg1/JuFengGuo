@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>call+apply</title>
+</head>
+
+<body>
+  <h2>作用：都是为了改变this指向</h2>
+  <h1>
+    两点不同：
+  </h1>
+  <h3>
+    写法不一样,一个写call，一个写apply
+  </h3>
+  <h3>
+
+    传参形式不一样
+  </h3>
+  <h3>
+    hanshu.call(obj,canshu1,canshu2)。除了第一个参数，后边的实参要和hanshu的形参一一对应
+  </h3>
+  <h3>
+    hanshu.apply(obj,[canshu1,canshu2])。第一个参数传this的指向对象，第二个参数传一个arguments数组，数组内部的项和hanshu形参一一对应
+  </h3>
+  <script>
+    function foo() {
+      console.log(arguments)
+      box.call(null, arguments); //预期结果打印出1-5数组。这么写才正确
+      box.apply(null, arguments); //只打印出了1，说明apply只能接受第一个参数后边是一个数组参数，多余的参数打印不出来.
+      // 按理说不对啊，apply是要接受一个数组的那个人啊，call需要接受形参实参一一对应的那个人啊。
+    }
+
+    function box(x) {
+      // 这里只接受一个参数，
+      // 在call里边，这一个数组[1,2,3,4,5]就是当成一个x为一个数组参数了，所以被直接打印出来
+      // 但是在apply里，本身系统需要一个数组。arguments是数组满足这个条件了，但是坑在于数组里边的长度。
+      // 这里box只接受一个x作为参数，那么及时传入数组，在apply的arguments里应该是一个长度为一的数组才对，比如["a"],这样也是可以的。
+      // 但是如果你多传入了，那么没关系，自动忽略和形参不对应的后边的实参。
+      console.log(x);
+
+    }
+    foo(1, 2, 3, 4, 5)
+    foo(["1", 2, 3, 4, 5])//这么传参也就正确了。这里为了和上一个调用区分，把1变成了字符串类型。
+  </script>
+</body>
+
+</html>

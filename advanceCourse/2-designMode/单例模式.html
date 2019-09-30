@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    li {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1px solid tomato;
+      margin: 0 5px;
+      float: left;
+
+    }
+
+    .clearfix::after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+
+    div {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo" id="demo">
+    <ul class="clearfix">
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <script>
+    // 来一波构造函数内部原理
+    /* function Constructor(name){
+      第一步 - new调用时内部隐式定义this对象，并且该对象隐式原型__proto__为构造函数的原型prototype
+      var this = Object.create(Test.prototype);
+
+      第二步 - 将this.属性的东西挂载到新创建的this对象上
+      this.name = name
+
+      第三步 - 如果构造函数内部没有显示的return一个引用值（对象或数组、函数等），就会隐式return新创建的this对象
+      return this;
+    } */
+  </script>
+  <script>
+    let oDiv = document.getElementById('demo');
+    console.log(oDiv.parentElement, document.parentNode)
+    // 单例模式 - 简单实现
+    function Test(name) {
+      // this存到Test当静态属性
+      // var this = Object.create(Test.prototype);//new调用时内部隐式实现的第一步
+      this.name = name;
+      if (Test._this) {
+        return Test._this; //显示的return出去第一次保存的这个对象
+      } else {
+        Test._this = this;
+      }
+      // return this;//new调用时内部隐式实现的第二步
+    }
+    var a = new Test('a');
+    Test.prototype.newVar = '后增的新属性';
+    var b = new Test('b');
+    console.log(a);
+    console.log(b);
+    console.log(a === b);
+  </script>
+  <script>
+    // 一种不推荐的写法，但是思想可以看看
+    function Test0(name){
+      this.name = name;
+      var _this = this;
+      Test0 = function(){
+        return _this;
+      }
+    }
+    var a0 = new Test0('a0');
+    Test0.prototype.newVar = '后增的新属性';
+    var b0 = new Test0('b0');
+    console.log(a0);
+    console.log(b0);
+    console.log(a0 === b0);
+  </script>
+  <script>
+    // 更高级的思路，使用闭包实现：
+    /* 突破常规思路，不一定非要函数表达式。
+    function Test1(name){
+      this.name = name;
+    } */
+    let Test1 = (function () {//立即执行函数，用来存放私有变量_this
+      let _this = null;
+      return function (name) {//返回一个函数，就是构造函数Test1的实体了
+        this.name = name;
+        if (_this === null) {
+          _this = this;//说明是第一次new对象，存储this对象到闭包当中
+        }else{
+          return _this;//说明不是第一次new对象，直接返回预存的_this即可
+        }
+      }
+    }());
+    var a1 = new Test1('a1');
+    Test1.prototype.newVar = '后增的新属性';
+    var b1 = new Test1('b1');
+    console.log(a1)
+    console.log(b1)
+    console.log(a1 === b1);
+  </script>
+</body>
+
+</html>

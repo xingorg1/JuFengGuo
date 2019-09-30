@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>京东</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <label for="">哈哈</label>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+  <script src="../../../gjfUtils/xingorg1Utils.js"></script>
+  <script>
+    console.log(xingorg1Utils.getType3(undefined))
+    console.log(xingorg1Utils.getType3(null))
+    console.log(xingorg1Utils.getType3(123))
+    console.log(xingorg1Utils.getType3('undefined'))
+    console.log(xingorg1Utils.getType3(true))
+    console.log(xingorg1Utils.getType3({}))
+    console.log(xingorg1Utils.getType3([undefined]))
+    console.log(xingorg1Utils.getType3(function(){}))
+    console.log(xingorg1Utils.getType3(new String()))
+    var x = 10;
+
+    function foo(x, y = function () { x = 3; debugger;console.log('x',x) }) {
+      debugger;
+      console.log(x,y);
+      var x = 1;
+      var aa = 1;
+      console.log(x,y);
+      y();
+      console.log('哈哈',x);
+    }
+    foo();
+  </script>
+  <script>
+    var x = 10;
+    var c = [];
+    var b = [12];
+    var a = {};
+    var e = {
+      key: 23
+    }
+    var f = {
+      key: 123
+    }
+    a[c] = '32'
+    a[b] = '132'
+    a[e] = 11123
+
+    console.log(a[f])
+    console.log(a)
+
+    function foo(x) {
+      var x, y = function () {
+        x = 3;
+        console.log(x, this, 'wee')
+      }
+      x = 1;
+
+      y();
+      console.log(x);
+    }
+
+    function foo1(x) {
+      var x;
+      x = 1;
+
+      function y() {
+        x = 3;
+        console.log(x, this, 'wee')
+      }
+      y();
+      console.log(x);
+    }
+    foo();
+    var oLi = document.getElementsByTagName('li');
+    for (var index = 0; index < oLi.length; index++) {
+      (function (i) { //父函数 - 立即执行函数，其中有局部变量i，是每次循环传入的index。i在外部访问不到，但是内部的及内部的子函数可以访问到
+        oLi[i].onclick = function () { //子函数，内部引用了父函数的局部变量i，然后因为被当做click事件的回调函数，绑定到了oLi对象上，也就是被保存到了父函数的外部，导致父函数（立即执行函数）执行完毕后不能销毁内部变量和这个函数。
+          console.log(i); //在事件触发的时候打印的这个i，就是通过闭包保存的立即执行函数内部的i。
+        }
+      })(index)
+    }
+
+    function searchToObj(str) {
+      var obj = {};
+      if (str) {
+        str = str.substring(str.indexOf('?') + 1);
+        var searchArr = str.split('&');
+        searchArr.forEach(function (el) {
+          var arr = el.split('=');
+          console.log(arr)
+          obj[arr[0]] = arr[1]
+        });
+      }
+      return obj;
+    }
+    var rst = searchToObj('http://item.taobao.com/item.htm?a=1&b=2&c=&d=xxx&e')
+    console.log(rst);
+    var a = xingorg1Utils.formatCurrentUrl('http://item.taobao.com/item.htm?a=1&b=2&c=&d=xxx&e')
+    console.log(a)
+  </script>
+  <div class="header">
+    <div class="nav">
+      <div class="shortcut">
+        <ul class="nav-right">
+          <li>
+            你好,请登陆
+            <a href="#">免费登陆</a>
+          </li>
+          <li></li>
+          <li>
+            <a href="#">我的订单</a>
+          </li>
+          <li></li>
+          <li id="myJD">
+            <!-- <a href="#">我的京东</a>
+                        <div class="dropdown">
+                            <dl>
+                                <dd>待处理订单
+                                </dd>
+                                <dd>返修退换货
+                                </dd>
+                                <dd> 降价商品
+                                </dd>
+                                <dd> 消息
+                                </dd>
+                                <dd>我的问答
+                                </dd>
+                                <dd>我的关注</dd>
+                            </dl>
+                            <dl>
+                                <dd>
+                                    我的京豆
+                                </dd>
+                                <dd>
+                                    我的白条
+                                </dd>
+                                <dd>我的优惠券</dd>
+                                <dd>
+                                    我的理财
+                                </dd>
+                            </dl>
+                        </div> -->
+          </li>
+          <li></li>
+          <li>
+            京东会员
+          </li>
+          <li></li>
+          <li id="procurement">
+
+          </li>
+          <li></li>
+          <li id="service">
+          </li>
+          <li></li>
+          <li id="bar-navs">
+          </li>
+          <li></li>
+          <li>
+            手机京东
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="search-bar">
+
+    </div>
+  </div>
+  <div class="content"></div>
+  <div class="footer"></div>
+  <script src="../jquery.js"></script>
+  <script src="swiper.js"></script>
+  <script src="./dropdown.js"></script>
+  <script src="main.js"></script>
+</body>
+
+</html>

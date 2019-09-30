@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div {
+      float: left;
+      width: 100px;
+      height: 100px;
+      background: red;
+      visibility: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  不可见节点：不会渲染输出的节点（不会显示在屏幕上的节点）
+  meta、link、script等标签
+  通过css进行隐藏的节点，即display:none；（opacity对人类不可见，计算机还能看见，所以还会渲染。）（那visibility呢？做个试验，一个div设置visibility不可见，左浮动，周围全是文字，看文字环绕是否让出一块空白区域）<div>对计算机是否可见</div>
+  最后证明确实绕出了一段空白的位置，说明visibility和opacity设置的不可见只是对人类肉眼不可见，计算机还是会在生成render Tree的时候计算位置信息并把他绘制出来。
+  !!!
+  最后证明确实绕出了一段空白的位置，说明visibility和opacity设置的不可见只是对人类肉眼不可见，计算机还是会在生成render Tree的时候计算位置信息并把他绘制出来。
+  !!!
+  最后证明确实绕出了一段空白的位置，说明visibility和opacity设置的不可见只是对人类肉眼不可见，计算机还是会在生成render Tree的时候计算位置信息并把他绘制出来。 
+  !!!
+  最后证明确实绕出了一段空白的位置，说明visibility和opacity设置的不可见只是对人类肉眼不可见，计算机还是会在生成render Tree的时候计算位置信息并把他绘制出来。
+</body>
+
+</html>

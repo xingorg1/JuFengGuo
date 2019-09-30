@@ -1,0 +1,233 @@
+/*
+* @Author: maty
+* @Date:   2018-01-05 14:39:53
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2019-05-01 16:32:25
+*/
+
+@import "_mixin.scss";
+@import "../../node_modules/yi-yiche-ui/m-widget/src/scss/modules/layout.scss";
+// layout.scss 已调用 common.scss";
+
+html,
+body {
+  min-height: 100vh;
+  color: #fff;
+  background: #262b48;
+  background: #805d33;
+}
+
+// common
+.recode-img,
+.rocker,
+.btn-reback,
+.user-head,
+{
+  text-indent: -9999px;
+}
+img{
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  &[src=""]{
+    opacity: 0;
+  }
+}
+
+// header部分
+header {
+  padding: 20px 35px 15px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+
+  .btn-reback {
+    float: left;
+    width: 35px;
+    height: 35px;
+    margin-top: 20px;
+    border: 2px solid transparent;
+    border-bottom-color: #fff;
+    border-left-color: #fff;
+    transform: rotate(45deg);
+  }
+
+  // 左侧歌曲信息和作者
+  .info {
+    float: left;
+
+    .title {
+      font-size: 30px;
+    }
+
+    a {
+      font-size: 24px;
+      color: #fff;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 8px;
+        width: 12px;
+        height: 12px;
+        border: 1px solid transparent;
+        border-bottom-color: #fff;
+        border-right-color: #fff;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  // 右侧分享与关注
+  .btns-contact {
+    float: right;
+    overflow: hidden;
+    line-height: 70px;
+
+    .btn-attention,
+    .btn-share {
+      float: left;
+    }
+
+    .btn-attention {
+      position: relative;
+      margin-top: 5px;
+      font-size: 26px;
+      line-height: 55px;
+      margin-right: 30px;
+      padding-right: 20px;
+      padding-left: 80px;
+      background: rgba(255, 255, 255, 0.35);
+      border-radius: 45px 45px 45px 45px;
+    }
+
+    .user-head {
+      position: absolute;
+      top: -5px;
+      left: 0;
+      width: 65px;
+      height: 65px;
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+
+      border-radius: 50%;
+      background: #fff;
+    }
+  }
+}
+
+// cotent
+$recodeSize: 580;
+$borderWidth: 30;
+.main-content {
+  position: absolute;
+  top: 106px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: $recodeSize + px;
+    height: $recodeSize + px;
+    margin: 120px auto 0;
+    border-radius: 50%;
+    border: $borderWidth + px solid rgb(219, 204, 204);
+    opacity: 0.25;
+    box-sizing: border-box;
+  }
+  // 摇杆
+  .rocker{
+    position: absolute;
+    top: 0;
+    left: 54%;
+    z-index: 1;
+    width: 350px;
+    height: 80px;
+    border: 10px solid #fff;
+    border-bottom: none;
+    border-left: none;
+    border-radius: 10px;
+    transform: rotate(25deg) translateZ(0);
+    transform-origin: left top;
+    transition: transform .75s linear;
+    &.down{
+      transform: rotate(45deg) translateZ(0);
+    }
+    &::before,&::after{
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      background: #fff;
+    }
+    &::before{
+      top: -30px;
+      left: -30px;
+    }
+    &::after{
+      bottom: -30px;
+      right: -30px;
+    }
+  }
+  // 唱片
+  .recode-box {
+    position: relative;
+    z-index: 1;
+    width: $recodeSize - $borderWidth * 2 + 10 + px;
+    height: $recodeSize - $borderWidth * 2  + 10 + px;
+    margin: 120 + 25px auto 0;
+    border-radius: 50%;
+    background: #020127;
+    overflow: hidden;
+    .recode-img{
+      height: 100%;
+    }
+  }
+}
+
+// footer
+footer,.layer{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+// layer
+.layer{
+  position: absolute;
+  bottom: 0;
+}
+
+// loading
+.loading {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  // 
+}
+
+.loading .load {
+  width: 200px;
+  height: 200px;
+  padding-top: 55px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  border-radius: .1rem;
+  background: rgba(0, 0, 0, 0.8);
+}

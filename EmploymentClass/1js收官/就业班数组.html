@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Array</title>
+</head>
+
+<body>
+  <h1>forEach的用法學習</h1>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+  <script>
+    var arr = [{
+      a: 1,
+      b: 2,
+      c: 3
+    }, {
+      a: 21,
+      b: 22,
+      c: 23
+    }, {
+      a: 31,
+      b: 32,
+      c: 33
+    }]
+    arr.forEach(function (item, index, array) {
+      'use strict'
+      console.log('item：', item, 'index：', index, 'array：', array)
+      console.log('this', this)
+    }, document.getElementsByTagName('li'))
+    console.log()
+    /* 解锁新姿势 */
+    arr.forEach(function (item, index, array) {
+      this[index].innerText = JSON.stringify(item);
+    }, document.getElementsByTagName('li'))
+    /* 仿写 */
+    /* 
+    思路：
+    1、传递一个函数参数
+    2、可以接受第二个参数，作为this指向
+    函数执行次数等于数组长度
+    */
+    Array.prototype.gjfForEach = function (fn) {
+      var _arr = this,
+        len = this.length,
+        params02 = arguments[1] || window; //this函数执行时的指向（严格模式指向undefined怎么办？）
+      for (let i = 0; i < len; i++) {
+        fn.apply(params02, [_arr[i], i, _arr]);
+      }
+      return 'author:@guojufeng';
+    }
+    arr.gjfForEach(function (el, i, arr) {
+      console.log(this, el, i, arr)
+    }, document.getElementsByTagName('li'));
+    arr.gjfForEach(function (el, i, arr) {
+      console.log(this, el, i, arr)
+    });
+    arr.gjfForEach(function (el, i, arr) {
+      console.log(this, el, i, arr)
+    }, 'str');
+    arr.forEach(function (el, i, arr) {
+      console.log(this, el, i, arr)
+    }, 'str');
+  </script>
+  <h1>filter - 过滤</h1>
+  <script>
+    var newArr = arr.filter(function (el, i, arr) {
+      console.log(el, i, arr)
+      console.log(this, el.b)
+      /* if(el.b > 20){
+        return true;
+      }else{
+        return false;
+      } */
+      // 简化写法
+      return el.b > 20
+    }, 'str');
+    var newArr = arr.filter(function (el, i, arr) {
+      return true
+    });
+    console.log(newArr);
+    // newArr[1].b = 'gjf';
+    // console.log(arr, newArr)
+    /* 重写 */
+    /* 
+      思路基本同forEach，但是多一条是要有返回值
+      遍历执行次数等于数组的长度
+      第一个必填fun，fun有三个参数分别是el项、index值、arr自身
+      第二个选填，指向fun中的this
+      同forEach比，特殊点，最后返回一个数组，数组中放条件成立的项
+    */
+    console.log('======仿写=========')
+    Array.prototype.gjfFilter = function (fn) {
+      var _arr = this,
+        len = this.length,
+        self = arguments[1] || window,
+        resultArr = [];
+      for (let i = 0; i < len; i++) {
+        fn.apply(self, [_arr[i], i, _arr]) ? resultArr.push(_arr[i]) : 'author:@guojufeng';
+      }
+      return resultArr;
+    }
+    var newArr2 = arr.gjfFilter(function (el, i, arr) {
+      console.log(el, i, arr)
+      console.log(this, el.b)
+      return el.b > 20
+    }, 'str');
+    console.log(newArr2);
+    newArr2[1].b = 'gjf';
+    console.log('浅拷贝', arr, newArr2);
+  </script>
+  <h1>map映射</h1>
+  <script>
+    // var mapArr = arr.map(function (el, i, arr) {
+    //   console.log(this);
+    //   console.log(el, i, arr);
+    //   return el.b += 'gjf';
+    // }, {
+    //   n: 'gjf'
+    // });
+    // console.log(mapArr, arr)
+
+    Array.prototype.gjfMap = function (fn) {
+      var _arr = this,
+        len = this.length,
+        self = arguments[1] || window,
+        newArr = [];
+      for (let i = 0; i < len; i++) {
+        newArr.push(fn.apply(self, [_arr[i], i, _arr]));
+      }
+      return newArr;
+    }
+    var mapArr = arr.gjfMap(function (el, i, arr) {
+      el.b += 'gjf'
+      return el;
+    });
+    console.log(mapArr, arr)
+  </script>
+  <h1>every 逻辑与</h1>
+  <script>
+    console.log('===========every==============')
+    var everyArr = [23, 22, 13, 14, 56, 23, 235, 124, 23];
+    // var isArr = everyArr.every(function (el, i, arr) {
+    //   console.log(el, i, arr, this);
+    //   return el >= 20
+    // }, {
+    //   n: 'this?'
+    // });
+    // console.log(isArr);
+    Array.prototype.gjfEvery = function (fn) {
+      var _arr = this,
+        len = this.length,
+        self = arguments[1] || window,
+        result = true;
+      for (let i = 0; i < len; i++) {
+        if (!fn.apply(self, [_arr[i], i, _arr])) {
+          return false; //一旦不符合条件，立即返回，不再执行接下来的内容。
+        }
+      }
+      return result;
+    }
+    var isArr = everyArr.gjfEvery(function (el, i, arr) {
+      console.log(el, i, arr, this);
+      return el >= 10
+    }, {
+      n: 'this2?'
+    });
+    console.log(isArr);
+  </script>
+  <h1>some 逻辑或</h1>
+  <script>
+    console.log('===========some==============')
+    // var someArr = [23, 22, 13, 14, 56, 23, 235, 124, 23];
+    // var result = someArr.some(function(el,i,arr){
+    //   console.log(el,i,arr,this);
+    //   return el <= 20;
+    // },{n: 'gjf'});
+    // console.log(result);
+    Array.prototype.gjfSome = function (fn) {
+      var _arr = this,
+        len = this.length,
+        self = arguments[1] || window,
+        result = false;
+      for (let i = 0; i < len; i++) {
+        if (fn.apply(self, [_arr[i], i, _arr])) {
+          return true;
+        }
+      }
+      return result;
+    }
+    var someArr = [23, 22, 13, 14, 56, 23, 235, 124, 23];
+    var result = someArr.gjfSome(function (el, i, arr) {
+      console.log(el, i, arr, this);
+      return el <= 10;
+    }, {
+      n: 'gjf'
+    });
+    console.log(result);
+  </script>
+  <h1>reduce 讲解</h1>
+  <script>
+    console.log('==========map========')
+    // var reduceApp = [11,22,33,44,55];
+    // var result = reduceApp.reduce(function(prevValue,el,i,arr){
+    //   console.log(prevValue,el,i,arr,this);
+    // },'prevValue');
+    // 仿写
+    Array.prototype.gjfReduce = function (fn, initValue) {
+      var _arr = this,
+        len = this.length,
+        self = arguments[2] || window, //我们给他添加重新指向this的功能
+        prevValue = initValue;
+      for (let i = 0; i < len; i++) {
+        prevValue = fn.apply(self, [prevValue, _arr[i], i, _arr]);
+        //本次的prevValue就是上一次函数调用的返回值。而，函数每一次调用传入的prevValue就是上一次自己的返回值。
+      }
+      return prevValue; //返回最后一次遍历后，得出的结果值。
+    }
+    Array.prototype.gjfReduceRight = function (fn, initValue) {
+      var _arr = this,
+        len = this.length - 1,
+        self = arguments[2] || window, //我们给他添加重新指向this的功能
+        prevValue = initValue;
+      for (let i = len; i >= 0; i--) {
+        prevValue = fn.apply(self, [prevValue, _arr[i], i, _arr]); //本次的prevValue就是上一次函数调用的返回值。而，函数每一次调用传入的prevValue就是上一次自己的返回值。
+      }
+      return prevValue; //返回最后一次遍历后，得出的结果值。
+    }
+    var reduceApp = [11, 22, 33, 44, 55];
+    var result = reduceApp.gjfReduce(function (prevValue, el, i, arr) {
+      // console.log(prevValue, el, i, arr, this);
+      console.log(prevValue, el, this);
+      return prevValue + 1;
+    }, 'prevValue', {
+      thisName: 'gjf'
+    });
+    console.log('==========deal - search==========')
+    var str = 'ie=utf-8&hdq=sogou-addr-cc9657884708170e&query=www2&Ecnb=logs2&E=com';
+    var strArr = str.split('&');
+    var result = strArr.gjfReduce(function (prevValue, el, i, arr) {
+      console.log(prevValue, el, i);
+      var objArr = el.split('=');
+      prevValue[objArr[0]] = objArr[1]
+      return prevValue;
+    }, {});
+    console.log(result)
+  </script>
+  <script>
+    var originArr = [{
+      name: 'cst',
+      age: '18'
+    }, {
+      name: 'jc',
+      age: '20'
+    }, {
+      name: 'dxm',
+      age: '50'
+    }, {
+      name: 'dcg',
+      age: '30'
+    }];
+    /* 准备一个deepClone */
+    function deepClone(target) {
+      var type = typeof (target);
+      var result;
+      if (type === 'object' && target !== null) {
+        if (Object.prototype.toString.call(target) === '[object Array]') {
+          /* 数组 */
+          result = [];
+          target.forEach((el) => {
+            result.push(deepClone(el));
+          })
+        } else {
+          /* 对象 */
+          result = {};
+          for (const key in target) {
+            if (target.hasOwnProperty(key)) {
+              result[key] = deepClone(target[key]);
+            }
+          }
+        }
+      } else {
+        return target;
+      }
+      return result;
+    }
+    // filter 返回符合条件的数组
+    var result222 = originArr.filter((el) => {
+      var reg = /c/g;
+      return reg.test(el.name);
+    });
+    console.log('result222ya',result222);
+    var result = originArr.filter((el) => {
+      /* 写法1
+      if (el.name.indexOf('c') !== -1) {
+        return true;
+      } */
+      /* 写法2 */
+      // return el.name.indexOf('c') !== -1;
+      /* 写法3 */
+      var reg = /c/g;
+      // var result = reg.test(el.name)
+      return reg.test(el.name);
+    }).map((el) => {
+      console.log('el',el);
+      el.age = el.age * 2 + '';
+      return el;
+    });
+    console.log('结果',result);
+  </script>
+  <h1>
+    今日头条：使用reduce方法实现map方法
+  </h1>
+  <script>
+    /* 今日头条面试题 */
+    var TTarr = [1, 2, 3, 4, 5];
+    var TTarr = [{
+      name: 'cst',
+      age: '18'
+    }, {
+      name: 'jc',
+      age: '20'
+    }, {
+      name: 'dxm',
+      age: '50'
+    }, {
+      name: 'dcg',
+      age: '30'
+    }]
+    // 比如让arr每一项都加上自身
+    // map实现
+    /* var result = TTarr.map((el) => {
+      console.log(el)
+      el.age *= 2;
+      return el;
+    })
+console.log(result, TTarr,'map也是一个浅拷贝'); */
+    var result = TTarr.reduce((prev, cur, i, arr) => {
+      cur.age *= 2
+      prev.push(cur);
+      return prev;
+    }, []);
+    console.log(result, TTarr, 'reduce也是一个浅拷贝');
+  </script>
+</body>
+
+</html>

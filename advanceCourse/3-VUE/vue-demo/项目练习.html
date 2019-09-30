@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>课程列表</title>
+  <link rel="stylesheet" href="./style1.css">
+  <style>
+    h3{
+      border-bottom: 1px solid tomato;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+    <h3>一：课程列表</h3>
+    <ul class="list">
+      <li class="item" v-for="val,key in courseList">
+        <div class="img-box">
+          <img :src="val.poster" :alt="val.name">
+        </div>
+        <h4 class="title">
+          {{ val.name }}
+        </h4>
+        <div class="info">
+          <span class="info-company">
+           渡一教育
+          </span>
+          <span class="info-press" :class="val.free && 'free'">
+            {{ val.free ? '免费' : '￥' + val.price }}
+          </span>
+        </div>
+      </li>
+    </ul>
+    <h3>二：todolist</h3>
+    <!-- <input type="text" placeholder="输入..." v-model="inputVal" @keydown="inputFun"> -->
+    <!-- <input type="text" placeholder="输入..." v-model="inputVal" @keydown.enter="inputFun"> -->
+    <!-- <input type="text" placeholder="输入..." v-model="inputVal" @keydown.13="inputFun"> -->
+    <input type="text" placeholder="输入..." v-model="inputVal" @keydown.gjfkey="inputFun">
+    <button @click="submitFun">提交</button>
+    <div>
+      正在添加的任务：{{inputVal}}
+    </div>
+    <div>
+      <strong>所有任务：</strong>
+      <ul>
+        <li v-for="item,index in taskList" :key="'list_' + index" :data-id="'list_' + index">
+          {{item}}<button @click="deleteFun(index, $event)">删除</button>
+        </li>
+      </ul>
+    </div>
+    <h3>三：计算器</h3>
+    <input type="text" placeholder="one-value" v-model="oneValue">
+    <input type="text" placeholder="two-value" v-model="twoValue">
+    <div class="result">
+      结果: <input type="text" placeholder="resultVal" v-model="resultVal">
+    </div>
+    <h3>四：搜索热点</h3>
+    <div class="hot-search">
+      <component-son :searchlist='searchlist'></component-son>
+    </div>
+  </div>
+  <script>
+    Vue.config.keyCodes = {
+      'gjfkey' : 13 //名字必须是小驼峰格式的，不然不起作用
+    }
+    const vm = new Vue({
+      el: '#app',
+      components:{
+        componentSon:{
+          props: ['searchlist'],
+          template: `<div class="one-comp">
+                      <h4>搜索热点</h4>
+                      <ul>
+                        <li v-for="(item,index) in searchlist">
+                          <component-two :id='item.id + 1' :title="item.title" :clicknum="item.clickNum">
+                          </component-two>
+                        </li>
+                      </ul>
+                    </div>`,
+          components: {
+            componentTwo: {
+              props: ['id','title','clicknum'],
+              template: `<div class="two-comp">
+                          <span :class="'num num0'+id ">{{id}}</span>
+                          <a class="title" href="#">{{title}}</a>
+                          <span class="clicknum fr">{{clicknum}}万</span>
+                        </div>`,
+              mounted(){
+                console.log(this.id,this.title,this.clicknum)
+              }
+            }
+          },
+          data(){
+            return {}
+          }
+        },
+      },
+      computed: {
+        resultVal: {
+          get(){
+            return Number(this.oneValue) + Number(this.twoValue);
+          },
+          set(newVal){
+            console.log('计算属性resultVal修改了！',newVal)
+            this.oneValue = this.twoValue = newVal / 2
+          }
+        }
+      },
+      methods: {
+        commonSubmit(){
+          if(this.inputVal.length > 0 ){
+            this.taskList.push(this.inputVal);
+            this.inputVal = ''
+          } else{
+            alert('不能添加空串')
+          }
+        },
+        inputFun(e){
+          console.log(e)
+          // e.keyCode === 13 && this.commonSubmit();
+          this.commonSubmit();//有了修饰符以后就不用判断键名那么麻烦了
+        },
+        submitFun(e){
+          this.commonSubmit();
+        },
+        deleteFun(i,event){
+          console.log(i)
+          console.log(event)
+          // this.taskList.slice(0,1)//slice不改变原数组，不可取
+          this.taskList.splice(i,1);
+        }
+      },
+      data: {
+        oneValue: '',
+        twoValue: '',
+        // resultVal: '',
+        inputVal: '',
+        taskList: [],
+        
+        courseList: [{
+            name: 'Web前端开发之JavaScript(Js)精英课堂【渡一教育】',
+            free: true,
+            playback: false,
+            price: 0,
+            buyNumber: 0,
+            enrollment: 4942,
+            poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBsSud06XlZnJACsTWd7OSA5phIFPRTNibFBeuT8jRjy00Jb5ticSEKYUnpUYdBCicH2U/356'
+          },
+          {
+            name: 'Web前端开发之HTML+CSS精英课堂【渡一教育】',
+            free: true,
+            playback: false,
+            price: 0,
+            buyNumber: 0,
+            enrollment: 2982,
+            poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLBDFLdArBwf70PjMrL6bq0OI9LesEsskk1iamJKibriaic0QkBZhINoDuN0DicaojkqyQjk/356'
+          },
+          {
+            name: '淘宝商城项目实战开发【渡一教育】',
+            free: true,
+            playback: false,
+            price: 0,
+            buyNumber: 0,
+            enrollment: 1742,
+            poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLDBpXKL1sgAOKcbSz0Od2abiaqdJibiaDDQWfmrVNBCFrIpbTQKlNyWbPg5Uo1dnT7Znk/356'
+          },
+          {
+            name: '零基础WEB前端入门',
+            free: false,
+            playback: true,
+            price: 9.9,
+            buyNumber: 2514,
+            enrollment: 0,
+            poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLCRlDgtxVbmyclxP9fDUYmnuqAFbN5mYsncrPrVyQbtA3fNfuZ3qicSe1r7Ppt7tICs/356'
+          },
+          {
+            name: 'React顶级企业实战，全流程制作淘票票WebApp【渡一教育】',
+            free: false,
+            playback: true,
+            price: 399,
+            buyNumber: 670,
+            enrollment: 0,
+            poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLB2CyXIxsb8iaAUibBB9mzlkSgKNU7GiciaYxG1SicoLjkiahZ3ia54eZWbtCGDkFyvMo0uKk/356'
+          },
+          {
+            name: '原生JS贪吃蛇游戏实战开发【渡一教育】',
+            free: true,
+            playback: false,
+            price: 0,
+            buyNumber: 0,
+            enrollment: 1123,
+            poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLCfsOGnxjhUXFA6SHMOu0fMUicuucRlIVNo9zBnnLiacovMnePD6586QlRj2qvwudbn8/356'
+          },
+          {
+            name: '原生JS扫雷游戏实战开发【渡一教育】',
+            free: true,
+            playback: false,
+            price: 0,
+            buyNumber: 0,
+            enrollment: 631,
+            poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLDaTljUSVGk2eqS1MCT3DwDqxgs7KhfMf3411SXQkRvmiaicIuz47ydO27zGPWK97wicw/356'
+          },
+          {
+            name: '你不知道的Javascript【渡一教育】',
+            free: true,
+            playback: false,
+            price: 0,
+            buyNumber: 0,
+            enrollment: 1696,
+            poster: 'https://10.url.cn/qqcourse_logo_ng/ajNVdqHZLLCelo2lyibtrxDia7aq7tC0LE1Lcz2LVoDqhQy5tnOHicTzWhLuvPekL35rEmwTdgNuwI/356'
+          }
+        ],
+        searchlist: [{
+          id: 0,
+          title: '安居客或发哦也无法那是',
+          clickNum: 1231
+        },{
+          id: 1,
+          title: '阿嘎額啊發生的嘎嘎',
+          clickNum: 1211
+        },{
+          id: 2,
+          title: '啊噶啥的gas高达上岗',
+          clickNum: 1131
+        },{
+          id: 3,
+          title: '阿萨德噶尔安全网噶啥都干',
+          clickNum: 1031
+        },{
+          id: 4,
+          title: '也有我他惹祸上身热饮三个函数',
+          clickNum: 931
+        },{
+          id: 5,
+          title: '是个舌头函数返回',
+          clickNum: 821
+        },{
+          id: 6,
+          title: '涉世未深干涉如何',
+          clickNum: 714
+        },{
+          id: 7,
+          title: '欢迎加入客服的田野',
+          clickNum: 511
+        }],
+      },
+      
+    })
+  </script>
+</body>
+
+</html>

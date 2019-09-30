@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>每日一题</title>
+</head>
+
+<body>
+  <script>
+    // debugger
+    var a = {
+      n: 1
+    };
+    var b = a;
+    a.n = a = {
+      m: 2
+    }
+    console.log(a, b)
+    // 考点：
+    // 1、 js堆栈空间
+    // 2、 引用值拷贝（ 浅拷贝）
+    // 3、 连等赋值的顺序（ 从右向左）
+    // 4、“.”运算符赋值的优先级（ 高于等号赋值的顺序）
+    // 解析：
+    // 首先要知道的是， 在js中， 引用类型的值， 在栈中存了个地址， 指向堆内存中的真正位置和数据。
+
+    // 而引用类型的值再拷贝， 新的变量拿到的还是这个地址， 并在栈内存中开辟一块土地放置这个地址， 同样指向源值在堆中的位置。
+
+    // 上例， 变量a， 存放在栈内存中。 其值是一个指针， 指向堆内存中的 {n: 1}。
+    // var b = a；
+
+    // 先执行var b； 然后b = a；
+
+    // 所以b在栈内存也开辟了一个新空间。 然后新空间放一个内容就是和a的内容一致的、 指向堆内存 {n: 1}的指针。
+    // 所以，b此时等于{n:1}；
+
+    // 接下来是难点：
+    // a.n = a = {
+    //   m: 2
+    // }
+
+    // 首先要知道，js中变量连等赋值是从右向左的。
+
+    // 那我们就会理解为先是 a = {n:2},然后a.x = {n:2}。 这样理解就掉坑里了。
+
+    // 这道题中一个关键的考点是有一个 “.” 运算符。这个点运算符的优先级高于 “=” 赋值运算符。
+
+    // 所以这一句连等的正确执行顺序应该是
+    // a.n = {m: 2}; // 此时b = a = {n: {m: 2}};
+    // 再执行
+    // a = {m: 2}; // 此时整个a被重新赋值，a在栈内存中的指针指向了{m: 2}这个新对象，b和原来的{n:1}的对象不受影响。
+    // 最终就是：
+    // a -> {m: 2}
+    // b -> {n: {m: 2}}
+
+    function testArg(first, sec) {
+      'use strict';
+      // 严格模式下，arguments和形参是不相互映射的。
+      console.log(arguments);
+      console.log(first === arguments[0]);
+      console.log(sec === arguments[1]);
+      first = 'c';
+      sec = 'd';
+      console.log(first === arguments[0]);
+      console.log(sec === arguments[1]);
+      console.log(arguments);
+    }
+    testArg('a', 'b');
+    var a1 = 2;
+    console.log([b1, a1])
+    var b1 = 2[b1, a1] = [b1, a1];
+    console.log(a1, b1)
+    console.log(2[b1, a1]);
+
+    // 20190209
+    function fun20190209() {
+      y = function () {
+        X = 2;
+      };
+      return function () {
+        var x = 3;
+        y();
+        console.log(this.x); //undefined,js中变量严格区分大小写。
+      }.apply(this, arguments);
+    }
+    fun20190209();
+
+    // 2、4、1、1、2、3、1
+    console.log('常做常错')
+    function fun(n,o){//n=0,o=unde.//n=m=1,o=n=0 //n=m=2,o=n=0 //n=m=3,o=n=0
+      console.log('--',o);
+      return {
+        fun: function(m){//m=1,n=闭包0 //m=2,n=闭包0 //m=3,n=闭包0
+          return fun(m,n);//坑在这里又调了fun(),还是全局的fun。问题是外层fun里n都变成2了，这里闭包的为啥还是0
+        }
+      }
+    }
+    var a = fun(0);//闭包保留的n=0,o=unde.
+    console.log(a);
+    a.fun(1);
+    a.fun(2);
+    a.fun(3);
+    
+    /* // 这样写和下边b的链式调用一致，但是分号和.号完全不一样的效果，究竟是以为什么？没想明白
+    var a1 = a.fun(1);
+    var a2 = a1.fun(2);
+    console.log(a,a1,a2)
+    var a3 = a2.fun(3); */
+
+    // 老师，我想问一下今天的这个题目，既然是闭包，为什么打分号和打点不一样呢? 打分号执行了一个函数，再执行下一个是，前面的那个为什么没影响后面的这个
+    //  - 打分号后重开一个函数,不同的函数之间有自己的作用域，不相互影响。但是.号是链式调用，还是用同一个作用域的
+    // 但是这个为什么还是用上一个执行完了的函数的执行期上下文
+    function bibao(){
+      var num = 100;
+      function b(){
+        num++;
+        console.log(num);
+
+      }
+      return b;
+    }
+    var demo = bibao();
+    demo();
+    demo();
+    function fun2(n,o){//n=0,o=unde.//n=m=1,o=n=0 //n=m=2,o=n=1 //n=m=3,o=n=2
+      console.log(o);//undefined //0 //1 //2
+      return {
+        fun2: function(m){//-//m=1,n=闭包0 //m=2,n=闭包1 //m=3,n=闭包2
+          return fun2(m,n);//1,0 // 2,1 //3,2
+        }
+      }
+    }
+    var b = fun2(0).fun2(1).fun2(2).fun2(3);
+    /* function fun(n, o) { //n=0,o=unde.//n=m=1,o=n=0 -//n=m=2,o=n=1 //n=m=3,o=n=1
+      console.log(o); //undefined //0 -//1 //1
+      return {
+        fun: function (m) { //-//m=1,n=闭包0 -//m=2,n=闭包1 //m=3,n=闭包1
+          return fun(m, n); //1,0 -// 2,1 //3,1
+        }
+      }
+    }
+    var c = fun(0).fun(1); //和a的区别是，闭包保留的n=1,o=0
+    c.fun(2);
+    c.fun(3); */
+
+    /* var a = {
+      n: 1
+    };
+    var b = a;
+    a.n = a = {
+      m: 2
+    };
+    console.log(a, b); */
+    // 暗示全局变量
+    (function () {
+      try {
+        throw new Error();
+      } catch (x) {
+        var x = 1;
+        var y = 2;
+        console.log(x);
+      }
+      console.log(x, y);
+    })();
+
+    function testVar() {
+      var testVar1 = 1,
+        testVar2 = 2;
+      if (false) {
+        var a = 1,
+          b = 2;
+      }
+      console.log('if为false，变量还能提出来吗?', a, b, '能，undefined而不是报错，说明声明提出来了，但赋值不可以')
+    }
+    testVar();
+    if (false) {
+      var ifVar = 'if为false，在全局变量还能提出来吗？'
+    }
+    console.log(window.testVar2, ifVar, '能，undefined而不是报错，说明声明提出来了，但赋值不可以');
+    // 匿名函数的this统一指向window还是由定义环境的this决定呢？
+    function Person() {
+      this.hah = 'Person';
+      this.fn = function () {
+        console.log(this.hah);
+      }
+    }
+    var person = new Person();
+    person.fn(); //Person,定义时this指向preson对象
+    var aa = person.fn; //转手给了别人，然后在全局调用
+    aa(); //undefined,说明指向window
+    // 问a和b的值分别是多少
+    // debugger
+    function emphasis() {
+      var a = 1;
+      var b = 2[a, b] = [b, a];
+      console.log(a, b);
+    }
+    emphasis();
+    // 给定空对象属性
+    var d = {};
+    ['a', 'b'].forEach(function (k) {
+      d[k] = undefined;
+    });
+    console.log(d, d.a);
+    console.log(Object.keys(d));
+
+    // 给数组加属性、以及改变数组的length就会截取数组。
+    var arr = [];
+    arr[0] = 'a';
+    arr[1] = 'b';
+    arr.foo = 'c';
+    console.log(arr,arr.length);
+    arr.length = arr.foo.length;
+    console.log(arr);
+
+    // 0508
+    function tongming(x){
+      return x * 2;
+    }
+    var tongming;
+    console.log(tongming)
+
+
+
+  </script>
+</body>
+
+</html>

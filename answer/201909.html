@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    div{
+      font-size: 34px;
+      color: red;
+    }
+    div {
+      background: #dfe0ca;
+      border: 1px solid #333;
+      /* line-height: 0; */
+      /* line-height小于font-size也可以 */
+      /* font-size: 0; */
+    }
+
+    img {
+      width: 500px;
+      /* display: block; */
+      /* vertical-align: bottom; */
+    }
+  </style>
+</head>
+
+<body>
+  <h3>
+    四种方法解决img图片底部与父元素的1像素间隙问题，为了观察加了“x”，可去掉
+  </h3>
+  <ol>
+    <li>div父元素设置 line-height: 0;(line-height小于font-size也可以)</li>
+    <li>div父元素设置font-size:0;(不让空白节点占位置)</li>
+    <li>img元素设置display: block;(display block就是不用基线对齐了)</li>
+    <li>img元素设置vertical-align: bottom;(不用默认的基线对齐，改为文字底部对齐)</li>
+  </ol>
+
+  <div>
+    <img src="http://pic1.win4000.com/wallpaper/c/53cdd1f7c1f21.jpg" alt="">x
+  </div>
+  <p>
+    设置fong-size=0，是因为图片元素后边的空格/回车元素（文本节点）的存在，设置font-size为0，这个文本节点就不占位置了，自然就消除了一像素空隙。其实你在代码中，让包裹img的div和img之间没有回车和空格也可以解决。再专业点说，设置了font-size为0，元素的行高也就为0，文本节点不占高度，就不会撑出一个空隙
+  </p>
+  <p>
+    总结：看图理解，图片作为内联块元素，默认vertical
+    align是基线对齐的，而图片右边x文案的基线就是你可视的x字符底部,所以可以看出来图片和x底部对齐。但是x因为行高（或可以说字体大小），就能看出来x字符底部还有一点空白区域所在，我们设置字号和行高为最小值就是让x所占空间变小，img就不会为了和文字基线对齐而留出空白了。还有解决方法可以从img入手，设置img的对齐方式为bottom等。具体自己多去尝试总结，图片设置成块级元素也可以去掉，对，知道了原理，解决方式就很多了。你都可以自己发挥，想想还有其他解决方案吗
+  </p>
+  <script>
+    var { log } = console;
+    var
+      a1 = 1,
+      a2 = 2,
+      a3 = 3,
+      a4 = 4,
+      a5 = 5,
+      a6 = 6,
+      a7 = 7,
+      a8 = 8;
+    var sum = 0;
+    for (var i = 1; i <= 8; i++) {
+      sum += window['a' + i]
+    }
+    log(sum)
+  </script>
+</body>
+
+</html>

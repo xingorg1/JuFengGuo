@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>作用域和作用域链</title>
+</head>
+
+<body>
+  <script>
+    // go{
+    //   plus: function(){
+
+    //   };
+    //   plus1: undefined;
+    //   add: undefined;
+    // }
+    // ao{
+    //   acount: 0,
+    //   plusTwo: f()
+    // }
+    function add(){
+      var acount = 0;
+      plus = function(){//这样就也是一个闭包了，在外边window里边能取到add里count的数
+        acount++;
+        console.log("acount:"+acount);
+        console.log(this)
+      }
+      return plus;
+    }
+    var plus = add();
+    var plus1 = add();
+    plus();
+    plus1();
+    /* 就多加一个var变量声明，就不一样了 */
+    function addTwo(){
+      var acount = 0;
+      var plusTwo = function(){
+        acount++;
+        console.log("acount:"+acount);
+        console.log(this)
+      }
+      return plusTwo;
+    }
+    var plusTwo = addTwo();
+    var plusTwo1 = addTwo();
+    plusTwo();
+    plusTwo1();
+
+    
+    // 这就是闭包了
+    function a() {
+      var ddd = "ddd";
+
+      function b() {
+        var bbb = 234;
+        var ddd = ccc;
+        document.write(aaa); //用了父级作用域内部的变量
+      }
+      var ccc = 222;
+      var aaa = 123;
+      return b;
+    }
+    var glob = 100;
+    var demo = a();
+    demo();
+    // scope是一个集合
+    // a 定义 a.scope 加入第零个执行上下文 GO - global object 就是window的全局作用域
+    // a 执行 a.scope unshift进入自己的AO执行期上下文 - 就是自己的作用域。
+    // 0： aAo
+    // 1： GO
+    // a 执行导致b定义，b直接引入a的作用域链， 此时b.scope内是
+    // 0： aAo
+    // 1： GO
+    // b 执行，b作用域链顶端加上自己的AO作用域 bAO
+    // 0: bAO
+    // 1: aAo
+    // 2: GO
+    // b执行完，销毁自己的AO，scope回到被定义状态。
+    // 再次执行b，新建一个新的bAo，和之前销毁的b的AO不是一个   
+    +
+    function gjf() {
+      console.log('gjf')
+    }();
+    (function gjf() {
+      console.log('gjf')
+    })();
+
+    function exin(a, b, c, d) {
+      console.log(a + b + c + d)
+    }(1, 2, 3, 4)
+
+    // function exin(a, b, c, d) {
+    //   console.log(a + b + c + d)
+    // }()
+
+    /* 京东面试题 */
+    function setFun(obj) { //传引用，而不是传值，内部没有新建，而是修改了全局。
+      obj.name = "wer";
+      console.log(1, obj)
+      obj = new Object(); //新建一个新的obj
+      console.log(2, obj)
+      obj.name = "sgs";
+      console.log(obj.name);
+    }
+    var obj = new Object();
+    obj.name = "kkk";
+    console.log(3, obj)
+    setFun(obj); //传引用
+    console.log(obj.name);
+    console.log(4, obj);
+
+    // 一个字符串，找出里边重复字符最多的那个字符
+    var str = "xing.org1^";
+
+    function getStrMax(str) {
+      let array = str.split(""),
+        result = "",
+        count = 0
+      obj = {};
+      for (let i = 0; i < array.length; i++) {
+
+        if (!obj[array[i]]) {
+          obj[array[i]] = 1;
+        } else {
+          obj[array[i]] += 1;
+        }
+      }
+      for (const key in obj) {
+        if (obj[key] > count) {
+          result = key;
+          count = obj[key];
+        }
+      }
+      return result;
+    }
+    let ress = getStrMax(str);
+    console.log(ress);
+
+    // try catch
+    // try catch有块级作用域吗？
+    (function () {
+      try {
+        var e;
+        throw new Error();
+      } catch (e) {
+        var x = 1,
+          y = 2;
+        console.log("e", e)
+        console.log("x", x)
+      }
+      console.log("e", e)
+      console.log("x", x)
+      console.log("y", y)
+    })();
+    (function () {
+      try {
+        throw new Error();
+      } catch (x) {
+        var x = 1,
+          y = 2;
+        console.log(x)
+        console.log(y)
+      }
+      console.log(x)
+      console.log(y)
+    })();
+  </script>
+</body>
+
+</html>

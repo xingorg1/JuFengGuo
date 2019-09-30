@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>分享悬浮框</title>
+  <style>
+    * {
+      margin: 0;
+      left: 0;
+    }
+
+    html,
+    body {
+      font-family: "微软雅黑";
+      height: 100%;
+    }
+
+    .share {
+      position: relative;
+      /* bottom: 100px; */
+      top: 30px;
+      left: -300px;
+      width: 300px;
+      height: 200px;
+      line-height: 200px;
+      text-align: center;
+      background: sandybrown;
+      color: #fff;
+    }
+
+    .share-btn {
+      position: absolute;
+      top: 0;
+      /* right: 0; */
+      left: 100%;
+      width: 40px;
+      /* height: 40px; */
+      background: tomato;
+      cursor: pointer;
+    }
+
+    .demo {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      line-height: 200px;
+      text-align: center;
+      background: sandybrown;
+      color: #fff;
+    }
+
+    .demo::after,
+    .test {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: tomato;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo">
+    <!-- <span class="test">aa</span> -->
+    <div class="test">aaa</div>
+  </div>
+  <div class="share" id="share">
+    独乐乐不如众乐乐
+    <span class="share-btn">分享</span>
+  </div>
+  <script>
+    var share = document.getElementById('share');
+    share.onmouseenter = function () {
+      shareMove(this, 0, 20);
+    }
+    share.onmouseleave = function () {
+      shareMove(this, -this.clientWidth, 20);
+    }
+    function shareMove(dom, target, mySpeed) {
+      var timer = null,
+        speed = null;
+      clearInterval(timer);
+      timer = setInterval(function () {
+        var dis = target - dom.offsetLeft;
+        speed = dis / mySpeed;
+        speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+        if (Math.abs(dis) <= Math.abs(speed)) {
+          dom.style.left = target + 'px';
+          clearInterval(timer);
+          timer = null;
+        } else {
+          dom.style.left = dom.offsetLeft + speed + 'px';
+        }
+      })
+    }
+  </script>
+</body>
+
+</html>

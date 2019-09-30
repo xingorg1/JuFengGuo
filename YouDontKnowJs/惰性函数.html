@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>惰性函数</title>
+</head>
+
+<body>
+  <script>
+    var t = null;
+
+    function test() {
+      if (t) {
+        return t; //后面调用函数时有这个t值，直接返回第一次记录的值
+      }
+      t = +new Date(); //第一次调用，给t赋值
+      return t;
+    }
+    console.log(test());
+    console.log(test());
+    console.log(test());
+    console.log(test());
+    console.log(test());
+    console.log('=====gaijin========')
+    //改进
+    var result = (() => {
+      var t = null;
+      return function () {
+        if (t) {
+          return t;
+        }
+        t = +new Date();
+        return t;
+      }
+    })();
+    setTimeout(function () {
+      console.log('延迟后的时间：')
+      console.log(result());
+      console.log(result());
+      console.log(result());
+      console.log(result());
+      console.log(result());
+    }, 3000);
+    console.log(+new Date());
+    //完美版惰性函数实现：
+    console.log('lazyFun')
+    var lazyFun = function(){
+      var t = +new Date();//第一次定义函数，将结果计算完毕。
+      lazyFun = function(){//lazyFun只是一个变量名，又是一个函数，引用函数体。这个变量还可以改存其他值，引入其他函数体¸这里就是，被我们改掉，专为指向❤新函数体了。
+        return t;//闭包获取结果并返回，形成私有化变量。
+      }
+      return lazyFun();//调用更新后的lazyFun，得到返回值f，并返回。不返回值时，第一次调用得到undefined，因为第一次调用的时候，lazyFun才刚被改，还不能用其新函数体内部的return t代码。
+      // return t;//返回t也可以。老师说为了体现lazyFun的意义才返回他的。
+    }
+    console.log( lazyFun() );
+    console.log( lazyFun() );
+    console.log( lazyFun() );
+    // 惰性函数的概念，一个函数，在其内部定义功能，然后又在其内部重写函数。但是当函数执行之后的返回值只跟第一次定义有关系。
+
+    console.log('惰性函数 - 经常应用')
+    // 平时我们封装库，除了兼容性考虑，还要考虑吧性能，因为它是被频繁使用的。里边就可以用惰性函数的概念。
+    // 老师举例：事件绑定函数。因为事件绑定我们总是需要判断其兼容性，但是假如我们第一次用过以后，这个判断已经知道了，下次再使用就没必要进行判断了。这时候我们就用上了惰性函数：
+
+    function addEvent (){
+      if(dom.addEventListener){
+        dom.addEventListener(type,handler,false);
+        addEvent = function(dom,type,handler){
+          dom.addEventListener(type,handler,false);
+        }
+      }else{
+        dom.attachEvent('on',type,handler);
+        addEvent = function(dom,type,handler){
+          dom.attachEvent('on',type,handler);
+        }
+      }
+    }
+    // 惰性函数不是懒，而是有一个类似于记忆的功能。
+</script>
+</body>
+
+</html>

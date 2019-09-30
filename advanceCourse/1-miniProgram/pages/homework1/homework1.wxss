@@ -1,0 +1,35 @@
+/* pages/homework1/homework1.wxss */
+
+/* 引入公用样式，跟sass的写法很像 */
+@import '../public'; 
+
+
+
+
+
+
+view{
+  margin: 0;
+  padding: 0;
+}
+.article{
+  padding: 10rpx;
+  font-family: 'Microsoft YaHei';
+  text-align: center;
+}
+image{
+  width: 100%;
+}
+.desc{
+  /* 1em是一个字体的大小 */
+  width: 20rem;
+  font-size: 36rpx;
+  letter-spacing: 4rpx;
+  line-height: 66rpx;
+  text-align: justify;
+}
+.author{
+  float: right;
+  font-size: 32rpx;
+
+}

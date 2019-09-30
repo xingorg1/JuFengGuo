@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>六月答疑</title>
+  <link rel="stylesheet" href="./style/201906.css">
+  <script>
+    let arr1 = [1, 2, 3, true, false, 'string', {
+        name: 'ojb'
+      }],
+      num = 666,
+      str = 'abcsd',
+      bool = false,
+      obj1 = {
+        name: '我是对象',
+        age: 18,
+        time: 2019,
+        happiness: true
+      },
+      reg1 = /\d+/g,
+      date1 = new Date(),
+      set = new Set('我是Set结构'),
+      map = new Map([
+        ['name', '我是Map结构']
+      ]),
+      fn = function fn1() {};
+    const {
+      log
+    } = console;
+  </script>
+  <style>
+    .opera {
+      margin: 0 auto;
+      background: #eee;
+    }
+
+    .out-red {
+      width: 47px;
+      height: 50px;
+      border-radius: 50%;
+      background: red;
+      padding-top: 4px;
+      box-sizing: border-box;
+    }
+
+    .innner-white {
+      width: 22px;
+      height: 41px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    select {}
+
+    .aaa:visited {
+      color: blue;
+      text-decoration: none;
+    }
+    .aaa{
+      text-decoration: none
+    }
+    .aaa:hover{
+      text-decoration: none;
+    }
+    .aaa:link {
+      color: tomato;
+    }
+
+    .aaa {
+      color: greenyellow
+    }
+
+    .float ul {
+      padding: 0;
+      list-style: none;
+      overflow: hidden;
+      border: 1px sienna solid;
+    }
+
+    .float li {
+      float: left;
+    }
+
+    .float .float {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="typeFile">
+    <p>input type=file第一次选择后，value值不清空，下次点击还会触发change事件？</p>
+    <input type="file" id="file">
+  </div>
+  <div class="demno">
+    <a class="aaa" href="https://www.baidu.com">百度</a>
+  </div>
+  <div class="mouseleave" style="top: 10px">
+    测试
+  </div>
+  <div class="mouseleave" style="top: 10px">
+    测试
+  </div>
+  <div class="opera">
+    <div class="out-red">
+      <div class="innner-white"></div>
+    </div>
+  </div>
+  <select name="" id="selectID">
+    <option value="123">123</option>
+    <option value="3234">faefasdf</option>
+    <option value="erae ">aerewrghrh</option>
+    <option value="sdfas">thjwetetr</option>
+  </select>
+  <div class="float">
+    <p>左浮动后的元素，宽度设置100%，浮动还有用吗</p>
+    <ul>
+      <li class="float">1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>33</li>
+      <li>44</li>
+    </ul>
+  </div>
+
+  <script>
+    let oFile = document.getElementById('file');
+    oFile.onchange = function (e) {
+      log('change触发了', e);
+      log(this.value)
+      // this.value = '';//手动清空了上次的路径，但当遇到第二次选的文件和第一次选的是同一个文件，也会触发change
+    }
+    // for(in) 和 for 的区别
+    for (const key in obj1) {
+      log('1-in--obj--', key, obj1[key])
+    }
+    for (const key in arr1) {
+      log('1-in--arr--', key, arr1[key])
+    }
+    /* for (const key of obj1) {
+      log('of--obj--',key,obj1[key])
+    } */
+    for (const key of arr1) {
+      log('2-of--arr--', key, arr1[key])
+    }
+
+    // reverse返回新数组？不，改变原数组，并返回原数组翻转后的结果。所以array2===array1的
+    let array1 = 'join'.split('');
+    let array2 = array1.reverse();
+    let array3 = 'jones'.split('');
+    array2.push(array3);
+    log(array1)
+    log(array2)
+    log(array3)
+  </script>
+  <script>
+    let selectID = document.querySelector('.mouseleave');
+    log(selectID)
+    // 20190607
+    /* var mlDiv = document.getElementsByClassName('mouseleave')[0];
+    let key0607 = true;
+    var timer1 = null;
+    var timer2 = null;
+    mlDiv.onmouseenter = function () {
+      if (key0607) {
+        clearInterval(timer2)
+        timer1 = setInterval(function () {
+          mlDiv.style.top = parseInt(mlDiv.style.top) + 1 + 'px';
+        }, 10)
+      } else {
+        key0607 = false;
+      }
+    }
+    mlDiv.onmouseleave = function () {
+      timer2 = setInterval(function () {
+        clearInterval(timer1);
+        mlDiv.style.top = parseInt(mlDiv.style.top) - 1 + 'px';
+      }, 10)
+      key0607 = true;
+    } */
+  </script>
+  <script>
+    // 对象的属性：
+    /* var obj = {
+      n: 10,
+      m: obj.n * 10
+    }; */
+    /* var obj = {
+      n = 10,
+      m = obj.n * 10
+    }; */
+    var obj = {
+      n : 10,
+      m : this.n * 10
+    };
+    console.log(obj.m)
+  </script>
+  <script>
+    // 暂时性死区 20190610
+    // 下边这段代码在正常的js脚本中会报错（因为暂时性死区），在vue中let的作用就像var。
+    function test() {
+      console.log(params1);
+      let params1 = 2;
+    }
+    test();
+  </script>
+  <script>
+    // this
+    var value = 1;
+    var foo = {
+      value: 2,
+      bar: function () {
+        console.log(this)
+        return this.value;
+      }
+    }
+    console.log(foo.bar());
+    console.log((foo.bar)()); //2 ?
+    /* 
+      (function(){
+        return this.value;
+      })()
+     */
+    console.log((foo.bar = foo.bar)());
+    console.log((false || foo.bar)());
+    console.log((foo.bar, foo.bar)());
+  </script>
+</body>
+
+</html>

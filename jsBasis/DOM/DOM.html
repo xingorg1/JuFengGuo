@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>dom</title>
+  <style>
+    .pie {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: tomato;
+      background-image: linear-gradient(to right, transparent 50%, #5f220c 0);
+    }
+
+    .pie::before {
+      content: "";
+      display: block;
+      margin-left: 50%;
+      height: 100%;
+      border-radius: 0 100% 100% 0/50%;
+      background-color: inherit;
+      transform-origin: left;
+      transform: rotate(.1turn);
+      /* 10% */
+      transform: rotate(.2turn);
+      /* 20% */
+      transform: rotate(.3turn);
+      /* 30% */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <span class="txt">测试jq</span>
+    <p></p>
+  </div>
+  <script>
+    var div = document.getElementsByClassName('wrapper')[0];
+    var span = div.getElementsByTagName('span')[0];
+    var p = div.getElementsByTagName('p')[0];
+    div.insertBefore(p,span);//在span前边插入已有的p标签
+    // var result = p.remove();
+    // var result2 = div.removeChild(span);
+    // console.log(result,result2);
+    var myDiv = document.createElement('div');
+    var myP = document.createElement('p');
+    // p.innerText = '姬成，你最帅！';
+    var text = document.createTextNode('test')
+    p.appendChild(text)
+    console.log(text)
+    p.setAttribute('class','slogan');
+    myDiv.setAttribute('class','example');
+    myDiv.appendChild(p);
+    document.body.appendChild(myDiv);
+
+  </script>
+</body>
+
+</html>

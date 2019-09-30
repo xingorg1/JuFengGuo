@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>拖拽</title>
+  <title>拖拽</title>
+  <style>
+    #demo {
+      width: 100px;
+      height: 100px;
+      background: tomato;
+      position: absolute;
+      left: 0;
+      border-radius: 50%;
+      opacity: 0.85;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    span {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: black;
+      border-radius: 50%;
+      opacity: 0.65;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="demo"></div>
+  <script>
+    /* 拖拽 */
+    var lastX = 0; //记录上一次鼠标移动点x值
+    var lastY = 0; //记录上一次鼠标移动点y值
+    var spdX = 0; //记录x方向初始速度值
+    var spdY = 0; //记录y方向初始速度值
+    demo.onmousedown = demo.ontouchstart = function (e) { //鼠标按下触发事件
+      console.log(e)
+      clearInterval(this.timer); //球还没运动完的时候，把上一次的动画关闭
+      var e = e || window.event, //兼容性写法
+        self = this, //this指向小球元素
+        mouseX = e.clientX, //pc端鼠标按下，鼠标x点
+        mouseY = e.clientY; //pc端鼠标按下，鼠标y点
+      if (e.type === 'touchstart') {
+        mouseX = e.touches[0].clientX; //移动端按下，手指x点
+        mouseY = e.touches[0].clientY; //移动端按下，手指y点
+      }
+      var disX = mouseX - this.offsetLeft, //鼠标按下元素时，鼠标在元素身上x方向的哪个位置
+        disY = mouseY - this.offsetTop; //鼠标按下元素时，鼠标在元素身上y方向的哪个位置
+      document.onmousemove = document.ontouchmove = function (e) { //鼠标移动要加在body元素上，通过冒泡来同时加到demo身上。
+        var e = e || window.event, //兼容性写法
+          mouseX = e.clientX, //pc端鼠标按下，鼠标x点
+          mouseY = e.clientY; //pc端鼠标按下，鼠标y点
+        if (e.type === 'touchmove') {
+          mouseX = e.touches[0].clientX; //移动端按下，手指x点
+          mouseY = e.touches[0].clientY; //移动端按下，手指y点
+        }
+        var curX = mouseX - disX; //。。。
+        var curY = mouseY - disY;
+        spdX = curX - lastX; //速度等于前后鼠标移动两点相减，水平互减
+        spdY = curY - lastY; //同上
+        lastX = curX; //再次记录最后一点的值
+        lastY = curY; //同上
+        self.style.left = curX + 'px'; //给元素赋值
+        self.style.top = curY + 'px'; //同上
+        /* 观察效果 */
+        var newSpan = document.createElement('span');
+        newSpan.style.left = e.clientX + 'px';
+        newSpan.style.top = e.clientY + 'px';
+        document.body.appendChild(newSpan);
+      }
+      document.onmouseup = document.ontouchend = function () { //body上的鼠标抬起时
+        console.log('停止拖拽')
+        document.onmouseup = document.ontouchend = null; //清楚所有绑定的事件
+        document.onmousemove = document.ontouchmove = null;
+        console.log(self, spdX, spdY);
+        // startMove(self, spdX, spdY); //触发弹性、重力加速度运动
+        startMove(self, {
+          speedX: spdX,
+          speedY: spdY,
+          gravity: 3,
+          wastage: 0.95,
+          isPhone: false,
+          delay: 40
+        })
+      }
+    }
+
+    function startMove(dom, params) {
+      var newLeft = null, //定义元素要移动的新的left值
+        newTop = null, //定义元素要移动的新的top值
+        oW = document.body.clientWidth || document.documentElement.clientWidth, //获取可视区域宽
+        oH = document.body.clientHeight || document.documentElement.clientHeight, //同上，获取高
+        dW = dom.clientWidth, //获取元素宽
+        dH = dom.clientHeight, //同上，获取高
+        speedX = params.speedX,
+        speedY = params.speedY,
+        gravitySpd = params.gravity || 3, //重力值
+        wastage = params.wastage || 0.95; //能量损耗值
+      clearInterval(dom.timer); //本次运动触发前，清除上一次的运动
+      dom.timer = setInterval(function () { //触发新的定时器
+        /* 加速度 */
+        speedY += gravitySpd; //重力加速度，只作用在垂直方向上
+        newLeft = dom.offsetLeft + speedX; //本次left值等于上一次left值+速度值
+        newTop = parseInt(dom.offsetTop + speedY); //本次top值等于上一次top值+速度值
+        /* 向下碰撞 */
+        /* 优化 */
+        if (newTop >= oH - dH) { //碰撞检测 - 当元素的top值 >= 屏幕高度-元素高度，换句话说，元素触底
+          speedY *= -1; //反弹，同过将速度的值反转实现。
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newTop = oH - dH; //让元素刚好到底部的位置
+        }
+        if (newTop <= 0) { //碰撞检测 - 当元素top值过小导致元素冲出可视区上边时，让top直接等于0
+          speedY *= -1; //同样反弹
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newTop = 0; //让元素刚好在顶部的位置
+        }
+        if (newLeft >= oW - dW) { //同top，如果left值超出了屏幕宽度-自身宽度时
+          speedX *= -1;
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newLeft = oW - dW; //让元素刚好在可视区域最右边的位置
+        }
+        if (newLeft <= 0) { //元素向左冲出屏幕最左边外侧时
+          speedX *= -1;
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newLeft = 0; //让元素刚好在最左边
+        }
+        /* 有很多小数，优化一下 */
+        speedY = speedY > 0 ? Math.ceil(speedY) : Math.floor(speedY);
+        /* 运动停止判断 */
+        if (Math.abs(speedX) < 1) { //speedX不太可能等于0，所以扩大范围到1
+          speedX = 0; //如果速度已经很小了，做速度忽略不计处理
+        }
+        if (Math.abs(speedY) < 2) { //同上
+          speedY = 0;
+        }
+        // console.log(speedY, speedY == 0, speedX == 0, newTop == (oH - dH));
+        if (speedY == 0 && speedX == 0 && newTop == (oH - dH)) { //必须满足水平、垂直的速度皆为0，且元素触底的时候，才停止运动
+          // console.log('清除定时器');
+          clearInterval(dom.timer);
+        } else { //反之，不是静止就是运动，让元素的top和left随着计算的结果进行变化。
+          dom.style.top = newTop + 'px';
+          dom.style.left = newLeft + 'px';
+        }
+      }, params.delay);
+    }
+  </script>
+</body>
+
+</html>

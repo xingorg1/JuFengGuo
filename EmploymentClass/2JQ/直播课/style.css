@@ -1,0 +1,108 @@
+/*
+ * @Author: @Guojufeng 
+ * @Date: 2019-02-11 20:29:13 
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2019-02-14 16:42:13
+ */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background: #f1f1f1;
+}
+a {
+  color: #999;
+  text-decoration: none;
+}
+
+a:hover {
+  color: cornflowerblue;
+}
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
+
+/* 对应样式 */
+/* 头部 */
+.header {
+  width: 100%;
+}
+.header .nav {
+  width: 100%;
+  height: 30px;
+  background: #e3e4e5;
+  border-bottom: 1px solid #eee;
+}
+.header .nav .shortcut {
+  width: 1190px;
+  height: 30px;
+  margin: 0 auto;
+}
+.header .search-bar {
+  width: 1190px;
+  height: 140px;
+  border: 1px solid #000;
+  margin: 0 auto;
+}
+.content {
+  width: 1190px;
+  margin: 0 auto;
+  height: 480px;
+  border: 1px solid #000;
+}
+.nav-right {
+  float: right;
+  height: 30px;
+  line-height: 30px;
+}
+.nav-right li {
+  float: left;
+  margin-right: 8px;
+  text-align: center;
+  position: relative;
+  z-index: 100;
+}
+.nav-right li:nth-child(2n+1) a {
+  border: 1px solid transparent;
+  padding: 0 5px;
+  height: 100%;
+  display: inline-block;
+}
+.nav-right li:nth-child(2n) {
+  width: 1px;
+  height: 10px;
+  background-color: #ccc;
+  margin: 10px 8px 10px 0;
+}
+
+/* dropdown */
+.dropdown {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #eee;
+  top: 29px;
+}
+.dropdown dl {
+  width: 100%;
+  padding: 10px 10px 10px 15px ;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  cursor: pointer;
+}
+.dropdown dl dd {
+  display: inline-block;
+  /* width: 126px; */
+  white-space: nowrap;
+  text-align: left;
+}

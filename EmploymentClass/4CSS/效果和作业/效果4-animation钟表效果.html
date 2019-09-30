@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>钟表效果</title>
+  <style>
+    .pos{
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+    .clock {
+      width: 512px;
+      height: 512px;
+     
+      margin: 200px auto;
+      background: url(./../img/clock.png) no-repeat;
+      background-size: 100% 100%;
+      transform: scale(0.5);
+    }
+
+    .hour {
+      width: 32px;
+      height: 148px;
+     
+      margin: 241px auto;
+      transform: rotate(25deg);
+      transform-origin: 16px 16px;
+      background: url(./../img/hour.png) no-repeat;
+      background-size: 100% 100%;
+    }
+    .minute {
+      width: 32px;
+      height: 218px;
+      transform: rotate(90deg);
+      transform-origin: 16px 16px;
+      margin: 241px auto;
+      background: url(./../img/minute.png) no-repeat;
+      background-size: 100% 100%;
+      /* animation: minute 1s steps(1,end) 59s forwards; */
+      animation: minute 3600s steps(60,end) forwards;
+    }
+    @keyframes minute{
+      0%{
+        transform: rotate(90deg);
+      }
+      100%{
+        /* transform: rotate(96deg); */
+        transform: rotate(450deg);
+      }
+    }
+    .second{
+      width: 16px;
+      height: 278px;
+      transform: rotate(180deg);
+      transform-origin: 8px 77px;
+      margin: 179px auto;
+      background: url(./../img/second.png) no-repeat;
+      background-size: 100% 100%;
+      animation: second 60s steps(60,end) infinite forwards;
+    }
+    @keyframes second{
+      0%{
+        transform: rotate(180deg);
+      }
+      100%{
+        transform: rotate(540deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="clock pos">
+    <div class="hour pos"></div>
+    <div class="minute pos"></div>
+    <div class="second pos"></div>
+  </div>
+</body>
+
+</html>

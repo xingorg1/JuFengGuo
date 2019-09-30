@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>模拟重力场</title>
+  <style>
+    .demo {
+      width: 100px;
+      height: 100px;
+      background: tomato;
+      position: absolute;
+      left: 0;
+      border-radius: 50%;
+    }
+
+    .line {
+      width: 1px;
+      height: 300px;
+      position: absolute;
+      border-left: 1px solid;
+      left: 800px;
+      top: 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo" id="demo"></div>
+  <script>
+    demo.onclick = function () {
+      startMove(demo);
+    }
+
+    /* 第一步，向两个方向的匀速运动 */
+    function startMove(dom) {
+      var speedX = 3,
+        speedY = 5,
+        newLeft = null,
+        newTop = null,
+        timer = null;
+      clearInterval(timer);
+      timer = setInterval(function () {
+        newLeft = dom.offsetLeft + speedX;
+        newTop = dom.offsetTop + speedY;
+
+        dom.style.left = newLeft + 'px';
+        dom.style.top = newTop + 'px';
+      }, 40)
+    }
+    /* 第二步，碰撞检测 */
+    function startMove(dom) {
+      var speedX = 13,
+        speedY = 15,
+        newLeft = null,
+        newTop = null,
+        timer = null,
+        oW = document.body.clientWidth || document.documentElement.clientWidth;
+      oH = document.body.clientHeight || document.documentElement.clientHeight;
+      dW = dom.clientWidth;
+      dH = dom.clientHeight;
+      console.log(oW, oH, dW, dH)
+      clearInterval(timer);
+      timer = setInterval(function () {
+        newLeft = dom.offsetLeft + speedX;
+        newTop = dom.offsetTop + speedY;
+        /* 向下碰撞 */
+        console.log(newTop, oH, dH, newTop >= oH - dH)
+        if (newTop >= oH - dH || newTop < 0) {
+          // dom.style.top = oH - dH + 'px';
+          /* 触底反弹 - 把速度反过来即可，这次可以把底部边距理解成那一条线。 */
+          speedY *= -1; // 3 * -1 = -3; -5 * -1 = 5; 利用-1和乘法这个方法，让数值翻转正负号。
+        }
+        if (newLeft >= oW - dW || newLeft < 0) {
+          speedX *= -1;
+        }
+
+        dom.style.top = newTop + 'px';
+
+        dom.style.left = newLeft + 'px';
+      }, 40);
+    }
+    /* 第二步-2，碰撞检测 */
+    function startMove(dom) {
+      var speedX = 13,
+        speedY = 15,
+        newLeft = null,
+        newTop = null,
+        timer = null,
+        oW = document.body.clientWidth || document.documentElement.clientWidth;
+      oH = document.body.clientHeight || document.documentElement.clientHeight;
+      dW = dom.clientWidth;
+      dH = dom.clientHeight;
+      console.log(oW, oH, dW, dH)
+      clearInterval(timer);
+      timer = setInterval(function () {
+        newLeft = dom.offsetLeft + speedX;
+        newTop = dom.offsetTop + speedY;
+        /* 向下碰撞 */
+        console.log(newTop, oH, dH, newTop >= oH - dH);
+        /* 优化 */
+        if (newTop >= oH - dH) {
+          speedY *= -1;
+          newTop = oH - dH;
+        }
+        if (newTop <= 0) {
+          speedY *= -1;
+          newTop = 0;
+        }
+        if (newLeft >= oW - dW) {
+          speedX *= -1;
+          newLeft = oW - dW;
+        }
+        if (newLeft <= 0) {
+          speedX *= -1;
+          newLeft = 0;
+        }
+
+        dom.style.top = newTop + 'px';
+        dom.style.left = newLeft + 'px';
+      }, 40);
+    }
+    /* 第三步，重力加速度 */
+    function startMove(dom) {
+      var speedX = 13,
+        speedY = 15,
+        newLeft = null,
+        newTop = null,
+        oW = document.body.clientWidth || document.documentElement.clientWidth,
+        oH = document.body.clientHeight || document.documentElement.clientHeight,
+        dW = dom.clientWidth,
+        dH = dom.clientHeight,
+        gravitySpd = 5, //重力
+        timer = null;
+      console.log(oW, oH, dW, dH)
+      clearInterval(timer);
+      timer = setInterval(function () {
+        /* 加速度 */
+        speedY += gravitySpd;
+        newLeft = dom.offsetLeft + speedX;
+        newTop = parseInt(dom.offsetTop + speedY);
+        /* 向下碰撞 */
+        console.log(newTop, oH, dH, newTop >= oH - dH);
+        /* 优化 */
+        if (newTop >= oH - dH) {
+          speedY *= -1;
+          newTop = oH - dH;
+        }
+        if (newTop <= 0) {
+          speedY *= -1;
+          newTop = 0;
+        }
+        if (newLeft >= oW - dW) {
+          speedX *= -1;
+          newLeft = oW - dW;
+        }
+        if (newLeft <= 0) {
+          speedX *= -1;
+          newLeft = 0;
+        }
+        /* 运动停止判断 */
+        dom.style.top = newTop + 'px';
+        dom.style.left = newLeft + 'px';
+      }, 40);
+    }
+    /* 第四步，能量损耗 */
+    function startMove(dom) {
+      var speedX = 13,
+        speedY = 15,
+        newLeft = null,
+        newTop = null,
+        oW = document.body.clientWidth || document.documentElement.clientWidth,
+        oH = document.body.clientHeight || document.documentElement.clientHeight,
+        dW = dom.clientWidth,
+        dH = dom.clientHeight,
+        gravitySpd = 5, //重力
+        wastage = 0.5, //能量损耗
+        timer = null;
+      console.log(oW, oH, dW, dH)
+      clearInterval(timer);
+      timer = setInterval(function () {
+        /* 加速度 */
+        speedY += gravitySpd;
+        newLeft = dom.offsetLeft + speedX;
+        newTop = parseInt(dom.offsetTop + speedY);
+        /* 向下碰撞 */
+        console.log(newTop, oH, dH, newTop >= oH - dH);
+        /* 优化 */
+        if (newTop >= oH - dH) {
+          speedY *= -1;
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newTop = oH - dH;
+        }
+        if (newTop <= 0) {
+          speedY *= -1;
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newTop = 0;
+        }
+        if (newLeft >= oW - dW) {
+          speedX *= -1;
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newLeft = oW - dW;
+        }
+        if (newLeft <= 0) {
+          speedX *= -1;
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newLeft = 0;
+        }
+        /* 运动停止判断 */
+        dom.style.top = newTop + 'px';
+        dom.style.left = newLeft + 'px';
+      }, 40);
+    }
+    /* 第五步，运动停止判断 - 清除定时器 */
+    function startMove(dom) {
+      var speedX = 13,
+        speedY = 15,
+        newLeft = null,
+        newTop = null,
+        oW = document.body.clientWidth || document.documentElement.clientWidth,
+        oH = document.body.clientHeight || document.documentElement.clientHeight,
+        dW = dom.clientWidth,
+        dH = dom.clientHeight,
+        gravitySpd = 5, //重力
+        wastage = 0.5, //能量损耗
+        timer = null;
+      console.log(oW, oH, dW, dH)
+      clearInterval(timer);
+      timer = setInterval(function () {
+        /* 加速度 */
+        speedY += gravitySpd;
+        newLeft = dom.offsetLeft + speedX;
+        newTop = parseInt(dom.offsetTop + speedY);
+        /* 向下碰撞 */
+        console.log(newTop, oH, dH, newTop >= oH - dH);
+        /* 优化 */
+        if (newTop >= oH - dH) {
+          speedY *= -1;
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newTop = oH - dH;
+        }
+        if (newTop <= 0) {
+          speedY *= -1;
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newTop = 0;
+        }
+        if (newLeft >= oW - dW) {
+          speedX *= -1;
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newLeft = oW - dW;
+        }
+        if (newLeft <= 0) {
+          speedX *= -1;
+          /* 碰撞发生时，加上能量损耗 */
+          speedX *= wastage;
+          speedY *= wastage;
+          newLeft = 0;
+        }
+        /* 运动停止判断 */
+        if(Math.abs(speedX) < 1){
+          speedX = 0;
+        }
+        if(Math.abs(speedY) < 1){
+          speedY = 0;
+        }
+        if(speedY == 0 && speedX == 0 && newTop == (oH - dH)){
+          clearInterval(timer)
+        }else{
+          dom.style.top = newTop + 'px';
+          dom.style.left = newLeft + 'px';
+        }
+      }, 40);
+    }
+  </script>
+</body>
+
+</html>

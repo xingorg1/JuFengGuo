@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>数组去重</title>
+</head>
+
+<body>
+  <div class="box clear">
+    <!-- <img src="../t017c093f6111764a16.jpg" alt=""> -->
+  </div>
+  <style>
+    .box {
+      padding: 20px;
+      background-color: brown;
+    }
+
+    .clear {
+      *zoom: 1;
+    }
+
+    .clear::after {
+      content: "";
+      clear: both;
+      display: block;
+      height: 0;
+      visibility: hidden;
+    }
+
+    img {
+      float: left;
+    }
+  </style>
+  <script>
+    // 简单而且可以加中文，但是兼容性不好，indexOF兼容到ie9
+    function uniq(arr) {
+      var temp = [];
+      for (let i = 0; i < arr.length; i++) {
+        if (temp.indexOf(arr[i]) == -1) {
+          temp.push(arr[i])
+        }
+      }
+      return temp;
+    }
+    // console.log(uniq([1, 2, 3, 2, 34, "a", "b", "a", 2, 5, 2, 62, ]));
+    // 排序后相邻去除法：简单，去重排序一起做。必须是纯数组
+    function uniq3(array) {
+      array.sort((a, b) => {
+        return a - b
+      });
+      var temp = [array[0]]; //关键点，先把第一个放进去
+      for (let i = 1; i < array.length; i++) { //i从1开始
+        if (array[i] !== temp[temp.length - 1]) {
+          temp.push(array[i])
+        }
+      }
+      return temp;
+    }
+    console.log(uniq3([1, 2, 1, 2, 12, 13, 235, 3])); // 缺点就是不能加入字符串
+    console.log(uniq3([1, 2, "b", 1, 2, 12, 13, 235, 3, "a"])); // 缺点就是不能加入字符串
+    /* 数组中字符串排序去重 */
+    function uniq4(array) {
+      array.sort((a, b) => {
+        return (a + '').charCodeAt() - (b + '').charCodeAt()
+      });
+      var temp = [array[0]]; //关键点，先把第一个放进去
+      for (let i = 1; i < array.length; i++) { //i从1开始
+        if (array[i] !== temp[temp.length - 1]) {
+          temp.push(array[i])
+        }
+      }
+      return temp;
+    }
+    console.log(uniq4(['w', 'a', "b", 'w', 'n', 's', 's', 'b', 'e', "a"])); // 缺点就是不能混入别的
+    /* 有问题再改改 */
+    function uniq2(arr) {
+      var temp = [],
+        obj = {},
+        objV,
+        objK,
+        val;
+      for (let i = 0; i < arr.length; i++) {
+        val = arr[i];
+        objK = typeof (val);
+        console.log(obj[val]);
+        if (!obj[val]) {
+          obj[val] = [objK];
+          console.log(obj)
+          temp.push(val);
+        } else if (obj[val].indexOf(objK) < 0) {
+          obj[val].push(objK);
+          console.log(obj)
+          temp.push(val)
+        }
+      }
+      return temp;
+    }
+    console.log(uniq2([1, 2, 4, "1", "2", "a", , 1, 26, 4, 2]));
+
+
+    console.log("++++++++++++++++++++++++++")
+    /*
+     * @Author: @Guojufeng 
+     * @Date: 2018-11-05 09:35:14 
+     * @Last Modified by: @Guojufeng
+     * @Last Modified time: 2019-05-19 13:46:33
+     * 数组去重
+     */
+    // 思路 准备一个对象，循环数组时，将数组的值当做对象的键，且对应值为true/1皆可，然后每次拿数组的下一个值都去判断一下对象中是否有这个值，没有再push到新数组中去，最后返回新数组。
+    function uniqArr(arr, sort = false) {
+      var obj = {},
+        newArr = [];
+      obj[arr[0]] = true;
+      newArr.push(arr[0]);
+      arr.forEach((element) => {
+        if (!obj[element]) {
+          obj[element] = true;
+          newArr.push(element);
+        }
+      });
+      if (sort) {
+        // 执行排序
+        console.log([].slice.call(obj))
+      }
+      return newArr;
+    }
+    console.log(uniqArr([1, 2, 23, 1, 35, 1, 6, 34]))
+    console.log(uniqArr([1, 2, 23, 1, "gjf", 1, 6, "gjf", "gfj"]))
+
+    var uniqArr05 = function (arr) {
+      var arr = Array.prototype.slice.call(arr), //这里防止伪数组，容错
+        obj = {},
+        newArr = [];
+      obj[arr[0]] = true; //这里没必要
+      newArr.push(arr[0]);
+      arr.forEach((el) => {
+        if (!obj[el]) {
+          obj[el] = true; //这里写成true，if里少一步隐式转换
+          newArr.push(el);
+        }
+      });
+      return newArr;
+    }
+    let newArr5 = uniqArr05([1, 2, 23, 1, "gjf", 1, 6, "gjf", "gfj"]);
+    console.log(newArr5)
+    // 一行代码去重
+    let newArr = [...new Set([1, 2, 23, 1, "gjf", 1, 6, "gjf", "gfj"])]
+    console.log(newArr);
+    // const n = Array.from.call(new Set(this))
+
+    // 20190517 解决去重的缺点问题
+    var arr20190517 = [1, 2, 1, 3, 'a', 'd', 'a', {
+        name: 1,
+        age: undefined
+      }, 'a', {
+        name: 1,
+        age: undefined
+      },
+      [1, 23, 4],
+      undefined,
+      [3, 4],
+      new Date(2019 / 05 / 17),
+      [1, 23, 4],
+      new Date(2019 / 05 / 17),
+      new RegExp('\w', 'i'),
+      function a() {},
+      function a() {},
+      new RegExp('\w', 'i'),
+      undefined,
+      {
+        name: 'xing.org1',
+        age: 18
+      },
+      null,
+      1, 3,
+    ];
+    console.log();
+    // 目标：去掉重复的对象和数组以及其他原始值，但是保留不同的对象和数组.
+    // 因为数组在obj的中括号[]里进行toString后是字符串'1,2,3'这样，所以可以比较不同。但是对象不行。需要对对象进行处理：
+    function uniq0517(arr) {
+      var obj = {},
+        rst = [],
+        tempEl = '';
+      arr.forEach(el => {
+        if (Object.prototype.toString.call(el) === '[object Object]') {
+          // 证明这个值是一个对象，就事先将对象字符串化。而不是让他调用自己的toString
+          tempEl = JSON.stringify(el);
+        } else {
+          tempEl = el;
+        }
+        if (!obj[tempEl]) {
+          obj[tempEl] = true;
+          rst.push(el);
+        }
+      });
+      console.log(obj);
+      return rst;
+    }
+    console.log(arr20190517, '实验结果： ', uniq0517(arr20190517))
+
+    function uni10519Map(arr) {
+      // 用Map实现去重  - 但凡引用值都不能去重
+      let map = new Map(),
+        rst = [];
+      arr.forEach(el => {
+        if (!map.get(el)) { // 已有的一个对象再获取，因为地址不同，所以得到false
+          map.set(el, true);
+          rst.push(el);
+        }
+      });
+      console.log(map);
+      return rst;
+    }
+    console.log('map试水失败', uni10519Map(arr20190517));
+
+    function uni10519Set(arr) {
+      // 用Set实现去重  
+      return [...new Set(arr)];
+    }
+    console.log('set试水失败', uni10519Set(arr20190517));
+
+    Array.prototype.uniq20190525 = function () {
+      var obj = {},
+        rst = [],
+        tempEl = '',
+        objNum = 0;
+      this.forEach(el => {
+        if (Object.prototype.toString.call(el) === '[object Object]') {
+          tempEl = JSON.stringify(el) + objNum++;
+          console.log(tempEl)
+        } else {
+          tempEl = el;
+        }
+        if (!obj[tempEl]) {
+          obj[tempEl] = true;
+          rst.push(el);
+        }
+      });
+      return rst;
+    }
+    let arr20190525 = [false, true, undefined, null, NaN, 0, 1, {}, {}, 'a', 'a', NaN];
+    console.log('封装去重',arr20190525.uniq20190525())
+  </script>
+</body>
+
+</html>

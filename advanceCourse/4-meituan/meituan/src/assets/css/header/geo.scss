@@ -1,0 +1,52 @@
+@import '../var';
+.geo{
+  padding-top: 10px;
+  
+  .geo-left{
+
+  }
+  .geo-site{
+    color: $c9;
+    font-size: 12px;
+    .el-icon-location{
+      padding-top: 2px;
+      font-size: 14px;
+      transform: translateY(-2px) scaleY(1.1) scaleX(0.9) translateZ(0);
+    }
+    span.el-link--inner{
+      margin: 0;
+      color: $c6;
+    }
+  }
+  .change-city{
+    font-size: 12px;
+    margin: 0 10px;
+    background: #F4F4F4;
+    border: 1px solid #E5E5E5;
+    border-radius: 2px;
+    margin: 0 4px;
+    padding: 0 2px;
+    .el-link--inner{
+      color: $c6;
+      &:hover{
+        color: $mainClr;
+        text-decoration: none;
+      }
+    }
+  }
+  .geo-link{
+    color: $c9;
+    a{
+      margin-top: -2px;
+      padding: 0 4px;
+    }
+  }
+  .geo-right{
+    .el-link.el-link--primary{
+      span{
+        color: $mainClr;
+        margin-right: 10px;
+      }
+    }
+  }
+}

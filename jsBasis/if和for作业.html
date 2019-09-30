@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>if+for</title>
+</head>
+
+<body>
+  <h1>
+    2的
+    <span id="input1"></span>
+    次幂等于
+    <span id="input2"></span>
+  </h1>
+  <p>随便打</p>
+  <script defer="defer" async>
+    /* 计算2的n次幂，n可输入，n为自然数 */
+    function work1(n) {
+      var count = 2;
+      var str = "2的" + n + "次方：2"
+      for (var i = 0; i < n - 1; i++) {
+        count *= 2;
+        str += "*2"
+      }
+      console.log(str, '结果是:');
+      console.log(count);
+      document.getElementById('input1').innerText = n;
+      document.getElementById('input2').innerText = count;
+      return count;
+    }
+    // work1(parseInt(window.prompt('请输入你要计算的几次幂')))
+    /* 计算n的阶乘 */
+    function work2(n) {
+      // 规律分析
+      // 2 1*2
+      // 3 1*2*3
+      // 4 1*2*3*4
+      if (typeof (n) !== 'number') {
+        alert("请输入自然数")
+      }
+      var count = 1,
+        str = n + "的阶乘：";
+      for (var i = 1; i <= n; i++) {
+        count *= i;
+        if (i === n) {
+          str += i;
+        } else {
+          str += i + '*';
+        }
+      }
+
+      /* 
+      for(var i = n; i > 0; i--){
+        count *= n; 
+      }
+      */
+      console.log(str, '结果是:')
+      console.log(count)
+    }
+    // work2(Number(window.prompt('输入n求其阶乘：')));
+    /* 斐波那契额数列 */
+    function work3(n) {
+      // 规律分析：
+      // 求第3项 1 + 1 = 2;
+      // 求第4项 1 + 2 = 3;
+      // 求第5项 2 + 3 = 5;
+      // 求第6项 3 + 5 = 8;
+      // 求第7项 5 + 8 = 13;
+      // 总结： 前两项之和相加得当前项。
+      var a = 1,
+        b = 1,
+        str = "1-1-",
+        sum = 0;
+      for (var i = 0; i < (n - 2); i++) {
+        if (i % 2 === 0) { //交替更新a、b的值
+          a = a + b; // 比如得出第三项
+          sum = a;
+        } else {
+          b = a + b; // 第三项+第二项
+          sum = b;
+        }
+        if (n < 2) {
+          sum = 1;
+        }
+        str += sum + '-';
+        console.log(str, "求第" + n + "项得结果是：", sum);
+      }
+    }
+    // work3(parseInt(window.prompt("输入要求斐波那契额的第n项")))
+
+    function work4(type, num) {
+      /* 输入一个三位数的正整数，输出时反向输出。几种方式 */
+      if (num.length > 3) {
+        alert("请输入三位数的")
+      }
+      var a = b = c = "",//这里，其实b和c属于全局作用域window的属性
+        count = "";
+      if (type == 1) {
+        // 第一种方法
+        a = parseInt(num / 100) + "";
+        b = parseInt((num % 100) / 10) + "";
+        c = parseInt(num % 10) + "";
+        count = c + b + a;
+      } else if (type === 2) {
+        // console.log(num.split("").reverse())
+        var array = num.split("").reverse();
+        for (let i = 0; i < array.length; i++) {
+          count += array[i] + '';
+        }
+      }
+      console.log(count)
+      console.log(num + '取反为：' + count)
+    }
+    work4(1, window.prompt("输入要取反的数字："))
+    // work4(2, window.prompt("输入要取反的数字："))
+
+    function work5() {
+      /* 找出三个中最大的 */
+      var a = window.prompt("输入第一个值")
+      var b = window.prompt("输入第二个值")
+      var c = window.prompt("输入第三个值")
+      if (a > b) {
+        if (a > c) {
+          console.log("最大值为" + a);
+        }
+      } else {
+        if (b > c) {
+          console.log("最大值为" + b)
+        } else {
+          console.log("最大值为" + c)
+        }
+      }
+    }
+    // work5();
+
+    function work6() {
+      /* 打印0-100以内的质数（大于1的自然数，只能被1和自身整除的数，不能整除其他自然数） */
+      var i = 1,
+        count = 0,
+        str = [];
+      for (; i <= 100;) {
+        for (var j = 1; j <= i; j++) {
+          if (i % j == 0) {
+            count++;
+          }
+        }
+        if (count == 2) {
+          str.push(i);
+        }
+        count = 0;
+        i++;
+      }
+      console.log("0-100以内的质数有：",str)
+    }
+    work6();
+
+    function sortUP(a, b) {
+      return a - b
+    }
+
+    function sortDOWN(a, b) {
+
+      return -a + b
+    }
+
+    function work7() {
+      /* 面试题：找出一堆数组中第二大的值 */
+      // 思路就是：给数组排序，然后正序取倒数第二个，倒序取第二个数
+      var arr = [24, 34, 16, 785, 23, 83];
+      console.log(arr.sort(sortUP));
+      console.log(arr.sort(sortDOWN));
+      console.log("第二大的数：", arr.sort(sortDOWN)[1])
+    }
+    work7()
+  </script>
+</body>
+
+</html>

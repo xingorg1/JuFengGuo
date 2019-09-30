@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>自定义指令</title>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <div id="app">
+    <input type="text" v-splice:31.number='inputVal'>
+    <div>绑定内容：{{ inputVal }}</div>
+  </div>
+  <script>
+    // 功能应用 - 截取五位，只能填数字，双向绑定，初始化聚焦功能
+    function sliceStr(el, bindings, vnode){
+      let oldVal = vnode.context.inputVal;
+      if(bindings.modifiers.number){
+        oldVal = oldVal.match(/[0-9]+/g);
+        console.log(oldVal.join(''))
+        oldVal = oldVal === null ? '' : oldVal.join('');
+      }
+      let spliceVal = oldVal.slice(0, bindings.arg || 5)//(0,5);
+      vnode.context.inputVal = spliceVal;
+      el.value = spliceVal;
+      return spliceVal;
+    }
+    /* Vue.directive('splice', {
+      bind (el, bindings, vnode) {
+        // 指令绑定到input上时，更新input的value为变量值，并给input绑定输入事件
+        sliceStr(el, bindings, vnode);
+        el.oninput = function(){
+          // 每次输入内容，div绑定内容也开始变化
+          vnode.context.inputVal = el.value;
+        }
+      },
+      update(el, bindings, vnode){
+        // 更改inputVal的时候更新input的值（虚拟dom更新时即div绑定内容那里也会更新，所以会触发update，此时再将input的value更新一下。）
+        sliceStr(el, bindings, vnode);
+      },
+      inserted(el, bindings, vnode){
+        el.focus();
+      },
+    }); */
+
+
+    // 全局自定义指令
+    /* Vue.directive('splice',(el, bindings, vnode)=>{
+      console.log(el)
+      console.log(bindings)
+      console.log(vnode)
+    }); */
+    /* Vue.directive('splice', {
+      bind (el, bindings, vnode) {
+        // 只执行一次，当把指令绑定给dom元素的时候执行一次。
+      },
+      update(el, bindings, vnode){
+        // 当虚拟DOM更新、重新渲染的时候才会执行
+        // 即当所涉及的数据（本例中的inputVal）更新的时候就会触发update一次
+      },
+      inserted(el, bindings, vnode){
+        // 当指令绑定的标签元素被插入到页面中时会执行。可以做聚焦功能
+        el.focus()
+      },
+      // othersFunction...
+    }); */
+
+
+    const vm = new Vue({
+      el: '#app',
+      directives: {
+        'otherDir': (el, bindings, vnode)=>{
+          // 函数形式
+        },
+        'splice':  {//对象
+          bind (el, bindings, vnode) {
+            // 指令绑定到input上时，更新input的value为变量值，并给input绑定输入事件
+            sliceStr(el, bindings, vnode);
+            el.oninput = function(){
+              // 每次输入内容，div绑定内容也开始变化
+              vnode.context.inputVal = el.value;
+            }
+          },
+          update(el, bindings, vnode){
+            // 更改inputVal的时候更新input的值（虚拟dom更新时即div绑定内容那里也会更新，所以会触发update，此时再将input的value更新一下。）
+            sliceStr(el, bindings, vnode);
+          },
+          inserted(el, bindings, vnode){
+            el.focus();
+          },
+        }
+      },
+      data: {
+        inputVal: '默1认1值只5位'
+      },
+      methods: {
+
+      }
+    })
+  </script>
+</body>
+
+</html>

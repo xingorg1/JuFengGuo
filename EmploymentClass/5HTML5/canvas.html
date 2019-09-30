@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>canvas</title>
+  <style>
+    canvas{
+      background: #edf;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="myCan" width="450px" height="300px"></canvas>
+  <h3>纹理填充</h3>
+  <canvas id="can2"></canvas>
+  <script>
+    var myCan = document.getElementById('myCan');
+    var ctx = myCan.getContext('2d');
+    ctx.moveTo(100, 110);
+    ctx.arcTo(100, 200, 200, 200, 10); //前俩值是目标点
+    ctx.arcTo(200, 200, 200, 100, 10); //3、4值是圆角的拐向
+    ctx.arcTo(200, 100, 100, 100, 10);
+    ctx.arcTo(100, 100, 100, 200, 10);
+    ctx.fillStyle = "rgba(255,12,32,0.6)";
+    ctx.fill();
+    ctx.stroke();
+  </script>
+  <script>
+    // 纹理填充
+    var myCan2 = document.getElementById('can2');
+    myCan2.width = 450;
+    myCan2.height = 300;
+    var ctx2 = myCan2.getContext('2d');
+    ctx2.beginPath();
+    var img = new Image(50,120);
+    img.src = './demo.png';
+    img.onload = function(){
+      // img.width = 50;
+      // img.height = '50px';//设置尺寸不起作用
+      // 忘了这句的中转
+      var bg = ctx2.createPattern(img, 'no-repeat');//设置填充的图片和填充方式
+      // ctx2.fillStyle = img;//这里写错了
+      ctx2.fillStyle = bg;
+      ctx2.fillRect(100,100,450,300);
+    }
+  </script>
+  <script>
+    // 设置绘制的起点 - 通过改变坐标系的圆点实现
+    var myCan2 = document.getElementById('can2');
+    myCan2.width = 450;
+    myCan2.height = 300;
+    var ctx2 = myCan2.getContext('2d');
+    ctx2.beginPath();
+    var img = new Image(50,120);
+    img.src = './demo.png';
+    img.onload = function(){
+      ctx2.translate(100,100)
+      var bg = ctx2.createPattern(img, 'no-repeat');
+      ctx2.fillStyle = bg;
+      ctx2.fillRect(0,0,450,300);
+    }
+  </script>
+  <script>
+    var img2 = new Image();
+    img2.src = './demo.png';
+    img2.onload = function(){
+      img2.width = 50;
+      img2.height = 50;
+      document.body.appendChild(img2);
+    }
+  </script>
+</body>
+
+</html>

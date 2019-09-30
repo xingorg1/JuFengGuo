@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>3d旋转照片墙</title>
+  <style>
+    :root{
+      height: 100%;
+    }
+    body {
+      perspective: 800px;
+      transform-style: preserve-3d;
+      height: 100%;
+    }
+
+    .box {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      width: 300px;
+      height: 150px;
+      margin: auto;
+      /* position: relative; */
+      /* perspective: 800px; */
+      perspective-origin: 50% -40px;
+      transform-style: preserve-3d;
+      /* transition: all 4s linear; */
+      transform: rotateY(0deg);
+      animation: rotate 15s linear infinite;
+    }
+
+    /* .box:hover{
+      transform: rotateY(360deg);
+    } */
+    @keyframes rotate {
+      0% {
+        transform: rotateY(0deg);
+      }
+
+      100% {
+        transform: rotateY(-360deg);
+      }
+    }
+
+    .pic {
+      position: absolute;
+      width: 300px;
+      height: 150px;
+      background: url(./bdImg.jpg) no-repeat;
+      background-size: 100% auto;
+      text-indent: -9999px;
+      /* backface-visibility: hidden;设置图片的背面隐藏，用在图片上，我这个背景图没起作用 */
+    }
+
+    .pic:nth-child(odd) {
+      background: url(./bgImg2.jpg) no-repeat;
+      background-size: 100% auto;
+    }
+
+    .pic1 {
+      transform: translatez(300px);
+    }
+
+    .pic2 {
+      transform: rotateY(60deg) translatez(300px);
+    }
+
+    .pic3 {
+      transform: rotateY(120deg) translatez(300px);
+    }
+
+    .pic4 {
+      transform: rotateY(180deg) translatez(300px);
+    }
+
+    .pic5 {
+      transform: rotateY(240deg) translatez(300px);
+    }
+
+    .pic6 {
+      transform: rotateY(300deg) translatez(300px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box" id="box">
+    <div class="pic pic1">图1</div>
+    <div class="pic pic2">图2</div>
+    <div class="pic pic3">图3</div>
+    <div class="pic pic4">图4</div>
+    <div class="pic pic5">图5</div>
+    <div class="pic pic6">图6</div>
+  </div>
+  <script>
+    var box = document.getElementById('box');
+    document.body.onmousemove = function(e){
+      console.log(e.pageX + 'px ' + e.pageY + 'px')
+      document.body.style.webkitPerspectiveOrigin = e.pageX + 'px ' + e.pageY + 'px';
+      document.body.style.perspectiveOrigin = e.pageX + 'px ' + e.pageY + 'px';
+    }
+  </script>
+</body>
+
+</html>

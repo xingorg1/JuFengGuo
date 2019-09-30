@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 1000px;
+    }
+
+    ul,
+    li {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .kpi-header {
+      background: #def;
+      height: 45px;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .kpi-header ul {
+      min-width: 100%;
+      padding: 0 20px;
+      padding-right: 0;
+      height: 45px;
+      /* overflow: hidden; */
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .kpi-header li {
+      float: left;
+      white-space: nowrap;
+      background: #edf;
+      border-radius: 15px;
+      padding: 3px 8px;
+      margin-right: 20px;
+    }
+
+    .demo {
+      background: tomato;
+      height: 300px;
+      width: 300px;
+
+    }
+
+    .fa1 {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+
+    .fa2 {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate3d(-50%, -50%, 0)
+    }
+
+    .fa3 {
+      display: inline-block;
+      vertical-align: middle;
+      /* vertical-align:  */
+    }
+
+    body {
+      text-align: center;
+    }
+
+    body::after {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      height: 100%;
+    }
+
+    .fa4 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .fa5 {
+      /* table */
+    }
+
+    .fa6 {
+      /* display: table-cell; */
+    }
+  </style>
+</head>
+
+<body>
+  <header class="kpi-header">
+    <ul>
+      <li>二字</li>
+      <li>三个字</li>
+      <li>加li也不怕</li>
+    </ul>
+  </header>
+  <span class="demo fa1">
+    不定宽高水平垂直居中
+  </span>
+  <script>
+   
+    var user = 'window';
+    function myUser(){
+      user = 'myUser';
+      return;
+      function user(){
+        console.log('myUser Function');
+      }
+    }
+    myUser();
+    console.log(user)
+
+    // 冒泡排序
+    var arr = [38,1, 32, 62, 23,  17,];
+    function sort(arr) {
+      for (let i = 0; i < arr.length - 1; i++) {
+        // console.log(i,'-', arr[i],arr);
+        for (let j = 0; j < arr.length - 1 - i; j++) {//-i是为了后边已经排好序的不用再进行循环比对了
+          // console.log('-', arr[j], arr[j + 1], arr[j] > arr[j + 1]);
+          var temp = null;
+          if (arr[j] > arr[j + 1]) {
+            temp = arr[j];
+            arr[j] = arr[j + 1];
+            arr[j + 1] = temp;
+          }
+        }
+      }
+    }
+    sort(arr);
+    console.log(arr);
+
+    // 深拷贝（递归拷贝）、浅拷贝（只拷贝引用类型的一层）
+    var arr = [
+      'a',[1,2],{
+        name: 'b',
+        hobby: {
+          name: 'basketball'
+        }
+      },
+      3,
+      undefined
+    ];
+    var arr2 = copyData(arr);
+    console.log(arr,arr2)
+    arr2[2].hobby.name+= 'HHH'
+    arr[1].unshift('hhh')
+    console.log(arr,arr2)
+
+    function copyData(data){
+      let type = getType(data)
+      let result = null;
+      if(type == 'array'){
+        result = []; 
+        data.forEach(el => {
+          result.push(copyData(el))
+        });
+      }else if(type == 'object'){
+        result = {};
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            result[key] = copyData(data[key]);
+          }
+        }
+      }else{
+        result = data;
+      }
+      return result;
+    }
+    function getType(data){
+      if(data === null){
+        return null;
+      }
+      let result = typeof data;
+      if(result == 'object'){
+        let type = Object.prototype.toString.call(data);
+        if(type == '[object Object]'){
+          return 'object';
+        }else if(type == '[object Array]'){
+          return 'array'
+        }
+      }else{
+        return result;
+      }
+    }
+
+    // if+function
+    if(false){
+      var b = 12;
+      function a(){
+        console.log(a)
+      }
+    }
+    console.log(a,b);
+    // console.log(c);
+    // a();
+
+    function ha(name){
+      this.name  = name;
+      age: 12;
+    }
+    let obj = new ha('heheha');
+    console.log(obj,ha)
+  </script>
+</body>
+
+</html>

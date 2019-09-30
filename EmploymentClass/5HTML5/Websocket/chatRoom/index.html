@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>小石头的群聊</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div class="container">
+    <input type="text" placeholder="请输入要发送的内容" id="ipt">
+    <button id="btn">发送</button>
+    <button id="closeBtn">退出群聊</button>
+    <p>
+      群聊内容如下：
+    </p>
+    <div id="rst"></div>
+  </div>
+  <script>
+    // 聊天室功能
+    const ws = new WebSocket('ws://localhost:8081'),
+      ipt = document.getElementById('ipt'),
+      btn = document.getElementById('btn'),
+      closeBtn = document.getElementById('closeBtn'),
+      content = document.getElementById('rst');
+
+    // 初次进入聊天室，给个提醒
+    ws.addEventListener('open', (e) => {
+      console.log('加入聊天室成功', e);
+      content.appendChild(creatEle('您已成功加入小石头的群聊~'));
+      // 聊天区滚动到底
+      goBottom();
+    });
+
+    // 接收ws服务器发送的消息，并展示到div#rst当中
+    ws.addEventListener('message', (e) => {
+      console.log(e.data);
+      content.appendChild(creatEle(e.data));
+      goBottom();
+    });
+    // 一个带滚动条的DIV元素,怎么让它的滚动条位置默认保持在最底部?
+    function goBottom(){
+      content.scrollTop = content.scrollHeight;
+    }
+
+    // btn被点击时发送请求
+    btn.onclick = function () {
+      btnClickEvent();
+    }
+    ipt.addEventListener('keydown',(e)=>{
+      if(e.keyCode ===13){
+        btnClickEvent();
+      }
+    });
+    
+    // close-btn被点击时退出群聊
+    closeBtn.onclick = function () {
+      ws.close();
+    }
+
+    // 创建一个p标签，存储对应内容，以追加到内容展示区域
+    function creatEle(str) {
+      console.log(str.indexOf('{'));
+      const TYPE_LEAVE = 0; //leave,离开
+      const TYPE_ENTRY = 1; //entry,进入
+      const TYPE_SPEAK = 2; //speak,发言
+      const eleP = document.createElement('p');
+
+      if (str.indexOf('{') == 0) {
+        let parseStr = JSON.parse(str);
+        eleP.innerHTML = `<span class="timer">${parseStr.time}</span><br/><span class="msg">${parseStr.msg}</span>`;
+        switch (parseStr.type) {
+          case TYPE_LEAVE:
+            eleP.className = 'leave';
+            break;
+          case TYPE_ENTRY:
+            eleP.className = 'entry';
+            break;
+          case TYPE_SPEAK:
+            eleP.className = 'speek';
+            break;
+          default:
+            eleP.className = 'default';
+            break;
+        }
+      } else {
+        eleP.innerText = str;
+      }
+      return eleP;
+    }
+    // 添加回车发送消息事件
+    function btnClickEvent(){
+      if (ipt.value.length <= 0) {
+        alert('不能发送空消息');
+        return;
+      }
+      ws.send(ipt.value);
+      ipt.value = '';
+    }
+    
+  </script>
+
+</body>
+
+</html>

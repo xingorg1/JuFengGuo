@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+
+<body>
+	<script>
+		/*
+隐式转布尔值出现场景
+	1、取反运算
+		1、1个叹号表示，把这个数据转成布尔值后取它的反值
+		2、2个叹号表示，把这个数据转成布尔值
+	2、三目运算符
+	3、条件语句的小括号里
+	4、逻辑运算符 
+			*/
+		var data = [10, 'kaivon', true, null, undefined, function () {}, {
+				a: 12
+			},
+			[0, 1]
+		];
+		for (var i = 0; i < data.length; i++) {
+			//console.log(!data[i]);
+			//console.log(!!data[i]);
+			// console.log(data[i]?20:30);
+			if (data[i]) {
+				console.log(data[i]);
+			}
+		}
+
+		var a = [0];
+		if ([0]) {
+			console.log(a == true); //false
+		} else {
+			console.log('kaivon');
+		}
+	</script>
+</body>
+
+</html>

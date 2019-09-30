@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script>
+			/* 
+大小比较
+	1、如果比较两个字符串，那会对比它们各自对应的Unicode码值
+		Unicode码值查询地址 http://tool.oschina.net/encode
+	2、如果比较两边都为原始类型数据，那把所有数据转成数字进行对比
+		NaN与任何数据对比都是false
+	3、有对象数据的比较，先调用valueOf再调用toString方法，然后看另一数据的类型，如果另一个数据为字符串，则转为字符串对比，如果另一个数据为数字则转为数字对比
+
+
+总结：
+	1、字符串与字符串、字符串与对象、对象与对象比较时，都会转成字符串，然后对比Unicode码值
+	2、其它类型数据，转成数字对比
+			*/
+
+
+
+
+
+
+			console.log(
+				'A'>'a',				 		//false 65>97
+				'大'>'小',					 //false	22823>23567
+
+				true>false,					//true  1 > 0
+				'k'>5,							//false	NaN > 5
+				undefined>false,		//false	NaN > 0
+				null >= '',					//true	0>=0	
+
+				[]>0,								//false	0>0
+				{}>1,								//false	NaN > 1 (Number({}) = NaN)
+				{}>true,						//false	NaN
+				{}>'[',							//true '[object Object]'>[		91>91
+
+				{a:12}<function(){},//true '[object Object]'<'function(){}'	91<102
+			);
+
+
+			//console.log(1+ +'2')
+			//'1'+   +2
+		</script>
+	</body>
+</html>

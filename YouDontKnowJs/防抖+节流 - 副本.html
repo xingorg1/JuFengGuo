@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>防抖、节流</title>
+</head>
+
+<body>
+  <h1>防抖</h1>
+  <div>
+    <label for="debounce">防抖测试</label>
+    <input type="text" id="debounce">
+  </div>
+  <script>
+    var input2 = document.getElementById('debounce');
+
+
+    function debounce(fn, delay) {
+      /* 新版 -- 防抖 - 支持用户传入自定义参数 */
+      // 拿到防抖函数后边的所有参数
+      var _args1 = Array.prototype.slice.call(arguments,2);
+      console.log('用户传入的目标函数fn需要用到的参数',_args1);
+      var timer = null;
+      return function (e) {
+        console.log('系统自动给我们加的事件对象(e)参数',arguments);
+        // 合并当前函数中系统自动给我们加的事件对象(e)参数、和之前用户传入的目标函数fn需要用到的参数
+        var _args2 = Array.prototype.concat.call(Array.prototype.slice.call(arguments),_args1);
+        clearTimeout(timer); 
+        timer = setTimeout(() => {
+          // 把新的组合好的参数传给目标函数fn，用户执行的时候第一个参数是事件对象，之后的是自定义需要的参数
+          console.log('组合好的参数', _args2);
+          fn.apply(this, _args2);
+        }, delay);
+      }
+    }
+    // 运行示例
+    function getAjax(e,a) {
+      // 执行函数（我的目标函数，想往里边传参数，比如这个a）
+      console.log('最终传参结果：',e,a)//打印出事件对象e 和 参数a
+      console.log(this.value);
+    }
+    input2.onkeyup = debounce(getAjax, 1000,'A');
+  </script>
+
+</body>
+
+</html>
