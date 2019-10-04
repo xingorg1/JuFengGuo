@@ -1,0 +1,103 @@
+.baiduSearch {
+  text-align: center;
+}
+
+.baiduSearch ul,
+.baiduSearch li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.baiduSearch .wrapper{
+  width: 400px;
+  margin: 0 auto 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  text-align: left;
+}
+.baiduSearch h4{
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+.baiduSearch .change {
+  float: right;
+  color: #1af;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.baiduSearch .list {
+
+}
+
+.baiduSearch .item {
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.baiduSearch .item:last-child {
+  border-bottom: none;
+}
+
+
+.baiduSearch .link {
+  text-decoration: none;
+  color: #333;
+}
+
+.baiduSearch .number {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  color: #fff;
+  background-color: #1af;
+  border-radius: 3px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: 2px;
+}
+.baiduSearch .one .number{
+  background-color: #ff3434;
+}
+.baiduSearch .two .number{
+  background-color: #ff864c;
+}
+.baiduSearch .three .number{
+  background-color: #ffb74c;
+}
+.baiduSearch .tag {
+  padding: 2px;
+  margin-left: 3px;
+  color: #fff;
+  background-color: tomato;
+  border-radius: 3px;
+  font-size: 12px;
+  vertical-align: 2px;
+}
+
+.baiduSearch .total {
+  float: right;
+}
+
+.baiduSearch-logo {
+  height: 40vmin;
+}
+
+.baiduSearch-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.baiduSearch-link {
+  color: #09d3ac;
+}

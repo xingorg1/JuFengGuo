@@ -35,7 +35,7 @@ let App = React.createElement('div', {
 }, React.createElement('h3', {
   className: 'love_china',
   data_id: "2019/10/01"
-}, '此生无悔入华夏，来世还生中华家！'), '祖国母亲生日快乐！')
+}, '此生无悔入华夏，来世还生中华家！'), React.createElement('p', null, '2019/10/10'), '祖国母亲生日快乐！')
 
 /* 重写render函数 */
 const gjfRender = function (vNode, container) {
