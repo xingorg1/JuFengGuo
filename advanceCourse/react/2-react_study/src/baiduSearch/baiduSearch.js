@@ -2,7 +2,10 @@ import React,{ Fragment } from 'react';
 import './baiduSearch.css';
 import data from './data.json'
 import HotList from '../components/HotList'
+import TodoList from '../components/TodoList/TodoList'
+
 console.log(data)
+console.log(TodoList)
 
 // React.Fragment标签
 // function App() {
@@ -119,6 +122,7 @@ function App() {
         </div>
       </div>
       <HotList listData={ data } testData={ data2 }></HotList>
+      <TodoList></TodoList>
     </Fragment>
   );
 }
