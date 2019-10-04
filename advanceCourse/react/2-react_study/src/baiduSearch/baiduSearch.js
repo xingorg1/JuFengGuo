@@ -1,6 +1,7 @@
 import React,{ Fragment } from 'react';
 import './baiduSearch.css';
 import data from './data.json'
+import HotList from '../components/HotList'
 console.log(data)
 
 // React.Fragment标签
@@ -46,9 +47,19 @@ function test2(){
   console.log(mySelf);
   // return 2 + 2
 }
+var data2 = {
+  name: '测试数据',
+  target: '函数组件传参'
+}
+function Component(){
+  return <div className="comp">我是一个函数组件</div>
+  // return '函数组件里不返回jsx会怎样'
+}
 function App() {
   return (
     <Fragment>
+      <Component className="area">里边还能写什么吗</Component>
+      { Component() }
       <div style={ {padding: '20px', background: "#efe" } }>
         <h3 style={ {borderBottom: '1px solid #999', paddingBottom: '10px'} }>试试JSX里的js语法，花括号里都可以写啥</h3>
         <p>
@@ -107,6 +118,7 @@ function App() {
           </ul>
         </div>
       </div>
+      <HotList listData={ data } testData={ data2 }></HotList>
     </Fragment>
   );
 }
