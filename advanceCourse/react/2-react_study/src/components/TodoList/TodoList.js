@@ -2,7 +2,7 @@ import React from 'react'
 import './TodoList.css'
 const { log } = console;
 class TodoList extends React.Component {
-  handleChange = this.handleChange.bind(this)
+  // handleChange = this.handleChange.bind(this)
   constructor(){
     super();
     // 状态：组件内部要使用的数据称之为状态。
@@ -20,7 +20,8 @@ class TodoList extends React.Component {
         <input 
           type="text" 
           value={ this.state.inputVal } 
-          onChange= { this.handleChange.bind(this) }
+          // onChange= { this.handleChange.bind(this) }
+          onChange= { this.handleChange }
           placeholder="添加代办项"/>
         <button
           onClick={ this.handleClick.bind(this) }
@@ -32,7 +33,8 @@ class TodoList extends React.Component {
               return <li key={ el+"todolist" }> 第 { el } 项  
                         <span 
                           className="del" 
-                          onClick={ this.handleDelete.bind(this,i) }
+                          // onClick={ this.handleDelete.bind(this,i) }
+                          onClick={ ()=>{ this.handleDelete(i) } }
                         >X</span>
                       </li>
             })
@@ -45,7 +47,8 @@ class TodoList extends React.Component {
   };
 
   /* 类里边的方法 */
-  handleChange(e){
+  // handleChange(e) {
+  handleChange = (e) => {
     // 输入
     // log(this) // 默认，this指向undefined
     // log(e, e.target.value)
@@ -65,26 +68,24 @@ class TodoList extends React.Component {
     }
   }
 
-  handleDelete(index){
+  // handleDelete(index) {
+  handleDelete = (index) => {
     // 删除
-    log(index)
     var newList = [...this.state.list];
     newList.splice(index,1);
-    log(newList)
-    if(this.state.inputVal){
-      this.setState({
-        list: [...newList]
-      })
-    }
-    // 老师的
-    /* var list = this.state.list;
-    list.splice(index,1);
-    log(list)
-    if(this.state.inputVal){
+    // log(index,newList)
+    this.setState({
+      list: newList
+    })
+    /* 
+      // 老师的
+      var list = this.state.list;
+      list.splice(index,1);
+      log(list)
       this.setState({
         list
       })
-    } */
+    */
   }
 }
 
