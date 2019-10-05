@@ -1,3 +1,4 @@
+/* 函数组件应用 */
 import React from 'react'
 
 function HotList(props){

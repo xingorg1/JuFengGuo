@@ -15,14 +15,15 @@ class TodoList extends React.Component {
   
   render(){
     let todoList = <>
-      <h3>我是类组件 - TodoList</h3>
-      <div className="form">
+      <h3>TodoList（类组件应用）</h3>
+      <div className="form wrapper">
         <input 
           type="text" 
           value={ this.state.inputVal } 
           // onChange= { this.handleChange.bind(this) }
           onChange= { this.handleChange }
-          placeholder="添加代办项"/>
+          placeholder="添加代办项"
+          style={ {marginBottom: '10px'} }/>
         <button
           onClick={ this.handleClick.bind(this) }
         >添加</button>

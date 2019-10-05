@@ -1,31 +1,3 @@
 .form{
   padding: 20px;
 }
-input{
-  padding: 3px 9px;
-}
-button{
-  display: inline-block;
-  margin-left: 6px;
-  color: #fff;
-  background-color: #1af;
-  border-radius: 3px;
-  font-size: 12px;
-  text-align: center;
-  vertical-align: 2px;
-  border: none;
-  outline: none;
-}
-.del{
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin-left: 6px;
-  color: #fff;
-  background-color: #1af;
-  border-radius: 3px;
-  font-size: 12px;
-  text-align: center;
-  vertical-align: 2px;
-  cursor: pointer;
-}
