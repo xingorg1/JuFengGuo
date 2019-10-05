@@ -5,6 +5,7 @@ import HotList from '../components/HotList'
 import TodoList from '../components/TodoList/TodoList'
 import Control from '../components/Control'
 import UnControl from '../components/UnControl'
+import PropertyTransfer from '../components/PropertyTransfer'
 
 console.log(data)
 console.log(TodoList)
@@ -63,6 +64,17 @@ function Component(){
         </>
   // return '函数组件里不返回jsx会怎样'
 }
+let Person = {
+  // name: '小石头',
+  age: 21,
+  sex: '女',
+  figure: {
+    weight: 45,
+    height: 150
+  },
+  income: 9999
+}
+
 function App() {
   return (
     <Fragment>
@@ -132,11 +144,13 @@ function App() {
       {/* 函数组件应用 */}
       <HotList listData={ data } testData={ data2 }></HotList>
       {/* class组件应用 */}
-      <TodoList></TodoList>
+      <TodoList />
       {/* 受控组件 */}
-      <Control></Control>
+      <Control />
       {/* 非受控组件 */}
-      <UnControl></UnControl>
+      <UnControl />
+      {/* 属性传递 */}
+      <PropertyTransfer version = { 1.0 } Person={ Person } { ...Person }/>
     </Fragment>
   );
 }
