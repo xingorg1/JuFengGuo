@@ -6,6 +6,7 @@ import TodoList from '../components/TodoList/TodoList'
 import Control from '../components/Control'
 import UnControl from '../components/UnControl'
 import PropertyTransfer from '../components/PropertyTransfer'
+import GrandFather from '../components/family/GrandFather'
 
 console.log(data)
 console.log(TodoList)
@@ -151,6 +152,8 @@ function App() {
       <UnControl />
       {/* 属性传递 */}
       <PropertyTransfer version = { 1.0 } Person={ Person } { ...Person }/>
+      {/* 组件间交互 - 大家庭 */}
+      <GrandFather />
     </Fragment>
   );
 }
