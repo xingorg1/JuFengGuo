@@ -11,6 +11,7 @@ gifUtils | 公共方法封装
 gluttonousSnake | 贪吃蛇项目
 jsBasis | js重点基础
 LiveTelecast | 直播
+Python | python学习记录
 theSportsCourse | 运动&DOM操作
 YouDontKnowJs | 你不知道的JS
 
