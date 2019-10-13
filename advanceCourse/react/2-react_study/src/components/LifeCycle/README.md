@@ -17,7 +17,7 @@ componentDidMount |	执行componentDidMount生命周期函数。此时组件已�
 -- | -- | -- 
 state被更改 |	组间运行中，state被更改 |
 进行提问<br/>是否继续？ |	触发shouldComponentUpdate函数。提问组件是否要进行更新。<br/>该函数接收两个参数：nextProps、nextStates。<br/>该函数需要返回布尔值来回答是否更新：<br/>&nbsp;&nbsp;&nbsp;&nbsp;return false不更改 - 流程回到state被更改前。<br/>&nbsp;&nbsp;&nbsp;&nbsp;return true进行更改 - state更改，流程继续。
-  - |【回答】：是 |
+  _ |【回答】：是 |
 componentWillUpdate |	执行conponentWillUpdate生命周期函数。告知组件即将开始进行更新。 |
 render |	组间更新完毕，执行render函数重新渲染页面。 |
 componentDidUpdate |	执行componentDidUpdate生命周期函数。告知组件更新并渲染完毕。此时更新过的组件已经渲染到页面中。 |
