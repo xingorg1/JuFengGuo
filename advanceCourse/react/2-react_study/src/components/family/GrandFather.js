@@ -15,7 +15,7 @@ class GrandFather extends React.Component {
   render(){
     let GrandFather = <>
       {/* 爷爷组件 */}
-      <h3>组件间交互</h3>
+      <h3>组件间交互 - 层级组件数据传递</h3>
       <div className="wrapper">
         <input type="text" ref={ this.inputDom } style={ {'marginBottom': '10px'} }/>
         <button onClick={ this.handleClick }>添加</button>

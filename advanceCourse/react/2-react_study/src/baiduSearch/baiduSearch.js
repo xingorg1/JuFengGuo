@@ -6,7 +6,8 @@ import TodoList from '../components/TodoList/TodoList'
 import Control from '../components/Control'
 import UnControl from '../components/UnControl'
 import PropertyTransfer from '../components/PropertyTransfer'
-import GrandFather from '../components/family/GrandFather'
+import Family from '../components/family/GrandFather'
+import CreateContext from '../components/createContext/Provider'
 
 console.log(data)
 console.log(TodoList)
@@ -153,7 +154,9 @@ function App() {
       {/* 属性传递 */}
       <PropertyTransfer version = { 1.0 } Person={ Person } { ...Person }/>
       {/* 组件间交互 - 大家庭 */}
-      <GrandFather />
+      <Family />
+      {/* 组件间交互 - createContext */}
+      <CreateContext />
     </Fragment>
   );
 }

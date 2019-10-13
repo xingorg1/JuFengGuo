@@ -4,14 +4,8 @@
 1. 父组件引入子组件并通过属性传值  
 
 2. 孙子组件修改爷爷组件源值  
-
-  方案一：大型家庭伦理继承剧
-
-    i. 爷爷组件定义好修改值的功能函数
-
-    ii. 爸爸组件接收函数并传递给下边的儿子
-
-    iii. 末尾要使用的子孙组件调用方法修改爷爷组件值
+  
+  方案一详见[这里](../family/README.md)
 
   方案二：React.createContext
 
@@ -41,13 +35,6 @@
 ### 本节重点：孙子组件删除爷爷组件内部的数据
 （功能目标：在TodoItem中删除TodoList中对应的、位于TodoWrapper中的数据）
 
-#### 实现方案一：大型家庭继承剧
-1. 爷爷组件定义好修改值的功能函数  
-![爷爷组件相关代码](../../assets/images/GrandFather.png)
-2. 爸爸组件接收函数并传递给下边的儿子  
-![爷爷组件相关代码](../../assets/images/Father.png)
-3. 末尾要使用的子孙组件调用方法修改爷爷组件值  
-![爷爷组件相关代码](../../assets/images/GrandSon.png)
 
 #### 实现方案二：React.createContext （ps：react16+）
 ```
@@ -61,8 +48,6 @@
   
   b. 函数返回要渲染的结果
 ```
-
-实现方案二详见[这里](../createContext/README.md)
 
 
 
