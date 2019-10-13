@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-bottom: 200px
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+h3{
+  text-align: center
+}
+
+h4{
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+input{
+  padding: 5px 9px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
+input:focus{
+  border: 1px solid #1af;
+  outline: none;
+}
+button{
+  display: inline-block;
+  margin-left: 6px;
+  color: #fff;
+  background-color: #1af;
+  border-radius: 3px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: 2px;
+  border: none;
+  outline: none;
+}
+.del{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  color: #fff;
+  background-color: #1af;
+  border-radius: 3px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: 2px;
+  cursor: pointer;
+}
+.area{
+  padding: 20px;
+  background: #efe;
+}
+.wrapper{
+  width: 400px;
+  margin: 0 auto 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  text-align: left;
+}

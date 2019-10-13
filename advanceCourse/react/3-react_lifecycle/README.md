@@ -1,7 +1,7 @@
 ## React生命周期
 
 ### V16之前
-![生命周期流程图](https://github.com/xingorg1/JuFengGuo/raw/master/advanceCourse/react/2-react_study/src/assets/images/lifeCycle.png)
+![生命周期流程图](https://github.com/xingorg1/JuFengGuo/raw/master/advanceCourse/react/3-react_lifecycle/src/assets/images/lifeCycle.png)
 
 #### 初始化流程 - 
 流程 | 详解 | 备注 
