@@ -1,6 +1,7 @@
 ## React生命周期
 
 ### V16之前
+![生命周期流程图](https://github.com/xingorg1/JuFengGuo/blob/master/advanceCourse/react/2-react_study/src/assets/images/lifeCycle.png?raw=true)
 
 #### 初始化流程 - 
 流程 | 详解 | 备注 
@@ -24,8 +25,9 @@ componentDidUpdate |	执行componentDidUpdate生命周期函数。告知组件�
   _ |【往复】：回到组件运行状态（等待） | 
 
 #### 组间运行流程 - props改变，重新render
-props属性是从父组件传过来的。当父组件改变了传递给子组件的数据时，子组件内部就会触发该函数。
-以下流程发生在子组件内部：子组件内部
+props属性是从父组件传过来的。当父组件改变了传递给子组件的数据时，子组件内部就会触发该函数。  
+以下流程发生在子组件内部：子组件内部  
+
 流程 | 详解 | 备注 
 -- | -- | -- 
 componentWillReceiveProps |	执行componentWillReciveProps生命周期函数。告知父组件改变了props的值。|  
