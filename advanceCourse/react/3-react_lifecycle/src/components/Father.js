@@ -30,7 +30,7 @@ class Father extends React.Component {
       <div className="wrapper">
         <h4>父亲组件生命周期函数检测</h4> 
         count的值： { this.state.count }
-        <button onClick = { this.handleClick }>增加count的值</button>
+        <button onClick = { () => { this.handleClick() } }>增加count的值</button>
         <Son />
       </div>
     </>
@@ -42,10 +42,8 @@ class Father extends React.Component {
   }
 
   handleClick(){
-    let count = this.state.count;
-    count++;
     this.setState({
-      count
+      count: this.state.count + 1
     })
   }
 }
