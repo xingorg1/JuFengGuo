@@ -3,8 +3,6 @@
 ### V16之前
 ![生命周期流程图](https://github.com/xingorg1/JuFengGuo/raw/master/advanceCourse/react/2-react_study/src/assets/images/lifeCycle.png)
 
-![test](../../assets/images/logo.svg)
-![test2](../../assets/images/Father.png)
 #### 初始化流程 - 
 流程 | 详解 | 备注 
 -- | -- | -- 
