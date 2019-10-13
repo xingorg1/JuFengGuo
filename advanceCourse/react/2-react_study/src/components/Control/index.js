@@ -106,9 +106,9 @@ const {log} = console;
   以往处理同类问题，多使用函数传参区分不同的人调用的情况。这里有了dom夹持，可以用data-或表单元素的name属性来区分使用者了。
  */
 class Control extends React.Component {
-  constructor(){
-    super()
-  }
+  // constructor(){
+  //   super()
+  // }
   state = {
     taskA : '',
     taskB : '',

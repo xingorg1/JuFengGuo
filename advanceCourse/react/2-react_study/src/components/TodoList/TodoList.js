@@ -1,13 +1,13 @@
 import React from 'react'
 import './TodoList.css'
-const { log } = console;
+// const { log } = console;
 class TodoList extends React.Component {
   // handleChange = this.handleChange.bind(this)
-  constructor(){
-    super();
-    // 状态：组件内部要使用的数据称之为状态。
-    // this.state = { list: [1,2,3]};
-  }
+  // constructor(){
+  //   super();
+  //   // 状态：组件内部要使用的数据称之为状态。
+  //   // this.state = { list: [1,2,3]};
+  // }
   state = {
     inputVal: '',
     list: [1,2,3]

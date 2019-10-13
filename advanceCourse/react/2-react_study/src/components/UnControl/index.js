@@ -5,10 +5,10 @@ import React from 'react'
 const {log} = console;
 
 class UnControl extends React.Component {
-  constructor(){
-    super();
-    // this.taskC = React.createRef(); //写法一
-  }
+  // constructor(){
+  //   super();
+  //   // this.taskC = React.createRef(); //写法一
+  // }
   taskC = React.createRef(); //写法二
   state = {
     // taskA: '',
@@ -75,7 +75,7 @@ class UnControl extends React.Component {
   handleClick = (e) => {
     let name = e.target.name, value = null;
     log(this[name],this[name].value) //根据当前点击按钮的name，得到对应input及其value值。
-    if(name == 'taskC'){ // 用React.createRef创建的dom元素，node节点在current属性下。
+    if(name === 'taskC'){ // 用React.createRef创建的dom元素，node节点在current属性下。
       value = this[name].current.value;
       this[name].current.value = ''; //用完清空
     }else{
