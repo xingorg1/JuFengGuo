@@ -1,12 +1,10 @@
-## 组件间交互
+## 组件间交互 - 爷孙组件层级传递
 ### 目录：
 ```
 1. 父组件引入子组件并通过属性传值  
 
 2. 孙子组件修改爷爷组件源值  
   
-  方案一详见[这里](../family/README.md)
-
   方案二：React.createContext
 
     i. 需要V16+
@@ -35,6 +33,8 @@
 ### 本节重点：孙子组件删除爷爷组件内部的数据
 （功能目标：在TodoItem中删除TodoList中对应的、位于TodoWrapper中的数据）
 
+
+方案一详见[这里](../family/README.md)
 
 #### 实现方案二：React.createContext （ps：react16+）
 ```
