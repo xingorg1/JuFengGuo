@@ -5,7 +5,7 @@ guojufeng‘s front-end learning library
 模块 | 功能 | 
 -- | -- |
 advanceCourse | 进阶
-answer | 答疑
+answer | 答疑记录
 EmploymentClass | 就业
 gifUtils | 公共方法封装
 gluttonousSnake | 贪吃蛇项目

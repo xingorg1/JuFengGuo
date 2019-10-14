@@ -1,6 +1,7 @@
 <template>
   <div class="app-echarts">
     <h3>{{ msg }}</h3>
+    <el-button @click="changeData">改变数据</el-button>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane name="first">
         <span slot="label">客户分组</span>
@@ -21,6 +22,7 @@
 <script>
 import "echarts/lib/chart/bar";
 import "echarts/lib/chart/pie";
+const {log} = console;
 export default {
   name: "AppEcharts",
   data() {
@@ -100,90 +102,8 @@ export default {
     return {
       activeName: "second",
       msg: "echarts 应用",
-      polar: {
-        title: {
-          text: "222极坐标双数值轴"
-        },
-        legend: {
-          data: ["line"]
-        },
-        polar: {
-          center: ["50%", "54%"]
-        },
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            type: "cross"
-          }
-        },
-        angleAxis: {
-          type: "value",
-          startAngle: 0
-        },
-        radiusAxis: {
-          min: 0
-        },
-        series: [
-          {
-            coordinateSystem: "polar",
-            name: "line",
-            type: "line",
-            showSymbol: false,
-            data: [1, 2, 3, 4, 5]
-          }
-        ],
-        animationDuration: 2000
-      },
-      area: {
-        xAxis: {
-          type: "category",
-          boundaryGap: false,
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-        },
-        yAxis: {
-          type: "value",
-          name: "哈哈哈哈哈",
-          nameTextStyle: {
-            fontSize: 12,
-            color: "red",
-            align: "left",
-            padding: [0,0,0, 60],
-            rich: {
-              a: {
-                // 没有设置 `align`，则 `align` 为 right
-              }
-            }
-          },
-          axisLine: {
-            // show: false
-            lineStyle: {
-              color: "#eee"
-            }
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            fontSize: 12,
-            color: "#999"
-          },
-          splitLine: {
-            lineStyle: {
-              color: "#eee"
-            }
-          }
-        },
-        tooltip: {
-          trigger: "axis"
-        },
-        series: [
-          {
-            data: ["8", "9.1", "9.4", "4.5", "1.9", "3.3", "0"],
-            type: "line",
-            areaStyle: {}
-          }
-        ]
-      },
+      polar: {},
+      area: {},
       bar: {
         backgroundColor: {
           type: "pattern",
@@ -363,11 +283,32 @@ export default {
       }
     };
   },
+  created(){
+    this.polar = this.$mock.polarData;
+    this.area = this.$mock.areaData;
+    setTimeout(()=>{
+      setInterval(()=>{
+        this.changeData()
+      },1000)
+    },2000)
+  },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
       let myChart = this.$refs.myCharts;
       myChart.resize();
+    },
+    changeData(){
+      let arr = ["Mon", "Tue", "Wed","Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      this.$set(this.area.xAxis, "data", arr);
+      let data = [];
+      arr.forEach((el)=>{
+        data.push(Math.random() * 10)
+      })
+      let options = this.$mock.areaData;
+      options.series[0].data = data;
+      // this.$set(this.area.series[0], "data", data);
+      this.area = options
     }
   }
 };
