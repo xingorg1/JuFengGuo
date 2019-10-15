@@ -1,4 +1,89 @@
 export default {
+  'polarData': {
+    title: {
+      text: "222极坐标双数值轴"
+    },
+    legend: {
+      data: ["line"]
+    },
+    polar: {
+      center: ["50%", "54%"]
+    },
+    tooltip: {
+      trigger: "axis",
+      axisPointer: {
+        type: "cross"
+      }
+    },
+    angleAxis: {
+      type: "value",
+      startAngle: 0
+    },
+    radiusAxis: {
+      min: 0
+    },
+    series: [
+      {
+        coordinateSystem: "polar",
+        name: "line",
+        type: "line",
+        showSymbol: false,
+        data: [1, 2, 3, 4, 5]
+      }
+    ],
+    animationDuration: 2000
+  },
+  "areaData": {
+    xAxis: {
+      type: "category",
+      boundaryGap: false,
+      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    },
+    yAxis: {
+      type: "value",
+      name: "哈哈哈哈哈",
+      nameTextStyle: {
+        fontSize: 12,
+        color: "red",
+        align: "left",
+        padding: [0,0,0, 60],
+        rich: {
+          a: {
+            // 没有设置 `align`，则 `align` 为 right
+          }
+        }
+      },
+      axisLine: {
+        // show: false
+        lineStyle: {
+          color: "#eee"
+        }
+      },
+      axisTick: {
+        show: false
+      },
+      axisLabel: {
+        fontSize: 12,
+        color: "#999"
+      },
+      splitLine: {
+        lineStyle: {
+          color: "#eee"
+        }
+      }
+    },
+    tooltip: {
+      trigger: "axis"
+    },
+    series: [
+      {
+        data: ["8", "9.1", "9.4", "4.5", "1.9", "3.3", "0"],
+        type: "line",
+        smooth: true,
+        areaStyle: {}
+      }
+    ]
+  },
   "tableDataFixed": [{
     date: '2016-05-02',
     name: '王小虎',
