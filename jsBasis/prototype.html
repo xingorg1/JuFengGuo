@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //  Man.prototype.__proto__ = Person.prototype;
+    const l = console.log;
+    function Wrapper() {
+      this.name = '测试'
+    }
+    function VueWrapper(){
+      this.age = 'vuewrapper'
+    }
+    
+    VueWrapper.prototype.__proto__ = Wrapper.prototype
+    VueWrapper.prototype.constructor = VueWrapper
+    let wrapper = new VueWrapper();
+    l(wrapper.__proto__ === VueWrapper.prototype)
+    l(wrapper)
+
+
+    let person = {
+      name: 2
+    }
+    let person1 = Object.create(person)
+    // person1.__proto__ = person
+    l(person)
+    l(person1)
+  </script>
+</body>
+
+</html>

@@ -1,19 +1,33 @@
 <template>
   <div id="app">
     <HelloWorld msg="vue test"/>
+    <my-count />
+    <!-- <ul>
+      <li>
+        <router-link to="/home">home</router-link>
+      </li>
+      <li>
+        <router-link to="/about">about</router-link>
+      </li>
+    </ul>
+    <router-view></router-view> -->
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import HelloWorld from './components/HelloWorld.vue'
+import MyCount from './components/MyCount.vue'
 
 @Component({
   components: {
-    HelloWorld
+    HelloWorld,
+    MyCount
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  appName: string = '我是app啊'
+}
 </script>
 
 <style lang="scss">
