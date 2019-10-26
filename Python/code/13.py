@@ -13,6 +13,7 @@ class Chinese:
         print('我生在%s。' % self.hometown)
 # 构造得到实例化对象
 wufeng = Chinese('广东')
+
 print(wufeng.eye)
 # 调用实例化对象的方法
 wufeng.born()
