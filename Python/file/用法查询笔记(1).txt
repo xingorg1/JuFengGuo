@@ -1,0 +1,751 @@
+
+-----------------------------------------
+
+查询英文取名【网址】
+https://unbug.github.io/codelf/ 
+
+
+-----------------------------------------
+
+所有报错的查询【网址】：
+
+https://www.runoob.com/python/python-xceptions.html
+
+-----------------------------------------
+
+例题新知识：打印输出缓冲
+
+http://www.runoob.com/python/python-date-time.html
+
+https://jingyan.baidu.com/article/48a420571dfd70a925250410.html
+
+-----------------------------------------
+
+import time #调用time模块
+
+time.sleep(n)#n代表n秒，程序休眠n秒
+time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+time.localtime():读取当前时间
+time.strftime('格式',时间参数)：格式为%Y-%m-%d %H:%M:%S ，参数为当前时间
+2019-03-14 21:36:45
+
+-----------------------------------------
+
+import random#调用random随机数模块
+
+randint()函数：
+格式：random.randint(a,b)
+代码范例：
+X = random.randint(a,b) #从a到b产生一个随机整数并赋值给X
+list1 = [1,2,3,4,5,6,]
+
+-----------------------------------------
+
+import random#调用random随机数模块
+
+random.sample(seq, n) 
+#写法是random.sample() 
+#需要传递两个参数，第一个参数是一个序列（列表、字符串、元组），第二个参数是随机选取的元素个数
+list2 = random.sample(list1,3)#把list1中的随机3个元素拿出来组成list2
+
+-----------------------------------------
+
+随机选择函数
+
+import random#调用random随机数模块
+格式：random.choice(参数,个数)
+范例代码：
+dict1 = {['A':[],'B':[],'C':[]}
+dict2 = random.choice(dict1,2)#从dict1中随机选2个组成dict2
+
+-----------------------------------------
+
+type(参数)函数：查询参数的类型
+
+ 强制转换函数：str()\int()\float()
+ + 将内容拼接 需要统一类型为str()
+
+-----------------------------------------
+
+print()函数
+
+格式：print('',end='')
+end参数可省略不写，默认 end = '\n'
+
+print函数一种用法，用逗号隔开，可在同一行打印不同类型的数据。
+    print(x,'/',y,'=',z)
+
+范例代码：
+i = 2
+j = 4
+print('%d * %d = %-2d' % (i,j,i*j),end = 'A')
+>>>8A
+
+-----------------------------------------
+
+round()函数：
+
+格式：round(参数，数位)函数
+代码范例：
+print(round((0.55+0.3),2)))
+>>>0.85
+
+-----------------------------------------
+
+input()函数：
+
+格式：input('字符串')
+返回值：在屏幕上显示'字符串'，并存储用户输入的数据(str型)
+代码范例：
+A = input('请输入')#假设用户输入了1+1
+print (A) # A == '1+1'
+>>>请输入
+>>>1+1
+
+-----------------------------------------
+
+str()函数
+
+int()函数
+
+float()函数
+
+格式：str(参数)/int(参数)/float(参数)
+范例代码：
+print(int(float('1.5')))#str型先转为float型，再转成int型
+>>>1
+注意：int()只能转换纯整数字符串
+类浮点数字符串如'1.5'中的小数点
+是无法被int函数直接识别转换的，会报错
+
+-----------------------------------------
+
+列表操作：在列表末尾添加新元素
+
+使用函数：append()函数
+
+格式：列表名.append(新元素)#举例：list1.append(n) 
+新元素只能是一个，可以是任意类型，甚至是一个列表
+范例代码：
+list3 = [1,2]
+
+list3.append(3)#添加单个元素 3 在列表list3末尾
+print(list3)#输出 [1,2,3]
+
+list3.append(4,5)#不可添加多个元素，会报错
+#报错信息：list3.append(4,5) 
+TypeError: append() takes exactly one argument (2 given)
+
+list3.append([4,5])#添加一个新的列表在末尾
+print(list3)#输出 [1,2,3[4,5]]
+
+-----------------------------------------
+
+列表/字典操作：求列表/字典长度并返回一个长度值
+
+使用函数：len()函数
+
+格式：len(列表/字典名)
+
+范例代码：
+scores = {'小明':95,'小红':90,'小刚':90}
+print(len(scores))
+
+-----------------------------------------
+
+元组
+
+tuple1 = ('A','B')
+元组名 赋值号 小括号左 元素N个用逗号隔开 小括号右
+和列表特别类似，后面课程会提及。
+
+-----------------------------------------
+
+pop()函数：同时提取和删除某个元素(抓出来某元素)，默认最后一个
+
+格式：列表.pop(下标)
+范例代码：
+students = ['小明','小红','小刚']
+student1 = students.pop(0)
+print(students) #输出['小红','小刚']
+print(student1) #输出： 小明
+
+-----------------------------------------
+
+extend()函数：
+
+格式：列表.extend(列表2)
+范例代码：
+list1 =  [91, 95, 97, 99]  
+list2 =  [92, 93, 96, 98]
+list1.extend(list2)
+print(list1)
+>>>[91, 95, 97, 99, 92, 93, 96, 98]
+
+-----------------------------------------
+
+Python的三种排序方式
+
+sort()函数
+
+格式1：列表.sort()升序排序
+格式2：列表.sort(reverse=True)降序排序
+格式3：列表.reverse反转排序
+
+范例代码：
+list1 = [91, 95, 97, 99, 92, 93, 96, 98]
+list1.sort()
+print(list1)
+>>>[91, 92, 93, 95, 96, 97, 98, 99]
+list1.sort(reverse=True)
+print(list1)
+>>>[99, 98, 97, 96, 95, 93, 92, 91]
+----------------------------------------
+
+list1 = [91, 95, 97, 99, 92, 93, 96, 98]
+list1.reverse()
+print (list1)
+>>>[98, 96, 93, 92, 99, 97, 95, 91]
+
+-----------------------------------------
+
+range()函数
+
+格式：range(a,b,c)，#从a数到b-1,数的间隔为c
+当 a=0 时可省略为range(b,c)
+当默认 c=1 时可省略为range(a,b)
+通常与for循环配合使用
+作用相当于生成一个长度为b的列表list1 = [a,a+1,a+2......b-1]
+
+范例代码：
+for i in range(0,10,3):
+    print(i)
+输出：
+0
+3
+6
+9
+
+-----------------------------------------
+
+bool()函数：
+
+格式：bool(参数)
+代码范例：
+print('以下数据判断结果都是【假】：')
+print(bool(False))
+print(bool(0))
+print(bool(''))
+print(bool(None))
+
+print('以下数据判断结果都是【真】：')
+print(bool(True))
+
+-----------------------------------------
+
+and 语句
+
+格式：语句1 and 语句2
+返回值：
+0 and 0 == 0
+0 and 1 == 0
+1 and 0 == 0
+1 and 1 == 1
+
+-----------------------------------------
+
+or 语句
+
+格式： 语句1 or 语句2
+返回值：
+0 or 0 == 0
+0 or 1 == 1
+1 or 0 == 1
+1 or 1 == 1
+
+-----------------------------------------
+
+not 语句
+
+格式： not 语句
+返回值：
+not 0 == 1
+not 1 == 0
+
+-----------------------------------------
+
+in 语句 / not in 语句
+
+格式： 参数 (not) in 语句
+返回值：
+代码范例：
+a = [0,1]
+>>> 0 in a
+True
+>>> 1 not in a
+False
+
+-----------------------------------------
+
+代码规范：格式化字符串
+
+格式：'%s %d %f'% ('字符串'，整型参数，浮点型参数) 
+注意和字典类似，无序，位置、类型唯一对应
+范例代码：
+lucky = 8
+print('我的幸运数字是%d' % lucky)
+>>>我的幸运数字是8
+print('我的幸运数字是%d' % 8)
+>>>我的幸运数字是8
+print('我的幸运数字是%s' % '小龙女的生日816')
+>>>我的幸运数字是小龙女的生日816
+print('我的幸运数字是%d和%d' % (8,16))
+>>>我的幸运数字是8和16
+
+-----------------------------------------
+
+format()函数
+
+格式：'...{}...{}...'.format(元素1，元素2......)
+范例代码：
+print('\n{}{}'.format('数字：',0)) #优势1：不用担心用错类型码。
+print('{}，{}'.format(0,1)) #不设置指定位置时，默认按顺序对应。
+print('{1}，{0}'.format(0,1)) #优势2：当设置指定位置时，按指定的对应。
+print('{0}，{1}，{0}'.format(0,1)) #优势3：可多次调用format后的数据。
+name2 =  'Python基础语法'
+print('我正在学{}'.format(name2))  # format()函数也接受通过参数传入数据。
+
+-----------------------------------------
+
+# 知识1：一种新的列表生成方式
+
+num1 = [1,2,3,4,5]  # 想一想，如果用这个方法生成一个1-100的列表……
+num2 = list(range(1,6))
+print(num1)
+print(num2)
+
+# 知识2：extend 的新用法
+
+num2.extend(['ABCDE'])
+num2.extend('ABCDE')  # extend后面是列表的话会将其合并，后面是字符串的话会将每个字符当成一个列表中的元素。
+print(num2)
+
+# 知识点3：列表生成式
+
+list1 = [i for i in range(3)]  # 规定列表中元素的范围
+print(list1)
+list2 = [m+n for m in ['天字', '地字'] for n in '一二']  # 列表元素可以是组合，分别规定范围。
+print(list2)
+list3 = [n*n for n in range(1,11) if n % 3 == 0]  # 元素既可规定范围，也可附加条件。
+print(list3)
+
+-----------------------------------------
+
+join()函数
+
+语法：  'sep'.join(seq)
+
+参数说明
+
+sep：分隔符。可以为空
+seq：要连接的元素序列、字符串、元组、字典
+上面的语法即：以sep作为分隔符，将seq所有的元素合并成一个新的字符串
+#列表、元组可得到相同结果(可理解为去掉括号，用分隔符分隔每个元素)
+#字典操作后得到的是 键(舍弃值)
+#字符串操作后得到的是每个单字符
+
+返回值：返回一个以分隔符sep连接各个元素后生成的字符串
+范例代码：
+#对序列进行操作（分别使用' '与':'作为分隔符）  
+>>> seq1 = ['hello','good','boy','doiido']
+>>> print ' '.join(seq1)
+hello good boy doiido
+>>> print ':'.join(seq1)
+hello:good:boy:doiido  
+  
+#对字符串进行操作  
+>>> seq2 = "hello good boy doiido"
+>>> print ':'.join(seq2)
+h:e:l:l:o: :g:o:o:d: :b:o:y: :d:o:i:i:d:o
+    
+#对元组进行操作
+>>> seq3 = ('hello','good','boy','doiido')
+>>> print ':'.join(seq3)
+hello:good:boy:doiido
+  
+#对字典进行操作  
+>>> seq4 = {'hello':1,'good':2,'boy':3,'doiido':4}
+>>> print ':'.join(seq4)
+boy:good:doiido:hello
+
+-----------------------------------------
+
+index()函数
+
+格式：list.index(obj)，obj为object（对象）的缩写
+描述：index() 函数用于找出列表中某个元素第一次出现的索引位置
+具体可参考代码和运行结果。
+范例代码：
+num = [0,1,0,1,2]
+print(num.index(1))  # 数字1首先出现的索引位置是list[1]（索引位置从0开始）。
+print(num.index(2))  # 数字2首先出现的索引位置是list[4]。
+>>>1
+>>>4
+
+-----------------------------------------
+
+try语法：
+
+try:
+    执行命令(大部分情况是用户输入)
+except 报错类型1:
+except 报错类型2:
+报错类型有：
+1.精确报错：ZeroDivisionError、ValueError、TypeError、
+2.精确报错(多项)：(报错类型1,报错类型2...)
+3.模糊报错：Exception
+范例代码1：
+num = [1,2,0,3,1.5,'6']
+for x in num:
+    try:  # 尝试执行下列代码
+        print (6/x)
+    except ZeroDivisionError:
+        print('0是不能做除数的！')
+    except TypeError:  
+# 当报错信息为TypeError，执行下面的语句。
+        print('被除数必须是整值或浮点数！')
+范例代码2：
+print('\n欢迎使用除法计算器！\n')
+
+while True:
+    try:
+        x = input('请你输入被除数：')
+        y = input('请你输入除数：')
+        z = float(x)/float(y)
+        print(x,'/',y,'=',z)
+        break  # 默认每次只计算一次，所以在这里写了 break。
+    except ZeroDivisionError:  # 当除数为0时，跳出提示，重新输入。
+        print('0是不能做除数的！')
+    except ValueError:  # 当除数或被除数中有一个无法转换成浮点数时，跳出提示，重新输入。
+        print('除数和被除数都应该是整值或浮点数！')    
+    # 方式2：将两个（或多个）异常放在一起，只要触发其中一个，就执行所包含的代码。
+    # except(ZeroDivisionError,ValueError):
+    #     print('你的输入有误，请重新输入！')    
+    # 方式3：常规错误的基类，假设不想提供很精细的提示，可以用这个语句响应常规错误。
+    # except Exception:
+    #     print('你的输入有误，请重新输入！')
+
+------------------------------------------------------------------
+
+return语句
+
+  return语句就是将结果返回到调用的地方，并把程序的控制权一起返回，程序运行到所遇到的第一个return即返回（退出def块），不会再运行第二个return。要返回两个数值，写成一行即可：
+范例代码：
+def a(x,y):
+    if x==y:
+        return x,y
+print a(3,3)<br><br>>>> 3,3
+return a,b  # return 多个值时，返回一个元组(a,b)
+--------
+但并不意味着一个函数体中只能有一个return 语句，例如：
+def test_return(x):
+    if x > 0:
+        return x
+    else:
+        return 0
+函数没有 return，默认 return一个 None 对象。
+--------
+递归函数中没有return 的情况：
+def gcd(a,b):
+     if a%b==0:
+         return b
+     else:
+         gcd(b,a%b)
+分析：else 中没有 return 就没有出口，这个程序是自己内部运行，程序没有返回值，
+--------
+return 和 print 的区别：
+在交互模式下，return的结果会自动打印出来，而作为脚本单独运行时则需要print函数才能显示。
+x = 1
+y = 2
+def add (x, y):
+　　z = x + y
+　　return z
+print （add(x,y)
+
+x = 1
+y = 2
+def add (x, y):
+　　z = x + y
+　　print z
+print （add(x,y)）
+--------
+默认情况下，遇见 return 函数就会返回给调用者，但是 try，finally情况除外：
+def func():  
+    try:  
+        print 98  
+        return 'ok' #函数得到了一个返回值  
+    finally: #finally语句块中的语句依然会执行  
+        print 98    
+print fun()  
+输出：
+>>>98
+>>>98
+>>>ok　　
+--------
+函数作为返回值返回:
+def lazy_sum(*args):
+    def sum():
+        x=0
+        for n in args:
+            x=x+n
+        return x
+    return sum
+--------
+lazy_sum(1,2,3,4,5,6,7,8,9) #这时候lazy_sum 并没有执行，而是返回一个指向求和的函数的函数名sum 的内存地址。
+f=lazy_sum(1,2,3,4,5,6,7,8,9)
+print(type(f))
+print(f())  # 调用f()函数，才真正调用了 sum 函数进行求和，
+这其实就是闭包。
+返回一个函数列表：
+def count():
+    fs = []
+    for i in range(1,4):
+        def f():
+            return i*i
+        fs.append(f)
+    return fs
+f1, f2, f3 = count()
+print(f1())
+print(f2())
+print(f3())
+输出：
+>>>9
+>>>9
+>>>9
+
+执行过程：
+当i=1, 执行for循环， 结果返回函数f的函数地址，存在列表fs中的第一个位置上。
+当i=2, 由于fs列表中第一个元素所指的函数中的i是count函数的局部变量，i也指向了2；然后执行for循环， 结果返回函数f的函数地址，存在列表fs中的第二个位置上。
+当i=3, 同理，在fs列表第一个和第二个元素所指的函数中的i变量指向了3； 然后执行for循环， 结果返回函数f的函数地址，存在列表fs中的第三个位置上。
+所以在调用f1()的时候,函数中的i是指向3的：
+  f1():
+     return 3*3
+同理f2(), f3()结果都为9
+闭包时牢记的一点就是：返回函数不要引用任何循环变量，或者后续会发生变化的变量。即包在里面的函数（本例为f()），不要引用外部函数(本例为count())的任何循环变量
+--------
+如果一定要引入循环变量，方法是再创建一个函数，用该函数的参数绑定循环变量当前的值，无论该循环变量后续如何更改，已绑定到函数参数的值不变：
+复制代码
+def count():
+    fs=[]
+    for i in range(1,4):
+        def f(j):
+            def g():
+                return j*j
+            return g
+        fs.append(f(i))
+    return fs
+f1,f2,f3=count()
+print(f1())
+print(f2())
+print(f3())
+
+-----------------------------------------
+
+返回值条件判断句式：
+
+return a if 条件A成立 (else 条件B)
+
+-----------------------------------------
+
+自定义函数：
+
+def 函数名(参数1(位置参数),*参数2(不定长参数),参数3=默认值(默认参数)):#可以没有参数，这样只有一种输出。
+(缩进空格)函数主体内容#如对参数进行何种改变
+(缩进空格)return语句#可以没有return语句，和return None同样效果，return a if A else B
+范例代码：
+def menu(appetizer,course,*barbeque,dessert='绿豆沙'):
+
+    print('一份开胃菜：'+appetizer)
+
+    print('一份主菜：'+course)
+
+    print('一份甜品：'+dessert)
+
+    for i in barbeque:
+
+        print('一份烤串：'+i)
+
+        
+menu('话梅花生','牛肉拉面','烤鸡翅','烤茄子','烤玉米',dessert = '银耳羹')
+
+-----------------------------------------
+
+
+
+-----------------------------------------
+
+class 类A():
+
+    变量1 = 100
+    @classmethod
+    def 函数A(cls):
+        print(cls.变量1)
+
+类A.函数A()
+
+① 第一个格式@classmethod的中文意思就是“类方法”，@classmethod声明了函数1是类方法，这样才能允许函数1使用类属性中的数据。
+icon
+② 第二个格式cls的意思是class的缩写。如果类方法函数1想使用类属性（也就是类中的变量），就要写上cls为函数1的第一个参数，也就是把这个类作为参数传给自己，这样就能被允许使用类中的数据。
+icon
+③ 第三个格式是cls.变量。类方法想使用类属性的时候，需要在这些变量名称前加上cls.。
+
+-----------------------------------------
+
+练习题：日程表
+
+class calendar:
+    #日程表的日期
+    date = '2020-08-08'
+    #事件清单，以字典的形式给出，键为事件，值是安排的时间
+    things = {'给父母买礼物':'9:00','学习':'10:00','和朋友聚会':'18:30'}
+
+    @classmethod
+    def thing_done(cls,thing):
+        del cls.things[thing]
+        print(cls.things)
+
+    @classmethod
+    def add_thing(cls,thing,time):
+        cls.things[thing] = time
+        print(cls.things)
+
+calendar.thing_done('给父母买礼物')
+calendar.add_thing('写日记','20:00')
+
+-----------------------------------------
+
+读写文件格式规范：
+
+第一种：普通写法
+
+#打开文件
+file1 = open('路径','只读r/重写w/追加a'，encodeing = 'utf-8 or gbk')#路径含 \ ，用\\代替或在路径前加r
+#读取文件
+filecontent = file1.read()
+#写入文件
+file1.write('写入的内容')
+#打印文件
+print(filecontent)
+#关闭文件
+file1.close()
+
+
+第二种：with关键字写法
+
+with open ('路径','只读r/重写w/追加a') as file1:
+#with open('文件地址','读写模式') as 变量名:(冒号不能丢)
+    file1.write('写入内容')
+#缩进，无需close()函数
+
+-----------------------------------------
+
+readlines()函数：“按行读取”
+
+格式：变量名 = 文件名.readlines()
+范例代码：
+file1 = open('/Users/Ted/Desktop/scores.txt','r',encoding='utf-8') 
+file_lines = file1.readlines()      
+file1.close()
+print(file_lines)
+
+readlines() 会从txt文件取得一个列表，列表中的每个字符串就是scores.txt中的每一行。而且每个字符串后面还有换行的\n符号
+
+-----------------------------------------
+
+writelines()函数：“按行重写”
+
+格式：文件名.writelines(参数)
+范例代码：
+final_scores = [1,3,5,76,7,8]
+winner_new = open('winner_new.txt','w',encoding='utf-8') 
+winner_new.writelines(final_scores)
+winner_new.close()
+
+-----------------------------------------
+
+split()函数：
+
+格式：参数.split()#不带参数形式，默认空格替换成分隔符，不管空格在哪，或者有几个 全部被镐掉,得到一个列表
+范例代码：
+st0 = '   song   huan   gong   '
+print(st0.split())
+>>>['song', 'huan', 'gong']
+格式2：参数.split('分隔符','分隔次数')，默认分隔次数最大值(字符串长度)
+范例代码：
+st0 = 'iisongiiihuaniiiigongi'
+print(st0.split('i'))
+>>>['', '', 'song', '', '', 'huan', '', '', '', 'gong', '']
+
+-----------------------------------------
+
+join()函数：
+
+格式：参数1.join(参数2)#用参数1将参数2串起来成为新的字符串
+范例代码：
+a = 'cat'
+b = '-'
+print(b.join(a))
+>>>c-a-t
+
+-----------------------------------------
+
+dir()函数
+
+格式：dir(模块名/函数名/类型名) #简单查看：
+范例代码：
+import csv
+for i in dir(csv):
+    print(i)
+
+-----------------------------------------
+
+csv模块中常用的类方法
+
+csv.reader(csvfile,dialect = 'excel',**fmtparams)#fmpt参数
+
+-----------------------------------------
+
+范例代码：
+
+import csv
+with open('test.csv',newline='',encoding='utf-8')as f:
+    data1 = csv.reader(f)#数据存在内存中，需要保持读取文件的姿势进行遍历操作
+    for i in data1:#此处如果不缩进会报错，原因见上一条注释
+        print(i)
+
+-----------------------------------------
+
+import csv
+
+with open('test.csv','a',newline='',encoding='utf-8')as f:
+    writer = csv.writer(f)
+    writer.writerows(写入的内容)
+#注意：默认编码是Unicode，Python中默认编码utf-8，需指定。
+
+-----------------------------------------
+
+范例代码：
+
+import csv
+with open('test.csv','a', newline='',encoding='utf-8') as f:
+    writer  = csv.writer(f)
+    writer.writerow(['4', '猫砂', '25', '1022', '886'])
+    writer.writerow(['5', '猫罐头', '18', '2234', '3121'])
+
+-----------------------------------------
+
+引用模块语句直接写同一行中：
+
+print(''.join(__import__('random').choice('/\\') for i in range(50*24)))
+
+-----------------------------------------
