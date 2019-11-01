@@ -101,30 +101,47 @@ export default {
     name: '王小虎',
     address: '上海市普陀区金沙江路 1516 弄'
   }],
+  "tableDataFilter": [{
+    date: '2016-05-02',
+    name: 'guojufeng',
+    address: '上海市普陀区金沙江路 1518 弄'
+  }, {
+    date: '2016-05-04',
+    name: 'gaoxiaoxiao',
+    address: '上海市普陀区金沙江路 1517 弄'
+  }, {
+    date: '2016-05-01',
+    name: 'zhangailing',
+    address: '上海市普陀区金沙江路 1519 弄'
+  }, {
+    date: '2016-05-03',
+    name: 'zhangguorong',
+    address: '上海市普陀区金沙江路 1516 弄'
+  }],
   "tableDataNormal": [{
       id: 1,
       date: "2016-05-02",
-      name: "王小虎",
+      name: "郭菊锋",
       address: "上海市普陀区金沙江路 1518 弄"
     },
     {
       id: 2,
       date: "2016-05-04",
-      name: "王小虎",
+      name: "郭沫若",
       address: "上海市普陀区金沙江路 1517 弄",
       hasChildren: true
     },
     {
       id: 3,
       date: "2016-05-01",
-      name: "王小虎",
+      name: "郭德纲",
       address: "上海市普陀区金沙江路 1519 弄",
       hasChildren: true
     },
     {
       id: 4,
       date: "2016-05-03",
-      name: "王小虎",
+      name: "冯小纲",
       address: "上海市普陀区金沙江路 1516 弄",
       hasChildren: true
     },
