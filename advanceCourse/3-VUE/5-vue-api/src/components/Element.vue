@@ -33,18 +33,31 @@
     <div class="area">
       <h3>树形懒加载的加锁处理 - 有一个tr内容在下钻期间，同表格内其他tr不允许下钻</h3>
       <el-button @click="tableClick()">点击</el-button>
-      <el-input placeholder="输入关键字搜索" size="mini" v-model="search1" style="display: block; margin: 10px 0;width: 220px"/>
+      <el-input
+        clearable
+        placeholder="输入关键字搜索"
+        size="mini"
+        style="display: block; margin: 10px 0;width: 220px"
+        v-model="searchName"
+      />
+      <el-button @click="filterNameFn">查询</el-button>
+      <!-- 或者不用查询按钮，直接把这个过滤公式放到el-table上，利用filter直接返回新数组的特色了。原数组也不会改变
+        :data="tableDataNormal"
+      -->
       <el-table
-        :data="tableDataNormal.filter(data => !search1 || data.name.toLowerCase().includes(search1.toLowerCase()))"
+        :data="tableDataNormal.filter(data => !searchName || data.name.toLowerCase().includes(searchName.toLowerCase()))"
         :load="load"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         @expand-change="expandChange"
+        @select="select111"
+        @selection-change="handleSelectionChange"
         border
         lazy
         ref="multipleTable"
         row-key="id"
         style="width: 100%"
       >
+        <el-table-column :reserve-selection="bool" type="selection" width="55"></el-table-column>
         <el-table-column label="日期" prop="date" width="180"></el-table-column>
         <el-table-column label="姓名" prop="name" width="180"></el-table-column>
         <el-table-column label="地址" prop="address"></el-table-column>
@@ -52,7 +65,12 @@
     </div>
     <div class="area">
       <!-- 表格筛选 -->
-      <el-input placeholder="输入关键字搜索" size="mini" v-model="search2" style="display: block; margin: 10px 0;width: 220px"/>
+      <el-input
+        placeholder="输入关键字搜索"
+        size="mini"
+        style="display: block; margin: 10px 0;width: 220px"
+        v-model="search2"
+      />
       <el-table
         :data="tableDataFilter.filter(data => !search2 || data.name.toLowerCase().includes(search3.toLowerCase()))"
         style="width: 100%"
@@ -81,14 +99,19 @@ export default {
     return {
       flag: true,
       tableDataNormal: [],
+      tableDataNormalOrigin: [], //数据备份
       tableDataFixed: [],
       tableDataFilter: [],
+      searchName: '',
       search1: '',
       search2: '',
+      multipleSelection: [],
+      bool: true
     }
   },
   created() {
     this.tableDataNormal = this.$mock['tableDataNormal']
+    this.tableDataNormalOrigin = this.$mock['tableDataNormal']
     this.tableDataFixed = this.$mock['tableDataFixed']
     this.tableDataFilter = this.$mock['tableDataFilter']
   },
@@ -98,6 +121,7 @@ export default {
     //     console.log(document.body.getElementsByClassName(".el-tooltip__popper"))
     // });
     // },3000)
+    this.initSelectTable() // 初始化选中table中的个别数据
   },
   directives: {
     scrollNoFixed: {
@@ -141,6 +165,16 @@ export default {
   },
   watch: {},
   methods: {
+    filterNameFn() {
+      this.tableDataNormal =
+        this.searchName === ''
+          ? this.tableDataNormalOrigin
+          : this.tableDataNormal.filter(
+              data =>
+                !this.searchName ||
+                data.name.toLowerCase().includes(this.searchName.toLowerCase())
+            )
+    },
     toggleRowExpansion(row, expanded) {
       log(row, expanded)
     },
@@ -162,13 +196,13 @@ export default {
             {
               id: 31,
               date: '2016-05-01',
-              name: '王小虎',
+              name: '李德愁',
               address: '上海市普陀区金沙江路 1519 弄'
             },
             {
               id: 32,
               date: '2016-05-01',
-              name: '王小虎',
+              name: '张迪生',
               address: '上海市普陀区金沙江路 1519 弄'
             }
           ])
@@ -183,6 +217,33 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row)
+    },
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row)
+        })
+      } else {
+        this.$refs.multipleTable.clearSelection()
+      }
+    },
+    initSelectTable() {
+      for (var i in [1, 2, 3]) {
+        var item = parseInt(Math.random() * 8)
+        this.multipleSelection.push(this.tableDataNormal[item])
+        log(item)
+      }
+      console.log(this.multipleSelection)
+      this.handleSelectionChange(this.multipleSelection)
+      this.select111(this.multipleSelection)
+    },
+    handleSelectionChange(val) {
+      console.log(val)
+      this.multipleSelection = val
+    },
+    select111(val) {
+      console.log(val)
+      // this.multipleSelection = val
     }
   }
 }
