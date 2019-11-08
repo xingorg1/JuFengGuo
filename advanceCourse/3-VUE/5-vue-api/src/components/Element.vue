@@ -41,17 +41,31 @@
         v-model="searchName"
       />
       <el-button @click="filterNameFn">查询</el-button>
-      <!-- 或者不用查询按钮，直接把这个过滤公式放到el-table上，利用filter直接返回新数组的特色了。原数组也不会改变
+      <!-- 
+        // 多选表格的相关方法和属性
+        clearSelection
+        toggleRowSelection
+        toggleAllSelection
+
+        reserve-selection - 记忆多选
+        filter-multiple
+        filter-method
+        或者不用查询按钮，直接把这个过滤公式放到el-table上，利用filter直接返回新数组的特色了。原数组也不会改变
+        // 方法1，用按钮切换过滤，data上绑定过滤后的数据
         :data="tableDataNormal"
-      -->
-      <el-table
+        // 方法2，直接绑定在el-table上，问题是没能过滤树结构的子级，加的话代码太长，为了可读性改成了计算属性
         :data="tableDataNormal.filter(data => !searchName || data.name.toLowerCase().includes(searchName.toLowerCase()))"
+      -->
+      <!-- 只过滤了data的name，第一层的。需要再深入过滤data.children.name的值才行。另外这里:data太长了，可以写到计算属性中 -->
+      <el-table
+        :data="filtertableDataNormal"
         :load="load"
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
+        :tree-props="{children: 'children', hasChildren: 'haha'}"
         @expand-change="expandChange"
         @select="select111"
         @selection-change="handleSelectionChange"
         border
+        default-expand-all
         lazy
         ref="multipleTable"
         row-key="id"
@@ -164,6 +178,24 @@ export default {
     }
   },
   watch: {},
+  computed: {
+    filtertableDataNormal() {
+      // 树级结构做模糊过滤、搜索
+      function diguiFnc(arr) {
+        log(this)
+        // debugger
+        return arr.filter(data => {
+          let child = data.children
+          if (child && child.length > 0) {
+            return diguiFnc.call(this,child)
+          } else {
+            return !this.searchName || data.name.toLowerCase().includes(this.searchName.toLowerCase())
+          }
+        })
+      }
+      return diguiFnc.call(this, this.tableDataNormal)
+    }
+  },
   methods: {
     filterNameFn() {
       this.tableDataNormal =
@@ -231,18 +263,18 @@ export default {
       for (var i in [1, 2, 3]) {
         var item = parseInt(Math.random() * 8)
         this.multipleSelection.push(this.tableDataNormal[item])
-        log(item)
+        // log(item)
       }
-      console.log(this.multipleSelection)
+      // console.log(this.multipleSelection)
       this.handleSelectionChange(this.multipleSelection)
       this.select111(this.multipleSelection)
     },
     handleSelectionChange(val) {
-      console.log(val)
+      // console.log(val)
       this.multipleSelection = val
     },
     select111(val) {
-      console.log(val)
+      // console.log(val)
       // this.multipleSelection = val
     }
   }
