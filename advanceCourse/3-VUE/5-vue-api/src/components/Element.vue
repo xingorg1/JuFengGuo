@@ -56,9 +56,14 @@
         // 方法2，直接绑定在el-table上，问题是没能过滤树结构的子级，加的话代码太长，为了可读性改成了计算属性
         :data="tableDataNormal.filter(data => !searchName || data.name.toLowerCase().includes(searchName.toLowerCase()))"
       -->
-      <!-- 只过滤了data的name，第一层的。需要再深入过滤data.children.name的值才行。另外这里:data太长了，可以写到计算属性中 -->
+      <!-- 
+        只过滤了data的name，第一层的。需要再深入过滤data.children.name的值才行。另外这里:data太长了，可以写到计算属性中
+        // 第一种过滤计算属性，过滤完了以后带着父元素
+        :data="filtertableDataNormal1" 
+        // 第二种过滤计算属性，过滤的是最彻底的，留下的是最干净的。
+       -->
       <el-table
-        :data="filtertableDataNormal"
+        :data="filtertableDataNormal2"
         :load="load"
         :tree-props="{children: 'children', hasChildren: 'haha'}"
         @expand-change="expandChange"
@@ -179,21 +184,59 @@ export default {
   },
   watch: {},
   computed: {
-    filtertableDataNormal() {
-      // 树级结构做模糊过滤、搜索
+    filtertableDataNormal1() {
+      // 树级结构做模糊过滤、搜索 - 第一级，这种过滤完了以后，还会有父级在，不是最干净的过滤
       function diguiFnc(arr) {
         log(this)
-        // debugger
+        // debugger - 这种过滤完了以后
         return arr.filter(data => {
           let child = data.children
           if (child && child.length > 0) {
-            return diguiFnc.call(this,child)
+            return diguiFnc.call(this, child)
           } else {
-            return !this.searchName || data.name.toLowerCase().includes(this.searchName.toLowerCase())
+            return (
+              !this.searchName ||
+              data.name.toLowerCase().includes(this.searchName.toLowerCase())
+            )
           }
         })
       }
       return diguiFnc.call(this, this.tableDataNormal)
+    },
+    filtertableDataNormal2() {
+      // 树级结构做模糊过滤、搜索 - 第二级，可以满足只过滤子级，过滤到最深层级别
+      if (this.searchName.length === 0) {
+        return this.tableDataNormalOrigin
+      } else {
+        let filterArr = []
+        function diguiFnc(arr) {
+          log(this)
+          arr.forEach(data => {
+            let child = data.children
+            if (child && child.length > 0) {
+              // filterArr.push(data)
+              diguiFnc.call(this, child)
+            } else {
+              if (
+                !this.searchName ||
+                data.name.toLowerCase().includes(this.searchName.toLowerCase())
+              )
+                filterArr.push(data)
+            }
+          })
+          // debugger - 这种过滤完了以后
+          // return arr.filter(data => {
+          //   let child = data.children
+          //   if (child && child.length > 0) {
+          //     return diguiFnc.call(this,child)
+          //   } else {
+          //     return !this.searchName || data.name.toLowerCase().includes(this.searchName.toLowerCase())
+          //   }
+          // })
+        }
+        diguiFnc.call(this, this.tableDataNormal)
+        return filterArr
+      }
     }
   },
   methods: {
