@@ -31,6 +31,32 @@
       </el-tooltip>
     </div>
     <div class="area">
+      <h3>层级树 - column-key +filter-change过滤</h3>
+      <el-table
+        :data="tableDataTree"
+        :tree-props="{children: 'children', hasChildren: 'haha'}"
+        @selection-change="handleSelectionChangeTree"
+        border
+        default-expand-all
+        fit
+        ref="multipleTableTree"
+        row-key="id"
+        style="width: 100%"
+        tooltip-effect="dark"
+      >
+        <el-table-column type="selection" width="55"></el-table-column>
+        <el-table-column label="日期">
+          <template slot-scope="scope">{{ scope.row.date }}</template>
+        </el-table-column>
+        <el-table-column label="姓名" prop="name" column-key="name"></el-table-column>
+        <el-table-column label="地址" prop="address" show-overflow-tooltip></el-table-column>
+      </el-table>
+      <div style="margin-top: 20px">
+        <el-button @click="toggleSelectionTree([tableDataTree[1], tableDataTree[2]])">切换第二、第三行的选中状态</el-button>
+        <el-button @click="toggleSelectionTree()">取消选择</el-button>
+      </div>
+    </div>
+    <div class="area">
       <h3>树形懒加载的加锁处理 - 有一个tr内容在下钻期间，同表格内其他tr不允许下钻</h3>
       <el-button @click="tableClick()">点击</el-button>
       <el-input
@@ -61,9 +87,11 @@
         // 第一种过滤计算属性，过滤完了以后带着父元素
         :data="filtertableDataNormal1" 
         // 第二种过滤计算属性，过滤的是最彻底的，留下的是最干净的。
-       -->
-      <el-table
         :data="filtertableDataNormal2"
+        // 第三种过滤不仅要彻底、干净，不仅要深入层级，还要保留父级，不然有子级的父级过滤不出来
+      -->
+      <el-table
+        :data="filtertableDataNormal4"
         :load="load"
         :tree-props="{children: 'children', hasChildren: 'haha'}"
         @expand-change="expandChange"
@@ -76,6 +104,7 @@
         row-key="id"
         style="width: 100%"
       >
+        <el-table-column fixed type="index" width="25"></el-table-column>
         <el-table-column :reserve-selection="bool" type="selection" width="55"></el-table-column>
         <el-table-column label="日期" prop="date" width="180"></el-table-column>
         <el-table-column label="姓名" prop="name" width="180"></el-table-column>
@@ -125,10 +154,13 @@ export default {
       search1: '',
       search2: '',
       multipleSelection: [],
-      bool: true
+      bool: true,
+      tableDataTree: [],
+      multipleSelectionTree: []
     }
   },
   created() {
+    this.tableDataTree = this.$mock['tableDataNormal']
     this.tableDataNormal = this.$mock['tableDataNormal']
     this.tableDataNormalOrigin = this.$mock['tableDataNormal']
     this.tableDataFixed = this.$mock['tableDataFixed']
@@ -140,7 +172,7 @@ export default {
     //     console.log(document.body.getElementsByClassName(".el-tooltip__popper"))
     // });
     // },3000)
-    this.initSelectTable() // 初始化选中table中的个别数据
+    // this.initSelectTable() // 初始化选中table中的个别数据
   },
   directives: {
     scrollNoFixed: {
@@ -206,11 +238,11 @@ export default {
     filtertableDataNormal2() {
       // 树级结构做模糊过滤、搜索 - 第二级，可以满足只过滤子级，过滤到最深层级别
       if (this.searchName.length === 0) {
+        return this.tableDataNormal // 返回原数组就行，filter和forEach都不改变原数组
         return this.tableDataNormalOrigin
       } else {
         let filterArr = []
         function diguiFnc(arr) {
-          log(this)
           arr.forEach(data => {
             let child = data.children
             if (child && child.length > 0) {
@@ -235,6 +267,84 @@ export default {
           // })
         }
         diguiFnc.call(this, this.tableDataNormal)
+        return filterArr
+      }
+    },
+    filtertableDataNormal3() {
+      // 树级结构做模糊过滤、搜索 - 第三级，继续优化过滤方案，把最顶级也加入过滤中
+      if (this.searchName.length === 0) {
+        log(this.tableDataNormalOrigin)
+        return this.tableDataNormalOrigin // 返回原数组就行，filter和forEach都不改变原数组
+      } else {
+        let filterArr = []
+        function diguiFnc(arr) {
+          arr.forEach(data => {
+            // 第一层（父级）判断的时候，检测有过滤内容的就提取出来（不包含子级提取）
+            if (
+              !this.searchName ||
+              data.name.toLowerCase().includes(this.searchName.toLowerCase())
+            ) {
+              let { id, date, name, address } = data
+              log(data)
+              filterArr.push({ id, date, name, address })
+            }
+            // 检测子级层，如果存在就递归调用该逻辑
+            let child = data.children
+            if (child && child.length > 0) {
+              diguiFnc.call(this, child)
+            }
+            //  else {
+            //   if (
+            //     !this.searchName ||
+            //     data.name.toLowerCase().includes(this.searchName.toLowerCase())
+            //   )
+            //     filterArr.push(data)
+            // }
+          })
+        }
+        diguiFnc.call(this, this.tableDataNormal)
+        return filterArr
+      }
+    },
+    filtertableDataNormal4() {
+      // 树级结构做模糊过滤、搜索 - 第四级，继续最佳优化，父级能单独过滤出来了，子级选完后恢复全部树级又挂了
+      if (this.searchName.length === 0) {
+        log(this.tableDataNormal, this.multipleSelection)
+        this.multipleSelection.forEach(el => {
+          log(el && el.id)
+        })
+        return this.tableDataNormal // 返回原数组就行，filter和forEach都不改变原数组
+      } else {
+        let filterArr = [],
+          diguiFnc = arr => {
+            arr.forEach(data => {
+              // debugger
+              log(data)
+              if (
+                !this.searchName ||
+                data.name.toLowerCase().includes(this.searchName.toLowerCase())
+              ) {
+                let { id, date, name, address } = data
+                filterArr.push({ id, date, name, address })
+                // data.children = null
+                // filterArr.push(data)
+              }
+              let child = data.children
+              if (child && child.length > 0) {
+                diguiFnc(child)
+              }
+              // else {
+              //   if (
+              //     !this.searchName ||
+              //     data.name
+              //       .toLowerCase()
+              //       .includes(this.searchName.toLowerCase())
+              //   )
+              //     filterArr.push(data)
+              // }
+            })
+          }
+        diguiFnc(this.tableDataNormal)
         return filterArr
       }
     }
@@ -313,12 +423,24 @@ export default {
       this.select111(this.multipleSelection)
     },
     handleSelectionChange(val) {
-      // console.log(val)
+      console.log(val)
       this.multipleSelection = val
     },
     select111(val) {
-      // console.log(val)
+      console.log(val)
       // this.multipleSelection = val
+    },
+    toggleSelectionTree(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTableTree.toggleRowSelection(row)
+        })
+      } else {
+        this.$refs.multipleTableTree.clearSelection()
+      }
+    },
+    handleSelectionChangeTree(val) {
+      this.multipleSelectionTree = val
     }
   }
 }
