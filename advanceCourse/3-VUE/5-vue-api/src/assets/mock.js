@@ -22,15 +22,13 @@ export default {
     radiusAxis: {
       min: 0
     },
-    series: [
-      {
-        coordinateSystem: "polar",
-        name: "line",
-        type: "line",
-        showSymbol: false,
-        data: [1, 2, 3, 4, 5]
-      }
-    ],
+    series: [{
+      coordinateSystem: "polar",
+      name: "line",
+      type: "line",
+      showSymbol: false,
+      data: [1, 2, 3, 4, 5]
+    }],
     animationDuration: 2000
   },
   "areaData": {
@@ -46,7 +44,7 @@ export default {
         fontSize: 12,
         color: "red",
         align: "left",
-        padding: [0,0,0, 60],
+        padding: [0, 0, 0, 60],
         rich: {
           a: {
             // 没有设置 `align`，则 `align` 为 right
@@ -75,14 +73,12 @@ export default {
     tooltip: {
       trigger: "axis"
     },
-    series: [
-      {
-        data: ["8", "9.1", "9.4", "4.5", "1.9", "3.3", "0"],
-        type: "line",
-        smooth: true,
-        areaStyle: {}
-      }
-    ]
+    series: [{
+      data: ["8", "9.1", "9.4", "4.5", "1.9", "3.3", "0"],
+      type: "line",
+      smooth: true,
+      areaStyle: {}
+    }]
   },
   "tableDataFixed": [{
     date: '2016-05-02',
@@ -118,50 +114,76 @@ export default {
     name: 'zhangguorong',
     address: '上海市普陀区金沙江路 1516 弄'
   }],
+  // 名字随便打，如有雷同纯属巧合
   "tableDataNormal": [{
       id: 1,
       date: "2016-05-02",
       name: "郭菊锋",
-      address: "上海市普陀区金沙江路 1518 弄"
+      address: "上海市普陀区金沙江路 1518 弄",
+      children: [{
+          id: 11,
+          date: '2016-05-01',
+          name: '李德愁1',
+          address: '上海市普陀区金沙江路 1519 弄',
+          children: [{
+            id: 111,
+            date: '2016-05-01',
+            name: '郭德愁2',
+            address: '上海市普陀区金沙江路 1519 弄'
+          }]
+        },
+        {
+          id: 12,
+          date: '2016-05-01',
+          name: '张迪生3',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }
+      ]
     },
     {
       id: 2,
       date: "2016-05-04",
       name: "郭沫若",
       address: "上海市普陀区金沙江路 1517 弄",
-      hasChildren: true
+      children: [{
+        id: 31,
+        date: '2016-05-01',
+        name: '李德愁4',
+        address: '上海市普陀区金沙江路 1519 弄'
+      }]
     },
     {
       id: 3,
       date: "2016-05-01",
       name: "郭德纲",
       address: "上海市普陀区金沙江路 1519 弄",
-      hasChildren: true
     },
     {
       id: 4,
       date: "2016-05-03",
       name: "冯小纲",
       address: "上海市普陀区金沙江路 1516 弄",
-      hasChildren: true
     },
     {
       id: 5,
       date: "2016-05-01",
-      name: "王小虎",
+      name: "张艾迪",
       address: "上海市普陀区金沙江路 1519 弄",
-      hasChildren: true
+      children: [{
+        id: 52,
+        date: '2016-05-01',
+        name: '张迪生5',
+        address: '上海市普陀区金沙江路 1519 弄'
+      }]
     },
     {
       id: 6,
       date: "2016-05-03",
-      name: "王小虎",
+      name: "刘济格",
       address: "上海市普陀区金沙江路 1516 弄",
-      hasChildren: true
     }
   ],
-  "tableData": [
-    {
+  "tableData": [{
       date: "2016-05-03",
       name: "王小虎",
       province: "8%",
@@ -218,8 +240,7 @@ export default {
       zip: 200333
     }
   ],
-  "tableData1": [
-    {
+  "tableData1": [{
       id: 1,
       date: "2016-05-02",
       name: "王小虎1",
@@ -245,8 +266,7 @@ export default {
       address: "20%"
     }
   ],
-  "tableData2": [
-    {
+  "tableData2": [{
       id: 1,
       date: "2016-05-02",
       name: "郭菊锋1",
