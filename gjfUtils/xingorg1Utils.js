@@ -737,6 +737,22 @@ var xingorg1Utils = {
     var reg = /(?=(\B)(\d{3})+$)/g;
     return str.replace(reg, symb);
   },
+  scienceNote4: function (str) {
+    /*
+     * @Author: @Guojufeng 
+     * @Date: 2019-01-03 14:27:08 
+     * @Last Modified by:   @Guojufeng 
+     * @Last Modified time: 2019-01-03 14:27:08 
+     * 科学记数法 - Number(str).toLocaleString()
+     * @params {str}: string,要转换的字符串
+     * 示例：
+     * Number('124124').toLocaleString() -> "124,124"
+     * Number('124124.12').toLocaleString() -> "124,124.12"
+     * Number('124124.12%').toLocaleString() -> "NaN"
+     * 总结： 只适用于纯数字或者可转换为数字的字符串。其他情况皆为NaN,因为要走Number的原因，规律参考Number的类型转换规则
+    */
+   return Number(str).toLocaleString()
+  },
   getDomByClass: function (clsName) {
     /*
      * @Author: @Guojufeng 
