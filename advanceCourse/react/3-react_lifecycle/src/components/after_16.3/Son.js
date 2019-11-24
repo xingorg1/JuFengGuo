@@ -1,6 +1,6 @@
 import React from 'react';
 const {log} = console;
-
+log('16.3以后版本 - 组件生命周期流程图')
 log(`%c==============子组件生命周期流程图开始==============`,'color: #78d778')
 log(`【儿子初始化】-%c流程${1}: start%c开始创建组件`,'font-size: 12px; color: #f6b1a5','font-size：12px;color:#666')
 class Son extends React.Component {
@@ -20,9 +20,16 @@ class Son extends React.Component {
     
   }
 
-  componentWillMount(){
-    // 即将挂载组件触发此函数
-    log(`【儿子初始化】-%c流程${4}: componentWillMount%c生命周期函数。此时组件即将挂载到页面上。`,'font-size: 12px; color: #f6b1a5','font-size：12px;color:#666')
+  // componentWillMount(){
+  //   // 即将挂载组件触发此函数
+  //   log(`【儿子初始化】-%c流程${4}: componentWillMount%c生命周期函数。此时组件即将挂载到页面上。`,'font-size: 12px; color: #f6b1a5','font-size：12px;color:#666')
+  // }
+
+  static getDerivedStateFromProps(props,state){
+    log(props,state)
+    log(`【儿子初始化】-%c流程${4}: getDerivedStateFromProps%c静态方法。`,'font-size: 12px; color: #f6b1a5','font-size：12px;color:#666')
+    // log(`【父组件state更改】-%c流程${9}: getDerivedStateFromProps%c静态方法，组件的state或props即将被更新`,'font-size: 12px; color: #f6b1a5','font-size：12px;color:#666')
+    return state
   }
 
   render(){
@@ -50,23 +57,35 @@ class Son extends React.Component {
     return true; // true进行更新。流程继续向下
   }
 
-  componentWillUpdate(){
-    // 即将更新state数据
-    log(`【儿子组件state更改】-%c流程${9}: componentWillUpdate%c生命周期钩子函数，组件的state即将被更新`,'font-size: 12px; color: #f6b1a5','font-size：12px;color:#666')
-  }
+  // componentWillUpdate(){
+  //   // 即将更新state数据
+  //   log(`【儿子组件state更改】-%c流程${9}: componentWillUpdate%c生命周期钩子函数，组件的state即将被更新`,'font-size: 12px; color: #f6b1a5','font-size：12px;color:#666')
+  // }
 
   // 中间回重新渲染页面
 
-  componentDidUpdate(){
+  getSnapshotBeforeUpdate(prevProps,prevState){
+    // 更新前，创建快照
+    log(`【儿子组件state更改】-%c流程${10}: getSnapShotBeforeUpdate%c生命周期钩子函数，组件的state或props即将被更新前创建快照`,'font-size: 12px; color: #f6b1a5','font-size：12px;color:#666')
+    return {
+      prevProps,
+      prevState,
+      name:'我是从getSnapshotBeforeUpdate钩子函数返回出去的'
+    }
+  }
+
+  componentDidUpdate(prevProps,prevState,snapShot){
     // state数据更新完毕
-    log(`【儿子组件state更改】-%c流程${10}: componentDidUpdate%c生命周期钩子函数，重新回去执行render函数渲染页面后触发，表示组件的state已经被更新完毕`,'font-size: 12px; color: #f6b1a5','font-size：12px;color:#666')
+    // 从snapshot的返回值中接收
+    log('接收结果：',prevProps,prevState,snapShot)
+    log(`【儿子组件state更改】-%c流程${11}: componentDidUpdate%c生命周期钩子函数，重新回去执行render函数渲染页面后触发，表示组件的state已经被更新完毕`,'font-size: 12px; color: #f6b1a5','font-size：12px;color:#666')
     log(`%c==============子组件生命周期流程图一波结束==============`,'color: #95d8fe')
   }
 
-  componentWillReceiveProps(){
-    // 父组件state修改，子组件即将接受修改
-    log(`【儿子组件state更改，子组件反应】-%c流程${1}: componentWillReceiveProps%c生命周期钩子函数，父组件state修改，子组件的props即将被更新`,'font-size: 12px; color: #ffda00','font-size：12px;color:#666')
-  }
+  // componentWillReceiveProps(){
+  //   // 父组件state修改，子组件即将接受修改
+  //   log(`【儿子组件state更改，子组件反应】-%c流程${1}: componentWillReceiveProps%c生命周期钩子函数，父组件state修改，子组件的props即将被更新`,'font-size: 12px; color: #ffda00','font-size：12px;color:#666')
+  // }
 
   componentWillUnmount(){
     // 子组件即将被卸载时触发

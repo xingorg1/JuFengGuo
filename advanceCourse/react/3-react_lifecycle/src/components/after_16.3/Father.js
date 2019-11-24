@@ -23,16 +23,24 @@ class Father extends React.Component {
     showSon: true
   }
 
-  componentWillMount(){
-    // 即将挂载组件触发此函数
-    log(`【父初始化】-%c流程${4}: componentWillMount%c生命周期函数。此时组件即将挂载到页面上。`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
+  // 没有这个钩子函数了
+  // componentWillMount(){
+  //   // 即将挂载组件触发此函数
+  //   log(`【父初始化】-%c流程${4}: componentWillMount%c生命周期函数。此时组件即将挂载到页面上。`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
+  // }
+
+  static getDerivedStateFromProps(props,state){
+    log(props,state)
+    log(`【父初始化】-%c流程${4}: getDerivedStateFromProps%c静态方法。`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
+    // log(`【父组件state更改】-%c流程${9}: getDerivedStateFromProps%c静态方法，组件的state或props即将被更新`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
+    return state
   }
   
   render(){
     // render渲染函数
     log(`【父初始化】-%c流程${5 + '/9-10'}: render%c函数渲染页面。`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
     let Father = <>
-      <h3>生命周期函数流程研究</h3>
+      <h3>16.3版本以后，生命周期函数流程研究</h3>
       <div className="wrapper">
         <h4>父亲组件生命周期函数检测</h4> 
         count的值： { this.state.count }
@@ -62,24 +70,31 @@ class Father extends React.Component {
     })
   }
 
-  shouldComponentUpdate(){
+  shouldComponentUpdate(nextProps,nextStates){
     // 询问是否可更新组件数据
     log(`【父组件state更改】-%c流程${8}: shouldComponentUpdate%c钩子函数监听并拦截。询问是否需要更新。（我可以更新你的state数据吗？）`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
     // 写了此方法，就必须要有返回值，否则报错 
     // return false; // false表示不更新，流程不向下进行
     return true; // true进行更新。流程继续向下
+    return nextStates.count !== this.state.count
   }
 
-  componentWillUpdate(){
-    // 即将更新state数据
-    log(`【父组件state更改】-%c流程${9}: componentWillUpdate%c生命周期钩子函数，组件的state即将被更新`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
-  }
+  // componentWillUpdate(){
+  //   // 即将更新state数据
+  //   log(`【父组件state更改】-%c流程${9}: componentWillUpdate%c生命周期钩子函数，组件的state即将被更新`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
+  // }
 
   // 中间回重新渲染页面
+  
+  getSnapshotBeforeUpdate(prevProps,prevState){
+    // 更新前，创建快照
+    log(`【父组件state更改】-%c流程${10}: getSnapShotBeforeUpdate%c生命周期钩子函数，组件的state或props即将被更新前创建快照`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
+    return null
+  }
 
   componentDidUpdate(){
     // state数据更新完毕
-    log(`【父组件state更改】-%c流程${10}: componentDidUpdate%c生命周期钩子函数，在重新回去执行render函数渲染页面后触发，表示组件的state已经被更新完毕`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
+    log(`【父组件state更改】-%c流程${11}: componentDidUpdate%c生命周期钩子函数，在重新回去执行render函数渲染页面后触发，表示组件的state已经被更新完毕`,'font-size: 12px; color: tomato','font-size：12px;color:#000')
     log(`%c================父组件生命周期流程图一波结束================`,'color: #1af')
   }
   
