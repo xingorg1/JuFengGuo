@@ -1,3 +1,7 @@
+print(str(123))
+print(str('123'))
+print(str(12.3))
+print(str(True))
 print(int('123'))
 for i in '123': #for循环可以遍历字符串
   print(i)
@@ -43,6 +47,7 @@ def hanshu(a,b):
 result = hanshu(1,2)
 print(result)
 
+# 类
 class Person:
   mytype = '人类'  # 父类的属性
   def __init__(self): #初始化init函数，不是constructor函数
@@ -63,3 +68,24 @@ gjf.greeting('郭菊锋')
   
 a = list('123')
 print(a)
+
+# 类型获取
+def a():
+  pass
+print(type('str'))
+print(type(1))
+print(type(1.3))
+print(type(None))
+print(type(True))
+print(type({}))
+b = ["1",2]
+print(isinstance(b,list))
+print('-'.join(str(b)))
+print('-'.join(['d','o','g']))
+print(type(('1')))
+print(type(a))
+
+to_addr = ['xing.org1@outlook.com','702004176.qq.com']
+if isinstance(to_addr,list):
+  to_addr = ','.join(to_addr)
+  print(to_addr)

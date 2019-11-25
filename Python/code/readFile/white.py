@@ -10,7 +10,7 @@ file1 = open('abc.txt','w',encoding='utf-8')
 
 # 2、写
 
-filecontent = file1.white('\n郭菊锋')   
+filecontent = file1.write('\n郭菊锋')   
 print(filecontent)
 
 # 【第3步-关】关闭文件，使用的是close()函数。
