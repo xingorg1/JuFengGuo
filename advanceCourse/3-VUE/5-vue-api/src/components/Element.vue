@@ -48,7 +48,7 @@
         <el-table-column label="日期">
           <template slot-scope="scope">{{ scope.row.date }}</template>
         </el-table-column>
-        <el-table-column label="姓名" prop="name" column-key="name"></el-table-column>
+        <el-table-column column-key="name" label="姓名" prop="name"></el-table-column>
         <el-table-column label="地址" prop="address" show-overflow-tooltip></el-table-column>
       </el-table>
       <div style="margin-top: 20px">
@@ -137,6 +137,33 @@
         </el-table-column>
       </el-table>
     </div>
+    <div class="area">
+      <h3>两边固定，tr错位</h3>
+      <el-table
+        :data="fixedTableData"
+        border
+        max-height="250"
+        size="mini"
+        style="width: 700px"
+        tooltip-effect="light"
+      >
+        <el-table-column fixed label="日期" prop="date" width="150"></el-table-column>
+        <el-table-column label="姓名" prop="name" width="120"></el-table-column>
+        <el-table-column label="省份" prop="province" width="120"></el-table-column>
+        <el-table-column label="市区" prop="city" width="120"></el-table-column>
+        <el-table-column label="地址" prop="address" width="300"></el-table-column>
+        <el-table-column label="邮编" prop="zip" width="120"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="120">
+          <template slot-scope="scope">
+            <el-button
+              @click.native.prevent="deleteRow(scope.$index, tableData)"
+              size="small"
+              type="text"
+            >移除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 <script>
@@ -156,7 +183,8 @@ export default {
       multipleSelection: [],
       bool: true,
       tableDataTree: [],
-      multipleSelectionTree: []
+      multipleSelectionTree: [],
+      fixedTableData: []
     }
   },
   created() {
@@ -165,6 +193,7 @@ export default {
     this.tableDataNormalOrigin = this.$mock['tableDataNormal']
     this.tableDataFixed = this.$mock['tableDataFixed']
     this.tableDataFilter = this.$mock['tableDataFilter']
+    this.fixedTableData = this.$mock['fixedTableData']
   },
   mounted() {
     // setInterval(()=>{
