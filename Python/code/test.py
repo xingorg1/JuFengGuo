@@ -4,12 +4,12 @@ print(str(12.3))
 print(str(True))
 print(int('123'))
 for i in '123':  # for循环可以遍历字符串
-    print(i)
-# for i in 12: # for循环不能遍历整数
-#   print(i)
+    print('for循环可以遍历字符串',i)
+for i in range(3): # for循环遍历整数
+  print('for循环遍历整数',i)
 obj = {'name': '12', 'age': '2'}
 for i1 in obj:
-    print(i1)
+    print('for循环可以遍历字典',i1)
 for i2 in range(2):  # range遍历从0开始
     print('-', i2)
 print('a' < 'b')  # 字符串可以比较大小，应该也是转ascii码
