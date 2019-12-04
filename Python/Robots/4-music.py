@@ -15,7 +15,7 @@ for item in json_music['data']['song']['list']:
     # 查找专辑名
     print('播放时长：'+str(item['interval'])+'秒')
     # 查找播放时长
-    print('播放链接：https://y.qq.com/n/yqq/song/'+item['mid']+'.html\n\n')
+    print('播放链接：https://y.qq.com/n/yqq/song/'+item['mid']+'.html\n\n') # json里边不一定就有完整的url信息，也可能是其他参数拼接的。比如这个。
     # 查找播放链接
 print(songList,len(songList))
 
