@@ -164,3 +164,5 @@ else:
 list1 = ['一','二']
 for num in range(len(list1)):
     print('编号:%s,内容:%s' %(len(list1) - num, list1[num]))
+
+print('数组中某个数据的下标',list1.index('一'))
