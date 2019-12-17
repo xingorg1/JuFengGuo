@@ -50,6 +50,16 @@ export default new Router({
                     path: '/Element',
                     name: 'Element',
                     component: () => import('@/components/Element.vue')
+                },
+                {
+                    path: '/CodeEditor',
+                    name: 'CodeEditor',
+                    component: () => import('@/components/CodeEditor.vue')
+                },
+                {
+                    path: '/VueCodeMirror',
+                    name: 'VueCodeMirror',
+                    component: () => import('@/components/VueCodeMirror.vue')
                 }
 
             ]

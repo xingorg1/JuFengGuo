@@ -8,12 +8,12 @@ driver.get('https://localprod.pandateacher.com/python-manuscript/hello-spiderman
 time.sleep(2)
 
 teacher = driver.find_element_by_id('teacher')
-teacher.send_keys('必须是吴枫呀')
+teacher.send_keys('必须是吴枫呀')  # 输入文字
 assistant = driver.find_element_by_name('assistant')
 assistant.send_keys('都喜欢')
 time.sleep(1)
 button = driver.find_element_by_class_name('sub')
 time.sleep(1)
-button.click()
+button.click() # 点击【提交】按钮
 time.sleep(1)
 driver.close() # 关闭浏览器驱动，每次调用了webdriver之后，都要在用完它之后加上一行driver.close()用来关闭它。使用selenium调用了浏览器之后也要记得关闭浏览器。

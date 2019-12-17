@@ -5,7 +5,11 @@ import ECharts from 'vue-echarts' // refers to components/ECharts.vue in webpack
 import mock from './assets/mock.js'
 // import f2 from '@antv/f2'
 // console.log(f2)
+// vue-codemirror
+import VueCodemirror from 'vue-codemirror'
 
+// require styles
+import 'codemirror/lib/codemirror.css'
 import "echarts/lib/chart/line";
 import "echarts/lib/component/polar";
 
@@ -33,6 +37,14 @@ Vue.use(Button);
 // Vue.use(vueXlsxTable, {rABS: false}) //Browser FileReader API have two methods to read local file readAsBinaryString and readAsArrayBuffer, default rABS false
 
 Vue.use(ElementUI);
+
+// you can set default global options and events when use
+Vue.use(VueCodemirror,
+  /* { 
+  options: { theme: 'base16-dark', ... },
+  events: ['scroll', ...]
+} */
+)
 
 Vue.config.productionTip = false
 

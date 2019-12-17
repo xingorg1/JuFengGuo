@@ -2,6 +2,18 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import store from './store/index'
+// vue-codemirror
+import VueCodemirror from 'vue-codemirror'
+
+// require styles
+import 'codemirror/lib/codemirror.css'
+// you can set default global options and events when use
+Vue.use(VueCodemirror,
+  /* { 
+  options: { theme: 'base16-dark', ... },
+  events: ['scroll', ...]
+} */
+)
 console.log(store)
 router.beforeEach((to, from, next) => {
   console.log('main.js - beforeEach');

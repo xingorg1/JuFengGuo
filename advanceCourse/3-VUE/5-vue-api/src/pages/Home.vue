@@ -16,15 +16,21 @@
       <li>
         <router-link to="/app-vant">vant</router-link>
       </li>
-      
+
       <li>
         <router-link to="/xlsx">xlsx</router-link>
       </li>
       <!-- <li>
         <router-link to="/xlsxDown">xlsx高级下载</router-link>
-      </li> -->
+      </li>-->
       <li>
         <router-link to="/Element">Element</router-link>
+      </li>
+      <li>
+        <router-link to="/CodeEditor">代码编辑器</router-link>
+      </li>
+      <li>
+        <router-link to="/VueCodeMirror">代码编辑器-基于vue二次封装</router-link>
       </li>
     </ul>
     <hr />
@@ -37,12 +43,12 @@
 // import AppAntv from '@/components/AppAntv.vue';
 // import AppAntv from '@/components/AppAntv.vue';
 export default {
-  name: "Home"
+  name: 'Home'
   // components:{
   //     AppEcharts,
   //     AppAntv
   // }
-};
+}
 </script>
 
 <style lang="less">

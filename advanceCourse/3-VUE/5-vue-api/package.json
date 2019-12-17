@@ -18,7 +18,9 @@
     "vue-echarts": "^4.0.3",
     "vue-router": "^3.0.7",
     "vux": "^2.9.4",
-    "xlsx": "^0.15.1"
+    "xlsx": "^0.15.1",
+    "codemirror": "^5.41.0",
+    "diff-match-patch": "^1.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.0",
@@ -35,7 +37,8 @@
     "style-loader": "^1.0.0",
     "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.6.10",
-    "vux-loader": "^1.2.9"
+    "vux-loader": "^1.2.9",
+    "vue-codemirror": "^4.0.0"
   },
   "eslintConfig": {
     "root": true,
