@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>组件复用</title>
+
+</head>
+
+<body>
+  <p>
+    This is the first comment.
+    <!-- We will put our React component inside this div. -->
+    <div class="like_button_container" data-commentid="1"></div>
+  </p>
+
+  <p>
+    This is the second comment.
+    <!-- We will put our React component inside this div. -->
+    <div class="like_button_container" data-commentid="2"></div>
+  </p>
+
+  <p>
+    This is the third comment.
+    <!-- We will put our React component inside this div. -->
+    <div class="like_button_container" data-commentid="3"></div>
+  </p>
+  <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script>
+    'use strict';
+
+    const e = React.createElement;
+
+    class LikeButton extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { liked: false };
+      }
+
+      render() {
+        if (this.state.liked) {
+          return 'You liked comment number ' + this.props.commentID;
+        }
+
+        return e(
+          'button',
+          { onClick: () => this.setState({ liked: true }) },
+          'Like'
+        );
+      }
+    }
+
+    // 【*】Find all DOM containers, and render Like buttons into them.
+    document.querySelectorAll('.like_button_container')
+      .forEach(domContainer => {
+        // Read the comment ID from a data-* attribute.
+        const commentID = parseInt(domContainer.dataset.commentid, 10);
+        ReactDOM.render(
+          e(LikeButton, { commentID: commentID }),
+          domContainer
+        );
+      });
+  </script>
+</body>
+
+</html>
