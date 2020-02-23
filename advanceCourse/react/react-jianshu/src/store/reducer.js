@@ -1,4 +1,4 @@
-import {CHANGE_INPUT_VALUE, CLICK_ADD_BTN, CLICK_DEL_BTN} from './actionTypes'
+import {CHANGE_INPUT_VALUE, CLICK_ADD_BTN, CLICK_DEL_BTN, AJAX_DATA_SET} from './actionTypes'
 // 创建默认state数据
 const defaultState = { 
   todoListData: [
@@ -10,7 +10,8 @@ const defaultState = {
   ],
   todoListVal: '',
   showTips: false,
-  test: false
+  test: false,
+  resultData: [] // 异步数据
 }
 // 创建reducer函数，接收两个参数：state和action。state默认值是defaultState
 const reducer = (state = defaultState, action) => {
@@ -32,6 +33,9 @@ const reducer = (state = defaultState, action) => {
     break;
     case CLICK_DEL_BTN: // 删除list一项
       newState.todoListData.splice(value, 1)
+    break;
+    case AJAX_DATA_SET:
+      newState.resultData = value // 得到ajax返回的数据
     break;
     default:
     break;
