@@ -1,4 +1,11 @@
-import {CHANGE_INPUT_VALUE, CLICK_ADD_BTN, CLICK_DEL_BTN, AJAX_DATA_SET} from './actionTypes'
+import {
+  CHANGE_INPUT_VALUE, 
+  CLICK_ADD_BTN, 
+  CLICK_DEL_BTN, 
+  AJAX_DATA_SET,
+  SAGA_AJAX_RESULT_SET,
+  REDUX_SAGA_DEMO
+} from './actionTypes'
 // 创建默认state数据
 const defaultState = { 
   todoListData: [
@@ -11,7 +18,8 @@ const defaultState = {
   todoListVal: '',
   showTips: false,
   test: false,
-  resultData: [] // 异步数据
+  resultData: [], // 异步数据
+  sagaData: [] // 异步数据
 }
 // 创建reducer函数，接收两个参数：state和action。state默认值是defaultState
 const reducer = (state = defaultState, action) => {
@@ -36,6 +44,12 @@ const reducer = (state = defaultState, action) => {
     break;
     case AJAX_DATA_SET:
       newState.resultData = value // 得到ajax返回的数据
+    break;
+    case SAGA_AJAX_RESULT_SET:
+      newState.sagaData = value // 得到ajax返回的数据
+    break;
+    case REDUX_SAGA_DEMO:
+      console.log('reducer,REDUX_SAGA_DEMO')
     break;
     default:
     break;
