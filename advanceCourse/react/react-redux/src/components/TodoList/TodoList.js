@@ -1,10 +1,11 @@
 import React from 'react'
 import TodoListUI from './TodoListUI'
-import store from '../../store/store' 
+// import store from '../../store/store' 
 import { changeInputValue, clickAddBtn, clickDelBtn} from '../../store/actionCreator'
 import { connect } from 'react-redux'
 
 class TodoList extends React.Component{
+  // 源写法
   // constructor(props){
   //   super(props)
   //   this.state = store.getState()
