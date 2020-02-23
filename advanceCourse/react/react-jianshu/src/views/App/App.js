@@ -4,7 +4,9 @@ import HighChartsUI from '../../components/HighChartsUI/HighChartsUI'
 import DemoUI from '../../components/DemoUI/DemoUI'
 import TodoList1 from '../../components/TodoList1/TodoList1'
 import TodoList2 from '../../components/TodoList2/TodoList2'
-import TodoList from '../../components/TodoList3/TodoList'
+import TodoList3 from '../../components/TodoList3/TodoList'
+import AntDesign from '../../components/AntDesign/AntDesign'
+import TodoList4 from '../../components/TodoList4/TodoList'
 
 function App() {
   return (
@@ -13,7 +15,9 @@ function App() {
       <HighChartsUI />
       <TodoList1/>
       <TodoList2/>
-      <TodoList/>
+      <TodoList3/>
+      <AntDesign />
+      <TodoList4 />
     </div>
   );
 }
