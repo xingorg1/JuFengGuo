@@ -1,0 +1,93 @@
+$bgClr: #f1f1f1;
+$primary: #0af;
+$primaryDeep: #0093dc;
+$success: #0f5;
+$successDeep: #00dc49;
+$error: #f40;
+$errorDeep: #de3b00;
+$borderPrimary: #ccc;
+$borderRadius: 4px;
+.todolist-wrapper{
+  padding: 40px;
+  background: #f9f8f88a;
+  display: inline-block;
+  h1{
+    margin-bottom: 10px;
+  }
+  .todolist-input{
+    width: 430px;
+    outline: none;
+    padding: 4px 5px;
+    border-radius: $borderRadius;
+    border: 1px solid $borderPrimary;
+    &:focus{
+      border: 1px solid $primary;
+    }
+  }
+  .todolist-btn{
+    outline: none;
+    padding: 5px 14px 6px;
+    margin-left: 5px;
+    border-radius: $borderRadius;
+    border: none;
+    background: $primary;
+    color: #fff;
+    font-size: 16px;
+    line-height: 13px;
+    cursor: pointer;
+    &.todolist-add{
+      background: $primary;
+      &:hover{
+        background: $primaryDeep;
+      }
+    }
+    &.todolist-del{
+      background: $error;
+      &:hover{
+        background: $errorDeep;
+      }
+    }
+  }
+  .todolist-tips{
+    color: $error;
+    font-size: 12px;
+    margin-top: 5px;
+    &.hide{
+      display: none;
+    }
+  }
+  .todolist-list{
+    margin: 10px 0;
+    width: 485px;
+    padding: 10px;
+    border: 1px solid $borderPrimary;
+    border-radius: $borderRadius;
+    box-sizing: border-box;
+    h3{
+      font-weight: bold;
+      padding-bottom: 10px;
+    }
+  }
+  .todolist-li{
+    margin-bottom: 10px;
+    counter-increment: slideNum;
+    &:last-child{
+      margin: 0;
+    }
+    &:before{
+      content: counter(slideNum);
+      font-size: 14px;
+      padding: 1px 5px;
+      margin-right: 5px;
+      // background: $primary;
+      // color: #fff;
+      border-radius: 4px;
+    }
+  }
+  .todolist-empty {
+    padding: 40px 0;
+    text-align: center;
+    color: #ccc;
+    font-size: 12px;
+  }
+}
