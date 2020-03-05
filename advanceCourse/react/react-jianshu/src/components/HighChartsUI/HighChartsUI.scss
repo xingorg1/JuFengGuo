@@ -1,0 +1,8 @@
+$bgClr: #fed;
+$txtClr: rgb(57, 0, 114);
+#container{
+  background: $bgClr;
+  .test{
+    color: $txtClr;
+  }
+}

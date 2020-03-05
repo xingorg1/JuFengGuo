@@ -1,0 +1,15 @@
+.antd-wrapper{
+  padding: 40px;
+  max-width: 500px;
+  .ant-input{
+    width: 83%;
+    margin-right: 7px;
+  }
+  .ant-alert,.ant-list-bordered{
+    margin-top: 10px;
+    &.hide{
+      display: none;
+    }
+  }
+  
+}
