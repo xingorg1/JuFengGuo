@@ -4,16 +4,20 @@
     <el-button @click="changeData">改变数据</el-button>
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane name="first">
-        <span slot="label">客户分组</span>
+        <span slot="label">极坐标</span>
         <v-chart :options="polar" />
       </el-tab-pane>
       <el-tab-pane name="second">
-        <span slot="label">配置管理</span>
+        <span slot="label">动态图</span>
         <v-chart ref="myCharts" id="myCharts" :options="area" />
       </el-tab-pane>
       <el-tab-pane name="third">
-        <span slot="label">角色管理</span>
+        <span slot="label">柱图+饼图</span>
         <v-chart :options="bar" />
+      </el-tab-pane>
+      <el-tab-pane name="four">
+        <span slot="label">异常点图</span>
+        <v-chart :options="effectScatter" />
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -22,6 +26,7 @@
 <script>
 import "echarts/lib/chart/bar";
 import "echarts/lib/chart/pie";
+import "echarts/lib/chart/effectScatter"
 const {log} = console;
 export default {
   name: "AppEcharts",
@@ -104,6 +109,7 @@ export default {
       msg: "echarts 应用",
       polar: {},
       area: {},
+      effectScatter: {},
       bar: {
         backgroundColor: {
           type: "pattern",
@@ -291,6 +297,7 @@ export default {
         this.changeData()
       },1000)
     },2000)
+    this.effectScatter = this.$mock.effectScatter;
   },
   methods: {
     handleClick(tab, event) {
