@@ -4,7 +4,7 @@
  * @Author: @Guojufeng 
  * @Date: 2019-05-22 16:09:22 
  * @Last Modified by: @Guojufeng
- * @Last Modified time: 2019-05-22 19:07:35
+ * @Last Modified time: 2020-03-06 17:21:34
  */
 console.log(1);
 var pr1 = new Promise(function (res, rej) {
@@ -87,6 +87,7 @@ var pr4 = new Promise(function (res, rej) {
   setTimeout(function () {
     console.log('第4个promise');
     res('444');
+    // rej('444');
     return 'setTimeout';
   }, 1040);
   return 'Promise';
