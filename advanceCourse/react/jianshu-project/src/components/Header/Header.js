@@ -20,9 +20,8 @@ export default class Header extends React.Component{
         <Right>
           <Aa />
           <Beta href="/" />
-          <i className="iconfont icon-tianjiajiahaowubiankuang" />
           <User />
-          <WriteBtn>写文章</WriteBtn>
+          <WriteBtn><i className="iconfont icon-yumaobi" /> 写文章</WriteBtn>
         </Right>
       </HeaderWrapper>
     </>)
