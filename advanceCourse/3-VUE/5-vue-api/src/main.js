@@ -6,12 +6,14 @@ import mock from './assets/mock.js'
 // import f2 from '@antv/f2'
 // console.log(f2)
 // vue-codemirror
-import VueCodemirror from 'vue-codemirror'
+import VueCodemirror from 'vue-codemirror';
 
 // require styles
-import 'codemirror/lib/codemirror.css'
+import 'codemirror/lib/codemirror.css';
 import "echarts/lib/chart/line";
 import "echarts/lib/component/polar";
+import 'echarts/lib/component/toolbox'; // 工具（如下载功能与按钮）
+import 'echarts/lib/component/tooltip'; // 工具（如下载功能与按钮）
 
 import {
   Button

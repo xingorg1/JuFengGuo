@@ -19,6 +19,17 @@
         <span slot="label">异常点图</span>
         <v-chart :options="effectScatter" />
       </el-tab-pane>
+      <el-tab-pane name="five">
+        <span slot="label">异常点图+平均线+数据视图</span>
+        <v-chart :options="effectScatterDataView" />
+        <ul>
+          <li>要在main.js里边把toolbox引入进来，import 'echarts/lib/component/toolbox'; // 工具（如下载功能与按钮）</li>
+          <li>
+            数据视图控件的配置，在官网有实际例子，可以看这里：
+            <a href="https://www.echartsjs.com/zh/option.html#toolbox.feature.dataView.optionToContent" target="_blank" rel="noopener noreferrer">传送门</a>
+          </li>
+        </ul>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -105,11 +116,12 @@ export default {
     ctx.rotate(-Math.PI / 4);
     ctx.fillText(waterMarkText, 0, 0);
     return {
-      activeName: "second",
+      activeName: "five",
       msg: "echarts 应用",
       polar: {},
       area: {},
       effectScatter: {},
+      effectScatterDataView: {},
       bar: {
         backgroundColor: {
           type: "pattern",
@@ -298,6 +310,7 @@ export default {
       },1000)
     },2000)
     this.effectScatter = this.$mock.effectScatter;
+    this.effectScatterDataView = this.$mock.effectScatterDataView;
   },
   methods: {
     handleClick(tab, event) {
