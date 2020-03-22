@@ -1,7 +1,6 @@
 # 18-1帮你做选择
 import random
 menuList = ['秦唐','永和','米线','重庆','鱼公主','新奥',]
-
 while True:
   print('今天去吃%s好不好？' %(menuList[random.randint(0,5)]))
   result = input('好还是不好？请输入y或者n：')

@@ -13,35 +13,34 @@ export default {
                 lang: ['', '关闭', '刷新'],
                 backgroundColor: '#f3f3f3',
                 optionToContent: function(opt) {
-                    console.log(opt)
                     var axisData = opt.xAxis[0].data;
                     var series = opt.series;
                     var table = '<table style="width:100%;text-align:center"><tbody><tr>'
                                  + '<td>日期</td>';
                     series.forEach((el) => {
-                        console.log(el.name)
                         if(el.type === 'line'){
                              table += '<td>' + el.name || '-'  + '</td>'
                         }
                     })
                     table += '</tr>' 
-                    // 这里还需要tbody方便该样式
+                    // 这里还需要tbody方便改样式
+                    let errorData = series.filter((col) => { // 列数遍历
+                      return col.type === 'effectScatter'
+                    })
                     axisData.forEach((row, i) => { // 行数遍历
-                        console.log('row', row)
                         table += '<tr>'
                         table += `<td>${axisData[i]}</td>`
-                        series.forEach((col) => { // 列数遍历
-                          console.log('col', col)
+                        series.forEach((col, colNum) => { // 列数遍历
                           if(col.type === 'line'){
                             // 正常表
-                            table += `<td>${col.data[i] || '-'}</td>`
-                            // table += '<td>' + col.name || '-'  + '</td>'
-                          }else {
-                            // 异常点
-                            // table += `<td>${col.data[i] && (table += col.data[i])}</td>`
+                            table += `
+                              <td>
+                                ${col.data[i] || '-'}
+                                ${(errorData[colNum/2] && errorData[colNum/2].data[i]) ? '(*)' : ''}
+                              </td>`
                           }
                         })
-                        table += '/<tr>'
+                        table += '</tr>'
                     })
                     table += '</tbody></table>';
                     return table;
@@ -81,6 +80,18 @@ export default {
         color: 'red',
           symbol: 'pin',
           symbolSize: 20
+    },{
+      name: '哈哈哈2',
+      data: [1820, 1932, 1901, 1934, 1231, 1030, 1209],
+      type: 'line',
+      showSymbol: false,
+    },{
+      name: '哈哈哈2',
+      data: [null, 1932, null, null, 1231, null, 1209],
+      type: 'effectScatter',
+      color: '#f0f',
+      symbol: 'pin',
+      symbolSize: 20
     }, {
         name: '平均线',
         data: [840, 932, 840, 840, 932, 840, 840],
