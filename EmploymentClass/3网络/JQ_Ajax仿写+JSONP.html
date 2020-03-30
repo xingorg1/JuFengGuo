@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>仿写JQ的Ajax-JSONP功能</title>
+</head>
+<body>
+  <p>在script标签实现JSONP的原理上，研究JQ的Ajax实现JSONP的原理</p>
+  <script>
+    var $ = {
+      ajax: function(options){
+        var url = options.url,
+          type = options.type,
+          dataType = options.dataType;
+        // 判断是否同源（通过目标url的协议、域名、端口号与当前地址的对比）
+        var targetProtocol = '', // 目标接口的协议
+          targetHost = '';  // 目标接口的host（包含端口和域名）
+        if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) { // 不是同源的
+          // url.indexOf('http://') !== 0,说明目标接口路径是相对路径、也就是同源的。
+          var targetUrl = new URL(url);
+          targetProtocol = targetUrl.protocol
+          targetHost = targetUrl.host
+        } else {
+          // 同源
+          targetProtocol = location.protocol
+          targetHost = location.host
+        }
+        // 判读是否为jsonp，若不是jsonp，直接发送ajax
+        if (dataType.toLocaleLowerCase() === 'jsonp') {
+          // 判断是否同源
+          if(location.protocol === targetProtocol && location.host === targetHost){
+            // 同源，该干啥干啥
+          }else{
+            // 不同源，利用script实现JSONP
+              // 生成一个不会重名的随机名
+              var callback = 'gjf_' + Math.floor(Math.random() * 1000000); 
+              // 【*】将同名的方法挂载window上，函数体是success回调函数
+              window[callback] = options.success;
+              // 生成script标签
+              var script = document.createElement('script');
+              // 生成script的src地址，拼接上callback随机名和原来的参数
+              if (url.indexOf('?') > 0) {
+                // 目标地址里有参数
+                script.src = `${url}&callback=${callback}`;
+              } else {
+                // 无参数
+                script.src = `${url}?callback=${callback}`;
+              }
+              // script标签插入到head中
+              script.id = callback;
+              document.head.appendChild(script);
+          }
+        }
+      }
+    }
+
+   
+  </script>
+  <script>
+     // 对封装的应用
+     var urlGet = 'https://easy-mock.com/mock/5c637819438f894664f808a2/testAjax/userInfo?name=xiaoshitou';
+     urlGet = 'http://developer.duyiedu.com/edu/testJsonp';
+    $.ajax({
+      url: urlGet,
+      type: 'get',
+      dataType: 'jsonp',
+      success: function (res) {
+        console.log(res, 234)
+      }
+    })
+  </script>
+</body>
+</html>

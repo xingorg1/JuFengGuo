@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网络-新-JSONP</title>
+  <script src="../2JQ/jquery.js"></script>
+</head>
+<body>
+  <script>
+    var urlGet = 'https://easy-mock.com/mock/5c637819438f894664f808a2/testAjax/userInfo';
+    var urlPost = 'https://easy-mock.com/mock/5c637819438f894664f808a2/testAjax/pushUserInfo';
+    
+    $.ajax({
+      url: urlGet,
+      type: 'get',
+      dataType: 'jsonp',
+      success: function (res) {
+        console.log(res)
+      }
+    })
+
+  </script>
+</body>
+</html>

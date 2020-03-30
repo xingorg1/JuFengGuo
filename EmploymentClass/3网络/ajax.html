@@ -56,6 +56,7 @@
       if (window.XMLHttpRequest) {
         xhr = new XMLHttpRequest();
       } else {
+        // 兼容IE6
         xhr = new ActiveXObject('Microsoft.XMLHttp');
       }
       //get请求是将参数键值对字符串拼接到open方法的url参数后边，post请求是将键值对字符串传入send括号里
@@ -73,11 +74,18 @@
         xhr.open(type, params.url + prm, async); //第三个参数表示采用异步的方式
         xhr.send();
       }
-
-
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
+      /* 
+        xhr.readyState：
+          0: open之前，刚创建时状态为0，表示初始化
+          1: open之后，状态为1，表示发送中
+          2: 请求发送完毕成功
+          3: 请求处理中
+          4: 请求完毕，并且已经接收到数据
+       */
+      xhr.onreadystatechange = function () { // 监听readyState的变化而触发回调
+        console.log(xhr.readyState)
+        if (xhr.readyState === 4) { // 请求完毕
+          if (xhr.status === 200) { // http状态码
             params.success({
               data: JSON.parse(xhr.responseText).data,
               status: xhr.status,

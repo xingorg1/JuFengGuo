@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>script标签+JSONP</title>
+</head>
+<body>
+  <script src="http://www.baidu.com/?callback=hahah"></script>
+  <script>
+    function hahah(responese){
+      console.log(responese)
+    }
+  </script>
+</body>
+</html>
