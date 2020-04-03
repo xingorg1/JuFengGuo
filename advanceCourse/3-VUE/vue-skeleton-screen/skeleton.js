@@ -13,7 +13,7 @@ const renderer = createBundleRenderer(resolve(__dirname, './dist/skeleton.json')
 // 把上一步模板完成的内容写入（替换）`index.html`
 renderer.renderToString({}, (err, html) => {
   fs.writeFileSync('index.html', html, 'utf-8')
-  html = htmlMinifier.minify(html, {
+  html = htmlMinifier.minify(html, { // 压缩html内容
     collapseWhitespace: true,
     minifyCSS: true
   })
