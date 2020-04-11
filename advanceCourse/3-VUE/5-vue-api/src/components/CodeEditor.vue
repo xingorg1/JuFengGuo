@@ -6,7 +6,7 @@
 </template>
 
 <script>
-const { log } = console
+// const { log } = console
 import 'codemirror/theme/ambiance.css'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/addon/hint/show-hint.css'
@@ -25,7 +25,7 @@ export default {
     }
   },
   mounted() {
-    debugger
+    // debugger
     let mime = 'text/x-mariadb'
     //let theme = 'ambiance'//设置主题，不设置的会使用默认主题
     let editor = CodeMirror.fromTextArea(this.$refs.mycode, {

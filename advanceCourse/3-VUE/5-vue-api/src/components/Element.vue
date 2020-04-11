@@ -167,6 +167,10 @@
   </div>
 </template>
 <script>
+// import Mock from 'mockjs'
+// log(Mock)
+import axios from 'axios' // 引入axios
+import urls from '@/mock/urls'  // 引入实现准备好的接口请求相关配置
 const { log } = console
 export default {
   name: 'Element',
@@ -193,15 +197,25 @@ export default {
     this.tableDataNormalOrigin = this.$mock['tableDataNormal']
     this.tableDataFixed = this.$mock['tableDataFixed']
     this.tableDataFilter = this.$mock['tableDataFilter']
-    this.fixedTableData = this.$mock['fixedTableData']
+    // this.fixedTableData = this.$mock['fixedTableData']
   },
   mounted() {
     // setInterval(()=>{
     //   this.$nextTick(() => {
-    //     console.log(document.body.getElementsByClassName(".el-tooltip__popper"))
+    //     log(document.body.getElementsByClassName(".el-tooltip__popper"))
     // });
     // },3000)
     // this.initSelectTable() // 初始化选中table中的个别数据
+
+    // axios数据请求、该请求会被mock拦截
+    axios[urls.fixedTableData.type](urls.fixedTableData.url)
+      .then((response) => {
+        this.fixedTableData = response && response.data
+        log(this.fixedTableData);
+      })
+      .catch(function (error) {
+        log(error);
+      });
   },
   directives: {
     scrollNoFixed: {
@@ -427,10 +441,10 @@ export default {
       }
     },
     handleEdit(index, row) {
-      console.log(index, row)
+      log(index, row)
     },
     handleDelete(index, row) {
-      console.log(index, row)
+      log(index, row)
     },
     toggleSelection(rows) {
       if (rows) {
@@ -447,16 +461,16 @@ export default {
         this.multipleSelection.push(this.tableDataNormal[item])
         // log(item)
       }
-      // console.log(this.multipleSelection)
+      // log(this.multipleSelection)
       this.handleSelectionChange(this.multipleSelection)
       this.select111(this.multipleSelection)
     },
     handleSelectionChange(val) {
-      console.log(val)
+      log(val)
       this.multipleSelection = val
     },
     select111(val) {
-      console.log(val)
+      log(val)
       // this.multipleSelection = val
     },
     toggleSelectionTree(rows) {

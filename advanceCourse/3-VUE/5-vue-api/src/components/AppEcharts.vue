@@ -314,7 +314,7 @@ export default {
   },
   methods: {
     handleClick(tab, event) {
-      console.log(tab, event);
+      log(tab, event);
       let myChart = this.$refs.myCharts;
       myChart.resize();
     },
@@ -322,7 +322,7 @@ export default {
       let arr = ["Mon", "Tue", "Wed","Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
       this.$set(this.area.xAxis, "data", arr);
       let data = [];
-      arr.forEach((el)=>{
+      arr.forEach(()=>{
         data.push(Math.random() * 10)
       })
       let options = this.$mock.areaData;

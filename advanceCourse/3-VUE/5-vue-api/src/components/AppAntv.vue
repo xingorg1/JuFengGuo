@@ -32,7 +32,7 @@ export default {
   // created() {//注意，一定要在mounted中注册并使用，不然created中不出效果。还会报错“Error: Please specify the id or el of the chart!”
   mounted(){
     // let self = this;
-    // console.log(this.$refs.myChart)//在mounted之后，也才能拿到dom对象
+    // log(this.$refs.myChart)//在mounted之后，也才能拿到dom对象
     // Step 1: 创建 Chart 对象
     const chart = new F2.Chart({
       id: "myChart",
