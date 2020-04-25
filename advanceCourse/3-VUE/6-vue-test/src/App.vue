@@ -2,6 +2,7 @@
   <div id="app">
     <HelloWorld msg="vue test"/>
     <my-count />
+    <button @click="myDispatch">点击触发dispatch</button>
     <!-- <ul>
       <li>
         <router-link to="/home">home</router-link>
@@ -18,7 +19,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import HelloWorld from './components/HelloWorld.vue'
 import MyCount from './components/MyCount.vue'
-
+import store from '@/store'
 @Component({
   components: {
     HelloWorld,
@@ -27,6 +28,11 @@ import MyCount from './components/MyCount.vue'
 })
 export default class App extends Vue {
   appName: string = '我是app啊'
+  created () {
+  }
+  myDispatch () {
+    store.dispatch('changeNumAsync')
+  }
 }
 </script>
 

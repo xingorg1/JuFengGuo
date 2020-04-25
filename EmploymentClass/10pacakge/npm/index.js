@@ -19,3 +19,6 @@ async function saveMovieInfo() {
 }
 /* 3、调用 */
 saveMovieInfo()
+
+/* 当前环境变量获取 */
+console.log(process.env.NODE_ENV)
