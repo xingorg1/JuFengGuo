@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <!-- <script src="./worker.js"></script> -->
+  <script>
+    var globalMaxNum = 100000000
+    console.time()
+    console.log('worker代码开始')
+    let myWorker = new Worker('http://127.0.0.1:5500/EmploymentClass/5HTML5/webWorker/worker.js')
+    myWorker.postMessage({
+      maxNum: globalMaxNum
+    })
+    myWorker.onmessage = function (e) {
+      console.log('worker响应结果', e, e.data)
+      console.timeEnd()
+      myWorker.terminate()
+    }
+    
+    // console.log('==以上是worker==')
+    console.log('====同步代码开始====')
+    console.time()
+    console.log('1,同步第一行')
+    let arr = []
+    for (let i = 0; i < globalMaxNum; i++) {
+      arr.push(i)
+      // console.log('@@@@',i)
+    }
+    console.log('2,同步第二行', arr.length)
+    console.timeEnd()
+  </script>
+</body>
+</html>
