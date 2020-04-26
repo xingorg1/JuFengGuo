@@ -23,6 +23,7 @@ import 'vant/lib/index.css';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/style.less'
+require('./mock') // 引入mock文件
 
 Vue.prototype.$mock = mock;
 // register component to use

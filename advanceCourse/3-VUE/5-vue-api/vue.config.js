@@ -12,6 +12,7 @@ module.exports = {
   //   host: 'gjf.vue-study.com'
   // },
   configureWebpack: config => {
+    devtool: 'source-map'
     // vuxLoader.merge(config, {
     //   plugins: [{
     //     name: 'vux-ui'

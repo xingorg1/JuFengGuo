@@ -53,7 +53,7 @@ export default {
           "sheetjs.xlsx"
         );
       } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
+        if (typeof console !== "undefined") log(e, wbout);
       }
       return wbout;
     },

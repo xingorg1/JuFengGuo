@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="mermaid">
+    graph LR
+      A --- B
+      B-->C[fa:fa-ban forbidden]
+      B-->D(fa:fa-spinner 哈哈);
+  </div>
+  <style>
+    g.node rect {
+      fill: yellow!important;
+    }
+  </style>
+  <script src="https://unpkg.com/mermaid@8.2.6/dist/mermaid.js"></script>
+  <script>mermaid.initialize({startOnLoad:true});</script>
+</body>
+</html>

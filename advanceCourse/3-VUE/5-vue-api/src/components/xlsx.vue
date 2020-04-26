@@ -197,7 +197,7 @@ export default {
           "sheetjs.xlsx"
         );
       } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
+        if (typeof console !== "undefined") log(e, wbout);
       }
       if (id.indexOf("hahha") != -1) {
         /* 移除克隆好的dom */
@@ -222,7 +222,7 @@ export default {
           "sheetjs.xlsx"
         );
       } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
+        if (typeof console !== "undefined") log(e, wbout);
       }
       return wbout;
     },
