@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>flex之align-self</title>
+  <style>
+    .box {
+      display: flex;
+      align-items: flex-start;
+      border: 1px solid #333;
+      height: 400px;
+      flex-wrap: wrap;
+      flex-direction: column;
+      /* vertical-align: -webkit-baseline-middle; */
+    }
+
+    .item {
+      width: 130px;
+      height: 100px;
+      background: #def;
+      line-height: 40px;
+      /* white-space: nowrap; */
+      word-break: break-all;
+    }
+
+    .item:nth-child(odd) {
+      background: #fde;
+    }
+
+    .item:nth-child(2) {
+      align-self: auto;
+    }
+
+    .item:nth-child(5) {
+      align-self: stretch;
+      height: 100px;
+      align-self: baseline;
+      flex-direction: column;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="item">1xxxxxxxxxxxxxx</div>
+    x
+    <div class="item">2xxxxxxxxxxxx</div>
+    <div class="item">3xxxxxxxxxxxxxx</div>x
+    <div class="item">11xxxxxxxxxx</div>
+    <div class="item">22xxxxxxxxxxxxxxx</div>
+    <div class="item">33xxxxxxxxxxxxxxx</div>
+  </div>
+  <h1><a href="http://css.doyoe.com/properties/flex/align-self.htm" target="_blank"></a>关于align-self的说法实验</h1>
+</body>
+
+</html>
