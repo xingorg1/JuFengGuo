@@ -29,6 +29,7 @@ import store from '@/store'
 export default class App extends Vue {
   appName: string = '我是app啊'
   created () {
+    // console.log(this.$velocity)
   }
   myDispatch () {
     store.dispatch('changeNumAsync')
