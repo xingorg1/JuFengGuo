@@ -35,6 +35,8 @@
     </ul>
     <hr />
     <router-view></router-view>
+    <img src="/static/img/test.jpg" alt="">
+    <img :src='imgUrl' alt="">
   </div>
 </template>
 
@@ -43,7 +45,12 @@
 // import AppAntv from '@/components/AppAntv.vue';
 // import AppAntv from '@/components/AppAntv.vue';
 export default {
-  name: 'Home'
+  name: 'Home',
+  data: () => {
+    return {
+      imgUrl: "/static/img/test.jpg"
+    }
+  }
   // components:{
   //     AppEcharts,
   //     AppAntv
