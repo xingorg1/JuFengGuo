@@ -80,4 +80,5 @@ Poker.prototype.dispatchPoker = (pokerArr, radix) => {
   }
   return resultArr;
 }
+// node默认导出module.exports，我们可以给module.exports重新赋值
 module.exports = Poker
