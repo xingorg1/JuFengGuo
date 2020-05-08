@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import store from './store'
 import router from './router.js'
 import ECharts from 'vue-echarts' // refers to components/ECharts.vue in webpack
 import mock from './assets/mock.js'
@@ -53,5 +54,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

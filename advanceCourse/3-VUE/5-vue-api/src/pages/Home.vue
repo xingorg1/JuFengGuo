@@ -35,8 +35,9 @@
     </ul>
     <hr />
     <router-view></router-view>
-    <img src="/static/img/test.jpg" alt="">
-    <img :src='imgUrl' alt="">
+    <!-- <img src="/static/img/test.jpg" alt=""> -->
+    <!-- <img :src='imgUrl' alt=""> -->
+    <img :src='$store.state.imgUrl' alt="">
   </div>
 </template>
 
