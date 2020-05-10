@@ -2,6 +2,9 @@
   <div id="app">
     <!-- <Home/> -->
     <router-view></router-view>
+    <h1>
+      结果为：{{ result }}
+    </h1>
   </div>
 </template>
 
@@ -17,6 +20,19 @@ export default {
   name: 'app',
   components: {
     // Home
+  },
+  data() {
+    return {
+      name: 'one'
+    }
+  },
+  computed: {
+    result(){
+      // setTimeout(() => {
+      //   this.name = 1
+      // }, 1000)
+      return this.name
+    }
   }
 }
 </script>
