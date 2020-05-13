@@ -1,5 +1,5 @@
 // CommonJs规范：导出exports = {}
-
+// exports是commonJs的规范，node基于此规范，实现模块化。并新增了自己的特色module.exports。module.exports = exports = {}，但是如果开发者直接将module.exports重新赋值的话，会打破module.exports和exports之间的链接。之后在用exports.xxx的方式导出将不能被外部接收。
 const abc = 123
 exports.abc = abc
 exports.handleClickFunc = function () {
