@@ -155,8 +155,44 @@ kexuan(1, 2)
 kexuan(1, 2, 3)
 
 /* 默认参数 */
-function moren(a: number, b: number, c?: number = 0): number {
+function moren(a: number, b: number, c: number = 0): number {
   return a + b + c
 }
+/**
+ * 编译后效果
+ * 
+  function moren(a, b, c) {
+    if (c === void 0) { c = 0; }
+    return a + b + c;
+  }
+ */
 moren(1, 2)
 moren(1, 2, 3)
+
+/* 剩余参数 */
+function buildName(firstName: string, ...restOfName: string[]) {
+  return firstName + " " + restOfName.join(" ");
+}
+
+let employeeName = buildName("Joseph", "Samuel", "Lucas", "MacKinzie");
+/**
+ * 
+ * 编译后效果
+ * 
+ function buildName(firstName) {
+   var restOfName = [];
+   for (var _i = 1; _i < arguments.length; _i++) {
+       restOfName[_i - 1] = arguments[_i];
+   }
+   return firstName + " " + restOfName.join(" ");
+ }
+ var employeeName = buildName("Joseph", "Samuel", "Lucas", "MacKinzie");
+ */
+
+ 
+/**
+ * 类似下边这种写法
+ */
+let [head, ...tail] = [1, 2, 3, 4];
+//  head // 1
+//  tail // [2, 3, 4]
