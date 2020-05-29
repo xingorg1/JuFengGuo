@@ -17,7 +17,7 @@ type Pockers2 = SinglePoker2[]
 /**
  * 创建一副扑克牌
  */
-function createPockers(): Pockers2 {
+function createPockers2(): Pockers2 {
   const pocker: Pockers2 = [],
     pockerColor:PokerColor2[] = ['♥', '♠', '♦', '♣' ],
     pockerMark = {
@@ -36,9 +36,9 @@ function createPockers(): Pockers2 {
   }
   return pocker
 }
-function printPocker(pocker: SinglePoker2[]): void {
+function printPocker2(pocker: SinglePoker2[]): void {
   pocker.forEach((el: SinglePoker2) => {
     console.log(el.mark + el.color)
   });
 }
-printPocker(createPockers())
+printPocker2(createPockers2())
