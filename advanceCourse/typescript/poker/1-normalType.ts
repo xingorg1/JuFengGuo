@@ -13,36 +13,36 @@ type SinglePoker = {
 /**
  * 一副扑克牌
  */
-type Pockers = SinglePoker[]
+type Pokers = SinglePoker[]
 /**
  * 创建一副扑克牌
  */
-function createPockers(): Pockers {
-  const pocker: Pockers = [],
-    pockerColor:PokerColor[] = ['♥', '♠', '♦', '♣' ],
-    pockerMark = {
+function createPokers(): Pokers {
+  const poker: Pokers = [],
+    pokerColor:PokerColor[] = ['♥', '♠', '♦', '♣' ],
+    pokerMark = {
       1: 'A',
       11: 'J',
       12: 'Q',
       13: 'K'
     }
   for (let i = 1; i <= 13; i++) {
-    for (let j = 0; j < pockerColor.length; j++) {
-      pocker.push({
-        color: pockerColor[j],
-        mark: pockerMark[i] || i
+    for (let j = 0; j < pokerColor.length; j++) {
+      poker.push({
+        color: pokerColor[j],
+        mark: pokerMark[i] || i
       })
-      // console.log((pockerMark[i] || i )+ pockerColor[j])
+      // console.log((pokerMark[i] || i )+ pokerColor[j])
     }
   }
-  // console.log(pocker)
-  return pocker
+  // console.log(poker)
+  return poker
 }
-// createPockers()
+// createPokers()
 
-function printPocker(pocker: SinglePoker[]): void {
-  pocker.forEach((el: SinglePoker) => {
+function printPoker(poker: SinglePoker[]): void {
+  poker.forEach((el: SinglePoker) => {
     console.log(el.mark + el.color)
   });
 }
-printPocker(createPockers())
+printPoker(createPokers())

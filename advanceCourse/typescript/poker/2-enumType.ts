@@ -2,7 +2,31 @@
 /**
  * 花色
  */
-type PokerColor2 = '♥' | '♠' | '♦' | '♣' // string
+// type PokerColor2 = '♥' | '♠' | '♦' | '♣' // string
+enum PokerColor2 {
+  heart = '♥' ,
+  spade = '♠', 
+  club = '♦',
+  diamond = '♣'
+}
+/**
+ * 牌面
+ */
+enum PokerMark2 {
+  A = 'A',
+  two = '2',
+  three = '3',
+  four = '4',
+  five = '5',
+  six = '6',
+  seven = '7',
+  eight = '8',
+  nine = '9',
+  ten = '10',
+  J = 'J',
+  Q = 'Q',
+  K = 'K'
+}
 /**
  * 一张牌
  */
@@ -13,32 +37,29 @@ type SinglePoker2 = {
 /**
  * 一副扑克牌
  */
-type Pockers2 = SinglePoker2[]
+type Pokers2 = SinglePoker2[]
 /**
  * 创建一副扑克牌
  */
-function createPockers2(): Pockers2 {
-  const pocker: Pockers2 = [],
-    pockerColor:PokerColor2[] = ['♥', '♠', '♦', '♣' ],
-    pockerMark = {
-      1: 'A',
-      11: 'J',
-      12: 'Q',
-      13: 'K'
-    }
-  for (let i = 1; i <= 13; i++) {
-    for (let j = 0; j < pockerColor.length; j++) {
-      pocker.push({
-        color: pockerColor[j],
-        mark: pockerMark[i] || i
+function createPokers2(): Pokers2 {
+  const poker = []
+  const myObject: any = Object
+  const pcokerMark = myObject.values(PokerMark2)
+  const pokerColor = myObject.values(PokerColor2)
+  for (const m of pcokerMark) {
+    for (const c of pokerColor) {
+      poker.push({
+        color: c,
+        mark: m
       })
     }
   }
-  return pocker
+  return poker
 }
-function printPocker2(pocker: SinglePoker2[]): void {
-  pocker.forEach((el: SinglePoker2) => {
+// createPokers2()
+function printPoker2(poker: SinglePoker2[]): void {
+  poker.forEach((el: SinglePoker2) => {
     console.log(el.mark + el.color)
   });
 }
-printPocker2(createPockers2())
+printPoker2(createPokers2())
