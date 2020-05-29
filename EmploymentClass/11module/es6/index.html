@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="huanrao">
+    步余马于兰皋兮， 驰椒丘且焉止息。
+    进不入以离尤兮， 退将复修吾初服。
+    制芰荷以为衣兮， 集芙蓉以为裳。
+    不吾知其亦已兮， 苟余情其信芳。
+    高余冠之岌岌兮， 长余佩之陆离。
+    芳与泽其杂糅兮， 唯昭质其犹未亏。
+    忽反顾以游目兮， 将往观乎四荒。
+    佩缤纷其繁饰兮， 芳菲菲其弥章。
+    民生各有所乐兮， 余独好修以为常。
+    虽体解吾犹未变兮， 岂余心之可惩？
+    <img src="https://img.alicdn.com/bao/uploaded/i3/3521205332/O1CN01L96qbI1pG6PbMUAQW_!!3521205332.jpg_80x80.jpg" alt="">
+    步余马于兰皋兮， 驰椒丘且焉止息。
+    进不入以离尤兮， 退将复修吾初服。
+    制芰荷以为衣兮， 集芙蓉以为裳。
+    不吾知其亦已兮， 苟余情其信芳。
+    高余冠之岌岌兮， 长余佩之陆离。
+    芳与泽其杂糅兮， 唯昭质其犹未亏。
+    忽反顾以游目兮， 将往观乎四荒。
+    佩缤纷其繁饰兮， 芳菲菲其弥章。
+    民生各有所乐兮， 余独好修以为常。
+    虽体解吾犹未变兮， 岂余心之可惩？
+  </div>
+  <script>
+    let img = document.createElement('img')
+    img.src='https://img.alicdn.com/bao/uploaded/i3/3521205332/O1CN01L96qbI1pG6PbMUAQW_!!3521205332.jpg_80x80.jpg'
+    console.log(img)
+    function aaa () {
+      var a = '1aaa'
+      return function () {
+        console.log(123123, a)
+      }
+    }
+    const rebackFun = aaa()
+    // img.onload = (a,b,c) => {
+    //   console.log(a,b,c)
+    // }
+    console.log(rebackFun)
+    img.onload = rebackFun
+  </script>
+  <!-- 模块文件，加上type属性，值为module -->
+  <script src="./import.js" type="module"></script>
+  <script src="./defaultImport.js" type="module"></script>
+</body>
+</html>

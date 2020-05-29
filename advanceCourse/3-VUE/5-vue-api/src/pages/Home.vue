@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <button @click="handleClick">hahah</button>
     <ul>
       <li>
         <router-link to="/app-api">vue</router-link>
@@ -42,14 +43,21 @@
 </template>
 
 <script>
+const {log} = console
 // import AppEcharts from '@/components/AppEcharts.vue';
 // import AppAntv from '@/components/AppAntv.vue';
 // import AppAntv from '@/components/AppAntv.vue';
 export default {
   name: 'Home',
+<<<<<<< HEAD
   data: () => {
     return {
       imgUrl: "/static/img/test.jpg"
+=======
+  methods: {
+    handleClick(e){
+      log(e)
+>>>>>>> develop
     }
   }
   // components:{
