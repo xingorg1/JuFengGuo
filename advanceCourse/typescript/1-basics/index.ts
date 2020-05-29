@@ -196,3 +196,50 @@ let employeeName = buildName("Joseph", "Samuel", "Lucas", "MacKinzie");
 let [head, ...tail] = [1, 2, 3, 4];
 //  head // 1
 //  tail // [2, 3, 4]
+
+
+/**
+ * 枚举
+ * 
+  enum 枚举名称 {
+    枚举字段1 = 值1,
+    枚举字段x = 值x
+	}
+ */
+enum enumSexType {
+  male = 'man',
+  female = 'woman'
+}
+enum directionType {
+  // 以四个方向键的keycode码来举例，枚举的字段值可以是数字
+  left = 37,
+  up = 38,
+  right = 39,
+  down = 40
+}
+//使用枚举后，不能用真实的值来赋值，而是用对象.属性的写法
+let user1Sex = enumSexType.female 
+let user2Sex = enumSexType.male
+console.log(user1Sex, user2Sex)
+let enum1 = directionType.left
+console.log(enum1)
+/**
+ * 编译结果
+    var enumSexType;
+    (function (enumSexType) {
+        enumSexType["male"] = "man";
+        enumSexType["female"] = "woman";
+    })(enumSexType || (enumSexType = {}));
+    var directionType;
+    (function (directionType) {
+        // 以四个方向键的keycode码来举例，枚举的字段值可以是数字
+        directionType[directionType["left"] = 37] = "left";
+        directionType[directionType["up"] = 38] = "up";
+        directionType[directionType["right"] = 39] = "right";
+        directionType[directionType["down"] = 40] = "down";
+    })(directionType || (directionType = {}));
+    //使用枚举后，不能用真实的值来赋值，而是用对象.属性的写法
+    var user1Sex = enumSexType.female;
+    var user2Sex = enumSexType.male;
+    console.log(user1Sex, user2Sex);
+ */
