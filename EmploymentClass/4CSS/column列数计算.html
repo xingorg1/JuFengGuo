@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>column列数-动态计算</title>
+  <style>
+    .contentBox{
+      width: 300px;
+      height: 300px;
+      border: 1px solid red;
+      /* overflow: hidden; */
+      
+    }
+    .content{
+      width: 300px;
+      column-width: 300px;
+      column-gap: 30px;
+      font-size: 16px;
+      line-height: 24px;
+      transition: transform .7s;
+      user-select: none;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="contentBox">
+      <div class="content" id="demoContent">
+            “嘿，小子，把钱都给我拿出来!”两个头发染成花花绿绿的少年把一个身材瘦弱的学生逼在墙角。
+            “嘿，小子，把钱都给我拿出来!”两个头发染成花花绿绿的少年把一个身材瘦弱的学生逼在墙角。
+            “嘿，小子，把钱都给我拿出来!”两个
+
+
+
+            学生被打得嘴角通红，眼泪不争气的掉下来。这时高个旁边的矮胖少年说：“算了，别打坏了。这小子是我班里学习尖子，哈哈!”
+
+            那高个看看学生：“草，看他你熊样吧。学习好有个屁用。”转头对一边的胖子说：“老肥，你去翻翻他兜，我咋不相信他没钱呢!”
+
+            膀子‘恩’了一声，来到学生身前说：“谢文东，你把手松开。”原来那学生听见高个少年的话，用手死死抓住裤兜。
+
+            见那个名叫谢文东的学生象没听见一样还是用手捂着兜。“草，你当我放屁是不是?”胖子一脚蹬在谢文东的小腹上。谢文东身子重重撞在墙上。胖子把他的手拉开，另支手伸进他裤兜里。拿出一张褶皱的五元钱。
+
+            胖子把钱交给高个少年，往地下吐口吐沫：“妈的，给你脸你不要脸。”说完，和高个少年嘻嘻哈哈离开。留下满脸痛苦的谢文东。
+
+            谢文东是J市第二中学初三学生，学习努力，头脑聪明，成绩非常优秀，在整个学校都能排在第一。但是性格有些内向，没有什么朋友，加上身材瘦小，经常受到别人欺负。第二中学在J市不是什么重点中学，学校的管理也很松懈，经常有校外年龄不大的不良少年进出。这些人年龄都不大，由于各种原因不再上学，在社会上糊混。见到软弱好欺的学生，不是找茬就是要钱，或许这样他们能体会到一种成就感吧!
+
+            站在学校走廊里好一会，谢文东弯腰拣起掉这地上的书包，走出学校。回家的路上，谢文东眼睛里都是委屈的泪水，心里不停
+      </div>
+    </div>
+
+    <script>
+        window.onload = function () { 
+            computedColumns(300);
+        }
+        function computedColumns (height) {
+            const contentDom = document.getElementsByClassName('content')[0];
+            console.dir(contentDom)
+            ContentHeight = getComputedStyle(contentDom).height;
+            columns = Math.ceil(parseFloat(ContentHeight) / height);
+            setTimeout(() => {
+              scrollW = contentDom.scrollWidth
+              console.log(scrollW, Math.ceil(scrollW / (300 + 30)))
+            }, 500)
+            contentDom.style.height = height + 'px';
+            console.log('列数', columns)
+        }
+    </script>
+</body>
+
+</html>
