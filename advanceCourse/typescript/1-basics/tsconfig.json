@@ -25,7 +25,7 @@
     /* 严格的类型检查选项 */
     "strict": true,                           /* 启用所有严格的类型检查选项. */
     // "noImplicitAny": true,                 /* 使用隐含的“any”类型在表达式和声明上引发错误. */
-    // "strictNullChecks": true,              /* 启用严格的空检查. */
+    "strictNullChecks": true,              /* 启用严格的空检查. */
     // "strictFunctionTypes": true,           /* 启用对函数类型的严格检查. */
     // "strictBindCallApply": true,           /* 在函数上启用严格的“call”、“apply”和“bind”方法. */
     // "strictPropertyInitialization": true,  /* 在类中启用严格的属性初始化检查. */
