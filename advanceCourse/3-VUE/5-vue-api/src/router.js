@@ -60,6 +60,11 @@ export default new Router({
                     path: '/VueCodeMirror',
                     name: 'VueCodeMirror',
                     component: () => import('@/components/VueCodeMirror.vue')
+                },
+                {
+                    path: '/ElementTree',
+                    name: 'ElementTree',
+                    component: () => import('@/components/ElementTree.vue')
                 }
 
             ]

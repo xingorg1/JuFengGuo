@@ -33,6 +33,9 @@
       <li>
         <router-link to="/VueCodeMirror">代码编辑器-基于vue二次封装</router-link>
       </li>
+      <li>
+        <router-link to="/ElementTree">树组件开发</router-link>
+      </li>
     </ul>
     <hr />
     <router-view></router-view>

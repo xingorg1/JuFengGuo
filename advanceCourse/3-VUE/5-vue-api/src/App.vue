@@ -2,9 +2,7 @@
   <div id="app">
     <!-- <Home/> -->
     <router-view></router-view>
-    <h1>
-      结果为：{{ result }}
-    </h1>
+    <h1>结果为：{{ result }}</h1>
   </div>
 </template>
 
@@ -23,11 +21,11 @@ export default {
   },
   data() {
     return {
-      name: 'one'
+      name: 'app组件啊'
     }
   },
   computed: {
-    result(){
+    result() {
       // setTimeout(() => {
       //   this.name = 1
       // }, 1000)
