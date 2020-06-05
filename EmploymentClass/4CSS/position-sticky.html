@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+    <style>
+      .f div {
+        background-color: aquamarine;
+      }
+      /* body {
+        height: 5000px;
+      } */
+      .containers {
+        position: relative;
+        height: 500px;
+        overflow: scroll;
+        background: aliceblue;
+        padding-bottom: 1050px;
+      }
+      .sticky-top {
+        top: 50px;
+      }
+      .position-sticky {
+        position: sticky;
+        top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="">
+      <div
+        style="height: 500px;border: 1px solid green; width: 200px;background: rgba(0,0,0,.14)"
+      ></div>
+
+      <div
+        class="position-sticky"
+        style="width: 5rem; height: 5rem; background-color: red"
+      >
+        粘性定位
+      </div>
+      <div
+        style="height: 500px;border: 1px solid red; width: 200px;background: rgba(0,0,0,.14)"
+      ></div>
+
+      <div
+        class="sticky-top mt-5"
+        style="width: 5rem; height: 6rem; background-color: cadetblue; top: 30px;"
+      >
+        粘性定位
+      </div>
+      <div
+        style="height: 1100px;border: 1px solid yellow; width: 200px;background: rgba(0,0,0,.14)"
+      ></div>
+      <div style="margin-bottom: 10px;">结尾</div>
+    </div>
+    <!-- <div
+      class="sticky-top mt-5"
+      style="width: 5rem; height: 6rem; background-color: #edf;"
+    >
+      粘性定位
+    </div> -->
+  </body>
+</html>
