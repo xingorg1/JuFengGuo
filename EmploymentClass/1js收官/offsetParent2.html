@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> 
+</head>
+
+<body style="position: relative;">
+    <div class="test"></div>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        console.log($('.test').offsetParent()[0]);
+        console.log(document.querySelector(".test").offsetParent);
+        // jq3版本，封装了offsetParent，while查找父元素中设置了position的元素，逐级向上溯源，直到html。
+    </script>
+</body>
+
+</html>

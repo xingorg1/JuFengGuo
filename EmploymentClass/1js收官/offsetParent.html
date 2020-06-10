@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js-offsetParent和jq的区别</title>
+  <!-- <script type="text/javascript" src="https://www.w3school.com.cn/jquery/jquery.js"></script> -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <!-- 标准模式下，html是文档的根，body和head是html的两个子元素，
+    那为什么原生js的offsetParent方法终点是body，
+    而jQuery的offsetParent的终点是html呢？ -->
+    <div id="test"></div>    
+    <script>
+      console.log(test.offsetParent, test.offsetParent.offsetParent);//<body>
+      let testDom = document.querySelector('#test')
+      console.log(testDom.offsetParent, testDom.offsetParent.offsetParent)
+    </script>
+    <script>
+      console.log($('#test').offsetParent()[0])
+      console.log($('#test').offsetParent)
+      console.log($('#test').offsetParent().offsetParent().offsetParent()[0])
+      </script>
+</body>
+</html>
