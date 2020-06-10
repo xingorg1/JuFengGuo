@@ -27,7 +27,29 @@
       }
     }
   </script>
-
+  <ul>
+      <li class="felix">felix</li>
+      <li>fff</li>
+      <li>fff</li>
+  
+  </ul>
+  </body>
+  <script type="text/javascript">
+      $(document).ready(function(){
+          //通过on()方法
+          $('ul').on('click','#name,.felix',{data: '自定义参数'}, function(e, data){
+              console.log(this, e, data);
+          });
+          //未来追加的元素
+          $('ul').append('<a id="name">relix</a>')
+      })
+      $.ajax({
+        url: 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=哈哈&cb=hotData',
+        success: (data) => {
+          console.log(data)
+        }
+      })
+  </script>
 </body>
 
 </html>

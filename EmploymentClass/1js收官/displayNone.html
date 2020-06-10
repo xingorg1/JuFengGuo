@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>display:none的元素表现</title>
+    <style>
+      #target {
+        display: none;
+        width: 300px;
+        height: 300px;
+        background: red;
+      }
+      #brother {
+        width: 300px;
+        height: 300px;
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <!-- <div class="" id="target" style="display: none"> -->
+      <div class="" id="target">
+        目标元素
+      </div>
+      <div class="" id="brother">
+        可见元素
+      </div>
+    </div>
+    <script>
+      let targetDom = document.getElementById('target')
+      let brotherDom = document.getElementById('brother')
+      // 设置了可见和不可见元素的dom都能获取到
+      console.dir(targetDom)
+      console.dir(brotherDom)
+      console.log(targetDom)
+      // 获取style的样式都是空，原因是没有在标签上设置style的任何属性，取到的都是默认值。
+      console.log('css->targetDom', targetDom.style)
+      console.log('css->brotherDom', brotherDom.style)
+      // 内部元素的文案也可以取到
+      console.log(targetDom.innerText)
+      // 使用getComputedStyle还能获取到样式
+      console.log(getComputedStyle(targetDom, 'background'))
+      console.log(getComputedStyle(brotherDom, 'background'))
+      // 观察整个dom树，也有target和brother的存在。
+      console.dir(document)
+    </script>
+  </body>
+</html>
