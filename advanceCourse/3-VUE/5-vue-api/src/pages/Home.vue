@@ -39,6 +39,9 @@
     </ul>
     <hr />
     <router-view></router-view>
+    <!-- <img src="/static/img/test.jpg" alt=""> -->
+    <!-- <img :src='imgUrl' alt=""> -->
+    <img :src='$store.state.imgUrl' alt="">
   </div>
 </template>
 
@@ -49,9 +52,15 @@ const {log} = console
 // import AppAntv from '@/components/AppAntv.vue';
 export default {
   name: 'Home',
+<<<<<<< HEAD
+  data: () => {
+    return {
+      imgUrl: "/static/img/test.jpg"
+=======
   methods: {
     handleClick(e){
       log(e)
+>>>>>>> develop
     }
   }
   // components:{
