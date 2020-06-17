@@ -2,8 +2,8 @@
   "compilerOptions": {
     /* 基础配置 */
     // "incremental": true,                   /* 增量：启动增量编译 */
-    "target": "ES5",                          /* 指定ECMAScript目标版本: 'ES3' (默认), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */
-    "module": "es2015",                       /* 指定模块代码生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */
+    "target": "es2016",                       /* 指定ECMAScript目标版本: 'ES3' (默认), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */
+    "module": "commonjs",                       /* 指定模块代码生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. 使用哪种模块化标准*/
     "lib": ["es2016"],                        /* 指定要包含在编译中的库文件.默认情况下ts使用的是哪个环境,默认没有node环境，需要@type/node自行安装 */
     // "allowJs": true,                       /* 允许编译javascript文件. */
     // "checkJs": true,                       /* 报告js中的错误 */
@@ -16,7 +16,7 @@
     // "rootDir": "./",                       /* 指定输入文件的根目录. 用于用--outDir来控制输出目录结构. */
     // "composite": true,                     /* 复合：使项目编译 */
     // "tsBuildInfoFile": "./",               /* 指定文件来存储增量编译信息 */
-    // "removeComments": true,                /* 不向输出发出注释. */
+    // "removeComments": true,                   /* 不向输出发出注释. */
     // "noEmit": true,                        /* 不发出输出. */
     // "importHelpers": true,                 /* 从'tslib'导入emit helpers. */
     // "downlevelIteration": true,            /* 当目标为“ES5”或“ES3”时，为“for-of”、“spread”和“destructuring”中的迭代器提供完全支持. */
@@ -25,12 +25,13 @@
     /* 严格的类型检查选项 */
     "strict": true,                           /* 启用所有严格的类型检查选项. */
     // "noImplicitAny": true,                 /* 使用隐含的“any”类型在表达式和声明上引发错误. */
-    "strictNullChecks": true,              /* 启用严格的空检查. */
+    "strictNullChecks": true,                 /* 启用严格的空检查. */
     // "strictFunctionTypes": true,           /* 启用对函数类型的严格检查. */
     // "strictBindCallApply": true,           /* 在函数上启用严格的“call”、“apply”和“bind”方法. */
     // "strictPropertyInitialization": true,  /* 在类中启用严格的属性初始化检查. */
     // "noImplicitThis": true,                /* 使用隐含的“any”类型对“this”表达式提出错误 */
     // "alwaysStrict": true,                  /* 在严格模式下解析并为每个源文件发出“use strict”. */
+    "noImplicitUseStrict": false,             /* 编译结果文件顶部是否包含“use strict”. */
 
     /* 额外的检查 */
     // "noUnusedLocals": true,                /* 报告未使用的本地变量上的错误. */
