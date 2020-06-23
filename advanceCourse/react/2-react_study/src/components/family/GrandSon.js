@@ -1,5 +1,5 @@
 import React from 'react';
-const {log} = console;
+// const {log} = console;
 
 class GrandSon extends React.Component {
   // constructor(){

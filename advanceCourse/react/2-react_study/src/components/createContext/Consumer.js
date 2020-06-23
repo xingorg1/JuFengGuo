@@ -1,10 +1,10 @@
 import React from 'react';
 import { Consumer } from './context' //需要接收Provider的传值，就要用到这个组件了。
-const {log} = console;
+// const {log} = console;
 
 class ConsumerComp extends React.Component {
   render(){
-    {/* 消费者组件 - Consumer */}
+    // {/* 消费者组件 - Consumer */}
     const {value, index } = this.props;
     // Consumer也是一个组件，用来包裹需要使用Provider提供值的标签。
     let ConsumerComp = <Consumer>
@@ -15,7 +15,7 @@ class ConsumerComp extends React.Component {
           othertest // 可以接收很多值。这个是个测试
         }) => {
           // 测试多个值
-          { log(othertest) }
+          // { log(othertest) }
 
           // 返回的是要渲染的结果
           return <li key={'consumer' + index}>
