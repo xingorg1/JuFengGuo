@@ -1,8 +1,8 @@
 /*
  * @Author: guojufeng 
  * @Date: 2020-06-17 20:20:53 
- * @Last Modified by: guojufeng
- * @Last Modified time: 2020-06-23 12:52:30
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2020-06-24 23:24:35
  * 两数之和
   给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
   你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。
@@ -99,8 +99,9 @@ function towSum2(nums, target) {
   if (!nums || !Array.isArray(nums)) return
   let len = nums.length, differMap = {}
   for (let i = 0; i < len; i++) {
-    if (differMap[nums[i]] !== undefined) return [i, differMap[nums[i]]]
-    differMap[target - nums[i]] = i
+    let curNum = nums[i]
+    if (differMap[curNum] !== undefined) return [i, differMap[curNum]]
+    differMap[target - curNum] = i
   }
 }
 let result2 = towSum2([1, 2, 3, 14, 11, 13, 21, 4, 23], 24)
