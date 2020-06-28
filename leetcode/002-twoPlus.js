@@ -181,20 +181,75 @@ var addTwoNumbers = function (l1, l2) {
   return result
 };
 
+/**
+ * 
+ * @param {Node} l1 链表1
+ * @param {Node} l2 链表2
+ * 我的
+ */
+var addTwoLinkedME = function (l1, l2) {
+  let sum = 0,
+    p = null;
+  while (l1 || l2 || t) {
+    let val = (l1 && l1.val) + (l2 && l2.val) + sum
+    if (val > 9) {
+      val = val % 10;
+      t = 1;
+    } else {
+      t = 0
+    }
+    if (p) p.next = new ListNode(val)
+    else p = new ListNode(val)
+    l1 && (l1 = l1.next);
+    l2 && (l2 = l2.next);
+    console.log(val)
+  }
+  console.log(p, l1, l2)
+  return p
+};
 
-function Node(value) {
+/**
+ * 
+ * @param {*} l1 
+ * @param {*} l2 
+ * 可乐
+ */
+var addTwoLinkedKL = function (l1, l2) {
+  let sum = 0,
+    head = p = new ListNode();
+  while (l1 || l2 || sum) {
+    if (l1) {
+      sum += l1.val;
+      l1 = l1.next; // 累加上当前节点值，并趁机将链表的节点指针向下偏移一位
+    }
+    if (l2) {
+      sum += l2.val;
+      l2 = l2.next;
+    }
+    console.log(p)
+    p = p.next = new ListNode(sum % 10);
+    // %10，得到总值大于9时，两位数的个位数是几
+    // 指针向下偏移，原理类似l1 = l1.next,难理解的点是，初始化的时候后，p和p的next指向同一个对象。
+    // 初始化赋值，p.next就是head.next，所以p重新被指向了其他对象，但head.next也就指向了链表的起始节点。而p的作用就是一直指向下一个节点，永远当下一个节点的根节点。
+    sum = Math.floor(sum / 10) // 除以10再取整，判断得到是0还是1（如果总和是两位数，下一位进一）
+    console.log(p, head)
+  }
+  return head.next // 头指针head，其next指向链表的头结点
+};
+
+function ListNode(value) {
   // this.value = value;
   this.val = value
   this.next = null
 }
-var A = new Node(1) // 9
-var B = new Node(8)
-var C = new Node(3)
-var D = new Node(9)
-var E = new Node(9)
+var A = new ListNode(2) // 9
+var B = new ListNode(4)
+var C = new ListNode(3)
+var D = new ListNode(9)
+var E = new ListNode(9)
 
 A.next = B
-// B.next = C
+B.next = C
 // C.next = D
 // D.next = E
 // ===
@@ -203,14 +258,34 @@ function Node2(value) {
   this.val = value
   this.next = null
 }
-var A2 = new Node2(0) // 9
+var A2 = new Node2(5) // 9
 var B2 = new Node2(6)
 var C2 = new Node2(4)
 var D2 = new Node2(9)
 
-// A2.next = B2
-// B2.next = C2
+A2.next = B2
+B2.next = C2
 // C2.next = D2
 
 addTwoNumbers(A, A2)
+addTwoLinkedME(A, A2)
+addTwoLinkedKL(A, A2)
 
+
+// 最终整理代码
+var addTwoNumbers = function (l1, l2) {
+  let sum = 0,
+    head = p = new ListNode();
+  while (l1 || l2 || t) {
+    if (l1) sum += l1, l1 = l1.next;
+    if (l2) sum += l2, l2 = l2.next;
+    p = p.next = new ListNode(sum % 10);
+    sum = Math.floor(sum / 10);
+  }
+  return head.next
+};
+
+// 作者：xingorg1
+// 链接：https://leetcode-cn.com/problems/add-two-numbers/solution/lian-biao-zhi-zhen-pian-yi-by-xingorg1/
+// 来源：力扣（LeetCode）
+// 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
