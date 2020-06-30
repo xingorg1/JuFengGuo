@@ -1,6 +1,6 @@
 import React from 'react';
 import GrandSon from './GrandSon'
-const {log} = console;
+// const {log} = console;
 
 class Father extends React.Component {
   // constructor(){

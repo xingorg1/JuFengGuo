@@ -8,6 +8,7 @@ import UnControl from '../components/UnControl'
 import PropertyTransfer from '../components/PropertyTransfer'
 import Family from '../components/family/GrandFather'
 import CreateContext from '../components/createContext/Provider'
+import HookExample from '../components/Hooks/Hooks'
 
 console.log(data)
 console.log(TodoList)
@@ -138,7 +139,7 @@ function App() {
         </p>
         <p> 函数调用 - 没有返回值时：{ test2()} </p>
         <p>非要渲染一个对象：{JSON.stringify({a: 1})}</p>
-        <p>可以渲染数组：{ [1,2,<a href="http://www.jd.com" target="_blank">数组里的标签</a>] }</p>
+        <p>可以渲染数组：{ [1,2,<a href="http://www.jd.com">数组里的标签</a>] }</p>
       </div>
       {/* 函数组件 */}
       <Component className="area">里边还能写什么吗</Component>
@@ -157,6 +158,8 @@ function App() {
       <Family />
       {/* 组件间交互 - createContext */}
       <CreateContext />
+      {/* Hook的学习 */}
+      <HookExample />
     </Fragment>
   );
 }

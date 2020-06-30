@@ -1,0 +1,28 @@
+{
+  "compilerOptions": { // 编译环境
+    "target": "es5", // 最终，编译成es5标准的代码，用于打包上线
+    "lib": [ // 代码运行的是库环境，默认是dom环境
+      "dom",
+      "dom.iterable", // symbol 迭代器，让当前编码环境是新版本的dom环境，这样类似getElementsByTagName获取的伪数组将是有迭代器属性
+      "esnext" // 写代码的时候，库环境的es标准，希望越新越好
+    ],
+    "downlevelIteration": true, // for of循环时允许循环迭代器（即，允许for...of循环除数组之外的迭代器）
+    "allowJs": true, // 是否允许ts中跟js代码交互（导入js文件）
+    "skipLibCheck": true, // 跳过声明文件的类型检查
+    "esModuleInterop": true, // 如果第三方的库使用了默认导出，开启功能后，允许我们使用es6的默认导入方式了（之前不行，具体看模块化相关代码——默认导入的问题）
+    "allowSyntheticDefaultImports": true, // 鼠标浮上去，看解析
+    "strict": true, // 这个开启后，下边的strict严格检查可以禁止掉了
+    // "strictNullChecks": true, // 开启后，null和undefined不能复制给其他类型（本身，这俩是别人的子类型，可以赋值给任何人）
+    // "strictPropertyInitialization": true, // 检查属性的初始化
+    "forceConsistentCasingInFileNames": true, // 导入的文件名称是否区分大小写
+    "module": "esnext", // 模块化的标准使用哪一套（exnext和es6的表现一样，只不过允许动态导入了！这是exnext的知识！）
+    "moduleResolution": "node", // 模块解析的方式（非相对路径，先查找当前目录package.json的main配置，没有在找index文件...，在《npm-包管理器-包的使用》那里讲了模块的查找顺序）
+    "resolveJsonModule": true, // 是否允许解析json模块（即在ts中导入json文件并当作一个模块来使用）
+    "isolatedModules": true, // 是不是把每一个文件当作模块，如果是的话，里边没有import（导入）和export（导出）就会报错。（至少要写一个export）
+    "noEmit": true, // 不生成js文件,直接在内存中编译即可（因为代码后期还会进行webpack+ts+babel的处理和打包，不用像练习那样生成js文件了）
+    "jsx": "react" // 解析jsx的方式，react中jsx的代码ts原来是不认识的，ts就和react合作，ts开始支持tsx代码。preserve：不变，编译文件后缀是jsx，react：使用react的形式，编译文件后缀是js；react-native：；见官网文档里
+  },
+  "include": [
+    "src"
+  ]
+}

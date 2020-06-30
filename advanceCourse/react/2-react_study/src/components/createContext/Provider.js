@@ -17,7 +17,7 @@ class ProviderComp extends React.Component {
   }
 
   render(){
-    {/* 提供者组件 - Provider */}
+    // {/* 提供者组件 - Provider */}
     // 使用Provider组件，包裹住需要传值的组件。这里放在最外边即可。
     // 传值方式是，在Provider组件上写一个固定名字为value的属性。其值是一个对象。对象内部集合要传的所有值和方法即可。
     let ProviderComp = <Provider value={ {

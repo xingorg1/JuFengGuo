@@ -1,3 +1,13 @@
+# React 特性学习
+- todolist简单学习
+- 函数组件
+  - 应用：百度搜索布局项目实战（函数组件使用
+- 受控组件
+- 非受控组件
+- 组件间属性传递与校验
+- Consumer和Provider
+- hook学习
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
