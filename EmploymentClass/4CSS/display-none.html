@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>display:none研究</title>
+    <style>
+      div {
+        width: 200px;
+        height: 200px;
+        border: 1px solid;
+        cursor: pointer;
+        position: relative;
+        left: 20px;
+        top: 20px;
+      }
+
+      .box {
+        margin: 10px;
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .hide {
+        display: none;
+      }
+
+      .opacity {
+        opacity: 0;
+      }
+
+      li {
+        list-style: decimal;
+        margin-top: 5px;
+      }
+
+      li span {
+        padding: -1px 5px;
+        background-color: #fff0fa;
+      }
+      .grid {
+        margin: 20px 0;
+      }
+      .grid li {
+        display: flex;
+        justify-content: center;
+      }
+
+      .grid b {
+        font-weight: normal;
+        margin-right: 10px;
+        background: #def;
+        padding: 2px 5px;
+        border: 1px dashed #fff0fa;
+      }
+      input {
+        margin-top: 60px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>questions:</h2>
+    设置“display:none;”的元素...
+    <ul>
+      <li>
+        我还能在js里getEle...到这个元素吗？
+        <span>
+          答：可以，能拿到这个元素
+        </span>
+      </li>
+      <li>
+        元素内部的内容、元素身上的样式还能拿到么？
+        <span>
+          答：内容、style等属性都可以获取到，整个DOM能取到，DOM上的属性自然也可以
+        </span>
+      </li>
+
+      <li>
+        利用getComputedStyle还能获取到其样式表么？
+        <span>答：可以,不过有以下几个属性值不同</span>
+        <ul class="grid">
+          <li>
+            <b>bottom: "auto"</b>
+            <b>bottom: "-20px"</b>
+          </li>
+          <li>
+            <b>display: "none"</b>
+            <b>display: "block"</b>
+          </li>
+          <li>
+            <b>opacity: "1"</b>
+            <b>opacity: "0"</b>
+          </li>
+          <li>
+            <b>perspectiveOrigin: "50% 50%"</b>
+            <b>perspectiveOrigin: "101px 101px"</b>
+          </li>
+          <li>
+            <b>right: "auto"</b>
+            <b>right: "-20px"</b>
+          </li>
+          <li>
+            <b>transformOrigin: "50% 50%"</b>
+            <b>transformOrigin: "101px 101px"</b>
+          </li>
+          <li>
+            <b>webkitOpacity: "1"</b>
+            <b>webkitOpacity: "0"</b>
+          </li>
+          <li>
+            <b>webkitPerspectiveOrigin: "50% 50%" </b>
+            <b>webkitPerspectiveOrigin: "101px 101px"</b>
+          </li>
+          <li>
+            <b> webkitTransformOrigin: "50% 50%"</b>
+            <b> webkitTransformOrigin: "101px 101px" </b>
+          </li>
+        </ul>
+        <span>
+          backgroundColor不一样这个可以理解，我本来设置的颜色就不一样
+          opacity和display不一样也可以理解。
+        </span>
+      </li>
+      <li>
+        offsetWidth等属性是多少？
+        <span>
+          display为none的全部为0，opacity的都正常。
+        </span>
+      </li>
+      <li>
+        元素身上之前绑定的【鼠标】事件还在么？
+        <span
+          >答：都还在，只不过opacity的还可以被触发，display为none的触发不到事件了。</span
+        >
+      </li>
+      <li>
+        元素身上之前绑定的【键盘】事件还在么？
+        <span
+          >答：怎么说呢，这个想法不太合理。如果是非表单元素，根本触发键盘事件。
+          如果是表单元素（input）不可见时没法输入，也就监听不到键盘事件。
+          在给表单做了自动聚焦的情况下，display：none没动静；opacity:0的还是能监听到键盘输入事件的！！</span
+        >
+      </li>
+      <li>和"opcity:0"元素的对比表现分别是什么呢？<span>答：见表格</span></li>
+      <li>
+        和"visibility:hidden"元素的对比表现分别是什么呢？<span>答：见表格</span>
+      </li>
+      <li>这个元素还在DOM树中么？</li>
+      <li>
+        页面渲染的时候，渲染引擎是怎么处理的这类元素？
+      </li>
+    </ul>
+    <div class="box" id="box">
+      <!-- 里边为display:none -->
+      <div class="hide" id="noneDom" style="background: yellowgreen;">
+        不可见元素里边的内容
+      </div>
+    </div>
+    <input type="text" value="display" id="noneInput" class="hide" />
+    <div class="box" id="box2">
+      <!-- 里边为opacity：0 -->
+      <div class="opacity" id="opacity" style="background-color: yellow;">
+        不可见元素里边的内容
+      </div>
+    </div>
+    <input type="text" value="opacity" id="opacityInput" class="opacity" />
+    <script>
+      const { log, dir } = console;
+    </script>
+    <script>
+      // none 元素的表现
+      let noneDom = document.getElementById("noneDom");
+      dir(noneDom);
+      log(noneDom.innerHTML, noneDom.innerHTML.length);
+      log(noneDom.innerText, noneDom.innerText.length);
+      dir(noneDom.style);
+      log(noneDom.offsetWidth, noneDom.offsetHeight); // 0 0
+      log(noneDom.clientWidth, noneDom.clientHeight); // 0 0
+      log(noneDom.scrollWidth, noneDom.scrollHeight); // 0 0
+      /* getComputedStyle */
+      let noneCssStyle = window.getComputedStyle(noneDom, null);
+      dir(noneCssStyle);
+      noneDom.onclick = function (e) {
+        log(e);
+      };
+      noneDom.addEventListener(
+        "mouseover",
+        (e) => {
+          log("mouseover", e);
+        },
+        false
+      );
+      noneDom.addEventListener(
+        "mouseout",
+        (e) => {
+          log("mouseout", e);
+        },
+        false
+      );
+      noneInput.addEventListener(
+        "keydown",
+        (e) => {
+          log("node keydown", e);
+        },
+        false
+      );
+      // window.onload = function () {
+      //   noneInput.focus();
+      // };
+    </script>
+    <script>
+      log("=================|=================|=================");
+      // opacity元素的表现
+      let opacityDom = document.getElementById("opacity");
+      dir(opacityDom);
+      log(opacityDom.innerHTML, opacityDom.innerHTML.length);
+      log(opacityDom.innerText, opacityDom.innerText.length);
+      dir(opacityDom.style);
+      log(opacityDom.offsetWidth, opacityDom.offsetHeight); // 202 202
+      log(opacityDom.clientWidth, opacityDom.clientHeight); // 200 200
+      log(opacityDom.scrollWidth, opacityDom.scrollHeight); // 200 200
+      /* getComputedStyle */
+      let opacityCssStyle = window.getComputedStyle(opacityDom, null);
+      dir(opacityCssStyle);
+      opacityDom.onclick = function (e) {
+        log(e);
+      };
+      opacityDom.addEventListener(
+        "mouseover",
+        function (e) {
+          log('"mouseover"', e);
+        },
+        false
+      );
+
+      opacityDom.addEventListener(
+        "mouseout",
+        function (e) {
+          log("mouseout", e);
+        },
+        false
+      );
+      opacityInput.addEventListener(
+        "keydown",
+        (e) => {
+          log("opacityInput keydown", e);
+        },
+        false
+      );
+      window.onload = function () {
+        opacityInput.focus();
+      };
+    </script>
+  </body>
+</html>
