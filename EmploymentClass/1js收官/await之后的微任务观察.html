@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function a() {
+        console.log(123)
+        return 222
+      }
+      a()
+    </script>
+    <script>
+      // async的await后边是微任务
+      async function async1() {
+        console.log('async1 start')
+        await async2()
+        console.log('async1 end')
+        return 123 + 'async-hahha'
+      }
+      async function async2() {
+        console.log('async2')
+      }
+      console.log('script start')
+      setTimeout(() => {
+        console.log('setTimeout')
+      }, 0)
+      async1() // 为啥async1的调用完毕返回值在所有微任务完毕之后？
+      setTimeout(() => {
+        console.log('setTimeout2')
+      })
+      new Promise(resolve => {
+        console.log('promise 1')
+        resolve()
+      })
+        .then(() => {
+          console.log('promise 2')
+        })
+        .then(() => {
+          console.log('promise 3')
+        })
+      console.log('scrpit end')
+    </script>
+  </body>
+</html>
