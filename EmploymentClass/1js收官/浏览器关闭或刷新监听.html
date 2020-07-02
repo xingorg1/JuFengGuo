@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>浏览器关闭或刷新监听</title>
+  </head>
+  <body>
+    <script>
+      window.onbeforeunload = onbeforeunload_handler
+      function onbeforeunload_handler() {
+        var warning = '确认退出?'
+        return warning
+      }
+      window.onunload = onunload_handler
+
+      function onunload_handler() {
+        var warning = '谢谢光临'
+        alert(warning)
+      }
+    </script>
+  </body>
+</html>
