@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./jquery.js"></script>
+    <script>
+      function getData() {
+        var item = [];
+        $.ajax({
+          url: "https://developer.duyiedu.com/edu/groupChat/sendMsg",
+          method: "get",
+          data: {
+            name: "panda",
+            msg: "hello",
+          },
+          // async: false,
+          success: (reg) => {
+            console.log(reg);
+            item = reg;
+          },
+        });
+        console.log(item);
+        return item;
+      }
+      console.log(getData());
+    </script>
+  </body>
+</html>
