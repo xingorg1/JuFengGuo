@@ -6,6 +6,12 @@
     <div class="test" ref="test">
       <p>这是原内容，颜色为绿</p>
     </div>
+    <h3>未经声明的属性，不能直接使用，但是声明一个对象，使用对象身上未定义的属性，没有关系。</h3>
+    <input type="text" v-model="obj.name">
+    <span>{{obj.name + '1'}}</span>
+    <br>
+    <input type="text" v-model="name">
+    <span>{{name}}</span>
   </div>
 </template>
 

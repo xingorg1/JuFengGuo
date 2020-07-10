@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>slice是浅拷贝</title>
+  </head>
+  <body>
+    <script>
+      var array = [1, 2, 3, [4, 5]]
+      var array2 = array.slice(0)
+      console.log(array2)
+      array2[2] = 'a'
+      array2[3][0] = 'b'
+      console.log(array2, array)
+    </script>
+    <script>
+      //  改变原始数组，不存在拷贝一说!!
+      var array3 = [1, 2, 3, [4, 5]]
+      var array4 = array3.splice(0, array3.length)
+      console.log(array4)
+      array4[2] = 'a'
+      array4[3][0] = 'b'
+      console.log(array4, array3)
+    </script>
+  </body>
+</html>
