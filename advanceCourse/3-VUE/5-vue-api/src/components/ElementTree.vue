@@ -1,11 +1,6 @@
 <template>
   <div id="ElementTree">
-    <el-tree
-      :data="treeDataTotal"
-      :props="defaultProps"
-      accordion
-      @node-click="handleNodeClick"
-    ></el-tree>
+    <el-tree :data="treeDataTotal" :props="defaultProps" accordion @node-click="handleNodeClick"></el-tree>
     <h3>myTree</h3>
     <div class="my-tree-content">
       <Tree :treeData="treeDataTotal" />
@@ -14,10 +9,10 @@
 </template>
 
 <script>
-import Tree from './Tree.vue'
-const { log } = console
+import Tree from "./Tree.vue";
+const { log } = console;
 export default {
-  name: 'ElementTree',
+  name: "ElementTree",
   components: {
     // Home
     Tree
@@ -26,22 +21,22 @@ export default {
     return {
       treeDataTotal: [],
       defaultProps: {
-        children: 'subList',
-        label: 'dimName'
+        children: "subList",
+        label: "dimName"
       }
-    }
+    };
   },
   methods: {
     handleNodeClick(data) {
-      log(data)
+      log(data);
     }
   },
   created() {
-    let data = require('D:/guojufeng/Desktop/data.json')
-    this.treeDataTotal = data.obj[0].subList
-    log(data)
+    // let data = require('D:/guojufeng/Desktop/data.json')
+    // this.treeDataTotal = data.obj[0].subList
+    // log(data)
   }
-}
+};
 </script>
 
 <style lang="scss">
