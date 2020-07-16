@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const { log } = console;
+      const getJSON = function (url) {
+        const promise = new Promise(function (resolve, reject) {
+          const status = 201;
+          if (status === 200) {
+            resolve("response");
+          } else {
+            reject(new Error("statusText"));
+          }
+        });
+
+        return promise;
+      };
+      getJSON("/posts.json")
+        .then(
+          function (json) {
+            log(json, 1);
+            return "json.post";
+          },
+          (err) => {
+            log("error", 1, err);
+          }
+        )
+        .then(function (post) {
+          log(post, 2);
+        });
+      log(
+        new Promise((resolve) => {
+          resolve(123, 3);
+        }).then(),
+        4
+      );
+    </script>
+  </body>
+</html>

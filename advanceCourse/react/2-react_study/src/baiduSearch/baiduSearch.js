@@ -9,6 +9,7 @@ import PropertyTransfer from '../components/PropertyTransfer'
 import Family from '../components/family/GrandFather'
 import CreateContext from '../components/createContext/Provider'
 import HookExample from '../components/Hooks/Hooks'
+import UseEffectExam from '../components/Hooks/useEffect'
 
 console.log(data)
 console.log(TodoList)
@@ -160,6 +161,8 @@ function App() {
       <CreateContext />
       {/* Hook的学习 */}
       <HookExample />
+      {/* useEffect */}
+      <UseEffectExam />
     </Fragment>
   );
 }
