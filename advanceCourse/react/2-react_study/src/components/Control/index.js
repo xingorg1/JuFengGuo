@@ -106,9 +106,19 @@ const {log} = console;
   以往处理同类问题，多使用函数传参区分不同的人调用的情况。这里有了dom夹持，可以用data-或表单元素的name属性来区分使用者了。
  */
 class Control extends React.Component {
-  // constructor(){
-  //   super()
-  // }
+  constructor(){
+    super()
+    console.log(123, this.setState, this.state)
+    /* 
+     * 在constructor里setState报错如下
+      Warning: Can't call setState on a component that is not yet mounted. 
+      This is a no-op, but it might indicate a bug in your application. 
+      Instead, assign to `this.state` directly or define a `state = {};` class property with the desired state in the Control component.
+     */
+    // this.setState({
+    //   taskA: '唔哈哈哈'
+    // })
+  }
   state = {
     taskA : '',
     taskB : '',
