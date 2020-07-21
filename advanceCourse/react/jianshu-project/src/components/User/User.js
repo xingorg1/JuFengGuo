@@ -1,9 +1,9 @@
 import React from 'react';
 import { UserWrapper } from './style'
 export default class User extends React.Component {
-  render(){
+  render() {
     return <UserWrapper>
-      user
+      登陆
     </UserWrapper>
   }
 }
