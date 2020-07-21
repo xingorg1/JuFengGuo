@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js-offsetParent和jq的区别</title>
+  <!-- <script type="text/javascript" src="https://www.w3school.com.cn/jquery/jquery.js"></script> -->
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+   <script>
+      var arr = ['23.2%', '1.34%','25.2%','-']
+      arr.sort((a, b) => {
+         console.log(a, b); 
+         return parseFloat(a === '-' ? 0 : a) - parseFloat(b === '-' ? 0 : b)
+      })
+      console.log(arr)
+      arr.sort((a, b) => {
+         console.log('=', a, b)
+         return parseFloat(b === '-' ? 0 : b) - parseFloat(a === '-' ? 0 : a)
+      })
+      console.log(arr)
+   </script>
+</body>
+</html>
