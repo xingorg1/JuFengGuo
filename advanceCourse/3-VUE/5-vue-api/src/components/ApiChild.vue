@@ -21,6 +21,7 @@
   </div>
 </template>
 <script>
+const {log} = console
 export default {
   name: "ApiChild",
   props: {
@@ -43,30 +44,30 @@ export default {
     };
   },
   mounted() {
-    console.log(this, this.a);
-    console.log(this.obj.a, this.obj.c, this.obj.b);
-    console.log("sync传递多个属性", this.obj2, this.name1, this.age1);
+    log(this, this.a);
+    log(this.obj.a, this.obj.c, this.obj.b);
+    log("sync传递多个属性", this.obj2, this.name1, this.age1);
   },
   methods: {
     inputChange($event) {
-      console.log($event);
-      console.log(this.name1);
+      log($event);
+      log(this.name1);
       this.$emit("update:name1", $event.target.value);
-      console.log(this.name1);
+      log(this.name1);
     },
     changeObj() {
-      console.log(this.obj.c);
+      log(this.obj.c);
       this.obj.c = !this.obj.c;
-      console.log("=====");
-      console.log(this.obj.c);
-      console.log("++++");
+      log("=====");
+      log(this.obj.c);
+      log("++++");
     },
     changeObj2() {
-      console.log(this.age1);
+      log(this.age1);
       this.$emit("update:age1", this.age1 + 1);
-      console.log("==可以直接$emit修改，父组件不用写change事件监听了===");
-      console.log(this.age1);
-      console.log("++++");
+      log("==可以直接$emit修改，父组件不用写change事件监听了===");
+      log(this.age1);
+      log("++++");
     }
   }
 };
