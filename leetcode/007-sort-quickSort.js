@@ -2,7 +2,7 @@
  * @Author: guojufeng 
  * @Date: 2020-07-17 10:45:39 
  * @Last Modified by: guojufeng
- * @Last Modified time: 2020-07-22 15:03:56
+ * @Last Modified time: 2020-07-24 20:39:05
  * 快速排序
  * 思路：取出标兵，然后小的放左边，大的放右边（从小到大排序的情况）
  */
@@ -12,8 +12,9 @@ const { log } = console
 function dealArr(arr) {
   // 验证
   // quickSort0717(arr, 0, arr.length - 1)
-  quickSort0719(arr, 0, arr.length - 1)
-  quickSort0722(arr, 0, arr.length - 1)
+  // quickSort0719(arr, 0, arr.length - 1)
+  // quickSort0722(arr, 0, arr.length - 1)
+  quickSort0724(arr, 0, arr.length - 1)
   log(arr)
 }
 dealArr([...arr])
@@ -66,9 +67,24 @@ function quickSort0722(arr, l, r) { // arr 0 3
   rightP = r + 1; // 4
   while(leftP < rightP) {
     do leftP++; while(arr[leftP] < biaobing); // 0 arr[0] < arr[2]
-    do rightP-- ; while(arr[rightP] < biaobing); // 3 arr[3] < arr[2] 2 arr[2] < arr[2]
+    do rightP-- ; while(arr[rightP] > biaobing); // 3 arr[3] < arr[2] 2 arr[2] < arr[2]
     if (leftP < rightP) [arr[leftP], arr[rightP]] = [arr[rightP], arr[leftP]]; // 0 < 2 arr[0] <-> arr[2]
   }
   quickSort0722(arr, l, rightP); // [3,2,5,1] 0, 
   quickSort0722(arr, rightP + 1, r)
+}
+
+// 07.24
+function quickSort0724(arr, l, r) {
+  if (l >= r) return; // 这里有等于
+  let biaobing = arr[l + r >> 1],
+    zhizhenL = l - 1,
+    zhizhenR = r + 1;
+  while(zhizhenL < zhizhenR) { // 这里不确定大小
+    do zhizhenL ++; while(arr[zhizhenL] < biaobing); // 这里不确定大小【这里是小于,左边的要小于标兵】
+    do zhizhenR --; while(arr[zhizhenR] > biaobing); // 这里不确定大小【这里是大于，右边的要大于标兵】
+    if (zhizhenL < zhizhenR) [arr[zhizhenL], arr[zhizhenR]] = [arr[zhizhenR], arr[zhizhenL]] // 这里没印象了
+  }
+  quickSort0724(arr, l, zhizhenR);
+  quickSort0724(arr, zhizhenR + 1, r);
 }
