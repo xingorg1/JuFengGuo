@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <button @click="handleClick">hahah</button>
+    <!-- <button @click="handleClick">hahah</button> -->
     <ul>
       <li>
         <router-link to="/app-api">vue</router-link>
@@ -36,12 +36,16 @@
       <li>
         <router-link to="/ElementTree">树组件开发</router-link>
       </li>
+      <li>
+        <router-link to="/ElementSelect">级联选择组件开发</router-link>
+      </li>
     </ul>
     <hr />
     <router-view></router-view>
+    <!-- 图片引入 -->
     <!-- <img src="/static/img/test.jpg" alt=""> -->
     <!-- <img :src='imgUrl' alt=""> -->
-    <img :src='$store.state.imgUrl' alt="">
+    <!-- <img :src='$store.state.imgUrl' alt=""> -->
   </div>
 </template>
 

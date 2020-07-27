@@ -65,6 +65,11 @@ export default new Router({
                     path: '/ElementTree',
                     name: 'ElementTree',
                     component: () => import('@/components/ElementTree.vue')
+                },
+                {
+                    path: '/ElementSelect',
+                    name: 'ElementSelect',
+                    component: () => import('@/components/ElementSelect.vue')
                 }
 
             ]
