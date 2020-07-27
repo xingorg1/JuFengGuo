@@ -61,6 +61,20 @@ export default {
       imgUrl: "/static/img/test.jpg"
     }
   },
+  async created(){
+    console.log('home，created');
+    var resutl = await new Promise((req,rej)  => {
+      console.log('Promise')
+      req('promise req')
+    }).then((data) => {
+      console.log(data)
+      return 'resutl结果，123'
+    })
+    console.log(resutl)
+  },
+  mounted(){
+    console.log('home，mounted')
+  },
   methods: {
     handleClick(e){
       log(e)

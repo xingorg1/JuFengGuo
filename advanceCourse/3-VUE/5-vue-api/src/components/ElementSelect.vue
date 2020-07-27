@@ -37,14 +37,35 @@ export default {
       cascaderOptions: this.$mock.cascaderOptions
      }
   },
+  created() {
+    console.log('elementSelect，created')
+  },
+  mounted(){
+    console.log('elementSelect，mounted')
+  },
   methods: {
     checkboxChange(e) {
+      console.log(e)
       if (e) {
-        console.log(e, '全选')
-        this.selectVal = this.optionsSelect.reduce((pre, cur)=>{pre.push(cur.value);return pre}, [])
+        console.log(e, '全选', this.checkedAll,this.selectVal.length , this.optionsSelect.length)
+        if (this.selectVal.length === this.optionsSelect.length) {
+          console.log(e, '全不选', this.checkedAll)
+          this.selectVal = []
+          this.checkedAll = false;
+          this.isIndeterminate = false
+        } else {
+          this.selectVal = this.optionsSelect.reduce((pre, cur)=>{pre.push(cur.value);return pre}, [])
+        }
       } else {
-        this.selectVal = []
-        this.isIndeterminate = false
+        if (this.selectVal.length < this.optionsSelect.length){
+          this.isIndeterminate = false
+          this.checkedAll = true;
+          this.selectVal = this.optionsSelect.reduce((pre, cur)=>{pre.push(cur.value);return pre}, [])
+        } else {
+          this.selectVal = []
+          this.checkedAll = false;
+          this.isIndeterminate = false
+        }
       }
     },
     selectChange() {
