@@ -17,10 +17,14 @@
     <div class="area">
       <h3 class="demonstration">多选选择任意一级选项</h3>
       <el-cascader
+        v-model="cascaderVal"
         :options="cascaderOptions"
         :props="{ multiple: true, checkStrictly: true }"
         clearable
         filterable
+        :show-all-levels="false"
+        collapse-tags
+        @change="collapseChange"
       ></el-cascader>
     </div>
   </div>
@@ -34,6 +38,7 @@ export default {
       checkedAll: false,
       selectVal: '',
       optionsSelect: this.$mock.selectAllData,
+      cascaderVal: '',
       cascaderOptions: this.$mock.cascaderOptions
      }
   },
@@ -44,12 +49,13 @@ export default {
     console.log('elementSelect，mounted')
   },
   methods: {
+    // 切换全选按钮
     checkboxChange(e) {
       console.log(e)
       if (e) {
-        console.log(e, '全选', this.checkedAll,this.selectVal.length , this.optionsSelect.length)
+        console.log(e, '全选')
         if (this.selectVal.length === this.optionsSelect.length) {
-          console.log(e, '全不选', this.checkedAll)
+          console.log(e, '全不选')
           this.selectVal = []
           this.checkedAll = false;
           this.isIndeterminate = false
@@ -68,10 +74,15 @@ export default {
         }
       }
     },
+    // select选择器内容切换
     selectChange() {
       console.log(this.selectVal, '选择内容')
       if (this.selectVal.length < this.optionsSelect.length) this.isIndeterminate = true
       else this.isIndeterminate = false; this.checkedAll = true;
+    },
+    // 级联项选择
+    collapseChange() {
+      console.log(this.cascaderVal)
     }
   }
 }
