@@ -2,7 +2,7 @@
  * @Author: guojufeng 
  * @Date: 2020-07-17 10:45:39 
  * @Last Modified by: guojufeng
- * @Last Modified time: 2020-07-24 20:39:05
+ * @Last Modified time: 2020-07-28 10:21:12
  * 快速排序
  * 思路：取出标兵，然后小的放左边，大的放右边（从小到大排序的情况）
  */
@@ -14,7 +14,8 @@ function dealArr(arr) {
   // quickSort0717(arr, 0, arr.length - 1)
   // quickSort0719(arr, 0, arr.length - 1)
   // quickSort0722(arr, 0, arr.length - 1)
-  quickSort0724(arr, 0, arr.length - 1)
+  // quickSort0724(arr, 0, arr.length - 1)
+  quickSort0728(arr, 0, arr.length - 1)
   log(arr)
 }
 dealArr([...arr])
@@ -87,4 +88,19 @@ function quickSort0724(arr, l, r) {
   }
   quickSort0724(arr, l, zhizhenR);
   quickSort0724(arr, zhizhenR + 1, r);
+}
+
+// 07.28
+function quickSort0728(arr, l, r) {
+  if (l >= r) return;
+  let biaobing = arr[l + r >> 1],
+    zhizhenL = l - 1,
+    zhizhenR = r + 1;
+  while(zhizhenL < zhizhenR){
+    do zhizhenL++; while(arr[zhizhenL] < biaobing);
+    do zhizhenR--; while(arr[zhizhenR] > biaobing);
+    if (zhizhenL < zhizhenR) [arr[zhizhenL], arr[zhizhenR]] = [arr[zhizhenR], arr[zhizhenL]];
+  }
+  quickSort0728(arr, l, zhizhenR);
+  quickSort0728(arr, zhizhenR + 1, r);
 }
