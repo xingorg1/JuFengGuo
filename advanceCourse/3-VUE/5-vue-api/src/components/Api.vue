@@ -18,7 +18,6 @@
 
 <script>
 import ApiChild from "./ApiChild.vue";
-console.log(ApiChild);
 export default {
   name: "Api",
   components: {

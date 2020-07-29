@@ -52,36 +52,33 @@ export default {
     },
     checkedAll: { // 是否全选
       get: function() {
+        log('get')
         return this.selectVal.length >= this.optionsSelect.length
       },
-      set: function () {
+      set: function (e) {
+        log(e, 'set')
       }
     }
   },
   methods: {
     // 切换全选按钮
     checkboxChange (e) {
+      log(e, 'change')
       let len1 = this.selectVal.length,
         len2 = this.optionsSelect.length;
       if (e) { // '全选'
-        if (len1 === len2) {
-          this.selectVal = [] // '全不选'
-        } else {
-          this.selectVal = this.optionsSelect.reduce((pre, cur) => {
-            pre.push(cur.value)
-            return pre
-          }, [])
-        }
+        if (len1 === len2) this.selectVal = [] // '全不选'
+        else this.changeSelectedData()
       } else {
-        if (len1 < len2) {
-          this.selectVal = this.optionsSelect.reduce((pre, cur) => {
-            pre.push(cur.value)
-            return pre
-          }, [])
-        } else {
-          this.selectVal = []
-        }
+        if (len1 < len2) this.changeSelectedData()
+        else  this.selectVal = []
       }
+    },
+    changeSelectedData() {
+      this.selectVal = this.optionsSelect.reduce((pre, cur) => {
+        pre.push(cur[this.props.value])
+        return pre
+      }, [])
     },
     // 级联项选择
     collapseChange () {

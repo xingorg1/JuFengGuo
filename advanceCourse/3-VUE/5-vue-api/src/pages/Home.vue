@@ -62,18 +62,18 @@ export default {
     }
   },
   async created(){
-    console.log('home，created');
-    var resutl = await new Promise((req,rej)  => {
-      console.log('Promise')
+    log('home，created');
+    var resutl = await new Promise((req)  => {
+      log('Promise')
       req('promise req')
     }).then((data) => {
-      console.log(data)
+      log(data)
       return 'resutl结果，123'
     })
-    console.log(resutl)
+    log(resutl)
   },
   mounted(){
-    console.log('home，mounted')
+    log('home，mounted')
   },
   methods: {
     handleClick(e){
