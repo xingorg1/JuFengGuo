@@ -4,10 +4,11 @@
       <h3>全选效果</h3>
       <el-select v-model="selectVal"
                  placeholder="请选择"
+                 filterable
+                 clearable
                  multiple
                  collapse-tags
-                 popper-class="select-all-comp"
-                 @change="selectChange">
+                 popper-class="select-all-comp">
         <!-- <el-option label="全部日期" value="all" /> -->
         <el-checkbox v-model="checkedAll"
                      :indeterminate="isIndeterminate"
@@ -38,31 +39,33 @@ const { log } = console
 export default {
   data () {
     return {
-      isIndeterminate: false,
-      checkedAll: false,
       selectVal: '',
       optionsSelect: this.$mock.selectAllData,
       cascaderVal: '',
       cascaderOptions: this.$mock.cascaderOptions
     }
   },
-  created () {
-    log('elementSelect，created')
-  },
-  mounted () {
-    log('elementSelect，mounted')
+  computed: {
+    isIndeterminate : function () { // 是否半选
+      let len = this.selectVal.length
+      return len !== 0 && len < this.optionsSelect.length
+    },
+    checkedAll: { // 是否全选
+      get: function() {
+        return this.selectVal.length >= this.optionsSelect.length
+      },
+      set: function () {
+      }
+    }
   },
   methods: {
     // 切换全选按钮
     checkboxChange (e) {
-      log(e)
-      if (e) {
-        log(e, '全选')
-        if (this.selectVal.length === this.optionsSelect.length) {
-          log(e, '全不选')
-          this.selectVal = []
-          this.checkedAll = false
-          this.isIndeterminate = false
+      let len1 = this.selectVal.length,
+        len2 = this.optionsSelect.length;
+      if (e) { // '全选'
+        if (len1 === len2) {
+          this.selectVal = [] // '全不选'
         } else {
           this.selectVal = this.optionsSelect.reduce((pre, cur) => {
             pre.push(cur.value)
@@ -70,27 +73,15 @@ export default {
           }, [])
         }
       } else {
-        if (this.selectVal.length < this.optionsSelect.length) {
-          this.isIndeterminate = false
-          this.checkedAll = true
+        if (len1 < len2) {
           this.selectVal = this.optionsSelect.reduce((pre, cur) => {
             pre.push(cur.value)
             return pre
           }, [])
         } else {
           this.selectVal = []
-          this.checkedAll = false
-          this.isIndeterminate = false
         }
       }
-    },
-    // select选择器内容切换
-    selectChange () {
-      log(this.selectVal, '选择内容')
-      if (this.selectVal.length < this.optionsSelect.length)
-        this.isIndeterminate = true
-      else this.isIndeterminate = false
-      this.checkedAll = true
     },
     // 级联项选择
     collapseChange () {
