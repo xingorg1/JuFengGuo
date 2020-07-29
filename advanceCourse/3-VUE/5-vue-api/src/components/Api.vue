@@ -12,7 +12,7 @@
     <br />
     <!-- <input type="text" v-model="name">
     <span>{{name}}</span>-->
-    <ApiChild :syncData.sync="syncData" :obj.sync="obj" v-bind.sync="obj2" />
+    <ApiChild :syncData.sync="syncData2" :obj.sync="obj" v-bind.sync="obj2" />
   </div>
 </template>
 
@@ -40,7 +40,7 @@ export default {
         name1: "obj2",
         age1: 1
       },
-      syncData: "父组件给的数据"
+      syncData2: "父组件给的数据"
     };
   },
   mounted() {

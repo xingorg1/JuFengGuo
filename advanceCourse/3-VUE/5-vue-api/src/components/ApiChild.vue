@@ -4,7 +4,9 @@
     <a
       href="https://cn.vuejs.org/v2/guide/components-custom-events.html#sync-%E4%BF%AE%E9%A5%B0%E7%AC%A6"
     >sync官方地址</a>
-    <div>{{syncData}}</div>
+    <div>{{syncData}}
+      <button @click="changeSyncData">改变syncData的数据</button>
+    </div>
     <div>{{obj.a}}</div>
     <div>{{obj.b}}</div>
     <div>{{obj.c}}</div>
@@ -40,6 +42,7 @@ export default {
   },
   data() {
     return {
+      syncDataNum: 0,
       sonName: "子组件 - v-bind.sync"
     };
   },
@@ -49,6 +52,9 @@ export default {
     log("sync传递多个属性", this.obj2, this.name1, this.age1);
   },
   methods: {
+    changeSyncData() {
+      this.$emit("update:syncData", '新数据==' + this.syncDataNum++ + '==')
+    },
     inputChange($event) {
       log($event);
       log(this.name1);
