@@ -615,7 +615,7 @@ export default {
     label: '指南',
     children: [{
       value: 'shejiyuanze',
-      label: '设计原则',
+      label: '设计原则设计原则设计原则设计原则设计原则设计原则',
       children: [{
         value: 'yizhi',
         label: '一致'
@@ -624,7 +624,23 @@ export default {
         label: '反馈'
       }, {
         value: 'xiaolv',
-        label: '效率'
+        label: '效率效率效率效率效率效率效率效率效率',
+        children: [{
+          value: 'layout',
+          label: 'Layout 布局'
+        }, {
+          value: 'color',
+          label: 'Color 色彩'
+        }, {
+          value: 'typography',
+          label: 'Typography 字体'
+        }, {
+          value: 'icon',
+          label: 'Icon 图标'
+        }, {
+          value: 'button',
+          label: 'Button 按钮'
+        }]
       }, {
         value: 'kekong',
         label: '可控'

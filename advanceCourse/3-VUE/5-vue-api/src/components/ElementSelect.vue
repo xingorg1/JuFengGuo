@@ -20,28 +20,21 @@
         </el-option>
       </el-select>
     </div>
-    <div class="area">
-      <h3 class="demonstration">多选选择任意一级选项</h3>
-      <el-cascader v-model="cascaderVal"
-                   :options="cascaderOptions"
-                   :props="{ multiple: true, checkStrictly: true }"
-                   clearable
-                   filterable
-                   :show-all-levels="false"
-                   collapse-tags
-                   @change="collapseChange"></el-cascader>
-    </div>
+    <ElementCascader :cascaderOptions="cascaderOptions"/>
   </div>
 </template>
 
 <script>
+import ElementCascader from './ElementCascader'
 const { log } = console
 export default {
+  components: {
+    ElementCascader
+  },
   data () {
     return {
       selectVal: '',
       optionsSelect: this.$mock.selectAllData,
-      cascaderVal: '',
       cascaderOptions: this.$mock.cascaderOptions
     }
   },
@@ -79,10 +72,6 @@ export default {
         pre.push(cur[this.props.value])
         return pre
       }, [])
-    },
-    // 级联项选择
-    collapseChange () {
-      log(this.cascaderVal)
     }
   }
 }
