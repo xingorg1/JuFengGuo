@@ -2,29 +2,53 @@
   <div class="element-select">
     <div class="area">
       <h3>全选效果</h3>
-      <el-select v-model="selectVal"
-                 placeholder="请选择"
-                 filterable
-                 clearable
-                 multiple
-                 collapse-tags
-                 popper-class="select-all-comp">
+      <el-select
+        v-model="selectVal"
+        placeholder="请选择"
+        filterable
+        clearable
+        multiple
+        collapse-tags
+        popper-class="select-all-comp"
+      >
         <!-- <el-option label="全部日期" value="all" /> -->
-        <el-checkbox v-model="checkedAll"
-                     :indeterminate="isIndeterminate"
-                     @change="checkboxChange">全选</el-checkbox>
-        <el-option v-for="item in optionsSelect"
-                   :key="item.value"
-                   :label="item.label"
-                   :value="item.value">
+        <el-checkbox
+          v-model="checkedAll"
+          :indeterminate="isIndeterminate"
+          @change="checkboxChange"
+          >全选</el-checkbox
+        >
+        <el-option
+          v-for="item in optionsSelect"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
         </el-option>
       </el-select>
     </div>
+<<<<<<< HEAD
     <ElementCascader :cascaderOptions="cascaderOptions"/>
+=======
+    <div class="area">
+      <h3 class="demonstration">多选选择任意一级选项</h3>
+      <el-cascader
+        v-model="cascaderVal"
+        :options="cascaderOptions"
+        :props="{ multiple: true, checkStrictly: true }"
+        clearable
+        filterable
+        :show-all-levels="false"
+        collapse-tags
+        @change="collapseChange"
+      ></el-cascader>
+    </div>
+>>>>>>> abf3605661227f0f33c7ade41ddf73dba4df6211
   </div>
 </template>
 
 <script>
+<<<<<<< HEAD
 import ElementCascader from './ElementCascader'
 const { log } = console
 export default {
@@ -32,55 +56,83 @@ export default {
     ElementCascader
   },
   data () {
+=======
+const { log } = console;
+export default {
+  data() {
+>>>>>>> abf3605661227f0f33c7ade41ddf73dba4df6211
     return {
-      selectVal: '',
+      selectVal: "",
       optionsSelect: this.$mock.selectAllData,
+<<<<<<< HEAD
       cascaderOptions: this.$mock.cascaderOptions
     }
+=======
+      cascaderVal: "",
+      cascaderOptions: this.$mock.cascaderOptions,
+    };
+>>>>>>> abf3605661227f0f33c7ade41ddf73dba4df6211
   },
   computed: {
-    isIndeterminate : function () { // 是否半选
-      let len = this.selectVal.length
-      return len !== 0 && len < this.optionsSelect.length
+    isIndeterminate: function() {
+      // 是否半选
+      let len = this.selectVal.length;
+      return len !== 0 && len < this.optionsSelect.length;
     },
-    checkedAll: { // 是否全选
+    checkedAll: {
+      // 是否全选
       get: function() {
-        log('get')
-        return this.selectVal.length >= this.optionsSelect.length
+        log("get");
+        return this.selectVal.length >= this.optionsSelect.length;
       },
-      set: function (e) {
-        log(e, 'set')
-      }
-    }
+      set: function(e) {
+        log(e, "set");
+      },
+    },
   },
   methods: {
     // 切换全选按钮
-    checkboxChange (e) {
-      log(e, 'change')
+    checkboxChange(e) {
+      log(e, "change");
       let len1 = this.selectVal.length,
         len2 = this.optionsSelect.length;
-      if (e) { // '全选'
-        if (len1 === len2) this.selectVal = [] // '全不选'
-        else this.changeSelectedData()
+      if (e) {
+        // '全选'
+        if (len1 === len2) this.selectVal = [];
+        // '全不选'
+        else this.changeSelectedData();
       } else {
-        if (len1 < len2) this.changeSelectedData()
-        else  this.selectVal = []
+        if (len1 < len2) this.changeSelectedData();
+        else this.selectVal = [];
       }
     },
     changeSelectedData() {
       this.selectVal = this.optionsSelect.reduce((pre, cur) => {
+<<<<<<< HEAD
         pre.push(cur[this.props.value])
         return pre
       }, [])
     }
   }
 }
+=======
+        pre.push(cur.value);
+        return pre;
+      }, []);
+    },
+    // 级联项选择
+    collapseChange() {
+      log(this.cascaderVal);
+    },
+  },
+};
+>>>>>>> abf3605661227f0f33c7ade41ddf73dba4df6211
 </script>
 
 <style lang="scss">
 .select-all-comp {
   .el-select-dropdown__list {
-    // padding-top: 40px;
+    padding-top: 0px;
     position: relative;
   }
   .el-checkbox {
