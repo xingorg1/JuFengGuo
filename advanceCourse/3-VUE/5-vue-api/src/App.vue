@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <Home/> -->
     <router-view></router-view>
-    <h1>结果为：{{ result }}</h1>
+    <!-- <h1>结果为：{{ result }}</h1> -->
   </div>
 </template>
 
@@ -34,9 +34,3 @@ export default {
   }
 }
 </script>
-
-<style>
-#app {
-  padding: 20px;
-}
-</style>

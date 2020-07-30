@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <button @click="handleClick">hahah</button>
-    <ul>
+    <!-- <button @click="handleClick">hahah</button> -->
+    <ul class="nav">
       <li>
         <router-link to="/app-api">vue</router-link>
       </li>
@@ -31,17 +31,20 @@
         <router-link to="/CodeEditor">代码编辑器</router-link>
       </li>
       <li>
-        <router-link to="/VueCodeMirror">代码编辑器-基于vue二次封装</router-link>
+        <router-link to="/VueCodeMirror">代码编辑器组件</router-link>
       </li>
       <li>
-        <router-link to="/ElementTree">树组件开发</router-link>
+        <router-link to="/ElementTree">树组件</router-link>
+      </li>
+      <li>
+        <router-link to="/ElementSelect">级联全选组件</router-link>
       </li>
     </ul>
-    <hr />
     <router-view></router-view>
+    <!-- 图片引入 -->
     <!-- <img src="/static/img/test.jpg" alt=""> -->
     <!-- <img :src='imgUrl' alt=""> -->
-    <img :src='$store.state.imgUrl' alt="">
+    <!-- <img :src='$store.state.imgUrl' alt=""> -->
   </div>
 </template>
 
@@ -56,6 +59,21 @@ export default {
     return {
       imgUrl: "/static/img/test.jpg"
     }
+  },
+  async created(){
+    // log('home，created');
+    // await是promise异步执行完的返回结果？
+    // var resutl = await new Promise((req)  => {
+    //   log('Promise')
+    //   req('promise req')
+    // }).then((data) => {
+    //   log(data)
+    //   return 'resutl结果，123'
+    // })
+    // log(resutl)
+  },
+  mounted(){
+    // log('home，mounted')
   },
   methods: {
     handleClick(e){

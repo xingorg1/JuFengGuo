@@ -216,6 +216,14 @@ export default {
       .catch(function (error) {
         log(error);
       });
+    // 在vue中访问public内的静态资源
+    axios.get('./data.json')
+      .then((response) => {
+        log('aaa', response);
+      })
+      .catch(function (error) {
+        log(error);
+      });
   },
   directives: {
     scrollNoFixed: {

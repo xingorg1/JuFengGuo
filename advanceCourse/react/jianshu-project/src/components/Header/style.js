@@ -7,6 +7,17 @@ export const HeaderWrapper = styled.div`
   height: 56px;
   line-height: 56px;
   border-bottom: 1px solid #eee;
+  &.fatherBox {
+    
+  }
+  &.clearfix {
+    &::after{
+      content: '';
+      clear: both;
+      display: block;
+      overflow: hidden;
+    }
+  }
 `
 
 export const Logo = styled.a.attrs({
@@ -20,10 +31,11 @@ export const Logo = styled.a.attrs({
   background-size: 100% 100%;
 `
 
-export const WriteBtn = styled.button.attrs({
+export const Button = styled.button.attrs({
 })`
   float: right;
   width: 100px;
+  padding: 0 12px;
   height: 40px;
   line-height: 24px;
   margin: 8px 12px 0;
@@ -32,13 +44,30 @@ export const WriteBtn = styled.button.attrs({
   color: #fff;
   background-color: #ea6f5a;
   cursor: pointer;
+  &:hover{
+    background-color: #ec6149;
+  }
+  &.reg{
+    width: 80px;
+    background-color: #fff;
+    color: #ea6f5a;
+    border: 1px solid #ea6f5a;
+    &:hover{
+      background-color: rgba(236,97,73,.05);
+    }
+  }
 `
 export const Beta = styled.a`
   display: inline-block;
   width: 57px;
   height: 25px;
-  margin: 0 12px;
+  margin: 0 27px;
   background: url(${betaPic});
   background-size: 100% 100%;
   vertical-align: middle;
+`
+export const NavItem = styled.div`
+  &.left {
+    float: left
+  }
 `

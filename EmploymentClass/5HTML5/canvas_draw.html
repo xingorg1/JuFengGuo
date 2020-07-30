@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas id="event_canvas"></canvas>
+  <script>
+    var tempContext = null; // global variable 2d context
+		var started = false;
+		var mText_canvas = null;
+		var x = 0, y =0;
+		window.add
+		window.onload = function() {
+			var canvas = document.getElementById("event_canvas");
+			console.log(canvas.parentNode.clientWidth);
+			canvas.width = canvas.parentNode.clientWidth;
+			canvas.height = canvas.parentNode.clientHeight;
+			
+			if (!canvas.getContext) {
+			    console.log("Canvas not supported. Please install a HTML5 compatible browser.");
+			    return;
+			}
+			
+			// get 2D context of canvas and draw rectangel
+			tempContext = canvas.getContext("2d");
+			tempContext.fillStyle="green";
+			x = canvas.width/2;
+			y = canvas.height/2;
+			tempContext.fillRect(x, y, 80, 40);
+	
+	        // key event - use DOM element as object
+	        canvas.addEventListener('keydown', doKeyDown, true);
+	        canvas.focus();  
+	        // key event - use window as object
+	        window.addEventListener('keydown', doKeyDown, true);
+	        
+	        // mouse event
+	        canvas.addEventListener("mousedown", doMouseDown, false);
+	        canvas.addEventListener('mousemove', doMouseMove, false);
+	        canvas.addEventListener('mouseup',   doMouseUp, false);
+		}
+		
+		function getPointOnCanvas(canvas, x, y) {
+			var bbox = canvas.getBoundingClientRect();
+			return { x: x - bbox.left * (canvas.width  / bbox.width),
+					y: y - bbox.top  * (canvas.height / bbox.height)
+					};
+		}
+		
+		function doKeyDown(e) {
+      console.log(e)
+			var keyID = e.keyCode ? e.keyCode :e.which;
+			if(keyID === 38 || keyID === 87)  { // up arrow and W
+				clearCanvas();
+				y = y - 10;
+				tempContext.fillRect(x, y, 80, 40);
+				e.preventDefault();
+			}
+			if(keyID === 39 || keyID === 68)  { // right arrow and D
+				clearCanvas();
+				x = x + 10;
+				tempContext.fillRect(x, y, 80, 40);
+				e.preventDefault();
+			}
+			if(keyID === 40 || keyID === 83)  { // down arrow and S
+				clearCanvas();
+				y = y + 10;
+				tempContext.fillRect(x, y, 80, 40);
+				e.preventDefault();
+			}
+			if(keyID === 37 || keyID === 65)  { // left arrow and A
+				clearCanvas();
+				x = x - 10;
+				tempContext.fillRect(x, y, 80, 40);
+				e.preventDefault();
+			}
+		}
+		
+		function clearCanvas() {
+			tempContext.clearRect(0, 0, 500, 500)
+		}
+		
+		function doMouseDown(event) {
+			var x = event.pageX;
+			var y = event.pageY;
+			var canvas = event.target;
+			var loc = getPointOnCanvas(canvas, x, y);
+			console.log("mouse down at point( x:" + loc.x + ", y:" + loc.y + ")");
+			tempContext.beginPath();
+			tempContext.moveTo(loc.x, loc.y);
+			started = true;
+		}
+		
+		function doMouseMove(event) {
+			var x = event.pageX;
+			var y = event.pageY;
+			var canvas = event.target;
+			var loc = getPointOnCanvas(canvas, x, y);
+			if (started) {
+				tempContext.lineTo(loc.x, loc.y);
+				tempContext.stroke();
+			}
+		}
+		
+		function doMouseUp(event) {
+			console.log("mouse up now");
+		    if (started) {
+		    	doMouseMove(event);
+		        started = false;
+			}
+    }
+    
+    </script>
+  <script>
+    var globalA2 = {};
+
+    function bibao2() {
+      var a1 = 'a1内部的变量'
+      var a2 = function() {
+        console.log(a1)
+      }
+      globalA2.hanshu = a2
+      globalA2.hanshu2 = function() {
+        console.log(a1)
+      }
+    }
+    bibao2()
+    globalA2.hanshu()
+    console.log(globalA2)
+
+
+    function Deng(name, wife) {
+
+      var prepareWife = "xiaozhang";
+
+      this.name = name;
+      this.wife = wife;
+      this.divorce = function () {
+        this.wife = prepareWife;
+        return this.wife;
+      }
+      this.changePrepareWife = function (target) {
+        prepareWife = target;
+        return prepareWife;
+      }
+      this.sayPraprewife = function () {
+        console.log(prepareWife); // 對，每次执行deng.sayPraprewife时，就会寻找这个prepareWife变量，因为这里用到了这个变量
+变量
+        return console.log(prepareWife);
+      }
+
+    }
+    var deng = new Deng('deng', 'xiaoliu');
+  </script>
+</body>
+
+</html>
