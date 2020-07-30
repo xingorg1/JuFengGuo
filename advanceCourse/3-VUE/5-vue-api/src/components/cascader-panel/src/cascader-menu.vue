@@ -3,6 +3,7 @@ import ElScrollbar from 'element-ui/packages/scrollbar';
 import CascaderNode from './cascader-node.vue';
 import Locale from 'element-ui/src/mixins/locale';
 import { generateId } from 'element-ui/src/utils/util';
+import ElCheckbox from 'element-ui/packages/checkbox';
 
 export default {
   name: 'ElCascaderMenu',
@@ -12,6 +13,7 @@ export default {
   inject: ['panel'],
 
   components: {
+    ElCheckbox,
     ElScrollbar,
     CascaderNode
   },
@@ -28,6 +30,8 @@ export default {
     return {
       activeNode: null,
       hoverTimer: null,
+      checkAll: false, // 是否全选
+      // indeterminate: false, // checkbox 的不确定状态，一般用于实现全选的效果
       id: generateId()
     };
   },
@@ -38,6 +42,18 @@ export default {
     },
     menuId() {
       return `cascader-menu-${this.id}-${this.index}`;
+    },
+    indeterminate() {
+      // let len = this.panel.checkedValue.length // 选中项是所有项的，不合适
+      let checkedLen = 0,
+        nodesLen = this.nodes.length;
+      this.nodes.forEach(node => {
+        node.checked && checkedLen ++
+      });
+      console.log(checkedLen, checkedLen !== 0 && checkedLen < this.nodes.length)
+      if (checkedLen === 0) this.checkAll = false 
+      if (checkedLen === nodesLen) this.checkAll = true 
+      return checkedLen !== 0 && checkedLen < nodesLen // 选中项!==0 && 选中项 < nodes所有选项
     }
   },
 
@@ -79,6 +95,32 @@ export default {
         <div class="el-cascader-menu__empty-text">{ this.t('el.cascader.noData') }</div>
       );
     },
+    // 全选按钮change事件
+    handleMultiCheckChange(checked) {
+      this.checkAll = checked;
+      this.nodes.map((node) => {
+        node.checked = checked
+        node.doCheck(checked);
+      })
+      this.panel.calculateMultiCheckedValue(); // 选中每个节点
+    },
+    // 渲染“全选”按钮
+    renderCheckbox(h) {
+      const { node, checkAll, indeterminate } = this;
+      const events = {
+        on: { change: this.handleMultiCheckChange },
+        nativeOn: {}
+      };
+     
+      return (
+        <el-checkbox
+          value={ checkAll }
+          class="checked-all-btn"
+          indeterminate={ indeterminate }
+          { ...events }
+        >全选</el-checkbox>
+      );
+    },
     renderNodeList(h) {
       const { menuId } = this;
       const { isHoverMenu } = this.panel;
@@ -87,12 +129,9 @@ export default {
       if (isHoverMenu) {
         events.on.expand = this.handleExpand;
       }
-
       const nodes = this.nodes.map((node, index) => {
         const { hasChildren } = node;
         return (
-          <template>
-            <span>全选</span>
             <cascader-node
               key={ node.uid }
               node={ node }
@@ -100,17 +139,16 @@ export default {
               aria-haspopup={ hasChildren }
               aria-owns = { hasChildren ? menuId : null }
               { ...events }></cascader-node>
-          </template>
-        );
+          );
       });
-
       return [
+        this.renderCheckbox(h),
         ...nodes,
         isHoverMenu ? <svg ref='hoverZone' class='el-cascader-menu__hover-zone'></svg> : null
       ];
     }
   },
-
+  
   render(h) {
     const { isEmpty, menuId } = this;
     const events = { nativeOn: {} };
