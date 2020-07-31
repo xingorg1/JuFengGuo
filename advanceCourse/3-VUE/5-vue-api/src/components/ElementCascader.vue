@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Cascader from './cascader/src/cascader.vue'
+import Cascader from './cascader/cascader.vue'
 const { log } = console
 export default {
   name: 'ElementCascader',
