@@ -4,7 +4,6 @@ import CascaderNode from './cascader-node.vue';
 import Locale from 'element-ui/src/mixins/locale';
 import { generateId } from 'element-ui/src/utils/util';
 import ElCheckbox from 'element-ui/packages/checkbox';
-
 export default {
   name: 'ElCascaderMenu',
 
@@ -30,7 +29,7 @@ export default {
     return {
       activeNode: null,
       hoverTimer: null,
-      checkAll: false, // 是否全选
+      // checkAll: false, // 是否全选
       // indeterminate: false, // checkbox 的不确定状态，一般用于实现全选的效果
       id: generateId()
     };
@@ -45,15 +44,16 @@ export default {
     },
     indeterminate() {
       // let len = this.panel.checkedValue.length // 选中项是所有项的，不合适
-      let checkedLen = 0,
-        nodesLen = this.nodes.length;
-      this.nodes.forEach(node => {
-        node.checked && checkedLen ++
-      });
-      console.log(checkedLen, checkedLen !== 0 && checkedLen < this.nodes.length)
-      if (checkedLen === 0) this.checkAll = false 
-      if (checkedLen === nodesLen) this.checkAll = true 
-      return checkedLen !== 0 && checkedLen < nodesLen // 选中项!==0 && 选中项 < nodes所有选项
+      let checkedLen =  this.checkedNums()       
+      this.panel.getCheckedNodes(this.panel.leafOnly)
+      return checkedLen !== 0 && checkedLen < this.nodes.length // 选中项!==0 && 选中项 < nodes所有选项
+    },
+    checkAll: {
+      get() {
+        this.panel.getCheckedNodes(this.panel.leafOnly)
+        return this.checkedNums() >= this.nodes.length
+      },
+      set() {}
     }
   },
 
@@ -89,11 +89,18 @@ export default {
       if (!hoverZone) return;
       hoverZone.innerHTML = '';
     },
-
     renderEmptyText(h) {
       return (
         <div class="el-cascader-menu__empty-text">{ this.t('el.cascader.noData') }</div>
       );
+    },
+    // 计算当前列选中了几项
+    checkedNums() {
+      let checkedLen = 0
+      this.nodes.forEach(node => {
+        node.checked && checkedLen ++
+      });
+      return checkedLen
     },
     // 全选按钮change事件
     handleMultiCheckChange(checked) {

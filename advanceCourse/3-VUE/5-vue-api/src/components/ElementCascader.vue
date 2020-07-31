@@ -45,7 +45,7 @@ export default {
     // 级联项选择
     collapseChange () {
       // log(this.cascaderVal)
-      // log(this.cascaderVal1)
+      log(this.cascaderVal1)
     },
     expandChange (node, a, b, c) {
       log('expandChange', node, a, b, c, this.cascaderVal)
@@ -55,6 +55,9 @@ export default {
 </script>
 
 <style lang="scss">
+.el-cascader{
+  width: 300px;
+}
 .el-cascader-menu__list{
   /* padding-top: 40px; */
 }
