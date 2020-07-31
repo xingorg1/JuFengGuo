@@ -224,6 +224,10 @@ export default {
       .catch(function (error) {
         log(error);
       });
+      axios.post('/api/', {
+        account: 'admin',
+        password: '12346'
+      })
   },
   directives: {
     scrollNoFixed: {
