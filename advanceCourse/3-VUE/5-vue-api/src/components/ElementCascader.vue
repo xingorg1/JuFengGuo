@@ -13,7 +13,7 @@
                   @expand-change="expandChange"
                   >
                   </el-cascader>
-    <h4>自己封装-带全选功能！</h4>
+    <h4>自己封装带全选功能</h4>
     <Cascader v-model="cascaderVal1"
                   :options="cascaderOptions"
                   :props="{ multiple: true, checkStrictly: true }"
