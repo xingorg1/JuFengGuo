@@ -23,11 +23,20 @@ module.exports = {
         .loader('babel-loader')
         .end()
   },
-  // devServer:{
-  //   disableHockCheck: true,
-  //   post: '80',
-  //   host: 'gjf.vue-study.com'
-  // },
+  devServer:{
+    // disableHockCheck: true,
+    // post: '80',
+    // host: 'gjf.vue-study.com',
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://.com/',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '/api': ''
+    //     }
+    //   }
+    // }
+  },
   configureWebpack: config => {
     devtool: 'source-map'
     // vuxLoader.merge(config, {
