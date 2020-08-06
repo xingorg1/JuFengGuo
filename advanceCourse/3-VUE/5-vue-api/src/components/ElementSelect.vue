@@ -46,6 +46,18 @@ export default {
     }
   },
   computed: {
+    allOptionsData: function() {
+      console.time('a')
+      return this.optionsSelect.reduce((pre, cur) => {
+        // 这里是全选功能，思路就是，能不能在全选的时候，只选择过滤的数据呢？这就需要知道fileter的过滤规则
+        // 随之而来的问题1：如果过滤规则变了呢？
+        // 随之而来的问题2：取消全选的时候怎么办？需要只取消当前过滤的内容，需要遍历啊啊啊这就是性能问题了
+        // 性能问题：空间换时间？链表代替多次耗性能的循环
+        pre.push(cur.value)
+        return pre
+      }, [])
+      console.timeEnd('a')
+    },
     isIndeterminate: function() {
       // 是否半选
       let len = this.selectVal.length;
@@ -79,10 +91,9 @@ export default {
       }
     },
     changeSelectedData() {
-      this.selectVal = this.optionsSelect.reduce((pre, cur) => {
-        pre.push(cur[this.props.value])
-        return pre
-      }, [])
+      console.time('changeSelectedData')
+      this.selectVal = this.allOptionsData
+      console.timeEnd('changeSelectedData')
     }
   }
 }
