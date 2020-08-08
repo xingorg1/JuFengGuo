@@ -1,5 +1,5 @@
 <template>
-  <div class="api-child" style="border: 1px solid red; padding: 3px">
+  <div class="api-child area">
     <h3>{{sonName}}</h3>
     <a
       href="https://cn.vuejs.org/v2/guide/components-custom-events.html#sync-%E4%BF%AE%E9%A5%B0%E7%AC%A6"
@@ -47,9 +47,9 @@ export default {
     };
   },
   mounted() {
-    log(this, this.a);
-    log(this.obj.a, this.obj.c, this.obj.b);
-    log("sync传递多个属性", this.obj2, this.name1, this.age1);
+    // log(this, this.a);
+    // log(this.obj.a, this.obj.c, this.obj.b);
+    // log("sync传递多个属性", this.obj2, this.name1, this.age1);
   },
   methods: {
     changeSyncData() {
