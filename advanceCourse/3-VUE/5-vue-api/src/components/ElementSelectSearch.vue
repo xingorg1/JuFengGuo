@@ -1,7 +1,7 @@
 <template>
-  <div class="element-select">
+  <div class="element-select-search">
     <div class="area">
-      <h3>全选效果</h3>
+      <h3>全选效果+搜索后全选</h3>
       <el-select
         v-model="selectVal"
         placeholder="请选择"
@@ -9,10 +9,13 @@
         clearable
         multiple
         collapse-tags
+        remote
         reserve-keyword
+        :remote-method="remoteMethod"
+        :loading="loading"
         popper-class="select-all-comp"
+        @change="selectChange"
       >
-        <!-- <el-option label="全部日期" value="all" /> -->
         <el-checkbox
           v-model="checkedAll"
           :indeterminate="isIndeterminate"
@@ -20,7 +23,7 @@
           >全选</el-checkbox
         >
         <el-option
-          v-for="item in optionsSelect"
+          v-for="item in options"
           :key="item.value"
           :label="item.label"
           :value="item.value"
@@ -28,34 +31,26 @@
         </el-option>
       </el-select>
     </div>
-    <ElementSelectSearch />
-    <ElementCascader :cascaderOptions="cascaderOptions"/>
+    <!-- <ElementCascader :cascaderOptions="cascaderOptions"/> -->
   </div>
 </template>
 
 <script>
-import ElementCascader from './ElementCascader'
-import ElementSelectSearch from './ElementSelectSearch'
 const { log } = console
 export default {
   components: {
-    ElementCascader,
-    ElementSelectSearch
   },
   data () {
     return {
-      selectVal: "",
+      options: [],
+      loading: false,
+      selectVal: [],
       optionsSelect: this.$mock.selectAllData,
-      cascaderOptions: this.$mock.cascaderOptions
     }
   },
   computed: {
     allOptionsData: function() {
-      return this.optionsSelect.reduce((pre, cur) => {
-        // 这里是全选功能，思路就是，能不能在全选的时候，只选择过滤的数据呢？这就需要知道fileter的过滤规则
-        // 随之而来的问题1：如果过滤规则变了呢？
-        // 随之而来的问题2：取消全选的时候怎么办？需要只取消当前过滤的内容，需要遍历啊啊啊这就是性能问题了
-        // 性能问题：空间换时间？链表代替多次耗性能的循环
+      return this.options.reduce((pre, cur) => {
         pre.push(cur.value)
         return pre
       }, [])
@@ -63,37 +58,59 @@ export default {
     isIndeterminate: function() {
       // 是否半选
       let len = this.selectVal.length;
-      return len !== 0 && len < this.optionsSelect.length;
+      return len !== 0 && len < this.options.length;
     },
     checkedAll: {
       // 是否全选
       get: function() {
         // log("get");
-        return this.selectVal.length >= this.optionsSelect.length;
+        return this.selectVal.length >= this.options.length; // 应该是selctVal里包含options的length
       },
       set: function(e) {
-        log(e, "set");
+        log(e, "set===");
       },
     },
   },
+  mounted() {
+    this.options = this.optionsSelect
+  },
   methods: {
+    remoteMethod(query) {
+      log('remote')
+      if (query !== '') {
+        this.loading = true;
+        this.options = this.optionsSelect.filter(item => {
+          return item.label.toLowerCase()
+            .indexOf(query.toLowerCase()) > -1;
+        });
+        this.loading = false;
+      } else {
+        this.options = this.optionsSelect;
+      }
+    },
     // 切换全选按钮
     checkboxChange(e) {
+      // 全选：是从当前列表内容一个一个选中。全不选，是将selectVal中的内容去掉当前的几项。selectVal得用什么数据结构更友好？
+      // select的选中和不确定状态，应该是和当前列表对比，而不是全部数据。
       // log(e, "change");
       let len1 = this.selectVal.length,
-        len2 = this.optionsSelect.length;
+        len2 = this.options.length;
       if (e) {
         // '全选'
+        log(e)
         if (len1 === len2) this.selectVal = [];
         // '全不选'
-        else this.changeSelectedData();
+        else this.selectAllDataFn();
       } else {
-        if (len1 < len2) this.changeSelectedData();
+        if (len1 < len2) this.selectAllDataFn();
         else this.selectVal = [];
       }
     },
-    changeSelectedData() {
+    selectAllDataFn() {
       this.selectVal = this.allOptionsData
+    },
+    selectChange() {
+      log('change')
     }
   }
 }
