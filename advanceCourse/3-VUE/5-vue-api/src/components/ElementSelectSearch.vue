@@ -2,34 +2,28 @@
   <div class="element-select-search">
     <div class="area">
       <h3>全选效果+搜索后全选</h3>
-      <el-select
-        v-model="selectVal"
-        placeholder="请选择"
-        filterable
-        clearable
-        multiple
-        collapse-tags
-        remote
-        reserve-keyword
-        :remote-method="remoteMethod"
-        :loading="loading"
-        popper-class="select-all-comp"
-        @change="selectChange"
-        @blur="blurHandle"
-      >
-        <el-checkbox
-          v-model="checkedAll"
-          :indeterminate="isIndeterminate"
-          @change="checkboxChange"
-          >全选</el-checkbox
-        >
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-          :disabled="item.disabled"
-        >
+      <el-select v-model="selectVal"
+                 placeholder="请选择"
+                 filterable
+                 clearable
+                 multiple
+                 collapse-tags
+                 remote
+                 reserve-keyword
+                 :remote-method="remoteMethod"
+                 :loading="loading"
+                 popper-class="select-all-comp"
+                 @visible-change="visibleChange"
+                 @change="selectChange"
+                 @blur="blurHandle">
+        <el-checkbox v-model="checkedAll"
+                     :indeterminate="isIndeterminate"
+                     @change="checkboxChange">全选</el-checkbox>
+        <el-option v-for="item in optionsList"
+                   :key="item.value"
+                   :label="item.label"
+                   :value="item.value"
+                   :disabled="item.disabled">
         </el-option>
       </el-select>
     </div>
@@ -44,77 +38,132 @@ export default {
   },
   data () {
     return {
-      options: [],
+      optionsList: [],
       loading: false,
       selectVal: [],
-      optionsSelect: this.$mock.selectAllData,
+      originSelectData: this.$mock.selectAllData,
+      optionsNoDisLen: 0, // 排除disabled后的内容列表长度
+      optionsNoDisLenfilter: 0, // 过滤后的内容，排除disabled后的内容列表长度
     }
   },
   computed: {
-    allOptionsData: function() {
-      return this.options.reduce((pre, cur) => {
+    allOptionsData () {
+      return this.optionsList.reduce((pre, cur) => {
         !cur.disabled && pre.push(cur.value)
         return pre
       }, [])
     },
-    isIndeterminate: function() {
+    isIndeterminate: function () {
       // 是否半选
-      let len = this.selectVal.length;
-      return len !== 0 && len < this.options.length;
+      // let len = this.selectVal.length;
+      let len = 0,
+        selectVal = this.selectVal;
+      this.optionsList.forEach((cur) => {
+        selectVal.includes(cur.value) && len++
+      });
+      return len !== 0 && len < this.optionsNoDisLenfilter;
     },
     checkedAll: {
       // 是否全选
-      get: function() {
+      get: function () {
+        let len = 0,
+          selectVal = this.selectVal;
+        this.optionsList.forEach((cur) => {
+          selectVal.includes(cur.value) && len++
+        });
         // log("get");
-        return this.selectVal.length >= this.options.length; // 应该是selctVal里包含options的length
+        return len >= this.optionsNoDisLenfilter; // 应该是selctVal里包含options的length
       },
-      set: function(e) {
+      set: function (e) {
         log(e, "set===");
       },
     },
   },
-  mounted() {
-    this.options = this.optionsSelect
+  mounted () {
+    log('初始化可选下拉为全部数据')
+    this.optionsList = this.originSelectData
+    this.initFunc();
+  },
+  watch: {
+    originSelectData (newVal) {
+      newVal = newVal || []
+      this.initFunc(newVal)
+      // this.optionsList = newVal
+      log('全部数据修改，同步修改初始化可选下拉')
+    }
   },
   methods: {
-    remoteMethod(query) {
-      log('remote')
+    // 初始化，生成可以选中的所有项value集合，方便
+    initFunc (options = this.originSelectData) {
+      let len = 0
+      this.optionsList = options
+      options.forEach((cur) => !cur.disabled && len++)
+      this.optionsNoDisLenfilter = this.optionsNoDisLen = len
+      log(this.optionsNoDisLen)
+    },
+    remoteMethod (query) {
+      log('remote-搜索')
       if (query !== '') {
+        let len = 0
         this.loading = true;
-        this.options = this.optionsSelect.filter(item => {
+        this.optionsList = this.originSelectData.filter(item => {
           return item.label.toLowerCase()
             .indexOf(query.toLowerCase()) > -1;
         });
+        this.optionsList.forEach((item) => {
+          !item.disabled && len++
+          this.optionsNoDisLenfilter = len
+        })
         this.loading = false;
+        log('remote-if', this.optionsList, len)
       } else {
-        this.options = this.optionsSelect;
+        this.optionsList = this.originSelectData;
+        this.optionsNoDisLenfilter = this.optionsNoDisLen
+        log('remote-else', this.optionsList, this.optionsNoDisLen)
       }
     },
     // 切换全选按钮
-    checkboxChange(e) {
+    checkboxChange (e) {
       // 全选：是从当前列表内容一个一个选中。全不选，是将selectVal中的内容去掉当前的几项。selectVal得用什么数据结构更友好？
       // select的选中和不确定状态，应该是和当前列表对比，而不是全部数据。
       // log(e, "change");
       let len1 = this.selectVal.length,
-        len2 = this.options.length;
+        len2 = this.optionsNoDisLenfilter
       if (e) {
         // '全选'
         log(e)
-        if (len1 === len2) this.selectVal = [];
+        if (len1 === len2) this.selectSpliceDataFn()
         // '全不选'
         else this.selectAllDataFn();
       } else {
         if (len1 < len2) this.selectAllDataFn();
-        else this.selectVal = [];
+        else this.selectSpliceDataFn()
+      }
+      log(this.selectVal)
+    },
+    selectSpliceDataFn () {
+      // 全不选 - 从选项中去除
+      let selectVal = this.selectVal;
+      this.optionsList.forEach((cur) => {
+        selectVal.includes(cur.value) && selectVal.splice(selectVal.indexOf(cur.value), 1)
+      });
+      this.selectVal = selectVal
+    },
+    selectAllDataFn () {
+      // 全选 - 合并+去重
+      this.selectVal = [...new Set(this.selectVal.concat(this.allOptionsData))]
+    },
+    visibleChange (show) {
+      // 下拉列表收起,
+      log('收起', show)
+      if (!show) {
+        this.initFunc();
       }
     },
-    selectAllDataFn() {
-      this.selectVal = this.allOptionsData
-    },
-    selectChange() {
+    selectChange () {
       log('change')
     },
-    blurHandle() {
+    blurHandle () {
       // 失焦时，希望下拉列表为全部数据
       log('blur')
     }
