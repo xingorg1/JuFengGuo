@@ -15,6 +15,7 @@
         :loading="loading"
         popper-class="select-all-comp"
         @change="selectChange"
+        @blur="blurHandle"
       >
         <el-checkbox
           v-model="checkedAll"
@@ -27,6 +28,7 @@
           :key="item.value"
           :label="item.label"
           :value="item.value"
+          :disabled="item.disabled"
         >
         </el-option>
       </el-select>
@@ -51,7 +53,7 @@ export default {
   computed: {
     allOptionsData: function() {
       return this.options.reduce((pre, cur) => {
-        pre.push(cur.value)
+        !cur.disabled && pre.push(cur.value)
         return pre
       }, [])
     },
@@ -111,6 +113,10 @@ export default {
     },
     selectChange() {
       log('change')
+    },
+    blurHandle() {
+      // 失焦时，希望下拉列表为全部数据
+      log('blur')
     }
   }
 }

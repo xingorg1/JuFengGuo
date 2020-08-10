@@ -587,19 +587,20 @@ export default {
     label: '龙须面'
   }, {
     value: '选项5',
-    label: '北京烤鸭'
+    label: '北京烤鸭1'
   }, {
     value: '选项6',
-    label: '北京烤鸭'
+    label: '北京烤鸭2'
   }, {
     value: '选项7',
-    label: '北京烤鸭'
+    label: '北京烤鸭3'
   }, {
     value: '选项8',
-    label: '北京烤鸭'
+    label: '北京烤鸭4',
+    disabled: true
   }, {
     value: '选项9',
-    label: '北京烤鸭'
+    label: '北京烤鸭5'
   }, {
     value: '选项61',
     label: '北京烤鸭61'
