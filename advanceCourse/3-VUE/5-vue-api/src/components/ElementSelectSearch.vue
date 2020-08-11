@@ -2,6 +2,8 @@
   <div class="element-select-search">
     <div class="area">
       <h3>全选效果+搜索后全选</h3>
+                 <!-- reserve-keyword -->
+
       <el-select v-model="selectVal"
                  placeholder="请选择"
                  filterable
@@ -9,7 +11,6 @@
                  multiple
                  collapse-tags
                  remote
-                 reserve-keyword
                  :remote-method="remoteMethod"
                  :loading="loading"
                  popper-class="select-all-comp"
@@ -34,6 +35,15 @@
 <script>
 const { log } = console
 export default {
+  mixins: [
+    {
+      methods: {
+        testMixin () {
+          log('执行混入的testMixin方法')
+        }
+      }
+    }
+  ],
   components: {
   },
   data () {
@@ -83,6 +93,8 @@ export default {
     log('初始化可选下拉为全部数据')
     this.optionsList = this.originSelectData
     this.initFunc();
+    // log('混入mixins学习观察——实例内有同名函数时'); this.testMixin()
+    log('混入mixins学习观察——实例内无同名函数时'); this.testMixin()
   },
   watch: {
     originSelectData (newVal) {
@@ -93,6 +105,10 @@ export default {
     }
   },
   methods: {
+    // testMixin () {
+    //   log(this)
+    //   log('执行组件实例内的testMixin方法')
+    // },
     // 初始化，生成可以选中的所有项value集合，方便
     initFunc (options = this.originSelectData) {
       let len = 0

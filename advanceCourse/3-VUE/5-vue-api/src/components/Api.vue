@@ -21,6 +21,7 @@
       v-bind="obj2"
       @handleClick="handleClick"
     />
+    <ApiEmitOn />
   </div>
 </template>
 
@@ -28,11 +29,13 @@
 const {log} = console
 import ApiChild from "./ApiChild.vue";
 import ApiAttr from "./ApiAttr.vue";
+import ApiEmitOn from "./ApiEmitOn.vue";
 export default {
   name: "Api",
   components: {
     ApiChild,
-    ApiAttr
+    ApiAttr,
+    ApiEmitOn
   },
   data() {
     return {
@@ -53,6 +56,11 @@ export default {
       syncData2: "父组件给的数据"
     };
   },
+  created() {
+    // 直接监听$on
+    this.$on('emitHandleClick', this.emitHandleClickFunc)
+    log(this.emitHandleClickFunc)
+  },
   mounted() {
     log(this.divClickHandle)
     this.$nextTick(() => {
@@ -70,6 +78,9 @@ export default {
     },
     handleClick(txt) {
       log('handleClick', txt)
+    },
+    emitHandleClickFunc() {
+      log('子组件emit触发父组件事件，父组件on监听', arguments)
     }
   }
 };
