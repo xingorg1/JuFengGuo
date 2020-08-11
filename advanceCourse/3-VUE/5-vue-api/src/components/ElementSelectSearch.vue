@@ -11,6 +11,7 @@
                  multiple
                  collapse-tags
                  remote
+                 reserve-keyword
                  :remote-method="remoteMethod"
                  :loading="loading"
                  popper-class="select-all-comp"
@@ -188,6 +189,9 @@ export default {
 </script>
 
 <style lang="scss">
+.el-select { 
+  width: 300px;
+}
 .select-all-comp {
   .el-select-dropdown__list {
     padding-top: 0px;
