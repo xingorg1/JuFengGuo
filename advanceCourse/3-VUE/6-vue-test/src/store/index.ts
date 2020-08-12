@@ -11,16 +11,16 @@ export default new Vuex.Store({
   mutations: {
     changeNum (state) {
       state.num++
-      console.log(JSON.stringify(state))
+      // console.log(JSON.stringify(state))
     },
     changeNumBeforeMut (state) {
       state.flag = !state.flag
-      console.log(JSON.stringify(state))
+      // console.log(JSON.stringify(state))
     }
   },
   actions: {
     changeNumAsync (ctx) {
-      console.log(ctx)
+      // console.log(ctx)
       ctx.dispatch('changeNumBefore') // 在actions中触发actions
       ctx.commit('changeNum')
     },
