@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+ 
+</head>
+<body>
+  <p id="dom">一段文字内容<span style="position:absolute;">...</span></p>
+  <button onClick="this.after(dom.innerText)">
+      innerText结果是？
+  </button>
+  <button onClick="this.after(dom.textContent)">
+      textContent结果是？
+  </button>
+
+  <p id="dom2">我后面有一段隐藏文字<span style="display: none;">，就是我啦！</span></p>
+  <button onClick="this.after(dom2.innerText)">
+      innerText结果是？
+  </button>
+  <button onClick="this.after(dom2.textContent)">
+      textContent结果是？
+  </button>
+  <button onClick="afterFn(this)">
+    this.after
+    </button>
+    <script>
+      function afterFn() {
+        console.log(this, this.after)
+      }
+    </script>
+   
+</button>
+</body>
+</html>
