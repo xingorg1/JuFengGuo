@@ -22,6 +22,7 @@
       @handleClick="handleClick"
     />
     <ApiEmitOn />
+    <api-data-this />
   </div>
 </template>
 
@@ -30,12 +31,14 @@ const {log} = console
 import ApiChild from "./ApiChild.vue";
 import ApiAttr from "./ApiAttr.vue";
 import ApiEmitOn from "./ApiEmitOn.vue";
+import ApiDataThis from './ApiDataThis';
 export default {
   name: "Api",
   components: {
     ApiChild,
     ApiAttr,
-    ApiEmitOn
+    ApiEmitOn,
+    ApiDataThis
   },
   data() {
     return {
