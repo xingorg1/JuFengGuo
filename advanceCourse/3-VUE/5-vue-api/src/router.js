@@ -70,6 +70,11 @@ export default new Router({
                     path: '/ElementSelect',
                     name: 'ElementSelect',
                     component: () => import('@/components/ElementSelect.vue')
+                },
+                {
+                    path: '/EditorWang',
+                    name: 'EditorWang',
+                    component: () => import('@/components/EditorWang.vue')
                 }
 
             ]

@@ -3,8 +3,8 @@
     <h3>这里用了奇技淫巧，拐弯抹角的把下载的dom的不需要的结构删除了再生成的excel，但是这种做法频繁操作dom不太高效</h3>
     <div class="area">
       <!-- <el-tree :props="props" :load="loadNode" lazy show-checkbox @check-change="handleCheckChange"></el-tree> -->
-      <el-button type="primary" @click="downLoad('#out-table')">下载+单元格格式</el-button>
-      <el-button type="primary" @click="clone">固定首列+克隆+下载</el-button>
+      <el-button size="mini"  type="primary" @click="downLoad('#out-table')">下载+单元格格式</el-button>
+      <el-button size="mini"  type="primary" @click="clone">固定首列+克隆+下载</el-button>
       <h3></h3>
       <el-table
         id="out-table"
@@ -36,8 +36,8 @@
       </el-table>
     </div>
     <div class="area">
-      <el-button type="primary" @click="clone2">克隆+插入dom+下载+移除dom+高级表格</el-button>
-      <el-button type="primary" @click="clone3">克隆+node对象直接转变并下载+高级表格</el-button>
+      <el-button size="mini"  type="primary" @click="clone2">克隆+插入dom+下载+移除dom+高级表格</el-button>
+      <el-button size="mini"  type="primary" @click="clone3">克隆+node对象直接转变并下载+高级表格</el-button>
       <h3></h3>
       <div id="table2">
         <el-table :data="tableData" style="width: 600px; margin-bottom: 20px;">

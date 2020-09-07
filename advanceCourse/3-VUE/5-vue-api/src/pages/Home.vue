@@ -39,6 +39,9 @@
       <li>
         <router-link to="/ElementSelect">级联全选组件</router-link>
       </li>
+      <li>
+        <router-link to="/EditorWang">富文本编辑器</router-link>
+      </li>
     </ul>
     <router-view></router-view>
     <!-- 图片引入 -->
