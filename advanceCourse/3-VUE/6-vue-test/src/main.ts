@@ -3,8 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
-import Velocity from 'velocity-animate'
-console.log(Velocity)
+/* import Velocity from 'velocity-animate'
+console.log(Velocity) */
 
 // 打印test.js的结果
 
@@ -38,7 +38,7 @@ function VueWrapper(vm, options)
  */
 Vue.config.productionTip = false
 Vue.prototype.$store = store
-Vue.prototype.$velocity = Velocity
+/* Vue.prototype.$velocity = Velocity */
 new Vue({
   router,
   store,

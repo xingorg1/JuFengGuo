@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>响应式数据</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <button id="btn">点击+1</button>
+    <script>
+      let state = { count: 0 };
+
+      // 1、将数据变成响应式数据
+      let active;
+      function defineReactive(obj) {
+        for (const key in obj) {
+          let value = obj[key];
+          let dep = [];
+          Object.defineProperty(obj, key, {
+            get() {
+              active && dep.push(active);
+              return value;
+            },
+            set(newValue) {
+              value = newValue;
+              // 数据修改的时候，把之前监听的再执行一遍
+              dep.forEach((el) => el());
+            },
+          });
+        }
+      }
+      defineReactive(state);
+      // 监听数据变化，执行回调函数
+      const watcher = (fn) => {
+        active = fn;
+        fn();
+        active = null;
+      };
+      // state有两个watcher，分别操作dom和打印数据
+      watcher(() => {
+        app.innerHTML = state.count;
+      });
+      watcher(() => {
+        console.log(state.count);
+      });
+      // 更改数据，观察dom修改
+      btn.onclick = () => {
+        state.count += 1
+      }
+    </script>
+  </body>
+</html>

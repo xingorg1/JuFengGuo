@@ -1,36 +1,44 @@
 <template>
   <div class="app-echarts">
     <h3>{{ msg }}</h3>
-    <el-button @click="changeData">改变数据</el-button>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane name="first">
-        <span slot="label">极坐标</span>
-        <v-chart :options="polar" />
-      </el-tab-pane>
-      <el-tab-pane name="second">
-        <span slot="label">动态图</span>
-        <v-chart ref="myCharts" id="myCharts" :options="area" />
-      </el-tab-pane>
-      <el-tab-pane name="third">
-        <span slot="label">柱图+饼图</span>
-        <v-chart :options="bar" />
-      </el-tab-pane>
-      <el-tab-pane name="four">
-        <span slot="label">异常点图</span>
-        <v-chart :options="effectScatter" />
-      </el-tab-pane>
-      <el-tab-pane name="five">
-        <span slot="label">异常点图+平均线+数据视图</span>
-        <v-chart :options="effectScatterDataView" />
-        <ul>
-          <li>要在main.js里边把toolbox引入进来，import 'echarts/lib/component/toolbox'; // 工具（如下载功能与按钮）</li>
-          <li>
-            数据视图控件的配置，在官网有实际例子，可以看这里：
-            <a href="https://www.echartsjs.com/zh/option.html#toolbox.feature.dataView.optionToContent" target="_blank" rel="noopener noreferrer">传送门</a>
-          </li>
-        </ul>
-      </el-tab-pane>
-    </el-tabs>
+    <el-button size="mini"
+               @click="changeData">改变数据</el-button>
+    <div class="area">
+      <el-tabs v-model="activeName"
+               @tab-click="handleClick">
+        <el-tab-pane name="first">
+          <span slot="label">极坐标</span>
+          <v-chart :options="polar" />
+        </el-tab-pane>
+        <el-tab-pane name="second">
+          <span slot="label">动态图</span>
+          <v-chart ref="myCharts"
+                   id="myCharts"
+                   :options="area" />
+        </el-tab-pane>
+        <el-tab-pane name="third">
+          <span slot="label">柱图+饼图</span>
+          <v-chart :options="bar" />
+        </el-tab-pane>
+        <el-tab-pane name="four">
+          <span slot="label">异常点图</span>
+          <v-chart :options="effectScatter" />
+        </el-tab-pane>
+        <el-tab-pane name="five">
+          <span slot="label">异常点图+平均线+数据视图</span>
+          <v-chart :options="effectScatterDataView" />
+          <div>
+            <p>要在main.js里边把toolbox引入进来，import 'echarts/lib/component/toolbox'; // 工具（如下载功能与按钮）</p>
+            
+            <p>
+              数据视图控件的配置，在官网有实际例子，可以看这里：
+              <el-link href="https://www.echartsjs.com/zh/option.html#toolbox.feature.dataView.optionToContent"
+                       type="primary">传送门</el-link>
+            </p>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
   </div>
 </template>
 
@@ -38,13 +46,13 @@
 import "echarts/lib/chart/bar";
 import "echarts/lib/chart/pie";
 import "echarts/lib/chart/effectScatter"
-const {log} = console;
+const { log } = console;
 export default {
   name: "AppEcharts",
-  data() {
+  data () {
     let data = [];
 
-    for (let i = 0; i <= 360; i++) {
+    for (let i = 0;i <= 360;i++) {
       let t = (i / 180) * Math.PI;
       let r = Math.sin(2 * t) * Math.cos(2 * t);
       data.push([r, i]);
@@ -140,7 +148,7 @@ export default {
             text: "各版本下载",
             subtext:
               "总计 " +
-              Object.keys(downloadJson).reduce(function(all, key) {
+              Object.keys(downloadJson).reduce(function (all, key) {
                 return all + downloadJson[key];
               }, 0),
             x: "75%",
@@ -150,7 +158,7 @@ export default {
             text: "主题下载",
             subtext:
               "总计 " +
-              Object.keys(themeJson).reduce(function(all, key) {
+              Object.keys(themeJson).reduce(function (all, key) {
                 return all + themeJson[key];
               }, 0),
             x: "75%",
@@ -227,7 +235,7 @@ export default {
                 show: true
               }
             },
-            data: Object.keys(builderJson.charts).map(function(key) {
+            data: Object.keys(builderJson.charts).map(function (key) {
               return builderJson.charts[key];
             })
           },
@@ -240,7 +248,7 @@ export default {
                 color: "#eee"
               }
             },
-            data: Object.keys(builderJson.charts).map(function(key) {
+            data: Object.keys(builderJson.charts).map(function (key) {
               return builderJson.all - builderJson.charts[key];
             })
           },
@@ -256,7 +264,7 @@ export default {
                 show: true
               }
             },
-            data: Object.keys(builderJson.components).map(function(key) {
+            data: Object.keys(builderJson.components).map(function (key) {
               return builderJson.components[key];
             })
           },
@@ -271,7 +279,7 @@ export default {
                 color: "#eee"
               }
             },
-            data: Object.keys(builderJson.components).map(function(key) {
+            data: Object.keys(builderJson.components).map(function (key) {
               return builderJson.all - builderJson.components[key];
             })
           },
@@ -279,7 +287,7 @@ export default {
             type: "pie",
             radius: [0, "30%"],
             center: ["75%", "25%"],
-            data: Object.keys(downloadJson).map(function(key) {
+            data: Object.keys(downloadJson).map(function (key) {
               return {
                 name: key.replace(".js", ""),
                 value: downloadJson[key]
@@ -290,7 +298,7 @@ export default {
             type: "pie",
             radius: [0, "30%"],
             center: ["75%", "75%"],
-            data: Object.keys(themeJson).map(function(key) {
+            data: Object.keys(themeJson).map(function (key) {
               return {
                 name: key.replace(".js", ""),
                 value: themeJson[key]
@@ -301,28 +309,28 @@ export default {
       }
     };
   },
-  created(){
+  created () {
     this.polar = this.$mock.polarData;
     this.area = this.$mock.areaData;
-    setTimeout(()=>{
-      setInterval(()=>{
+    setTimeout(() => {
+      setInterval(() => {
         this.changeData()
-      },1000)
-    },2000)
+      }, 1000)
+    }, 2000)
     this.effectScatter = this.$mock.effectScatter;
     this.effectScatterDataView = this.$mock.effectScatterDataView;
   },
   methods: {
-    handleClick(tab, event) {
+    handleClick (tab, event) {
       log(tab, event);
       let myChart = this.$refs.myCharts;
       myChart.resize();
     },
-    changeData(){
-      let arr = ["Mon", "Tue", "Wed","Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    changeData () {
+      let arr = ["Mon", "Tue", "Wed", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
       this.$set(this.area.xAxis, "data", arr);
       let data = [];
-      arr.forEach(()=>{
+      arr.forEach(() => {
         data.push(Math.random() * 10)
       })
       let options = this.$mock.areaData;

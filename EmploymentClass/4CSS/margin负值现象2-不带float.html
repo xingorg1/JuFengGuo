@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>margin负值2-不带float</title>
+</head>
+
+<body>
+  <h6>当块元素的margin-top为【自身高度 = 内容高度+上下border】的负值时，两个元素就会层叠到一起</h6>
+  <div class="box clearfix">
+    <p class="p">p</p>
+    <span class="span1" id="span1">1</span>
+    <span class="span2" id="span2">2</span>
+    
+    <span class="span3" id="span3">3</span>
+    <span class="span4" id="span4">4</span>
+  </div>
+  <h3 id="h3"></h3>
+  <style>
+    body{
+      transform: scale(1.5);
+    }
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    h6{
+      margin-top: 80px;
+      text-align: center;
+    }
+    #h3{
+      position: absolute;
+      top: 150px;
+      right: 0;
+      width: 200px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      margin: auto;
+      font-size: 14px;
+    }
+    .box {
+      position: absolute;
+      top: 100px;
+      right: 0;
+      left: 0;
+      margin: auto;
+      width: 200px;
+      border: 1px solid;
+    }
+    .clearfix::after {
+      content: "";
+      clear: both;
+      height: 0;
+      display: block;
+    }
+
+    /* .left {
+      float: left;
+    }
+
+    .right {
+      float: right;
+    } */
+
+    .p {
+      width: 198px;
+      height: 200px;
+      background: #fbfff0;
+    }
+
+    span {
+      display: block;
+      width: 20px;
+      height: 20px;
+      /* margin-left: 20px; */
+      margin-top: 0px;
+      background: #afe;
+      opacity: 0.45;
+      border: 1px solid #12dead;
+    }
+    span.span2 {
+      background: #feaaff;
+      border: 1px solid #ee12ec;
+    }
+    span.span3 {
+      margin-left: 150px;
+      background: #aac1ff;
+      border: 1px solid #4512ee;
+      transition: all .35s linear;
+    }
+    span.span4 {
+      margin-left: 170px;
+      background: #ffdaaa;
+      border: 1px solid #eeb312;
+      transition: all .35s linear;
+    }
+  </style>
+  <script>
+    let sH1 = 1;
+    let sH2 = 1;
+    let timer = null
+    let timer2 = null
+    window.onload = function() {
+      timer = setInterval(() => {
+        span1.style.marginTop = --sH1 + 'px';
+        // span2.style.marginTop = --sH2 + 'px';
+        h3.innerHTML = 'span1的margin-top:' + sH1 + 'px'
+        if (Math.abs(sH1) >= 20) {
+          clearInterval(timer);
+          setTimeout(() => {
+            span2Top()
+          }, 800)
+        }
+      }, 200)
+    }
+    function span2Top() {
+      let txt = h3.innerText
+      timer2 = setInterval(() => {
+        span2.style.marginTop = --sH2 + 'px';
+        h3.innerHTML = txt + '<br>span2的margin-top:' + sH2 + 'px<br>'
+        if (Math.abs(sH2) >= 20) {
+          clearInterval(timer2);
+          setTimeout(() => {
+            span3Top()
+          }, 800)
+        }
+      }, 200)
+    }
+    function span3Top() {
+      let txt = h3.innerText
+      span3.style.marginTop = -20 + 'px';
+      h3.innerHTML = txt + '<br>span3的margin-top:' + -20 + 'px<br>'
+      setTimeout(() => {
+        let txt = h3.innerText
+        span4.style.marginTop = -20 + 'px';
+        h3.innerHTML = txt + '<br>span4的margin-top:' + -20 + 'px'
+        setTimeout(() => {
+          let txt = h3.innerText
+          span3.style.marginLeft = '0px';
+          h3.innerHTML = txt + '<br>span3的margin-left: 0px'
+          setTimeout(() => {
+            let txt = h3.innerText
+            span4.style.marginLeft = '0px';
+            h3.innerHTML = txt + '<br>span4的margin-left: 0px'
+          }, 800)
+        }, 800)
+      }, 800)
+    }
+  </script>
+</body>
+
+</html>

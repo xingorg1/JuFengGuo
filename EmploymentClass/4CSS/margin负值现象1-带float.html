@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>margin负值1-带float</title>
+</head>
+
+<body>
+  <h6>当span的margin-top为【自身高度 = 内容高度+上下border】的负值时，两个浮动的span元素就会层叠到一起</h6>
+  <div class="box clearfix">
+    <p class="p">p</p>
+    <span class="right" id="span1">1</span>
+    <span class="right" id="span2">2</span>
+  </div>
+  <h3 id="h3"></h3>
+  <style>
+    body{
+      transform: scale(1.5);
+    }
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    h6{
+      margin-top: 80px;
+      text-align: center;
+    }
+    #h3{
+      position: absolute;
+      top: 280px;
+      right: 0;
+      left: 0;
+      text-align: center;
+    }
+    .box {
+      position: absolute;
+      top: 100px;
+      right: 0;
+      left: 0;
+      margin: auto;
+      width: 200px;
+      border: 1px solid;
+    }
+    .clearfix::after {
+      content: "";
+      clear: both;
+      height: 0;
+      display: block;
+    }
+
+    .left {
+      float: left;
+    }
+
+    .right {
+      float: right;
+    }
+
+    .p {
+      float: left;
+      width: 198px;
+      height: 200px;
+      background: #fbfff0;
+    }
+
+    span {
+      width: 20px;
+      height: 20px;
+      margin-left: 20px;
+      margin-top: 1px;
+      background: #afe;
+      opacity: 0.45;
+      border: 1px solid #12dead;
+    }
+    span:nth-child(2n) {
+      background: #feaaff;
+      border: 1px solid #ee12ec;
+    }
+  </style>
+  <script>
+    let sH1 = 1;
+    let sH2 = 1;
+    let timer = null
+    window.onload = function() {
+      timer = setInterval(() => {
+        span1.style.marginTop = --sH1 + 'px';
+        span2.style.marginTop = --sH2 + 'px';
+        h3.innerText = sH1 + 'px'
+        Math.abs(sH1) >= 20 && clearInterval(timer)
+      }, 200)
+    }
+  </script>
+</body>
+
+</html>

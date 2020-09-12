@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>pageXOffset</title>
+<style>
+div {
+    border: 1px solid black;
+    background-color: lightblue;
+    height: 2000px;
+    width: 2000px;
+}
+</style>
+</head>
+<body>
+
+<div>
+    pageXOffset 和 pageYOffset 属性返回文档在窗口左上角水平和垂直方向滚动的像素。
+
+    pageXOffset 设置或返回当前页面相对于窗口显示区左上角的 X 位置。pageYOffset 设置或返回当前页面相对于窗口显示区左上角的 Y 位置。
+
+    pageXOffset 和 pageYOffset 属性相等于 scrollX 和 scrollY 属性。
+
+    这些属性是只读的。
+</div>
+<p>点击按钮将文档窗口在水平和垂直方向各滚动 100px 。</p>
+
+<p><strong>注意:</strong>IE8 及其更早版本支不支持  pageXOffset 和 pageYOffset 属性。</p>
+
+<button onclick="myFunction()" style="position:fixed;">点我滚动</button><br><br>
+
+<div>
+</div>
+
+<script>
+function myFunction() {
+    // window.scrollBy(100, 100);
+    // console.log("pageXOffset: " + window.pageXOffset + ", pageYOffset: " + window.pageYOffset);
+    window.pageXOffset = '200px';
+    window.pageYOffset = '200px';
+}
+</script>
+
+</body>
+</html>

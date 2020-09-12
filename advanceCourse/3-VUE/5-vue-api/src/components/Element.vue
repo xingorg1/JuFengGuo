@@ -2,71 +2,96 @@
   <div class="api-element">
     <div class="area">
       <h3>el-table表头置顶 - 只针对非fixed的表格内容,且需要没有超出滚动效果</h3>
-      <el-table :data="tableDataFixed" ref="noFixedTable" style="width: 600px" v-scrollNoFixed>
-        <el-table-column label="日期" prop="date" sortable></el-table-column>
-        <el-table-column label="姓名" prop="name" sortable></el-table-column>
-        <el-table-column label="地址" prop="address" sortable></el-table-column>
+      <el-table :data="tableDataFixed"
+                ref="noFixedTable"
+                style="width: 600px"
+                v-scrollNoFixed>
+        <el-table-column label="日期"
+                         prop="date"
+                         sortable></el-table-column>
+        <el-table-column label="姓名"
+                         prop="name"
+                         sortable></el-table-column>
+        <el-table-column label="地址"
+                         prop="address"
+                         sortable></el-table-column>
       </el-table>
       <p>总结，初步实现表头置顶效果，但是范围值定死的做法肯定不可取</p>
     </div>
     <div class="area">
       <h3>el-table表头置顶 - fixed的表格置顶</h3>
-      <el-table
-        :data="tableDataFixed"
-        ref="fixedTable"
-        style="width: 600px"
-        v-scrollfixed
-        width="400"
-      >
-        <el-table-column fixed label="日期" prop="date" sortable width="280"></el-table-column>
-        <el-table-column label="姓名" prop="name" sortable width="220"></el-table-column>
-        <el-table-column label="地址" prop="address" sortable width="300"></el-table-column>
+      <el-table :data="tableDataFixed"
+                ref="fixedTable"
+                style="width: 600px"
+                v-scrollfixed
+                width="400">
+        <el-table-column fixed
+                         label="日期"
+                         prop="date"
+                         sortable
+                         width="280"></el-table-column>
+        <el-table-column label="姓名"
+                         prop="name"
+                         sortable
+                         width="220"></el-table-column>
+        <el-table-column label="地址"
+                         prop="address"
+                         sortable
+                         width="300"></el-table-column>
       </el-table>
       <p>第一列固定后，置顶的表头与表格列之间错位，emmm</p>
     </div>
     <div class="area">
       <h3>el-tooltip的三角样式修改</h3>
-      <el-tooltip class="item" content="Top Left 提示文字" effect="dark" placement="top-start">
-        <el-button>上左</el-button>
+      <el-tooltip class="item"
+                  content="Top Left 提示文字"
+                  effect="dark"
+                  placement="top-start">
+        <el-button size="mini">上左</el-button>
       </el-tooltip>
     </div>
     <div class="area">
       <h3>层级树 - column-key +filter-change过滤</h3>
-      <el-table
-        :data="tableDataTree"
-        :tree-props="{children: 'children', hasChildren: 'haha'}"
-        @selection-change="handleSelectionChangeTree"
-        border
-        default-expand-all
-        fit
-        ref="multipleTableTree"
-        row-key="id"
-        style="width: 100%"
-        tooltip-effect="dark"
-      >
-        <el-table-column type="selection" width="55"></el-table-column>
+      <el-table :data="tableDataTree"
+                :tree-props="{children: 'children', hasChildren: 'haha'}"
+                @selection-change="handleSelectionChangeTree"
+                border
+                default-expand-all
+                fit
+                ref="multipleTableTree"
+                row-key="id"
+                style="width: 100%"
+                tooltip-effect="dark">
+        <el-table-column type="selection"
+                         width="55"></el-table-column>
         <el-table-column label="日期">
           <template slot-scope="scope">{{ scope.row.date }}</template>
         </el-table-column>
-        <el-table-column column-key="name" label="姓名" prop="name"></el-table-column>
-        <el-table-column label="地址" prop="address" show-overflow-tooltip></el-table-column>
+        <el-table-column column-key="name"
+                         label="姓名"
+                         prop="name"></el-table-column>
+        <el-table-column label="地址"
+                         prop="address"
+                         show-overflow-tooltip></el-table-column>
       </el-table>
       <div style="margin-top: 20px">
-        <el-button @click="toggleSelectionTree([tableDataTree[1], tableDataTree[2]])">切换第二、第三行的选中状态</el-button>
-        <el-button @click="toggleSelectionTree()">取消选择</el-button>
+        <el-button size="mini"
+                   @click="toggleSelectionTree([tableDataTree[1], tableDataTree[2]])">切换第二、第三行的选中状态</el-button>
+        <el-button size="mini"
+                   @click="toggleSelectionTree()">取消选择</el-button>
       </div>
     </div>
     <div class="area">
       <h3>树形懒加载的加锁处理 - 有一个tr内容在下钻期间，同表格内其他tr不允许下钻</h3>
-      <el-button @click="tableClick()">点击</el-button>
-      <el-input
-        clearable
-        placeholder="输入关键字搜索"
-        size="mini"
-        style="display: block; margin: 10px 0;width: 220px"
-        v-model="searchName"
-      />
-      <el-button @click="filterNameFn">查询</el-button>
+      <el-button size="mini"
+                 @click="tableClick()">点击</el-button>
+      <el-input clearable
+                placeholder="输入关键字搜索"
+                size="mini"
+                style="display: block; margin: 10px 0;width: 220px"
+                v-model="searchName" />
+      <el-button size="mini"
+                 @click="filterNameFn">查询</el-button>
       <!-- 
         // 多选表格的相关方法和属性
         clearSelection
@@ -90,76 +115,93 @@
         :data="filtertableDataNormal2"
         // 第三种过滤不仅要彻底、干净，不仅要深入层级，还要保留父级，不然有子级的父级过滤不出来
       -->
-      <el-table
-        :data="filtertableDataNormal4"
-        :load="load"
-        :tree-props="{children: 'children', hasChildren: 'haha'}"
-        @expand-change="expandChange"
-        @select="select111"
-        @selection-change="handleSelectionChange"
-        border
-        default-expand-all
-        lazy
-        ref="multipleTable"
-        row-key="id"
-        style="width: 100%"
-      >
-        <el-table-column fixed type="index" width="25"></el-table-column>
-        <el-table-column :reserve-selection="bool" type="selection" width="55"></el-table-column>
-        <el-table-column label="日期" prop="date" width="180"></el-table-column>
-        <el-table-column label="姓名" prop="name" width="180"></el-table-column>
-        <el-table-column label="地址" prop="address"></el-table-column>
+      <el-table :data="filtertableDataNormal4"
+                :load="load"
+                :tree-props="{children: 'children', hasChildren: 'haha'}"
+                @expand-change="expandChange"
+                @select="select111"
+                @selection-change="handleSelectionChange"
+                border
+                default-expand-all
+                lazy
+                ref="multipleTable"
+                row-key="id"
+                style="width: 100%">
+        <el-table-column fixed
+                         type="index"
+                         width="25"></el-table-column>
+        <el-table-column :reserve-selection="bool"
+                         type="selection"
+                         width="55"></el-table-column>
+        <el-table-column label="日期"
+                         prop="date"
+                         width="180"></el-table-column>
+        <el-table-column label="姓名"
+                         prop="name"
+                         width="180"></el-table-column>
+        <el-table-column label="地址"
+                         prop="address"></el-table-column>
       </el-table>
     </div>
     <div class="area">
       <!-- 表格筛选 -->
-      <el-input
-        placeholder="输入关键字搜索"
-        size="mini"
-        style="display: block; margin: 10px 0;width: 220px"
-        v-model="search2"
-      />
-      <el-table
-        :data="tableDataFilter.filter(data => !search2 || data.name.toLowerCase().includes(search3.toLowerCase()))"
-        style="width: 100%"
-      >
-        <el-table-column label="Date" prop="date"></el-table-column>
-        <el-table-column label="Name" prop="name"></el-table-column>
+      <el-input placeholder="输入关键字搜索"
+                size="mini"
+                style="display: block; margin: 10px 0;width: 220px"
+                v-model="search2" />
+      <el-table :data="tableDataFilter.filter(data => !search2 || data.name.toLowerCase().includes(search3.toLowerCase()))"
+                style="width: 100%">
+        <el-table-column label="Date"
+                         prop="date"></el-table-column>
+        <el-table-column label="Name"
+                         prop="name"></el-table-column>
         <el-table-column align="right">
           <template slot-scope="scope">
-            <el-button @click="handleEdit(scope.$index, scope.row)" size="mini">Edit</el-button>
-            <el-button
-              @click="handleDelete(scope.$index, scope.row)"
-              size="mini"
-              type="danger"
-            >Delete</el-button>
+            <el-button size="mini"
+                       @click="handleEdit(scope.$index, scope.row)"
+                       >Edit</el-button >
+            <el-button 
+                       @click="handleDelete(scope.$index, scope.row)"
+                       size="mini"
+                       type="danger">Delete</el-button >
           </template>
         </el-table-column>
       </el-table>
     </div>
     <div class="area">
       <h3>两边固定，tr错位</h3>
-      <el-table
-        :data="fixedTableData"
-        border
-        max-height="250"
-        size="mini"
-        style="width: 700px"
-        tooltip-effect="light"
-      >
-        <el-table-column fixed label="日期" prop="date" width="150"></el-table-column>
-        <el-table-column label="姓名" prop="name" width="120"></el-table-column>
-        <el-table-column label="省份" prop="province" width="120"></el-table-column>
-        <el-table-column label="市区" prop="city" width="120"></el-table-column>
-        <el-table-column label="地址" prop="address" width="300"></el-table-column>
-        <el-table-column label="邮编" prop="zip" width="120"></el-table-column>
-        <el-table-column fixed="right" label="操作" width="120">
+      <el-table :data="fixedTableData"
+                border
+                max-height="250"
+                size="mini"
+                style="width: 700px"
+                tooltip-effect="light">
+        <el-table-column fixed
+                         label="日期"
+                         prop="date"
+                         width="150"></el-table-column>
+        <el-table-column label="姓名"
+                         prop="name"
+                         width="120"></el-table-column>
+        <el-table-column label="省份"
+                         prop="province"
+                         width="120"></el-table-column>
+        <el-table-column label="市区"
+                         prop="city"
+                         width="120"></el-table-column>
+        <el-table-column label="地址"
+                         prop="address"
+                         width="300"></el-table-column>
+        <el-table-column label="邮编"
+                         prop="zip"
+                         width="120"></el-table-column>
+        <el-table-column fixed="right"
+                         label="操作"
+                         width="120">
           <template slot-scope="scope">
-            <el-button
-              @click.native.prevent="deleteRow(scope.$index, tableData)"
-              size="small"
-              type="text"
-            >移除</el-button>
+            <el-button size="mini"
+                       @click.native.prevent="deleteRow(scope.$index, tableData)"
+                       type="text">移除</el-button >
           </template>
         </el-table-column>
       </el-table>
@@ -174,7 +216,7 @@ import urls from '@/mock/urls'  // 引入实现准备好的接口请求相关配
 const { log } = console
 export default {
   name: 'Element',
-  data() {
+  data () {
     return {
       flag: true,
       tableDataNormal: [],
@@ -191,7 +233,7 @@ export default {
       fixedTableData: []
     }
   },
-  created() {
+  created () {
     this.tableDataTree = this.$mock['tableDataNormal']
     this.tableDataNormal = this.$mock['tableDataNormal']
     this.tableDataNormalOrigin = this.$mock['tableDataNormal']
@@ -199,7 +241,7 @@ export default {
     this.tableDataFilter = this.$mock['tableDataFilter']
     // this.fixedTableData = this.$mock['fixedTableData']
   },
-  mounted() {
+  mounted () {
     // setInterval(()=>{
     //   this.$nextTick(() => {
     //     log(document.body.getElementsByClassName(".el-tooltip__popper"))
@@ -224,12 +266,16 @@ export default {
       .catch(function (error) {
         log(error);
       });
+    axios.post('/api/', {
+      account: 'admin',
+      password: '12346'
+    })
   },
   directives: {
     scrollNoFixed: {
-      bind(el, binding, vnode) {
+      bind (el, binding, vnode) {
         // this.$refs.noFixedTable == vnode.context
-        window.onscroll = function() {
+        window.onscroll = function () {
           let oH = document.documentElement.scrollTop
           // log(oH)
           if (oH <= 150) {
@@ -260,16 +306,16 @@ export default {
       }
     },
     scrollfixed: {
-      bind() {
+      bind () {
         log('fixed的表格，头疼，咋搞啊！')
       }
     }
   },
   watch: {},
   computed: {
-    filtertableDataNormal1() {
+    filtertableDataNormal1 () {
       // 树级结构做模糊过滤、搜索 - 第一级，这种过滤完了以后，还会有父级在，不是最干净的过滤
-      function diguiFnc(arr) {
+      function diguiFnc (arr) {
         log(this)
         // debugger - 这种过滤完了以后
         return arr.filter(data => {
@@ -286,14 +332,14 @@ export default {
       }
       return diguiFnc.call(this, this.tableDataNormal)
     },
-    filtertableDataNormal2() {
+    filtertableDataNormal2 () {
       // 树级结构做模糊过滤、搜索 - 第二级，可以满足只过滤子级，过滤到最深层级别
       if (this.searchName.length === 0) {
         return this.tableDataNormal // 返回原数组就行，filter和forEach都不改变原数组
         return this.tableDataNormalOrigin
       } else {
         let filterArr = []
-        function diguiFnc(arr) {
+        function diguiFnc (arr) {
           arr.forEach(data => {
             let child = data.children
             if (child && child.length > 0) {
@@ -321,14 +367,14 @@ export default {
         return filterArr
       }
     },
-    filtertableDataNormal3() {
+    filtertableDataNormal3 () {
       // 树级结构做模糊过滤、搜索 - 第三级，继续优化过滤方案，把最顶级也加入过滤中
       if (this.searchName.length === 0) {
         log(this.tableDataNormalOrigin)
         return this.tableDataNormalOrigin // 返回原数组就行，filter和forEach都不改变原数组
       } else {
         let filterArr = []
-        function diguiFnc(arr) {
+        function diguiFnc (arr) {
           arr.forEach(data => {
             // 第一层（父级）判断的时候，检测有过滤内容的就提取出来（不包含子级提取）
             if (
@@ -357,7 +403,7 @@ export default {
         return filterArr
       }
     },
-    filtertableDataNormal4() {
+    filtertableDataNormal4 () {
       // 树级结构做模糊过滤、搜索 - 第四级，继续最佳优化，父级能单独过滤出来了，子级选完后恢复全部树级又挂了
       if (this.searchName.length === 0) {
         log(this.tableDataNormal, this.multipleSelection)
@@ -401,29 +447,29 @@ export default {
     }
   },
   methods: {
-    filterNameFn() {
+    filterNameFn () {
       this.tableDataNormal =
         this.searchName === ''
           ? this.tableDataNormalOrigin
           : this.tableDataNormal.filter(
-              data =>
-                !this.searchName ||
-                data.name.toLowerCase().includes(this.searchName.toLowerCase())
-            )
+            data =>
+              !this.searchName ||
+              data.name.toLowerCase().includes(this.searchName.toLowerCase())
+          )
     },
-    toggleRowExpansion(row, expanded) {
+    toggleRowExpansion (row, expanded) {
       log(row, expanded)
     },
-    tableClick() {
+    tableClick () {
       var table = this.$refs.multipleTable
       log(table)
       table.toggleRowExpansion(row, true)
     },
-    expandChange(row, expanded) {
+    expandChange (row, expanded) {
       log(row, expanded)
       expanded = false
     },
-    load(tree, treeNode, resolve) {
+    load (tree, treeNode, resolve) {
       if (this.flag) {
         log(tree, treeNode, resolve)
         this.flag = false
@@ -448,13 +494,13 @@ export default {
         treeNode.loading = false
       }
     },
-    handleEdit(index, row) {
+    handleEdit (index, row) {
       log(index, row)
     },
-    handleDelete(index, row) {
+    handleDelete (index, row) {
       log(index, row)
     },
-    toggleSelection(rows) {
+    toggleSelection (rows) {
       if (rows) {
         rows.forEach(row => {
           this.$refs.multipleTable.toggleRowSelection(row)
@@ -463,7 +509,7 @@ export default {
         this.$refs.multipleTable.clearSelection()
       }
     },
-    initSelectTable() {
+    initSelectTable () {
       for (var i in [1, 2, 3]) {
         var item = parseInt(Math.random() * 8)
         this.multipleSelection.push(this.tableDataNormal[item])
@@ -473,15 +519,15 @@ export default {
       this.handleSelectionChange(this.multipleSelection)
       this.select111(this.multipleSelection)
     },
-    handleSelectionChange(val) {
+    handleSelectionChange (val) {
       log(val)
       this.multipleSelection = val
     },
-    select111(val) {
+    select111 (val) {
       log(val)
       // this.multipleSelection = val
     },
-    toggleSelectionTree(rows) {
+    toggleSelectionTree (rows) {
       if (rows) {
         rows.forEach(row => {
           this.$refs.multipleTableTree.toggleRowSelection(row)
@@ -490,7 +536,7 @@ export default {
         this.$refs.multipleTableTree.clearSelection()
       }
     },
-    handleSelectionChangeTree(val) {
+    handleSelectionChangeTree (val) {
       this.multipleSelectionTree = val
     }
   }

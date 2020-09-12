@@ -6,44 +6,45 @@
  */
 @pre-blue : #5B83AD;
 @link: #333;
-
-.home ul.nav{
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  padding: 20px;
-  background: #fff;
-  line-height: 35px;
-  overflow: hidden;
-  // border-bottom: 1px solid #666;
-  box-shadow: 0px 7px 14px rgba(164,204,255, 52%);
-  padding-bottom: 0;
-  margin-bottom: 20px;
-}
-
-.home li {
-  float: left;
-  margin: 0 4px;
-  overflow: hidden;
-  // border-radius: 4px;
-  color: #333;
-  // color: @pre-blue
-  border-bottom: 2px solid rgba(30, 139, 255, 0.44);
-}
-
-.home li a {
-  color: @link;
-  display: block;
-  padding: 0 8px;
-  // background: rgba(28, 113, 203, 0.1);
-  transition: all .25s ease-in-out;
-  &:hover,
-  &.router-link-exact-active.router-link-active {
-    background: rgba(30, 139, 255, 0.44);
-    color: #033939;
+.home{
+  > div{
+    padding: 0 20px;
+  }
+  ul.nav{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 20px;
+    background: #fff;
+    line-height: 35px;
+    overflow: hidden;
+    // border-bottom: 1px solid #666;
+    box-shadow: 0px 7px 14px rgba(164,204,255, 52%);
+    padding-bottom: 0;
+    margin-bottom: 20px;
+  }
+  li {
+    float: left;
+    margin: 0 4px;
+    overflow: hidden;
+    // border-radius: 4px;
+    color: #333;
+    // color: @pre-blue
+    border-bottom: 2px solid rgba(30, 139, 255, 0.44);
+    a {
+      color: @link;
+      display: block;
+      padding: 0 8px;
+      // background: rgba(28, 113, 203, 0.1);
+      transition: all .25s ease-in-out;
+      &:hover,
+      &.router-link-exact-active.router-link-active {
+        background: rgba(30, 139, 255, 0.44);
+        color: #033939;
+      }
+    }
   }
 }
-
 .area {
   padding: 20px;
   border-radius: 5px;

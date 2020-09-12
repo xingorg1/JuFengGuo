@@ -13,7 +13,7 @@
                   @expand-change="expandChange"
                   >
                   </el-cascader>
-    <h4>自己封装-带全选功能！</h4>
+    <h4>自己封装带全选功能</h4>
     <Cascader v-model="cascaderVal1"
                   :options="cascaderOptions"
                   :props="{ multiple: true, checkStrictly: true }"
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Cascader from './cascader/src/cascader.vue'
+import Cascader from './cascader/cascader.vue'
 const { log } = console
 export default {
   name: 'ElementCascader',
@@ -45,7 +45,7 @@ export default {
     // 级联项选择
     collapseChange () {
       // log(this.cascaderVal)
-      // log(this.cascaderVal1)
+      log(this.cascaderVal1)
     },
     expandChange (node, a, b, c) {
       log('expandChange', node, a, b, c, this.cascaderVal)
@@ -55,6 +55,9 @@ export default {
 </script>
 
 <style lang="scss">
+.el-cascader{
+  width: 300px;
+}
 .el-cascader-menu__list{
   /* padding-top: 40px; */
 }

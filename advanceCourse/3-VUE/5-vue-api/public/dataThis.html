@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<div id="box">
+  <button @click="one">this指向window</button>
+  <button @click="two">this指向Vue实例vm</button>
+  <button @click="oneArrows">箭头函数，this指向Vue实例vm</button>
+</div>
+
+<body>
+  <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+
+    var vm = new Vue({
+      el: "#box",
+      // data: {
+      //   one: function () {
+      //     console.log(this) // one就是一个很单纯的function，不是类的属性，所以别的地方调用的时候，会指向window。相当于var a = b.func, a(); 则函数内this指向window
+      //   }
+      // },
+      /* 第二种写法 */
+      data: function () {
+        var self = this // this变量
+        return {
+          one: function () {
+            console.log(self)
+            console.log(this)
+          },
+          oneArrows: () => { // 或者箭头函数写法
+            console.log(this)
+          }
+        }
+      },
+      methods: {
+        two: function () {
+          console.log(this) // 底层是调用了 one.apply(this, args),这样传入了vm的this
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

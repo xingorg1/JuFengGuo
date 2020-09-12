@@ -2,10 +2,10 @@
   <div class="xlsx">
     <!-- <h3 @click="downLoad"></h3> -->
     <!-- <el-tree :props="props" :load="loadNode" lazy show-checkbox @check-change="handleCheckChange"></el-tree> -->
-    <el-button  @click="downLoad('#'+'out-table')">
+    <el-button size="mini"   @click="downLoad('#'+'out-table')">
       下载
     </el-button>
-    <!-- <el-button @click="clone">
+    <!-- <el-button size="mini"  @click="clone">
       克隆+下载
     </el-button> -->
     <el-table
