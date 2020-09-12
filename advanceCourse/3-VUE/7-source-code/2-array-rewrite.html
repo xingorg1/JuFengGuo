@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数组重写</title>
+</head>
+<body>
+  <div id="app"></div>
+    <button id="btn">点击+1</button>
+    <script>
+      let state = [1,2,3]; //待监听的数据
+
+      // 1、响应式数据-函数劫持实现数组原型方法重写
+      let OriginalArray = Array.prototype; // 并不是直接改写原型上的方法。而是给当前待监听的数组原型链上加了push等方法劫持了Array原型的push方法。
+      let arrayMethods = Object.create(OriginalArray) // 创建一个新对象(对象or数组由第一个参数决定)，带着指定的原型对象（Array.prototype）
+      console.log(
+        arrayMethods,
+         // 原型修改
+        arrayMethods.__proto__ === OriginalArray,
+        arrayMethods.__proto__ === Array.prototype
+      )
+      function defineReactive(obj) {
+        // 【函数劫持】改写这个新对象身上的push、splice等数组方法
+        arrayMethods.push = function(...args){
+          // 并还是调用原生的push方法
+          OriginalArray.push.apply(this, args) // 或者用call(this, ...args)
+          // 然后这里边做自己的事情，比如视图更新（具体源码怎么更新的视图？）
+          render()
+        }
+        // 
+        obj.__proto__ = arrayMethods // 修改传进来的、被监听的数组的原型链，链接数组与被重写的方法。原本__proto__指向Array.prototype,现在中间给他包了一层，指向我们重写的原型方法。并在重写的原型方法里再调用Array.prototype的同名原型方法。
+      }
+      defineReactive(state);
+      // 操作dom
+      function render() {
+        app.innerHTML = state;
+      }
+      render()
+      // 更改数据，观察dom修改
+      btn.onclick = () => {
+        state.push(state[state.length - 1] + 1)
+      }
+    </script>
+</body>
+</html>
