@@ -1,6 +1,11 @@
 <template>
   <div class="api-test">
     <div class="area">
+      <h3>watch监听数组变化</h3>
+      <input v-model="msg">
+      <p>msg改变，watch:msg的数组内绑定的函数依次执行。</p>
+    </div>
+    <div class="area">
       {{ obj.a.v}}
       <h3 :class="{'my-class': `${isA} + ${isB}` == `${isC}`}">动态绑定class {{isA + isB }}</h3>
       <p>这用错了，得到一个字符串加法表达式啊：{{`${isA} + ${isB}`}}、{{`${isA} + ${isB}` == `${isC}`}}</p>
@@ -42,6 +47,7 @@ export default {
   },
   data() {
     return {
+      msg: '这是默认文案',
       isA: "A",
       isB: "B",
       isC: "AB",
@@ -74,8 +80,24 @@ export default {
   },
   watch: {
     // watch监听嵌套对象
+    msg: [
+      'msgChange', 
+      function() {
+        console.log('匿名函数')
+      },
+      {
+        handler() {
+          console.log('匿名函数2')
+        },
+        deep: true,
+        immediate: true
+      }
+    ]
   },
   methods: {
+    msgChange() {
+      log('msgChange函数',this.msg)
+    },
     divClickHandle() {
       log(123)
     },
