@@ -4,6 +4,15 @@
       <h3>watch监听数组变化</h3>
       <input v-model="msg">
       <p>msg改变，watch:msg的数组内绑定的函数依次执行。</p>
+      <button @click="setArrayData">改变数组的数据</button>
+      <div>
+        <span v-for="item in arrayData" :key="item.name + '123'">
+          {{item.name}}
+        </span>
+        <span v-for="item in arrayData1" :key="item + '456'">
+          {{item}}
+        </span>
+      </div>
     </div>
     <div class="area">
       {{ obj.a.v}}
@@ -47,6 +56,8 @@ export default {
   },
   data() {
     return {
+      arrayData: [{name: 1}, {name: 2}],
+      arrayData1: [1,2,3],
       msg: '这是默认文案',
       isA: "A",
       isB: "B",
@@ -95,6 +106,18 @@ export default {
     ]
   },
   methods: {
+    setArrayData() {
+      this.$set(this.arrayData, 1, {name: '小石头888'})
+      this.$nextTick(() => {
+        this.arrayData[0].name = '暗戳戳'
+        this.arrayData[2] = {name: 123}
+      })
+      this.$set(this.arrayData1, 1, '小石头8881')
+      this.$nextTick(() => {
+        this.arrayData1[0] = '暗戳戳2'
+        this.arrayData1[2] = {name: 123123}
+      })
+    },
     msgChange() {
       log('msgChange函数',this.msg)
     },
