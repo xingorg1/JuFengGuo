@@ -1,8 +1,8 @@
 /*
  * @Author: guojufeng 
  * @Date: 2020-07-17 10:45:39 
- * @Last Modified by: guojufeng
- * @Last Modified time: 2020-08-26 16:25:23
+ * @Last Modified by: @Guojufeng
+ * @Last Modified time: 2020-09-25 20:02:05
  * 快速排序
  * 思路：取出标兵，然后小的放左边，大的放右边（从小到大排序的情况）
  */
@@ -16,7 +16,8 @@ function dealArr(arr) {
   // quickSort0722(arr, 0, arr.length - 1)
   // quickSort0724(arr, 0, arr.length - 1)
   // quickSort0728(arr, 0, arr.length - 1)
-  quickSort0826(arr, 0, arr.length - 1)
+  // quickSort0826(arr, 0, arr.length - 1)
+  quickSort0925(arr, 0, arr.length - 1);
   log(arr)
 }
 dealArr([...arr])
@@ -117,5 +118,30 @@ function quickSort0826(arr, l, r) { // [ 1, 1, 2, 2, 3, 5, 0, 46 ]
     if(zhizhenL < zhizhenR) [arr[zhizhenL], arr[zhizhenR]] = [arr[zhizhenR], arr[zhizhenL]];
   }
   quickSort0826(arr, l, zhizhenR);
-  quickSort0826(arr, zhizhenR + 1, r);
+  // quickSort0826(arr, zhizhenR + 1, r);
+  quickSo
+}
+/* 
+
+>> 移位运算符：将数字转化为二进制后向右移动一位，新二进制再转化为10禁止
+如：
+3：(二进制)11 -> (二进制)1  = (十进制)1
+4：100 -> 10 = 2（同上）
+8：1000 -> 100 = 4（同上）
+以此类推...
+看规律，就是“%2后向上取整”的作用。用于得出数组中《中心点标兵》的下标
+*/
+function quickSort0925(arr, l, r){ // [1, 2, 3, 0, 2, 2, 1 ]
+  // 从大到小
+  if(l >= r) return false;
+  let biaobing = arr[l + r >> 1],
+  zhizhenL = l - 1,
+  zhizhenR = r + 1;
+  while(zhizhenL < zhizhenR) {
+    do zhizhenL++; while(arr[zhizhenL] > biaobing);
+    do zhizhenR--; while(arr[zhizhenR] < biaobing);
+    if (zhizhenL < zhizhenR) [arr[zhizhenL], arr[zhizhenR]] = [arr[zhizhenR], arr[zhizhenL]];
+  }
+  quickSort0925(arr, l, zhizhenR);
+  quickSort0925(arr, zhizhenR + 1, r);
 }
