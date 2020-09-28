@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>异步函数结果获取</title>
+  </head>
+  <body>
+    <script>
+      const noParamsRequest1 = async (handler) => {
+        try {
+          let result = await handler();
+          console.log(result);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      noParamsRequest1(() => {
+        return new Promise((res) => {
+          setTimeout(() => {
+            res(123);
+          }, 3000);
+        });
+      });
+    </script>
+  </body>
+</html>

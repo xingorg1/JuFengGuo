@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>模版编译原理</title>
+</head>
+<body>
+  <script>
+    // with语句学习
+    // debugger
+    window.with1 = 'window-variable'
+    function withTestFn(){
+      var with1 = 'function-variable'
+      var withObj = {
+        with1: 'with-variable'
+      }
+      with(withObj){
+        console.log(with1)
+      }
+    }
+    withTestFn()
+  </script>
+  <script src="./node_modules/vue-template-compiler/browser.js"></script>
+  <script>
+    let {ast, render, staticRenderFns} = VueTemplateCompiler.compile('<div>gjf</div>')
+    console.log(ast, )
+    console.log(render)
+    console.log(staticRenderFns)
+    let renderFn = new Function(render) // 模版引擎
+    console.log(renderFn)
+    console.log(renderFn.toString())
+  </script>
+  
+</body>
+</html>

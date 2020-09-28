@@ -9,23 +9,24 @@
     <div id="app"></div>
     <button id="btn">点击+1</button>
     <script>
-      let state = { count: 0 };
+      let state = { count: 0 }; //待监听的数据
 
-      // 1、将数据变成响应式数据
+      // 1、通过Object.defineProperty将state数据变成响应式数据
       let active;
       function defineReactive(obj) {
         for (const key in obj) {
+          // 把每一个属性都用defineProperty定义下
           let value = obj[key];
-          let dep = [];
+          let dep = []; // 订阅在每一个属性身上
           Object.defineProperty(obj, key, {
             get() {
-              active && dep.push(active);
+              active && dep.push(active); // 依赖收集
               return value;
             },
             set(newValue) {
-              value = newValue;
-              // 数据修改的时候，把之前监听的再执行一遍
-              dep.forEach((el) => el());
+              value = newValue; // 这里不应该是obj[key]=newValue吗？可能会死循环？
+              // 渲染逻辑与状态更改相结合。数据修改的时候，把之前监听的再执行一遍
+              dep.forEach((el) => el()); // 触发更新
             },
           });
         }
@@ -34,19 +35,20 @@
       // 监听数据变化，执行回调函数
       const watcher = (fn) => {
         active = fn;
-        fn();
-        active = null;
+        // dep直接在这里push不可以吗？为什么在get里？据说是依赖收集只在数据需要监听的时候收集。比如只是触发了watcher/或者watcher是别人的，那么这个state更改时就不用执行watcher
+        fn(); // 相当于发布订阅，状态改变，调用订阅的函数。
+        active = null; // 后续不在watcher中取值，不触发更新
       };
-      // state有两个watcher，分别操作dom和打印数据
+      // state数据有两个watcher订阅者，分别操作dom和打印数据
       watcher(() => {
-        app.innerHTML = state.count;
+        app.innerHTML = state.count; // 执行state.xx，就会触发get函数
       });
       watcher(() => {
         console.log(state.count);
       });
       // 更改数据，观察dom修改
       btn.onclick = () => {
-        state.count += 1
+        state.count += 1 // 改值触发set函数
       }
     </script>
   </body>
