@@ -22,6 +22,25 @@
           }, 3000);
         });
       });
+      // 下边await和promise结合，打印结果需要探究
+      var a = new Promise((resolve, reject) => {
+        resolve('a的resolve')
+      })
+      var b = new Promise(async (resolve, reject) => {
+        // 1、没有await，里边打印b都是undefined，不管是否resolve触发
+        // 2、有了await，之后直接打印b，没有resolve是“promise-pending”状态；有resolve是“promise-fullfiled”状态，“PromiseResult”的值是resolve的参数
+        // 3、await后直接跟resolve，打印b是“promise-fullfiled”状态，“PromiseResult”的值是resolve的参数
+        // 结论：可能是async函数执行的时候，一旦遇到await就会先返回，等到异步操作完成，再接着执行函数体内后面的语句。
+        //      那么也就是：当遇到await，这个new Pormise里的匿名函数就返回了，await之后再打印new Promise的结果就是pending或者fullfiled(如果调用reject，就是rejected)，具体是什么受是否在匿名函数内调用resolve/reject的影响，
+        console.log(b) // undefined
+        await a
+        console.log(b) // promise-pending
+        resolve('await之后调用resolve')
+        // reject('await之后调用rejected')
+        console.log(b) // promise-fullfiled，PromiseResult为'await之后调用resolve'
+        /* await resolve('b的resolve')
+        console.log(b) // promise-fullfiled,promiseResult为'b的resolve' */
+      })
     </script>
   </body>
 </html>
