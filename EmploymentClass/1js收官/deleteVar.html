@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    a{
+      color: red;
+    }
+  </style>
+  用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/var">var</a>声明变量是它所在上下文环境的不可配置属性，非声明变量是可配置的（如非声明变量可以被删除）。
+  <br>
+  未能声明变量将很可能导致意想不到的结果。因此，建议始终声明变量，无论它们是在函数还是全局作用域内。 
+  <br>
+  configurable属性控制是否该属性能从对象上删除，以及它的属性（除了writable）能否被修改。
+  <br>
+  尝试用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/delete">delete</a>删除某个属性，但是这个属性是不可配置的,非严格模式下删除无效，严格模式下删除<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Errors/Cant_delete" >報錯</a>。
+  <br>
+  <a href="">函数参数</a>对于函数内部的形参，他们相当于var的一个参数，所以也具有不可配置性，即同样不能删除。如果参数是引用值，可以删除引用值身上的属性。
+  <script>
+    window.a = 123
+    console.log(Object.getOwnPropertyDescriptor(window))
+    delete window.a
+    console.log(Object.getOwnPropertyDescriptor(window), window, window.a)
+    // 删除var定义的变量或者形参
+    debugger
+    (function(x) {
+      delete x;
+      delete x.m;
+      console.log(x)
+    }({
+      m: 'mmmm'
+    }));
+
+
+    (function(x) {
+      var a = 1 // 经过var声明后所得出的属性，这种属性叫做“不可配置属性”，对于不可配置属性，delete是不能删除的。严格模式下，删除有用“不可配置属性”的变量，将会报错
+      console.log(Object.getOwnPropertyDescriptor(a))
+      b = 2 // 而没有经过var声明的变量，也就是非声明变量，它是可配置的（也就是说非声明变量可以被删除）。
+      console.log(b)
+      delete a
+      delete b
+      delete x; // 对于参数内部的形参，他们相当于var的一个参数，所以也具有不可配置性，即同样不能删除
+      console.log(a, b, x)
+      return x
+    }(1))
+  </script>
+</body>
+</html>
