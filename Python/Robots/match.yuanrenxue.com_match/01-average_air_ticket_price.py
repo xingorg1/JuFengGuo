@@ -1,21 +1,27 @@
-# 引用requests库
+# 爬虫-网页内容读取（难点是：内容是js填充的）
 import requests
 url = 'http://match.yuanrenxue.com/match/1'
-res_music = requests.get(url)
-# 调用get方法，下载这个字典
-json_music = res_music.json()
-# 使用json()方法，将response对象，转为列表/字典
-songList = []
-for item in json_music['data']['song']['list']:
-    songList.append(item['name'])
-    # 以name为键，查找歌曲名
-    print('所属专辑：'+item['album']['name'])
-    # 查找专辑名
-    print('播放时长：'+str(item['interval'])+'秒')
-    # 查找播放时长
-    print('播放链接：https://y.qq.com/n/yqq/song/'+item['mid']+'.html\n\n') # json里边不一定就有完整的url信息，也可能是其他参数拼接的。比如这个。
-    # 查找播放链接
-print(songList,len(songList))
-
-# 扩展，爬取歌曲名、所属专辑、播放时长，以及播放链接
+from bs4 import BeautifulSoup #引入BS库
+try:
+    res = requests.get(url)
+    res.raise_for_status()
+    # print(res)
+    # # 请求结果转换成bs对象
+    soup = BeautifulSoup(res.text, 'html.parser') #需要安装这个解释器
+    # print(soup)
+    # ws = open('abc.txt','w',encoding='utf-8') 
+    # ws.write(res.text)
+    # filecontent = ws.write(soup)   
+    # print(filecontent)
+    # ws.close()
+    commentTag = soup.find('body').find('div',class_="m-airfly-lst").find('div', class_='b-airfly')
+    print(commentTag)
+    # commentList = commentTag.find_all('li',class_='comment')
+    # for comm in commentList:
+    #   author = comm.find('article').find('footer').find('div',class_='comment-author').find('b',class_='fn').text
+    #   time = comm.find('article').find('footer').find('div',class_='comment-metadata').find('a').find('time').text
+    #   content = comm.find('article').find('div',class_='comment-content').find('p').text
+    #   print('%s(%s)：\r\n“%s”' %(author,time.strip(),content))
+except:
+    print('解析失败',res.status_code)
 
