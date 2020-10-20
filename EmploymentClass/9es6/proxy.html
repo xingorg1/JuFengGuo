@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高程4-代理与反射篇章练习</title>
+  <script>
+    let {log} = console
+  </script>
+</head>
+<body>
+  <!-- <h1>名词</h1> -->
+  <span>代理对象 </span>、<span>目标对象 </span>、<span>反射对象</span>
+  <script>
+    let targetObj = {
+      name: '目标对象'
+    }
+    let proxyObj = new Proxy(targetObj, {
+      get(trapTarget, property, receiver)  {
+        // console.log(trapTarget, property, receiver) 
+        return '代理对象 '
+      },
+      set(){
+        return Reflect.set(...arguments) // 反射
+      }
+    })
+    log(proxyObj.name)
+    log(targetObj == proxyObj)
+    log(targetObj === proxyObj)
+    log({} == {})
+    let createObj = Object.create(proxyObj)
+    log(createObj, createObj.xxx)
+    createObj.mmm = 'new data'
+    log(createObj)
+
+    Object.defineProperty(targetObj, 'noDelete', {
+      value: '不能删除',
+      configurable: false
+    })
+    log(targetObj)
+    let result = delete targetObj.noDelete
+    log(result)
+    log(targetObj)
+  </script>
+  
+</body>
+</html>
