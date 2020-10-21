@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+	<title></title>
+	<script>
+		/*
+			100 * (414 / 1080) = 38.333333333333336px
+			1vw=414/100=4.14px;
+			38.333333333333336/4.14=9.259259259259261vw
+		 */
+	</script>
+	<style>
+		html,
+		body {
+			position: relative;
+			overflow-y: hidden;
+			height: 100vh;
+		}
+
+		body {
+			font-family: helvetica;
+			max-width: 750px;
+			margin: 0 auto;
+			font-size: 12px;
+			/* 需要限制一个字体大小，要不然的话默认字体大小也会跟着变 */
+		}
+
+		body * {
+			-webkit-user-select: none;
+			-webkit-touch-callout: none;
+			-webkit-text-size-adjust: 100%;
+		}
+
+		a,
+		button,
+		input {
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+		}
+
+		button,
+		input {
+			-webkit-appearance: none;
+			border-radius: 0;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		input {
+			outline: none;
+			vertical-align: middle;
+			padding: 0;
+		}
+
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		img {
+			vertical-align: middle;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		p {
+			margin: 0;
+		}
+
+		.left {
+			float: left;
+		}
+
+		.right {
+			float: right;
+		}
+
+		.clearfix:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+
+		html {
+			font-size: 9.259259259259261vw;
+		}
+
+		@media screen and (min-width: 750px) {
+			html {
+				font-size: 69.445px;
+				/* 页面达到750的时候1vw=750/100=7.5px，这时根字体的大小为9.259259259259261vw，此时转成px为7.5*9.259259259259261=69.444px */
+			}
+		}
+
+		/* header */
+		#header {
+			/* height: 58.666666666666664px; */
+			height: calc(176px / 3);
+			background: #f89a00;
+			line-height: 45px;
+			color: #fff;
+			text-align: center;
+			font-size: 16px;
+			font-weight: 600;
+		}
+
+		#header h1 img {
+			width: calc(517px / 3);
+		}
+
+		.bar {
+			font-size: 0;
+		}
+
+		.bar a {
+			display: inline-block;
+			height: calc(176px / 3);
+			margin-right: 0.3rem;
+		}
+
+		.bar a:nth-child(1) {
+			width: calc(80px / 3);
+			background: url(../images/ico_01.png) no-repeat center;
+			background-size: 100%;
+		}
+
+		.bar a:nth-child(2) {
+			width: calc(85px / 3);
+			background: url(../images/ico_02.png) no-repeat center;
+			background-size: 100%;
+		}
+
+		/* scroll */
+		#scroll {
+			overflow-y: auto;
+			position: absolute;
+			top: calc(176px / 3);
+			bottom: 60px;
+			max-width: 750px;
+			height: calc(100vh - 60);
+			-webkit-overflow-scrolling: touch;
+		}
+
+		/* banner */
+		#banner {
+			height: 5.40rem;
+			position: relative;
+		}
+
+		.moveWrap img {
+			width: 100%;
+		}
+
+		.control {
+			width: 100%;
+			position: absolute;
+			bottom: 0.34rem;
+			font-size: 0;
+			text-align: center;
+		}
+
+		.control span {
+			display: inline-block;
+			width: 0.24rem;
+			height: 0.24rem;
+			background: #ddd;
+			border-radius: 50%;
+			margin: 0 0.08rem;
+		}
+
+		.control span.active {
+			background: #46ae00;
+		}
+
+		/* nav */
+		#nav {
+			padding: 0.5rem 0;
+		}
+
+		#nav a {
+			width: 25%;
+			float: left;
+			text-align: center;
+		}
+
+		#nav a img {
+			width: 1.8rem;
+			height: 1.8rem;
+			display: block;
+			margin: 0 auto 0.16rem auto;
+		}
+
+		#nav a span {
+			font-size: 0.4rem;
+			color: #666;
+		}
+
+		/* ad */
+		#ad img {
+			width: 100%;
+		}
+
+		/* item */
+		.item {
+			display: flex;
+			justify-content: space-between;
+			background: #f5f5f5;
+			padding: 0.2rem;
+			padding-bottom: 0;
+		}
+
+		.pb {
+			padding-bottom: 0.2rem;
+		}
+
+		.item div img {
+			width: 4.5rem;
+			height: 6.4rem;
+		}
+
+		.item div.coloum {
+			display: flex;
+			width: 5.7rem;
+			flex-wrap: wrap;
+			align-content: space-between;
+		}
+
+		.item div.coloum img {
+			width: 5.7rem;
+			height: 3.1rem;
+		}
+
+		#banner,
+		img {
+			background: #f4f5f5;
+		}
+
+		input {
+			height: 50px;
+			line-height: 50px;
+			border: 1px solid #666;
+			border-radius: 10px;
+			display: block;
+			margin: 20px;
+			width: 90%;
+		}
+
+		/* footer */
+		#footer {
+			height: 60px;
+			display: flex;
+			justify-content: space-around;
+			background: #fff;
+			margin-top: 0.2rem;
+			box-shadow: 0 -0.06rem 0.06rem #dcdcdc;
+
+			width: 100%;
+			max-width: 750px;
+			position: absolute;
+			bottom: 0;
+		}
+
+		#footer img {
+			width: calc(160px / 3);
+		}
+		#header.fixed-class {
+			position: fixed;
+			z-index: 111;
+			top: 0;
+			left: 0;
+			right: 0;
+			background-color: red;
+		}
+
+		#box {
+			padding: 20px;
+			color: red;
+			text-align: center;
+			background: #f4f4f4;
+		}
+
+		body {
+			/* border-top: 10px solid #333; */
+		}
+	</style>
+</head>
+
+<body>
+	<header id="header" class="clearfix">
+		保证header始终固定在顶部，即使呼出软键盘
+	</header>
+
+	<section id="scroll">
+		<section id="banner">
+			<div class="moveWrap">
+				<div><img src="" alt=""></div>
+			</div>
+			<div class="control">
+				<span class="active"></span>
+				<span></span>
+				<span></span>
+			</div>
+		</section>
+
+		<nav id="nav" class="clearfix">
+			<a href="#">
+				<img src="" alt="">
+				<span>1</span>
+			</a>
+			<a href="#">
+				<img src="" alt="">
+				<span>2</span>
+			</a>
+			<a href="#">
+				<img src="" alt="">
+				<span>3</span>
+			</a>
+			<a href="#">
+				<img src="" alt="">
+				<span>4</span>
+			</a>
+		</nav>
+
+		<h1 id="box"></h1>
+		<span id="box2"></span>
+
+		<section id="ad">
+			<a href="#"><img src="" alt=""></a>
+			<input type="text" name="firstname" id="nameInput" placeholder="使input聚焦观察软键盘呼起后，顶部固定绿色条的位置">
+		</section>
+
+		<section class="item">
+			<div>
+				<a href="#"><img src="" alt=""></a>
+			</div>
+			<div class="coloum">
+				<a href="#"><img src="" alt=""></a>
+				<a href="#"><img src="" alt=""></a>
+			</div>
+		</section>
+		<section class="item pb">
+			<div class="coloum">
+				<a href="#"><img src="" alt=""></a>
+				<a href="#"><img src="" alt=""></a>
+			</div>
+			<div>
+				<a href="#"><img src="" alt=""></a>
+			</div>
+		</section>
+	</section>
+
+	<footer id="footer">
+		<a href="#"><img src="" alt=""></a>
+		<a href="#"><img src="" alt=""></a>
+		<a href="#"><img src="" alt=""></a>
+		<a href="#"><img src="" alt=""></a>
+	</footer>
+	<script src='https://libs.baidu.com/jquery/2.1.1/jquery.min.js'></script>
+	<script>
+		$('#box').html(window.innerHeight + ',' + $(window).height() + ',' + $(document).height() + ',' + $('body').height()+ ',' + $('#scroll').height())
+		$('#nameInput').bind('focus', function () {
+			$('#header').attr('class', 'clearfix fixed-class');
+			setTimeout(() => {
+				// $(window).height(window.innerHeight + 'px');
+				// $(document).height(window.innerHeight + 'px');
+				// $('body').height(window.innerHeight + 'px');
+				$('#box').html('视口高度！：' + window.innerHeight + ',' + $(window).height() + ',' + $(document).height() + ',' + $('body').height()+ ',' + $('#scroll').height())
+				$('#header').css('top', $(window).height() - window.innerHeight + 'px');
+			}, 100)
+		}).bind('blur', function () {
+			$('#header').attr('class', 'clearfix');
+			setTimeout(() => {
+				// $(window).height(window.innerHeight + 'px');
+				// $(document).height(window.innerHeight + 'px');
+				// $('body').height(window.innerHeight + 'px');
+				$('#box').html('视口高度：' + window.innerHeight + ',' + $(window).height() + ',' + $(document).height() + ',' + $('body').height()+ ',' + $('#scroll').height())
+			}, 100)
+		});
+		num = 1
+		window.onscroll = function() {
+			$('#box2').html(num++ +'视口高度：' + window.innerHeight + ',' + $(window).height() + ',' + $(document).height() + ',' + $('body').height()+ ',' + $('#scroll').height())
+			$('#header').css('top', $(window).height() - window.innerHeight + 'px');
+			// $('#header').css('position', 'absolute');
+		}
+	</script>
+</body>
+
+</html>
