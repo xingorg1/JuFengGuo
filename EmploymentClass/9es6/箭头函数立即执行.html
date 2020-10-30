@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    下边这种可以执行
+  </div>
+  <script>
+    (()=>{
+      console.log(1)
+    })()
+  </script>
+  <div>
+    下边这种直接报错，为什么？
+  </div>
+  <script>
+    /* 
+      因为根据规范：（http://ecma-international.org/ecma-262/6.0）
+
+      ArrowFunction 被列在 AssignmentExpression 
+      CallExpression 的 LHS 必须是 MemberExpression，SuperCall 或 CallExpression
+
+      解释:箭头函数属于赋值表达式，但是调用表达式的LHS必须是运算符表达式、supercall、或callexpression
+     */
+    (()=>{
+      console.log(2)
+    }())
+  </script>
+</body>
+</html>
