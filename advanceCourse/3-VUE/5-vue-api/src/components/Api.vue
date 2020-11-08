@@ -1,6 +1,25 @@
 <template>
   <div class="api-test">
     <div class="area">
+      <ApiSlot>
+        <template slot-scope="props">
+          默认插槽传递数据：{{props.user}}
+        </template>
+        <p>具名插槽</p>
+        <template #name>
+          <p>name插槽</p>
+        </template>
+        <template v-slot:slotName>
+          <p>v-slot:slotName</p>
+        </template>
+        <template v-slot:slotProps="props">
+          <!-- slot-scope -->
+          <p>v-slot:slotProps数据传递：</p>
+          <span>name:{{props.user.name|emitProps}}</span>
+        </template>
+      </ApiSlot>
+    </div>
+    <div class="area">
       <h3>watch监听数组变化</h3>
       <input v-model="msg">
       <p>msg改变，watch:msg的数组内绑定的函数依次执行。</p>
@@ -46,16 +65,26 @@ import ApiChild from "./ApiChild.vue";
 import ApiAttr from "./ApiAttr.vue";
 import ApiEmitOn from "./ApiEmitOn.vue";
 import ApiDataThis from './ApiDataThis';
+import ApiSlot from './ApiSlot';
 export default {
   name: "Api",
   components: {
     ApiChild,
     ApiAttr,
     ApiEmitOn,
-    ApiDataThis
+    ApiDataThis,
+    ApiSlot
+  },
+  filters: {
+    emitProps: function(data){
+      console.log(data, this, '=====')
+      return data
+      // this.emitPropsData = data
+    }
   },
   data() {
     return {
+      emitPropsData: '',
       arrayData: [{name: 1}, {name: 2}],
       arrayData1: [1,2,3],
       msg: '这是默认文案',
@@ -103,7 +132,10 @@ export default {
         deep: true,
         immediate: true
       }
-    ]
+    ],
+    // emitPropsData: function(newData){
+    //   console.log(newData, 'watch后的newData')
+    // }
   },
   methods: {
     setArrayData() {
