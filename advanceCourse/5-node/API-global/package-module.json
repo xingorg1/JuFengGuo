@@ -1,0 +1,8 @@
+{
+  // "type": "module", // 用了这个参数，所有的文件都成了es6模块化的方式了
+  "scripts": {
+    "es6": "node --experimental-modules es6module.mjs",
+    "common": "node --experimental-modules module.js"
+  }
+}
+  

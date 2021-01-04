@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "es6": "node --experimental-modules es6module.mjs",
+    "common": "node --experimental-modules module.js"
+  }
+}
+  
