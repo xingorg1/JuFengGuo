@@ -14,6 +14,6 @@ delay(1000).then((data) => {
 // 转换成callback形式的异步函数：
 const callbackDelay = utils.callbackify(delay)
 console.log(callbackDelay)
-callbackDelay(3000, (err, data) => { // 回调的模式是node模式，第一个参数是err，第二个是响应结果
+callbackDelay(3000, (err, data) => { // 回调函数模式是node模式，第一个参数是err，第二个是响应结果
   console.log(222, data)
 })
