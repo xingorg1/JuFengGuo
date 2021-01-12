@@ -14,6 +14,9 @@
     <div class="api-slot-name">
       <slot name="name"></slot>
     </div>
+    <div class="api-slot-name2">
+      <slot name="name2"></slot>
+    </div>
     <div class="api-slot-slotName">
       <slot name="slotName"></slot>
     </div>
@@ -37,7 +40,7 @@ export default {
     };
   },
   mounted() {
-    
+    log('插槽API')
   },
   methods: {
     
