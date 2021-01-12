@@ -33,7 +33,7 @@ async function testStat() {
     console.log(12, error)
   }
 }
-testStat()
+testStat() // ？ 这里为什么先打印11、后打印10呢？await没阻塞吗？
 
 console.log(11, Buffer)
 let bufferData = new Uint8Array(Buffer.from('不存在的文件直接写入，会直接创建文件的！')) // 写入一个Buffer
@@ -49,3 +49,22 @@ fs.promises.writeFile(pathUrl1, bufferData)
     if (err) throw err
     console.log('向不存在的文件写入内容成功', err, data)
   })
+
+// 目录不存在，写入报错
+const pathDirectory = path.resolve(__dirname, './noThatPath/abc.md')
+fs.writeFile(pathDirectory, '不存在的目录会导致错误', 'utf-8', (err) => {
+  console.log('目录不存在，出错啦！', err) // Error: ENOENT: no such file or directory
+})
+
+// 写入时的容错处理
+try{
+  const isFile = fs.statSync(pathDirectory);
+  isFile && fs.writeFile(pathDirectory, '不存在的目录会导致错误', 'utf-8', (err) => {
+    console.log('目录不存在，出错啦！', err) //这样就不会走到这一行了
+  })
+  console.log('是否是一个文件夹', isFile.isDirectory())
+}
+catch(error) {
+  console.log('抛出错误', error)
+}
+
