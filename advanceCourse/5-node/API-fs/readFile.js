@@ -25,7 +25,7 @@ fs.readFile(pathUrl, {
 console.log(5, '我先输出，他们都是异步的！')
 
 
-// 同步函数 - 不仅阻塞下边的代码执行，也阻塞上边的异步函数的执行（因为占用了主线程）
+// 同步函数readFileSync - 不仅阻塞下边的代码执行，也阻塞上边的异步函数的执行（因为占用了主线程）
 console.log('123')
 const result = fs.readFileSync(pathUrl, 'utf-8')
 console.log(6, result)
@@ -35,6 +35,9 @@ console.log('456')
 // console.log(7, fs.promises)
 const promiseRst = fs.promises.readFile(pathUrl, 'utf-8')
 .then((data) => {
-  console.log(8, data)
+  console.log(8, data, promiseRst)
 })
+setTimeout(() => {
+  console.log(10, promiseRst)
+}, 1000)
 console.log(9, promiseRst) // Promise { <pending> } 这里之所以是pending状态的，
