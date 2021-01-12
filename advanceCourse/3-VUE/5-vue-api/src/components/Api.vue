@@ -5,12 +5,15 @@
         <template slot-scope="props">
           默认插槽传递数据：{{props.user}}
         </template>
-        <p>具名插槽</p>
+        <p>具名插槽：</p>
         <template #name>
-          <p>name插槽</p>
+          <p>name插槽：<span style="color: #f40">&lt;template #name&gt;</span></p>
+        </template>
+        <template slot="name2">
+          <p>具名插槽第二种写法：<span style="color: #f40">&lt;template slot="name2"&gt;</span></p>
         </template>
         <template v-slot:slotName>
-          <p>v-slot:slotName</p>
+          <p>指令写法：v-slot:slotName</p>
         </template>
         <template v-slot:slotProps="props">
           <!-- slot-scope -->
@@ -77,7 +80,7 @@ export default {
   },
   filters: {
     emitProps: function(data){
-      console.log(data, this, '=====')
+      log(data, this, '=====')
       return data
       // this.emitPropsData = data
     }
@@ -123,18 +126,18 @@ export default {
     msg: [
       'msgChange', 
       function() {
-        console.log('匿名函数')
+        log('匿名函数')
       },
       {
         handler() {
-          console.log('匿名函数2')
+          log('匿名函数2')
         },
         deep: true,
         immediate: true
       }
     ],
     // emitPropsData: function(newData){
-    //   console.log(newData, 'watch后的newData')
+    //   log(newData, 'watch后的newData')
     // }
   },
   methods: {
