@@ -123,6 +123,38 @@ where c.name like '%渡一%'
 GROUP BY location,companyName
 
 -- 5. 查询员工人数大于200的公司信息
+SELECT c2.*
+FROM (
+-- -- SQL子句
+select c.id
+from employee as e
+inner join department as d on d.id = e.deptId
+inner join company as c on c.id = d.companyId
+GROUP BY c.id
+HAVING count(e.id) > 200
+) AS result_table
+INNER JOIN company AS c2 ON c2.id = result_table.id
+
 -- 6. 查询渡一公司里比他平均工资高的员工
+SELECT e2.id, 
+e2.`name`, 
+salary, 
+result_table.name AS 'company',
+avgSalary
+FROM (
+-- SQL子句
+select c.id, c.`name`, AVG(e.salary) as avgSalary
+from employee as e
+inner join department as d on d.id = e.deptId
+inner join company as c on c.id = d.companyId
+where c.name like '%渡一%'
+GROUP BY c.id, c.`name`
+) AS result_table
+INNER JOIN employee AS e2
+WHERE e2.salary > avgSalary
+ORDER BY e2.salary
+
 -- 7. 查询渡一所有名字为两个字和三个字的员工对应人数
+
+
 -- 8. 查询每个公司每个月的总支出薪水，并按照从低到高排序
