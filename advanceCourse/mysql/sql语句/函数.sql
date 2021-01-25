@@ -157,4 +157,8 @@ ORDER BY e2.salary
 -- 7. 查询渡一所有名字为两个字和三个字的员工对应人数
 
 
--- 8. 查询每个公司每个月的总支出薪水，并按照从低到高排序
+-- 8. 查询每个公司每个月的总支出薪水，并按照从低到高排序【使用视图】
+SELECT companyId, companyName, SUM(salary) as salary
+FROM three_table_join
+GROUP BY companyId, companyName
+ORDER BY salary
