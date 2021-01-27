@@ -7,13 +7,15 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>3d旋转照片墙</title>
   <style>
-    :root{
+    :root {
       height: 100%;
     }
+
     body {
       perspective: 800px;
       transform-style: preserve-3d;
       height: 100%;
+      overflow: hidden;
     }
 
     .box {
@@ -27,7 +29,7 @@
       height: 150px;
       margin: auto;
       /* position: relative; */
-      /* perspective: 800px; */
+      /* perspective: 800px; 景深要写到父元素上，body上*/
       perspective-origin: 50% -40px;
       transform-style: preserve-3d;
       /* transition: all 4s linear; */
@@ -108,7 +110,7 @@
   </div>
   <script>
     var box = document.getElementById('box');
-    document.body.onmousemove = function(e){
+    document.body.onmousemove = function (e) {
       console.log(e.pageX + 'px ' + e.pageY + 'px')
       document.body.style.webkitPerspectiveOrigin = e.pageX + 'px ' + e.pageY + 'px';
       document.body.style.perspectiveOrigin = e.pageX + 'px ' + e.pageY + 'px';
