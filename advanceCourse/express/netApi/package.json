@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:test": "DEBUG=express:* node index.js"
+    "dev:test": "DEBUG=express:* node --trace-deprecation index.js"
   },
   "author": "xing.org1^",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "logger": "^0.0.1",
+    "morgan": "^1.10.0"
   }
 }
