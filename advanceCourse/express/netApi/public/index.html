@@ -11,12 +11,32 @@
 <body>
   <h1>请求接口平台</h1>
   <input type="text" placeholder="输入点啥吧" id="inputBox">
-  <button onclick="getQuery()">查询</button>
+  <button onclick="getQuery()">get查询</button>
+  <button onclick="postQuery()">post</button>
   <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
   <script>
     function getQuery() {
       $.get({
         url: "/getData",
+        data: {
+          name: '小石头'
+        },
+        success: function (res) {
+          // document.write(res.msg);
+          console.log(res);
+        },
+        error: function (error) {
+          console.log(error);
+          // document.write(JSON.stringify(error));
+        },
+      });
+    }
+    function postQuery() {
+      $.post({
+        url: "/getData",
+        data: {
+          name: '小石头post'
+        },
         success: function (res) {
           // document.write(res.msg);
           console.log(res);

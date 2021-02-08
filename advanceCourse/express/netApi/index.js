@@ -27,7 +27,12 @@ app.use('/static', express.static(__dirname + '/public')); // 改路径 // GET /
 /* 日志记录 */
 // app.use(express.logger()); // throw new Error：Most middleware (like logger) is no longer bundled with Express and must be installed separately. Please see https://github.com/senchalabs/connect#middleware.');
 const morgan = require('morgan')
-// app.use(morgan('一条请求日志： :method :url :status')); // 在静态文件之后logger，就不记录静态资源的请求了
+morgan.token('username', function getUsername(req) { // 自定义字段
+  log('post', req.body)
+  log('get', req.query)
+  return '小石头'
+})
+// app.use(morgan('一条请求日志： :username :method :url :status')); // 在静态文件之后logger，就不记录静态资源的请求了
 
 /* // 将所有类型日志、所有日期的都写入同一个文件
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' }) 
