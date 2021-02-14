@@ -15,7 +15,7 @@ const ws = fs.createWriteStream(copyFileName, {
 })
 
 rs.on('data', buffer => {
-  console.log('写入内容:', buffer.toString());
+  console.log('读取内容后，准备写入内容:', buffer.toString());
   const flag = ws.write(buffer)
   !flag && rs.pause()
 })
