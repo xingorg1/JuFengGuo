@@ -11,6 +11,7 @@ const server = http.createServer({}, async (req, res) => {
   let { fileName, extName } = fileInfoHandle(pathname || '')
   let responseBody = await bodyHandle(fileName)
   res.setHeader('Content-type', contentTypeJson[extName])
+  if(fileName.includes('public/404.html')) res.statusCode = 404
   res.write(responseBody)
   res.end()
 })
