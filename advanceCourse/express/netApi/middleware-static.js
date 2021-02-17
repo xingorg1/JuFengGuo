@@ -1,4 +1,4 @@
-// 常用中间件
+// 常用中间件 - express.static
 const express = require('express')
 const path = require('path')
 
@@ -20,6 +20,7 @@ app.use('/static', (req) => {
   console.log(req.path); // 打印「/abc/deg」
 }) // use第一个参数表示「基路径」，表示匹配到第一个参数的路径后，才会执行第二个回调参数，也就是调用static后得到的staticApp这个中间件函数
  */
+
 /* // 没有设置基路径
 app.use((req) => {
   // 访问http://localhost:1015/static/abc/deg
