@@ -61,7 +61,7 @@
             columns = Math.ceil(parseFloat(ContentHeight) / height);
             setTimeout(() => {
               scrollW = contentDom.scrollWidth
-              console.log(scrollW, Math.ceil(scrollW / (300 + 30)))
+              console.log('总宽度:', scrollW, '总列数:',Math.ceil(scrollW / (300 + 30)))
             }, 500)
             contentDom.style.height = height + 'px';
             console.log('列数', columns)

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        arr = [1,2,3]
+        arr2 = []
+        /* foreach */
+        // arr.forEach(async element => {
+        //     console.log(element)
+        //     let result = await time(element)
+        //     arr2.push(result)
+        //     console.log('arr2-result', arr2)
+        // });
+        /* for */
+        async function aaa() {
+            for (let index = 0; index < arr.length; index++) {
+                let result = await time(arr[index])
+                arr2.push(result)
+            }
+            console.log('arr2-result', arr2)
+        }
+        aaa()
+        /* for of */
+        // async function bbb() {
+        //     for (let item of arr) {
+        //         console.log('item', item)
+        //         let result = await time(item)
+        //         console.log('result', result)
+        //         arr2.push(result)
+        //     }
+        //     console.log(arr2)
+        // }
+        // bbb()
+        // console.log('arr2-result', arr2)
+        async function time(item){
+             let aaa = await new Promise((res, rej) => {
+                 setTimeout(() => {
+                     item += 'a'
+                     console.log('Promise', item)
+                     res(item)
+                 }, 1000)
+            })
+            console.log(aaa, item)
+            return item
+        }
+    </script>
+</body>
+</html>

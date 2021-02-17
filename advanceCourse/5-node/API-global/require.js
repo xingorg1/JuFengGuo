@@ -61,5 +61,6 @@ function require(modulePath) {
     require.cache[moduleAbsolutePath] = module
 
     // 7. 调用临时函数，并传入相关参数，用call绑定模块里的this为module.exports
-    __temp.call(module.exports, require, module.exports, exports, module.path, module, filename)
+    // __temp.call(module.exports, require, module.exports, exports, module.path, module, filename)
+    __temp.apply(module.exports, [require, module.exports, exports, module.path, module, filename]) // 这里用apply比较明显
 }

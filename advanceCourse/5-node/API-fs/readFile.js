@@ -11,13 +11,13 @@ fs.readFile(pathUrl, (err, data) => {
 })
 
 // 配置编码格式
-fs.readFile(pathUrl, 'utf-8', (err, data) => { 
+fs.readFile(pathUrl, 'utf-8', (err, data) => {
   console.log(3, data) // returns：123 abc 郭菊锋
 })
 
 fs.readFile(pathUrl, {
   // 配置编码格式
-  encoding: 'utf-8' 
+  encoding: 'utf-8'
 }, (err, data) => {
   console.log(4, data) // returns：123 abc 郭菊锋
 })
@@ -34,10 +34,16 @@ console.log('456')
 // promise
 // console.log(7, fs.promises)
 const promiseRst = fs.promises.readFile(pathUrl, 'utf-8')
-.then((data) => {
-  console.log(8, data, promiseRst)
-})
+  .then((data) => {
+    console.log(8, data, promiseRst)
+  })
 setTimeout(() => {
   console.log(10, promiseRst)
 }, 1000)
 console.log(9, promiseRst) // Promise { <pending> } 这里之所以是pending状态的，
+
+// 读取不存在的文件 - 报错
+fs.readFile(path.resolve(__dirname, 'abc/xxx.md'), (err, data) => {
+  console.log(12, err) // Error ENOENT: no such file or directory, open '绝对路径'
+  console.log(13, data) // undefined
+})
