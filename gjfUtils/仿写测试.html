@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Function.prototype.gjfCall = function () {
+      //   var rst = null,
+      //     obj = arguments[0] || window,
+      //     len = arguments.length,
+      //     argArr = [];
+      //   for (let i = 1; i < len; i++) {
+      //     argArr.push("arguments[" + i + "]");
+      //     //这里也可以用reduce的思想，但是用reduce会用到Array原型上的call方法，故而放弃。
+      //   }
+      //   obj.newName = this;
+      //   console.log(argArr, argArr.join());
+      //   rst = eval("obj.newName(" + argArr.join() + ")");
+      //   delete obj.newName;
+      //   return rst;
+      // };
+      Function.prototype.gjfCallES6 = function () {
+        var rst = null,
+          obj = arguments[0] || window,
+          args = [...arguments].slice(1); //将参数集合成数组，并去掉第一个参数（第一个参数表示调用者的this绑定目标）
+        obj['newName'] = this; //将调用者存到this绑定目标这个对象上
+        console.log(obj)
+        rst = obj['newName']([...args]); //this绑定的本质是谁调用指向谁。所以用this绑定目标对象调用当前调用者函数。身份转换。需要想通。
+        delete obj['newName'];
+        return rst;
+      };
+
+      function han(...args) {
+        console.log(this, args);
+        return "han 调用结果";
+      }
+      const obj = {
+        a: 1,
+      };
+      // han.gjfCall(obj, 2, 3, 4);
+      han.gjfCallES6(obj, 4, 5, 6);
+
+      Function.prototype.callsss = function () {
+        let rst = null;
+        let obj = arguments[0] || window;
+        let len = arguments.length;
+        let arr = [];
+        for (let i = 1; i < len; i++) {
+          arr.push(`arguments[${i}]`);
+        }
+        console.log(arr);
+        obj.currentFunc = this;
+        console.log(obj);
+        rst = eval(`obj.currentFunc(${arr.join()})`);
+        delete obj.currentFunc;
+        console.log(rst);
+        return rst;
+      };
+      han.callsss(obj, 2, 3, 4);
+    </script>
+  </body>
+</html>
