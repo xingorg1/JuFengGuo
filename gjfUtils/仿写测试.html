@@ -27,22 +27,21 @@
         var rst = null,
           obj = arguments[0] || window,
           args = [...arguments].slice(1); //将参数集合成数组，并去掉第一个参数（第一个参数表示调用者的this绑定目标）
-        obj['newName'] = this; //将调用者存到this绑定目标这个对象上
-        console.log(obj)
-        rst = obj['newName']([...args]); //this绑定的本质是谁调用指向谁。所以用this绑定目标对象调用当前调用者函数。身份转换。需要想通。
-        delete obj['newName'];
+        obj["targetFunc"] = this; //将调用者存到this绑定目标这个对象上
+        rst = obj["targetFunc"](...args); //this绑定的本质是谁调用指向谁。所以用this绑定目标对象调用当前调用者函数。身份转换。需要想通。
+        console.log(rst, ...args)
+        delete obj["targetFunc"];
         return rst;
       };
-
       function han(...args) {
-        console.log(this, args);
+        console.log(this, args, arguments);
         return "han 调用结果";
       }
       const obj = {
         a: 1,
       };
       // han.gjfCall(obj, 2, 3, 4);
-      han.gjfCallES6(obj, 4, 5, 6);
+      han.gjfCallES6(obj, 2, 3, 4);
 
       Function.prototype.callsss = function () {
         let rst = null;
@@ -61,6 +60,15 @@
         return rst;
       };
       han.callsss(obj, 2, 3, 4);
+
+      Function.prototype.callEs6 = function (...args) {
+        let rst = null;
+        let obj = args[0];
+        arr = args.slice(1);
+        obj["targetFunc"] = this;
+        rst = eval(`obj.targetFunc(${arr.join()})`);
+        return rst;
+      };
     </script>
   </body>
 </html>
