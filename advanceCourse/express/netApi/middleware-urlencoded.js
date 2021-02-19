@@ -17,7 +17,7 @@ app.use(myUrlencoded({
 // }))
 // 当请求的Content-type与type类型（"application/x-www-form-urlencoded"）匹配，中间件就会进行处理，将请求的数据通过流的方式进行整合，最后将数据存储到req.body中
 app.post('/api/person', (req) => {
-  console.log(req.body); // 得到：{ name: 'xing.org1^', age: '18' }
+  console.log(req.body); // 得到传参并格式化：{ name: 'xing.org1^', age: '18' }
 })
 
 app.listen(1015, () => {
