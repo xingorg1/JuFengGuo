@@ -2,7 +2,14 @@
  * 仿写urlencoded中间件
  */
 const qs = require('querystring') // 第三方库，解析内容用的
-module.exports = (options) => {
+module.exports = (options = {
+  extended: true,
+  inflate: true,
+  limit: '100kb',
+  parameterLimit: 1000,
+  type: "application/x-www-form-urlencoded",
+  verify: undefined
+}) => {
   console.log(options);
   return (req, res, next) => {
     if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
