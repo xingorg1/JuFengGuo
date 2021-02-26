@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>
+      <a href="#1">标题1</a>
+    </h1>
+    <h2>
+      <a href="#2">标题2</a>
+    </h2>
+    <script>
+      window.onhashchange = function (ev) {
+        // hash 值改变
+        console.log("onhashchange", ev);
+        // do you want
+      };
+
+      window.onpopstate = function () {
+        // history 历史栈 信息改变
+        // do you want
+      };
+    </script>
+  </body>
+</html>
