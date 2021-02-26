@@ -43,6 +43,10 @@
           <span slot="label">tooltip添加功能按钮</span>
           <v-chart :options="effectScatterTooltip" />
         </el-tab-pane>
+        <el-tab-pane name="seven">
+          <span slot="label">区域图</span>
+          <v-chart :options="markAreaEcharts" />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -138,6 +142,7 @@ export default {
       effectScatter: {},
       effectScatterTooltip: {},
       effectScatterDataView: {},
+      markAreaEcharts: {},
       bar: {
         backgroundColor: {
           type: "pattern",
@@ -327,6 +332,7 @@ export default {
     }, 2000);
     this.effectScatter = this.$mock.effectScatter;
     this.effectScatterDataView = this.$mock.effectScatterDataView;
+    this.markAreaEcharts = this.$mock.markAreaEcharts
     this.effectScatterTooltip = {
       ...this.$mock.effectScatterTooltip,
       tooltip: {

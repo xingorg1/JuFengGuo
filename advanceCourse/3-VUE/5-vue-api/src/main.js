@@ -15,6 +15,8 @@ import "echarts/lib/chart/line";
 import "echarts/lib/component/polar";
 import 'echarts/lib/component/toolbox'; // 工具（如下载功能与按钮）
 import 'echarts/lib/component/tooltip'; // 工具（如下载功能与按钮）
+import 'echarts/lib/component/markArea'; // markArea
+import 'echarts/lib/component/visualMap'; // visualMap
 
 import {
   Button
