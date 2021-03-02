@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>测试</title>
+  </head>
+
+  <body>
+    <script>
+      function spanClick(e) {
+        console.log(e);
+      }
+    </script>
+    <a id="aid" href="#13" οnclick="alert('clicked');">触发onclick</a>
+    <span id="span" onclick="spanClick()"> 自动触发点击事件 </span>
+    <script>
+      // 进入页面立即触发
+      (() => {
+        console.log(1);
+        // 兼容IE
+        if (document.all) {
+          document.getElementById("aid").click();
+        }
+        // 兼容其它浏览器
+        else {
+          var e = document.createEvent("MouseEvents"); // https://developer.mozilla.org/zh-CN/docs/Web/API/Document/createEvent
+          e.initEvent("click", true, true); // 废弃，推荐Event.constructor来创建自定义事件
+          document.getElementById("aid").dispatchEvent(e);
+        }
+      })();
+
+      // 也可写个定时器进行触发
+      setTimeout(() => {
+        console.log('2');
+        // 兼容IE
+        if (document.all) {
+          document.getElementById("aid").click();
+        }
+        // 兼容其它浏览器
+        else {
+          var e = document.createEvent("MouseEvents");
+          e.initEvent("click", true, true);
+          document.getElementById("span").dispatchEvent(e);
+        }
+      }, 2000); // 3秒后执行
+    </script>
+  </body>
+</html>
