@@ -5,13 +5,18 @@
   "main": "index.js",
   "scripts": {
     "dev": "egg-bin dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "egg-bin test",
+    "cov": "egg-bin cov"
   },
   "author": "xingorg1",
   "license": "ISC",
   "dependencies": {
     "egg": "^2.29.3",
     "egg-bin": "^4.15.0",
-    "egg-view-nunjucks": "^2.3.0"
+    "egg-view-nunjucks": "^2.3.0",
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "egg-mock": "^4.0.1"
   }
 }
