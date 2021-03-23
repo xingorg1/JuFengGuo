@@ -18,10 +18,10 @@ Function.prototype.gjfCall = function () {
     argArr.push('arguments[' + i + ']');
     //这里也可以用reduce的思想，但是用reduce会用到Array原型上的call方法，故而放弃。
   }
-  obj.newName = this;
+  obj.targetFunc = this;
   console.log(argArr, argArr.join());
-  rst = eval('obj.newName(' + argArr.join() + ')');
-  delete obj.newName;
+  rst = eval('obj.targetFunc(' + argArr.join() + ')');
+  delete obj.targetFunc;
   return rst;
 }
 // call的es6写法
@@ -29,28 +29,28 @@ Function.prototype.gjfCallES6 = function () {
   var rst = null,
     obj = arguments[0] || window,
     args = [...arguments].slice(1); //将参数集合成数组，并去掉第一个参数（第一个参数表示调用者的this绑定目标）
-  obj[newName] = this; //将调用者存到this绑定目标这个对象上
-  rst = obj[newName]([...args]); //this绑定的本质是谁调用指向谁。所以用this绑定目标对象调用当前调用者函数。身份转换。需要想通。
-  delete obj[newName];
+  obj['targetFunc'] = this; //将调用者存到this绑定目标这个对象上
+  rst = obj['targetFunc'](...args); //this绑定的本质是谁调用指向谁。所以用this绑定目标对象调用当前调用者函数。身份转换。需要想通。
+  delete obj['targetFunc'];
   return rst;
 }
 // apply
 Function.prototype.gjfApply = function (obj, array) {
   var newObj = arguments[0] || window,
     len = arguments[1] && arguments[1].length,
-    newName = this.name,
+    targetFunc = this.name,
     argArr = [],
     rst = null;
-  obj.newName = this;
+  obj.targetFunc = this;
   if (arguments[1]) {
     for (var i = 0; i < len; i++) {
       argArr.push('arguments[1][' + i + ']');
     }
-    rst = eval('obj.newName(' + argArr.join() + ')');
+    rst = eval('obj.targetFunc(' + argArr.join() + ')');
   } else {
-    rst = obj.newName();
+    rst = obj.targetFunc();
   }
-  delete obj.newName;
+  delete obj.targetFunc;
   return rst;
 }
 // bind
