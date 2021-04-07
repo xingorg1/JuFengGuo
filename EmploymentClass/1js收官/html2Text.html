@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>根据html转化txt</title>
+</head>
+
+<body>
+  <script>
+    // editor.txt.text()
+    const { log, dir } = console
+    const util = {
+      // 类数组，forEach
+      forEach: function (fn) {
+        let i
+        for (i = 0; i < this.length; i++) {
+          const elem = this[i]
+          const result = fn.call(elem, elem, i)
+          if (result === false) {
+            break
+          }
+        }
+        return this
+      },
+      text: function (val) {
+        log(val)
+        if (!val) {
+          // 获取 text
+          const elem = this[0]
+          return elem.innerHTML.replace(/<.*?>/g, () => '')
+        } else {
+          // 设置 text
+          return this.forEach(elem => {
+            elem.innerHTML = val
+          })
+        }
+      },
+    }
+    let result = util.text('<h1 id="e56sq">带有格式的文案啊！</h1><h2 id="czew9">啊哈哈这是二级标题</h2><h3 id="6gxms">三级标题</h3><p><i><u>斜体加下划线</u></i></p>')
+    console.log(result)
+    //  $textElem.text(`<p>${val}</p>`)
+  </script>
+  <script>
+    // 根据 html 代码片段创建 dom 对象
+    function createElemByHTML(html) {
+      let div
+      div = document.createElement('div')
+      div.innerHTML = html
+      return div.children
+    }
+    // 封装 document.querySelectorAll
+    function querySelectorAll(selector) {
+      const result = document.querySelectorAll(selector)
+      if (isDOMList(result)) {
+        return result
+      } else {
+        return [result]
+      }
+    }
+    const myUtils = {
+      $textElem: (selector) => {
+        // 编辑区域
+        log(selector, selector.nodeType)
+
+        if (typeof selector === 'string') {
+          // 字符串
+          selector = selector.replace('/\n/mg', '').trim()
+          if (selector.indexOf('<') === 0) {
+            // 如 <div>
+            selectorResult = createElemByHTML(selector)
+          } else {
+            // 如 #id .class
+            selectorResult = querySelectorAll(selector)
+          }
+        }
+        let $textElem = '' // new DomElement()
+        $textElem.attr('contenteditable', 'true')
+          .css('width', '100%')
+          .css('height', '100%')
+        log($textElem)
+        return $textElem
+      },
+      text: function (val) {
+        const $textElem = this.$textElem('<div></div>')
+        let text
+        if (val == null) {
+          text = $textElem.text()
+          // 未选中任何内容的时候点击“加粗”或者“斜体”等按钮，就得需要一个空的占位符 &#8203 ，这里替换掉
+          text = text.replace(/\u200b/gm, '')
+          return text
+        } else {
+          $textElem.text(`<p>${val}</p>`)
+          // 初始化选取，将光标定位到内容尾部
+          editor.initSelection()
+        }
+      },
+    }
+    // myUtils.text()
+    let bbb =
+      elem => {
+        elem.innerHTML = val
+        log(elem)
+      }
+    function aaa(html, val) {
+      let div
+      div = document.createElement('div')
+      div.innerHTML = html
+      selectorResult = div.children
+      log('aaa', div.children)
+      if (!val) {
+        return ''
+      } else {
+        // 设置 text
+        let i
+        for (i = 0; i < selectorResult.length; i++) {
+          const elem = selectorResult[i]
+          dir(elem)
+          const result = bbb.call(elem, elem, i)
+          log(result)
+          if (result === false) {
+            break
+          }
+        }
+      }
+    }
+
+
+    // function forEach(len, fn) {
+    //   let i
+    //   for (i = 0; i < len; i++) {
+    //     const elem = this[i]
+    //     const result = fn.call(elem, elem, i)
+    //     if (result === false) {
+    //       break
+    //     }
+    //   }
+    //   return this
+    // }
+    let val = '<h1 id="e56sq">带有格式的文案啊！</h1><h2 id="czew9">啊哈哈这是二级标题</h2><h3 id="6gxms">三级标题</h3><p><i><u>斜体加下划线</u></i></p>'
+    aaa('<div></div>', val)
+  </script>
+  <script>
+    log('========')
+    new Text().text() = this.editor.txt.text()
+
+    // 获取 设置 text
+    text: function (val) {
+      // const $textElem = $('<div></div>')
+      // 编辑区域加入DOM
+      // $textContainerElem.append($textElem)
+      let text
+      if (val == null) {
+        text = elem.innerHTML.replace(/<.*?>/g, () => '').replace(/\u200b/gm, '')
+        // text = text.replace(/\u200b/gm, '')// 未选中任何内容的时候点击“加粗”或者“斜体”等按钮，就得需要一个空的占位符 &#8203 ，这里替换掉
+        return text
+      // } else {
+      //   $textElem.text(`<p>${val}</p>`)
+      }
+    },
+
+    $textElem: {
+      // 获取当前元素的 text
+      text: function (val) {
+        if (!val) {
+          // 获取 text
+          const elem = this[0]
+          return elem.innerHTML.replace(/<.*?>/g, () => '')
+        } else {
+          // 设置 text
+          return this.forEach(elem => {
+            elem.innerHTML = val
+          })
+        }
+      },
+    }
+  </script>
+</body>
+
+</html>
