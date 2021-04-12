@@ -25,13 +25,21 @@ new Vue({
       getter(),
       setter()
     })
+    // 遇到render、computed、watch等，创建watcher实例把vm包装一层 
+    new Watcher(vm) 
+    new Watcher(computed func) 
+    new Watcher(watch)... 
   }
 }) 
-一个组件对应一个watcher实例，遇到render、computed、watch等，创建watcher实例
-new Watcher(vm){ 
-  this.id++ // watcher都有编号
-  vm._watcher = this // 实力化的watcher对象
-  this.vm = vm // watcher实例上挂载vm
+一个组件对应一个watcher实例，
+Watcher(vm){ 
+  if(!vm._watcher){ // init created
+    this.id++ // watcher都有编号
+    vm._watcher = this // 实力化的watcher对象
+    this.vm = vm // watcher实例上挂载vm
+  } else {
+    this = vm._watcher
+  }
   window.globalwatcher = this // 类似老师举例，实际上不是window。而是当前组件执行时的全局变量/作用域内变量
   vm.render()
 }
@@ -41,7 +49,7 @@ render(h) {
   return h('div', `${this.val}`)
   this.val.getter(() => {
     this.val.dep = {}
-    this.val.dep.subs.push(globalwatcher)
+    this.val.dep.subs.push(globalwatcher) // 记录谁在用我。但是这个谁是谁嗯？我去哪里拿？所以用了globalwather这个中转站、代号！。
     // 互相记录彼此
     this._watcher.deps.push(this.val.dep)
     this._watcher.depIds.push(this.val.dep.id)
@@ -55,7 +63,7 @@ methods: {
     this.val.setter(() => {
       this.val.dep.forEach((globalwatcherItem) => {
         // 找到当初使用这个依赖的wacher，扔进微任务队列等待触发
-        Promise.resolve().then(globalwatcherItem.vm.render())
+        Promise.resolve().then(new Watcher(vm))
       })
     })
   }
