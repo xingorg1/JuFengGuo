@@ -42,7 +42,9 @@ render(h) {
   this.val.getter(() => {
     this.val.dep = {}
     this.val.dep.subs.push(globalwatcher)
+    // 互相记录彼此
     this._watcher.deps.push(this.val.dep)
+    this._watcher.depIds.push(this.val.dep.id)
   })
 }
 
