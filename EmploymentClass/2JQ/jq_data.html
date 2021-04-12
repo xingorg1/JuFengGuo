@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>$.data()</title>
+    <style>
+        span {
+            background: #def;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.3.1/jquery.min.js"></script>
+    <ul>
+        <li data-num="1">有data-num的</li>
+        <li>无data-num的</li>
+    </ul>
+</body>
+<script type="text/javascript">
+    // data()方法操作的数据保存在jQuery内部,而并没有改变DOM的属性,如果要修改DOM对应
+    $('ul').on('click', 'li', function (e) {
+        console.log(e.type, $(this).text());
+        console.log($(this).data());
+        $(this).data().num = 100
+        console.log($(this).data().num)
+        $(this).data('num', 200)
+        console.log($(this).data().num)
+        $(this).data({
+            num: 300
+        })
+        console.log($(this).data().num)
+        $(this).attr('data-num', 400)
+        console.log($(this).data().num)
+        $(this).attr('data-num', 400)
+    });
+</script>
+</body>
+
+</html>

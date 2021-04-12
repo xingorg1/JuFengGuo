@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div contenteditable="true">
+        这里可以编辑，复制图片进来，然后拿到图片资源数据
+    </div>
+    <script>
+        window.addEventListener('paste', (e) => {
+            console.log(e)
+            console.log(e.target)
+        })
+        window.addEventListener('keyup', (e) => {
+            console.log(e, e.keyCode)
+            if (e.ctrlKey && e.keyCode == 67) {　　　　
+                console.log('你按下了CTRL+C')　　
+            }
+        })
+    </script>
+</body>
+
+</html>
