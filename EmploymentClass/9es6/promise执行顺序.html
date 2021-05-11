@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 从上往下，依次挨个儿交替消耗then()， 即依次交替执行异步函数then()
+        Promise.resolve()
+            .then(res => { // .then()
+                console.log(0)
+                new Promise(resolve => {
+                    resolve(Promise.resolve(4)); // .then().then()
+                }).then(function(r) {
+                    console.log(r) // .then().then().then()
+                })
+            })
+        Promise.resolve()
+            .then(function() {
+                console.log(1) // .then()
+            })
+            .then(function() {
+                console.log(2) // .then().then()
+            })
+            .then(function() {
+                console.log(3) // .then().then().then()
+            })
+            .then(function() {
+                console.log(5) // .then().then().then().then()
+            })
+        Promise.resolve()
+            .then(function() {
+                console.log(11) // .then()
+            })
+            .then(function() {
+                console.log(22) // .then().then()
+            })
+            .then(function() {
+                console.log(33) // .then().then().then()
+            })
+            .then(function() {
+                console.log(55) // .then().then().then().then()
+            })
+    </script>
+</body>
+
+</html>

@@ -29,6 +29,7 @@ Function.prototype.gjfCallES6 = function () {
   var rst = null,
     obj = arguments[0] || window,
     args = [...arguments].slice(1); //将参数集合成数组，并去掉第一个参数（第一个参数表示调用者的this绑定目标）
+  // 要判断obj是不是原始值【*】
   obj['targetFunc'] = this; //将调用者存到this绑定目标这个对象上
   rst = obj['targetFunc'](...args); //this绑定的本质是谁调用指向谁。所以用this绑定目标对象调用当前调用者函数。身份转换。需要想通。
   delete obj['targetFunc'];

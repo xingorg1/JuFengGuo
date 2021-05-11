@@ -731,11 +731,31 @@ var xingorg1Utils = {
       4、找空，但是后边是3的倍数位的数字的空，正向预查："?="
       5、空的前边得是非单词边界，要不然出现下边这样的情况：,100,000
       最后，根据上边的条件，查到我们的目标“空”,并替换成指定symbol格式：
+      问题：对于带小数点的数字，不能匹配了就。需要内部切割一下，只把整数部分科学计数法一下。
      */
     str += '';
     symb += '';
     var reg = /(?=(\B)(\d{3})+$)/g;
     return str.replace(reg, symb);
+  },
+  scienceNote3_1: function (str, symb) {
+    /*
+     * @Author: @Guojufeng 
+     * @Date: 2019-01-03 14:27:08 
+     * @Last Modified by:   @Guojufeng 
+     * @Last Modified time: 2019-01-03 14:27:08 
+     * 科学记数法 - 正则
+     * @params {str}: string,要转换的字符串
+     * @params {symb}: string,用什么符号分割， 不传就是“,”分割
+     在scienceNote3函数的基础上解决问题：对于带小数点的数字，不能匹配了就。需要内部切割一下，只把整数部分科学计数法一下。
+     问题：对于null也处理成了0.00，这个就看具体业务逻辑了。
+     */
+    let fixedStr = (Number(str) || 0).toFixed(2);
+    let strArr = fixedStr.split('.')
+    str = strArr[0];
+    symb = symb || ',';
+    var reg = /(?=(\B)(\d{3})+$)/g;
+    return str.replace(reg, symb) + '.' + strArr[1];
   },
   scienceNote4: function (str) {
     /*
