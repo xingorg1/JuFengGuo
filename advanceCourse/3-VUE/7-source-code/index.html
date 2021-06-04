@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vue的使用与vue实例化对象观察</title>
+</head>
+
+<body>
+    <div id="app">
+        {{message}}
+        <p>{{arr}}</p>
+        <p>{{ arr[0] }}</p>
+    </div>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        Vue.component("button-counter", {
+            data: function() {
+                return {
+                    count: 0,
+                };
+            },
+            template: '<div><button v-on:click="count++">You clicked me {{ count }} times.</button></div>',
+        });
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                message: "Hello Vue!",
+                bool: false,
+                num: 1,
+                obj: {
+                    o: 123
+                },
+                arr: [
+                    ['a'], {
+                        a: 1,
+                    }, {
+                        b: 2,
+                    },
+                ],
+            },
+            template: "<button-counter />",
+        });
+        console.log(vm);
+        // vm.message = {
+        //     a: 1
+        // };
+        // // vm.arr[0].a = 2
+        // vm.arr[0] = [];
+        // vm.arr[0] = [];
+    </script>
+</body>
+
+</html>
