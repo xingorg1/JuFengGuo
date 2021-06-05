@@ -1,5 +1,5 @@
 {
-  "name": "8-vueNext",
+  "name": "8-vue-next",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
