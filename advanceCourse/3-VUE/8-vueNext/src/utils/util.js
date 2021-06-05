@@ -31,3 +31,20 @@ export const md5ID = () => {
     let ramdomStr = Math.random().toString(16)
     return new Date().getTime() + ramdomStr.substr(ramdomStr.length - 6)
 }
+
+export const zeroFill = (str = '') => {
+  str += ''
+  const rst = '00' + str
+  return rst.substr(str.length)
+}
+
+export const timeDeal = () => {
+  let time = new Date();
+  let year = time.getFullYear()
+  let month = zeroFill(time.getMonth() + 1)
+  let day = zeroFill(time.getDate())
+  let hour = zeroFill(time.getHours())
+  let min = zeroFill(time.getMinutes())
+  let sec = zeroFill(time.getSeconds())
+  return `${year}年${month}月${day}日 ${hour}:${min}:${sec}`
+}

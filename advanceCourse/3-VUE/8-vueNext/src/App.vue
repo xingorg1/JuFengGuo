@@ -20,8 +20,10 @@
             <input class="toggle" type="checkbox" />
             <label>{{ todo.title }}</label>
             <button class="destroy"></button>
+            <span class="time" v-show="todo.time"
+              >创建时间：{{ todo.time }}</span
+            >
           </div>
-          <span class="time">时间：{{ todo.time }}当时的</span>
           <input class="edit" type="text" />
         </li>
       </ul>
