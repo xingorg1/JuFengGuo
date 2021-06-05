@@ -54,7 +54,7 @@ body {
 
 .todoapp {
     background: #fff;
-    margin: 130px auto 40px;
+    margin: 130px auto 140px;
     max-width: 550px;
     min-width: 430px;
     position: relative;
@@ -208,13 +208,13 @@ body {
 }
 
 .todo-list li .toggle+label {
-    background-image: url("./assets/unchecked.svg");
+    background-image: url("./assets/images/unchecked.svg");
     background-repeat: no-repeat;
     background-position: center left;
 }
 
 .todo-list li .toggle:checked+label {
-    background-image: url("./assets/checked.svg");
+    background-image: url("./assets/images/checked.svg");
 }
 
 .todo-list li label {

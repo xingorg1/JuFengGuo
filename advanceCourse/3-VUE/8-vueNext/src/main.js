@@ -1,4 +1,4 @@
-import './index.css'
+import './assets/styles/index.css'
 // 全局引入axe-ui
 import { createApp } from 'vue'
 import App from './App.vue'
