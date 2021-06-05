@@ -160,12 +160,18 @@ body {
     margin: 0;
     padding: 0;
     list-style: none;
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .todo-list li {
     position: relative;
     font-size: 24px;
     border-bottom: 1px solid #ededed;
+}
+
+.todo-list li:hover {
+    background-color: #f7f7f7;
 }
 
 .todo-list li:last-child {
@@ -269,6 +275,14 @@ body {
     margin-bottom: -1px;
 }
 
+.todo-list li .time {
+    position: relative;
+    top: -20px;
+    left: 60px;
+    font-size: 12px;
+    color: #666;
+}
+
 .footer {
     display: flex;
     overflow: hidden;
@@ -329,6 +343,11 @@ html .clear-completed:active {
 
 .clear-completed:hover {
     text-decoration: underline;
+}
+
+.clear-completed.clear-completed-hide {
+    opacity: 0;
+    appearance: none;
 }
 
 .info {

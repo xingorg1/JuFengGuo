@@ -6,26 +6,27 @@
         class="new-todo"
         autofocus=""
         autocomplete="off"
+        v-model="todoTitle"
+        @keyup.enter="todoItemHandle"
         placeholder="What needs to be done?"
-        v-model="newTodoRef"
-        @keyup.enter="addTodo"
       />
     </header>
     <section class="main">
       <input id="toggle-all" class="toggle-all" type="checkbox" />
-      <label for="toggle-all">Mark all as complete</label>
+      <label for="toggle-all" v-show="!isEmpty">Mark all as complete</label>
       <ul class="todo-list">
-        <li class="todo">
+        <li class="todo" v-for="todo in todoLists" :key="todo.id">
           <div class="view">
             <input class="toggle" type="checkbox" />
-            <label>学习composition api</label>
+            <label>{{ todo.title }}</label>
             <button class="destroy"></button>
           </div>
+          <span class="time">时间：{{ todo.time }}当时的</span>
           <input class="edit" type="text" />
         </li>
       </ul>
     </section>
-    <footer class="footer">
+    <footer class="footer" v-show="!isEmpty">
       <span class="todo-count">
         <strong>1</strong>
         <span>items left</span>
@@ -35,21 +36,38 @@
         <li><a href="#/active" class="">Active</a></li>
         <li><a href="#/completed" class="">Completed</a></li>
       </ul>
-      <button class="clear-completed" style="display: none">
+      <button
+        class="clear-completed"
+        :class="{
+          'clear-completed-hide': true,
+        }"
+      >
         Clear completed
       </button>
     </footer>
   </section>
   <hr />
-  <axe-button icon="axe-icon-love" type="danger" style="float: right"
+  <axe-button
+    icon="axe-icon-love"
+    type="danger"
+    style="float: right"
+    position="left"
     >Axe使用成功啦！喜大普奔～</axe-button
   >
 </template>
 
 <script>
+import { useGetTodoLists } from "./components/useGetTodoLists";
+import { useAddTodo } from "./components/useAddTodo";
 export default {
   setup() {
     // console.log(this)
+    const { todoLists, isEmpty } = useGetTodoLists();
+    return {
+      todoLists,
+      isEmpty,
+      ...useAddTodo(todoLists),
+    };
   },
 };
 </script>
