@@ -48,3 +48,30 @@ export const timeDeal = () => {
   let sec = zeroFill(time.getSeconds())
   return `${year}年${month}月${day}日 ${hour}:${min}:${sec}`
 }
+
+export const locationHashDeal = () => {
+  let hash = window.location.hash
+  if(hash){
+    const reg = /^#\/?/g
+    return hash.replace(reg, '')
+  }
+  return 'all'
+}
+
+export const filterList = (todoLists, keys) => {
+  todoLists = todoLists || []
+  keys = keys || 'all'
+  let list = []
+  switch(keys) {
+    case 'all': 
+      list = todoLists;
+    break;
+    case 'active': 
+      list = todoLists.filter(todo => !todo.isCompleted);
+    break;
+    case 'completed': 
+      list = todoLists.filter(todo => todo.isCompleted);
+    break;
+  }
+  return list;
+}

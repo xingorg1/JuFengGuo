@@ -2,7 +2,7 @@ import { ref, computed } from "vue";
 import { $post } from "../utils/fetch";
 import { md5ID, timeDeal } from "../utils/util"
 
-export function useAddTodo(todoLists) {
+export function useAddTodo(todoListsRef) {
     const todoTitleRef = ref('');
     const todoItemHandle = () => {
         const title = todoTitleRef.value
@@ -12,8 +12,8 @@ export function useAddTodo(todoLists) {
             title,
             isCompleted: false
         }
-        todoLists.value.unshift(params)
-        $post(todoLists.value)
+        todoListsRef.value.unshift(params)
+        $post(todoListsRef.value)
         todoTitleRef.value = ''
     }
     return {

@@ -15,7 +15,7 @@
       <input id="toggle-all" class="toggle-all" type="checkbox" />
       <label for="toggle-all" v-show="!isEmpty">Mark all as complete</label>
       <ul class="todo-list">
-        <li class="todo" v-for="todo in todoLists" :key="todo.id">
+        <li class="todo" v-for="todo in todoListsFilter" :key="todo.id">
           <div class="view">
             <input class="toggle" type="checkbox" />
             <label>{{ todo.title }}</label>
@@ -34,9 +34,17 @@
         <span>items left</span>
       </span>
       <ul class="filters">
-        <li><a href="#/all" class="selected">All</a></li>
-        <li><a href="#/active" class="">Active</a></li>
-        <li><a href="#/completed" class="">Completed</a></li>
+        <li>
+          <a
+            :href="`#/${key}`"
+            :class="{
+              selected: hashStr === key,
+            }"
+            v-for="(conf, key) in focusBtnConf"
+            :key="key"
+            >{{ conf }}</a
+          >
+        </li>
       </ul>
       <button
         class="clear-completed"
@@ -61,14 +69,19 @@
 <script>
 import { useGetTodoLists } from "./components/useGetTodoLists";
 import { useAddTodo } from "./components/useAddTodo";
+import { useTodoFilters } from "./components/useTodoFilters";
+import { focusBtnMap } from "./utils/configs";
 export default {
   setup() {
     // console.log(this)
+    const focusBtnConf = focusBtnMap;
     const { todoLists, isEmpty } = useGetTodoLists();
     return {
+      focusBtnConf, // tips: 即使不是响应式的数据，如果模版中要使用，setup中就需要扔出去
       todoLists,
       isEmpty,
       ...useAddTodo(todoLists),
+      ...useTodoFilters(todoLists),
     };
   },
 };
