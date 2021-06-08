@@ -1,18 +1,26 @@
 import {
-    ref,
+    reactive,
+    // ref, // 引用类型数据尽量用reactive
+    watchEffect,
     computed
 } from "vue";
 import {
-    $get
+    $get,
+    $post
 } from "../utils/fetch";
 
 export function useGetTodoLists() {
-    const todoListsRef = ref($get());
+    const todoLists = reactive($get());
     const isEmptyRef = computed(() => {
-        return todoListsRef.value.length <= 0;
+        return todoLists.length <= 0;
     });
+    // FIXME: watchEffect不要太香了啊！只需要关心数据就行了，effect里集中去做相关的数据请求！
+    watchEffect(() => {
+      $post(todoLists)
+    })
+    
     return {
-        todoLists: todoListsRef,
+        todoLists,
         isEmpty: isEmptyRef,
     }
 }
