@@ -15,9 +15,10 @@
       <input id="toggle-all" class="toggle-all" type="checkbox" />
       <label for="toggle-all" v-show="!isEmpty">Mark all as complete</label>
       <ul class="todo-list">
-        <li class="todo" v-for="todo in todoListsFilter" :key="todo.id">
+        <li :class="['todo', todo.isCompleted && 'completed']" v-for="todo in todoListsFilter" :key="todo.id">
           <div class="view">
-            <input class="toggle" type="checkbox" />
+            <!-- FIXME: 太绝了！v-model的思想很好的应用到了这里，不用绑定值和事件了。 -->
+            <input class="toggle" type="checkbox" v-model="todo.isCompleted"/>
             <label>{{ todo.title }}</label>
             <button class="destroy" @click="deleteTodoHandle(todo.id)"></button>
             <span class="time" v-show="todo.time"
