@@ -32,8 +32,12 @@ export function useFilterTodoLists(todoLists) {
   const todoListsFilterRef = computed(() => {
     return filterList(todoLists, hashStrRef.value)
   });
+  const leftNumRef = computed(() => {
+    return filterList(todoLists, 'active').length
+  })
   return {
     todoListsFilter: todoListsFilterRef,
-    hashStr: hashStrRef
+    hashStr: hashStrRef,
+    leftNum: leftNumRef,
   }
 }

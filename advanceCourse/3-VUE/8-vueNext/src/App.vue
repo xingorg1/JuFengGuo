@@ -30,7 +30,7 @@
     </section>
     <footer class="footer" v-show="!isEmpty">
       <span class="todo-count">
-        <strong>1</strong>
+        <strong>{{leftNum}}</strong>
         <span>items left</span>
       </span>
       <ul class="filters">
