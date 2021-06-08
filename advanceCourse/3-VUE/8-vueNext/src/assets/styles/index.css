@@ -214,13 +214,13 @@ body {
 }
 
 .todo-list li .toggle+label {
-    background-image: url("./assets/images/unchecked.svg");
+    background-image: url("../images/unchecked.svg");
     background-repeat: no-repeat;
     background-position: center left;
 }
 
 .todo-list li .toggle:checked+label {
-    background-image: url("./assets/images/checked.svg");
+    background-image: url("../images/checked.svg");
 }
 
 .todo-list li label {
