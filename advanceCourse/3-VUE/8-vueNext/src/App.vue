@@ -69,7 +69,7 @@
 <script>
 import { useGetTodoLists } from "./components/useGetTodoLists";
 import { useAddTodo } from "./components/useAddTodo";
-import { useTodoFilters } from "./components/useTodoFilters";
+import { useFilterTodoLists } from "./components/useFilterTodoLists";
 import { focusBtnMap } from "./utils/configs";
 export default {
   setup() {
@@ -81,7 +81,7 @@ export default {
       todoLists,
       isEmpty,
       ...useAddTodo(todoLists),
-      ...useTodoFilters(todoLists),
+      ...useFilterTodoLists(todoLists),
     };
   },
 };
