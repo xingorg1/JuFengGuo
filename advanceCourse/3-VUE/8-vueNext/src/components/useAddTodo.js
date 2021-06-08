@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { md5ID, timeDeal } from "../utils/util"
 
-export function useAddTodo(todoLists) {
+export function useAddTodo(todoListsRef) {
     const todoTitleRef = ref('');
     const todoItemHandle = () => {
         const title = todoTitleRef.value
@@ -11,8 +11,8 @@ export function useAddTodo(todoLists) {
             title,
             isCompleted: false
         }
-        todoLists.unshift(params)
-        // $post(todoLists) // 数据改变后会自动触发watchEffect，该hook的钩子里会自动发请求的。
+        todoListsRef.value.unshift(params)
+        // $post(todoListsRef) // 数据改变后会自动触发watchEffect，该hook的钩子里会自动发请求的。
         todoTitleRef.value = ''
     }
     return {

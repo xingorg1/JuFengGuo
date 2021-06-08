@@ -12,7 +12,7 @@ import {
   focusBtnMap
 } from "../utils/configs";
 
-export function useFilterTodoLists(todoLists) {
+export function useFilterTodoLists(todoListsRef) {
   let hashStrRef = ref('all')
   const onHashChange = (e) => {
     hashStrRef.value = locationHashDeal()
@@ -30,10 +30,10 @@ export function useFilterTodoLists(todoLists) {
   })
 
   const todoListsFilterRef = computed(() => {
-    return filterList(todoLists, hashStrRef.value)
+    return filterList(todoListsRef.value, hashStrRef.value)
   });
   const leftNumRef = computed(() => {
-    return filterList(todoLists, 'active').length
+    return filterList(todoListsRef.value, 'active').length
   })
   return {
     todoListsFilter: todoListsFilterRef,
