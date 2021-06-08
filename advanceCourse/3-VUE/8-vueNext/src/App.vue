@@ -7,7 +7,7 @@
         autofocus=""
         autocomplete="off"
         v-model="todoTitle"
-        @keyup.enter="todoItemHandle"
+        @keyup.enter="addTodoHandle"
         placeholder="What needs to be done?"
       />
     </header>
@@ -51,7 +51,7 @@
         :class="{
           'clear-completed-hide': false,
         }"
-        @click="deleteCompletedTodos"
+        @click="deleteTodosHandle"
       >
         Clear completed
       </button>

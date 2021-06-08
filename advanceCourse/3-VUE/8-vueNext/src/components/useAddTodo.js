@@ -3,7 +3,7 @@ import { md5ID, timeDeal } from "../utils/util"
 
 export function useAddTodo(todoListsRef) {
     const todoTitleRef = ref('');
-    const todoItemHandle = () => {
+    const addTodoHandle = () => {
         const title = todoTitleRef.value
         const params = {
             id: md5ID(),
@@ -17,6 +17,6 @@ export function useAddTodo(todoListsRef) {
     }
     return {
         todoTitle: todoTitleRef,
-        todoItemHandle,
+        addTodoHandle,
     }
 }
