@@ -19,7 +19,7 @@
           <div class="view">
             <input class="toggle" type="checkbox" />
             <label>{{ todo.title }}</label>
-            <button class="destroy"></button>
+            <button class="destroy" @click="deleteTodoHandle(todo.id)"></button>
             <span class="time" v-show="todo.time"
               >创建时间：{{ todo.time }}</span
             >
@@ -49,8 +49,9 @@
       <button
         class="clear-completed"
         :class="{
-          'clear-completed-hide': true,
+          'clear-completed-hide': false,
         }"
+        @click="deleteCompletedTodos"
       >
         Clear completed
       </button>
@@ -70,6 +71,7 @@
 import { useGetTodoLists } from "./components/useGetTodoLists";
 import { useAddTodo } from "./components/useAddTodo";
 import { useFilterTodoLists } from "./components/useFilterTodoLists";
+import { useDeleteTodo } from "./components/useDeleteTodo";
 import { focusBtnMap } from "./utils/configs";
 export default {
   setup() {
@@ -82,6 +84,7 @@ export default {
       isEmpty,
       ...useAddTodo(todoLists),
       ...useFilterTodoLists(todoLists),
+      ...useDeleteTodo(todoLists),
     };
   },
 };
