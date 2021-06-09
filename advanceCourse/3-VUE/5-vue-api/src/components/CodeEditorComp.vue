@@ -4,10 +4,12 @@
     <div class="cm-container">
       <textarea class="codesql" ref="mycode" v-model="code"></textarea>
     </div>
+    <el-button @click="sqlFormatterHandle">SQL格式化</el-button>
   </div>
 </template>
 
 <script>
+// SQL编辑器
 import "codemirror/theme/ambiance.css";
 import "codemirror/lib/codemirror.css";
 import "codemirror/addon/hint/show-hint.css";
@@ -17,6 +19,9 @@ require("codemirror/addon/selection/active-line");
 require("codemirror/mode/sql/sql");
 require("codemirror/addon/hint/show-hint");
 require("codemirror/addon/hint/sql-hint");
+// sql格式化
+import { format as sqlFormatter } from "sql-formatter"; 
+
 const { log } = console;
 export default {
   name: "CodeEditorComp",
@@ -28,7 +33,7 @@ export default {
   mounted() {
     /* codemirror */
     let mime = "text/x-sql"; // text/x-mysql, text/x-mariadb, text/x-cassandra, text/x-plsql, text/x-mssql, text/x-hive, text/x-pgsql, text/x-gql, text/x-gpsql. text/x-esper
-    let theme = 'ambiance'//设置主题，不设置的会使用默认主题
+    let theme = "ambiance"; //设置主题，不设置的会使用默认主题
     let editor = CodeMirror.fromTextArea(this.$refs.mycode, {
       mode: mime, // 选择对应代码编辑器的语言，我这边选的是数据库，根据个人情况自行设置即可: https://codemirror.net/mode/
       indentWithTabs: true,
@@ -51,6 +56,14 @@ export default {
     editor.on("cursorActivity", function () {
       editor.showHint();
     });
+  },
+  methods: {
+    sqlFormatterHandle() {
+      console.log(sqlFormatter)
+      const sqlvalue = sqlFormatter(this.code);
+      console.log("sqlvalue:", sqlvalue);
+      this.code = sqlvalue
+    },
   },
 };
 </script>
