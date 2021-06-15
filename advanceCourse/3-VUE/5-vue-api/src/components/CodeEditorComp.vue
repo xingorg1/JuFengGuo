@@ -1,6 +1,9 @@
 <template>
   <div class="code-editor">
     有个小问题，代码自动提示（cursorActivity）打开后，删除关键字需要选中整个，不能单独删除一个关键字的字母
+    <p>
+      并且，格式化代码后，不能直接修改code值，因为这里model绑定的原因。可以参考CodeEditorComp1组件中，vue-codemirror-lite组件是怎么封装并修改的数据
+    </p>
     <div class="cm-container">
       <textarea class="codesql" ref="mycode" v-model="code"></textarea>
     </div>
