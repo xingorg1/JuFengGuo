@@ -1098,10 +1098,28 @@ var xingorg1Utils = {
         argsLen = args.length,
         params = [fn].concat(args);
       if (argsLen < len) {
-        return Curry(fixedCurry.apply(this, params), len - argsLen);
+        return this.curry(this.fixedCurry.apply(this, params), len - argsLen);
       } else {
         return fn.apply(this, args);
       }
+    }
+  },
+  currying: function (fn, arg = []) {
+    /*
+     * @Author: @Guojufeng 
+     * @Date: 2021-06-16 08:15
+     * 函数式编程 - 柯里化函数 - 偏函数柯里化。参数个数、调用次数不确定
+     * 核心逻辑就是 递归+闭包，根据闭包积累的数组与总长度判断是否临界
+     * @params { fn }: function, 要执行的目标函数，必填
+     * @params { arg }: array, 目标函数参数，可填；默认值：[]
+     */
+    let len = fn.length
+    return (...args) => {
+      let allArgs = args.concat(arg)
+      if (len > allArgs.length) {
+        return this.currying(fn, allArgs)
+      }
+      return fn(...allArgs)
     }
   },
   flatten: function (arr) {
