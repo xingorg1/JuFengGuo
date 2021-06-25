@@ -42,7 +42,9 @@ Vue.use(Button);
 // import vueXlsxTable from 'vue-xlsx-table'
 // Vue.use(vueXlsxTable, {rABS: false}) //Browser FileReader API have two methods to read local file readAsBinaryString and readAsArrayBuffer, default rABS false
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, {
+  size: 'mini'
+});
 
 // you can set default global options and events when use
 Vue.use(VueCodemirror,

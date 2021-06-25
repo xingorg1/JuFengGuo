@@ -66,7 +66,40 @@ Function.prototype.gjfBind = function (target) {
   temp.prototype = self.prototype;
   f.prototype = new temp();
   return f;
-}
+},
+// 大气层的bind，from：https://github.com/Raynos/function-bind
+// 解析：【https://mp.weixin.qq.com/s/APgrQ6R6nY8BHSm22xPAhg】
+Function.prototype._bind = function (thisObj) {
+  // 判断是否为函数调用
+  if (typeof target !== 'function' || Object.prototype.toString.call(target) !== '[object Function]') {
+    throw new TypeError(this + ' must be a function');
+  }
+  const self = this;
+  const args = [...arguments].slice(1);
+  var bound = function () {
+    var finalArgs = [...args, ...arguments];
+    // new.target 用来检测是否是被 new 调用
+    if (new.target !== undefined) {
+      // 说明是用new来调用的, this 指向的为构造函数本身
+      var result = self.apply(this, finalArgs);
+      // 判断改函数是否返回对象
+      if (result instanceof Object) {
+        return result;
+      }
+      // 没有返回对象就返回 this
+      return this;
+    } else {
+      // 如果不是 new 就原来的逻辑
+      return self.apply(thisArg, finalArgs);
+    }
+  };
+  if (self.prototype) {
+    // 为什么使用了 Object.create? 因为我们要防止，bound.prototype 的修改而导致self.prototype 被修改。不要写成 bound.prototype = self.prototype; 这样可能会导致原函数的原型被修改。
+    bound.prototype = Object.create(self.prototype);
+    bound.prototype.constructor = self;
+  }
+  return bound;
+};
 /* Object的各种方法仿写 */
 // toString
 Object.prototype.gjfToString = function (q) {

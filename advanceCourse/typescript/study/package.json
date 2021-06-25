@@ -1,0 +1,16 @@
+{
+  "name": "ts_study",
+  "version": "1.0.0",
+  "description": "学习ts",
+  "author": "xing.org1^",
+  "scripts": {
+    "dev": "rollup -c -w"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "rollup": "^2.50.0",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "typescript": "^4.2.4"
+  }
+}

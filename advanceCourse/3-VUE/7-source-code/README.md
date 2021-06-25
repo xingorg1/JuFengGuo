@@ -1,4 +1,6 @@
-# vue 源码解析
+# vue2 源码
+
+## 解析 与学习
 [笔记地址](https://www.yuque.com/xing.org1/cdu7by/wl85l1)
 
 ✅1、响应式原理  
@@ -9,3 +11,7 @@
 🔲6、nextTick原理解析  
 🔲7、虚拟DOM  
 🔲8、diff原理  
+
+## 思路与脑图整理
+
+[脑图整理地址](https://www.yuque.com/xing.org1/repeatfe/uxevhy)
