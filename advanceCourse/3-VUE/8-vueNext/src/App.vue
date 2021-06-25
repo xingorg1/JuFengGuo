@@ -26,13 +26,20 @@
           <div class="view">
             <!-- FIXME: 太绝了！v-model的思想很好的应用到了这里，不用绑定值和事件了。 -->
             <input class="toggle" type="checkbox" v-model="todo.isCompleted" />
-            <label>{{todoListsFilter.length - index}}. {{ todo.title }}</label>
-            <button class="destroy" @click="deleteTodoHandle(todo.id)"></button>
+            <label @dblclick.stop="editTodoHandle(todo)">{{todoListsFilter.length - index}}. {{ todo.title }}</label>
+            <button class="destroy" @click.stop="deleteTodoHandle(todo.id)"></button>
             <span class="time" v-show="todo.time"
               >创建时间：{{ todo.time }}</span
             >
           </div>
-          <input class="edit" type="text" />
+          <input 
+            :class="['edit', todo.isEdit && 'show']" 
+            type="text" 
+            v-model="todo.title" 
+            @keydown.enter="editDoneHandle(todo)"
+            @blur="editDoneHandle(todo)"
+            @keydown.escape="editDoneHandle(todo)"
+          />
         </li>
       </ul>
     </section>

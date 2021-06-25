@@ -269,6 +269,14 @@ body {
 
 .todo-list li .edit {
     display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: 43px;
+    width: calc(100% - 43px);
+}
+.todo-list li .show {
+  display: block;
 }
 
 .todo-list li.editing:last-child {

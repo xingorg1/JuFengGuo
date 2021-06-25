@@ -1,4 +1,5 @@
 import {
+  ref,
   computed
 } from "vue";
 
@@ -13,7 +14,20 @@ export function useEditTodo(todoListsRef) {
       todoListsRef.value.map(todo => todo.isCompleted = newVal) // FIXME: proxy返回的对象，有map函数。
     }
   })
+
+  const editTodoHandle = (todo) => {
+    todo.isEdit = true
+    console.log(todo, arguments);
+    // TODO: 1、这里怎么拿到自己，然后设置自动focus呢？
+    // TODO: 2、arguments里的RefRefImpl是啥？
+  }
+
+  const editDoneHandle = (todo) => {
+    todo.isEdit = false
+  }
   return {
     isCompletedAll: isCompletedAllRef,
+    editTodoHandle,
+    editDoneHandle
   }
 }
