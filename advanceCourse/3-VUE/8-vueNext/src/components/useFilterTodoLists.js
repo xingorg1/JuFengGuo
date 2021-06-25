@@ -35,9 +35,13 @@ export function useFilterTodoLists(todoListsRef) {
   const leftNumRef = computed(() => {
     return filterList(todoListsRef.value, 'active').length
   })
+  const completedNumRef = computed(() => {
+    return filterList(todoListsFilterRef.value, 'completed').length
+  })
   return {
     todoListsFilter: todoListsFilterRef,
     hashStr: hashStrRef,
     leftNum: leftNumRef,
+    completedNum: completedNumRef
   }
 }

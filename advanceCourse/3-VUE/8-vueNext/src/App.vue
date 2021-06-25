@@ -43,12 +43,12 @@
         </li>
       </ul>
     </section>
-    <footer class="footer" v-show="!isEmpty">
-      <span class="todo-count">
+    <footer class="footer clearfix" v-show="!isEmpty">
+      <span class="todo-count left">
         <strong>{{ leftNum }}</strong>
         <span>item{{ leftNum > 1 ? "s" : "" }} left</span>
       </span>
-      <ul class="filters">
+      <ul class="filters left">
         <li>
           <a
             :href="`#/${key}`"
@@ -62,11 +62,12 @@
         </li>
       </ul>
       <button
-        class="clear-completed"
+        class="clear-completed right"
         :class="{
           'clear-completed-hide': false,
         }"
-        @click="deleteTodosHandle"
+        @click.stop="deleteTodosHandle"
+        v-show="completedNum > 0"
       >
         Clear completed
       </button>
@@ -94,6 +95,11 @@ export default {
     // console.log(this)
     const focusBtnConf = focusBtnMap;
     const { todoLists, isEmpty } = useGetTodoLists();
+    // app.addEventListener('click', () => {
+    //   todoLists.value.map((todo) => {
+    //     todo.isEdit = false
+    //   })
+    // })
     return {
       focusBtnConf, // tips: 即使不是响应式的数据，如果模版中要使用，setup中就需要扔出去
       todoLists,

@@ -292,16 +292,24 @@ body {
 }
 
 .footer {
-    display: flex;
     overflow: hidden;
-    justify-content: space-between;
-    align-items: center;
     padding: 10px 15px;
     height: 41px;
     text-align: center;
     font-size: 15px;
     border-top: 1px solid #e6e6e6;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 1px, rgb(246, 246, 246) 0px 8px 0px -3px, rgba(0, 0, 0, 0.2) 0px 9px 1px -3px, rgb(246, 246, 246) 0px 16px 0px -6px, rgba(0, 0, 0, 0.2) 0px 17px 2px -6px;
+}
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.left {
+  float: left;
+}
+.right {
+  float: right;
 }
 
 .todo-count {
@@ -315,6 +323,7 @@ body {
 
 .filters {
     margin: 0;
+    margin-left: 55px;
     padding: 0;
     list-style: none;
 }
