@@ -20,7 +20,7 @@ export function useFilterTodoLists(todoListsRef) {
       hashStrRef.value = 'all'
     }
   }
-  // FIXME: onMounted里处理完数据是异步的。怎么return出异步之后获取的正确数据呢？
+  // TODO: onMounted里处理完数据是异步的。怎么return出异步之后获取的正确数据呢？
   onMounted(() => {
     window.addEventListener('hashchange', onHashChange)
     onHashChange()

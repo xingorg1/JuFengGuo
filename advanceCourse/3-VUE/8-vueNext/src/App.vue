@@ -101,7 +101,7 @@ export default {
     //   })
     // })
     return {
-      focusBtnConf, // tips: 即使不是响应式的数据，如果模版中要使用，setup中就需要扔出去
+      focusBtnConf, // FIXME: [tips]即使不是响应式的数据，如果模版中要使用，setup中就需要扔出去
       todoLists,
       isEmpty,
       ...useAddTodo(todoLists),
