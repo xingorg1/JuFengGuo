@@ -4,7 +4,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import Axe from 'axe-ui'
 import 'axe-ui/dist/axe.css'
-createApp(App).use(Axe).mount('#app')
+import router from './routers/router'
+createApp(App).use(Axe).use(router).mount('#app')
 
 
 // 局部引入axe-ui
