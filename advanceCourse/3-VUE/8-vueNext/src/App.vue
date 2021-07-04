@@ -81,6 +81,7 @@
     position="left"
     >Axe使用成功啦！喜大普奔～</axe-button
   >
+  <api></api>
 </template>
 
 <script>
@@ -90,7 +91,11 @@ import { useFilterTodoLists } from "./components/useFilterTodoLists";
 import { useDeleteTodo } from "./components/useDeleteTodo";
 import { useEditTodo } from "./components/useEditTodo";
 import { focusBtnMap } from "./utils/configs";
+import Api from './Api.vue'
 export default {
+  components: {
+    Api
+  },
   setup() {
     // console.log(this)
     const focusBtnConf = focusBtnMap;
