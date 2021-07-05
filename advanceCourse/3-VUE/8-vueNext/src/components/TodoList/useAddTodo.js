@@ -1,5 +1,5 @@
 import { ref } from "vue";
-import { md5ID, timeDeal } from "../utils/util"
+import { md5ID, timeDeal } from "../../utils/util"
 
 export function useAddTodo(todoListsRef) {
     const todoTitleRef = ref('');

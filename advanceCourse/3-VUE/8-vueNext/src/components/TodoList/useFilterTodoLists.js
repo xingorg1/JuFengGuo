@@ -7,10 +7,10 @@ import {
 import {
   locationHashDeal,
   filterList
-} from '../utils/util'
+} from '../../utils/util'
 import {
   focusBtnMap
-} from "../utils/configs";
+} from "../../utils/configs";
 
 export function useFilterTodoLists(todoListsRef) {
   let hashStrRef = ref('all')
