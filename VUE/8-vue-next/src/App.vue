@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Api from './Api.vue'
+import Api from './components/Api.vue'
 
 export default {
   components: {
