@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // const target = {
+      //   name: '目标对象',
+      // }
+      // const handler = {
+      //   name: '处理程序对象',
+      // }
+      // const proxyObject = new Proxy(target, handler) // 代理对象
+      // console.log(proxyObject)
+      // console.log(proxyObject.name)
+      // proxyObject.id = 123
+      // target.aaa = '目标对象直接加属性'
+      // console.log(proxyObject.id, target.id)
+      // console.log(proxyObject.aaa)
+    </script>
+    <script>
+      const target = {
+        id: 'target',
+      }
+      const handler = {}
+      const proxy = new Proxy(target, handler)
+      console.log(target, proxy)
+      // id 属性会访问同一个值
+      console.log(target.id) // target
+      console.log(proxy.id) // target
+
+      // 给目标属性赋值会反映在两个对象上
+      // 因为两个对象访问的是同一个值
+      target.id = 'foo'
+      console.log(target.id) // foo
+      console.log(proxy.id) // foo
+
+      // 给代理对象的属性赋值会反映在两个对象上
+      // 因为这个赋值会转移到目标对象（空代理，对代理的操作都会转移到目标对象）
+      proxy.id = 'bar' // 相当于给目标对象的id重新赋值
+      console.log(target.id) // bar
+      console.log(proxy.id) // bar
+
+      // hasOwnProperty()方法在两个地方
+      // 都会应用到目标对象
+      console.log(target.hasOwnProperty('id')) // true
+      console.log(proxy.hasOwnProperty('id')) // true
+
+      console.log(Proxy.prototype) // undefined
+      // Proxy.prototype 是 undefined
+      // 因此不能使用 instanceof 操作符
+      // console.log(target instanceof Proxy) // TypeError: Function has non-object prototype 9 'undefined' in instanceof check
+      // console.log(proxy instanceof Proxy) // TypeError: Function has non-object prototype 'undefined' in instanceof check
+
+      // 严格相等可以用来区分代理和目标
+      console.log(target === proxy) // false
+    </script>
+    <script>
+      const targetConstant = {}
+      Object.defineProperty(targetConstant, 'foo', {
+        configurable: false,
+        writable: false,
+        value: 'bar',
+      })
+      const handlerObj = {
+        get() {
+          return 'qux' // 报错：proxy.html:75 Uncaught TypeError: 'get' on proxy: property 'foo' is a read-only and non-configurable data property on the proxy target but the proxy did not return its actual value (expected 'bar' but got 'qux')
+          // return 'bar' // 正常
+        },
+      }
+      const proxyObj = new Proxy(targetConstant, handlerObj)
+      console.log(proxyObj.foo) // TypeError
+    </script>
+  </body>
+</html>
