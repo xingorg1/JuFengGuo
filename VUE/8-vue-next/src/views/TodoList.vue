@@ -76,11 +76,11 @@
 </template>
 
 <script>
-import { useGetTodoLists } from "../components/TodoList/useGetTodoLists";
-import { useAddTodo } from "../components/TodoList/useAddTodo";
-import { useFilterTodoLists } from "../components/TodoList/useFilterTodoLists";
-import { useDeleteTodo } from "../components/TodoList/useDeleteTodo";
-import { useEditTodo } from "../components/TodoList/useEditTodo";
+import { useGetTodoLists } from "../hooks/TodoList/useGetTodoLists";
+import { useAddTodo } from "../hooks/TodoList/useAddTodo";
+import { useFilterTodoLists } from "../hooks/TodoList/useFilterTodoLists";
+import { useDeleteTodo } from "../hooks/TodoList/useDeleteTodo";
+import { useEditTodo } from "../hooks/TodoList/useEditTodo";
 import { focusBtnMap } from "../utils/configs";
 export default {
   setup() {
