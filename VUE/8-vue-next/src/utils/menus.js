@@ -22,7 +22,7 @@ export default [
   },
   {
     name: 'Reactivity响应式API',
-    fileName: 'Reactivity',
-    path: '/reactivity'
+    fileName: 'ReactivityApi',
+    path: '/reactivity-api'
   }
 ]

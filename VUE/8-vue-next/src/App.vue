@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="menu">
       <span class="logo">
-        ✊ 石头加油
+        🎉 vue3.0 💗
       </span>
       <router-link
         v-for="item in menuConfig"
