@@ -13,22 +13,50 @@
         v-model="ruleForm1.workInfo.registeredCapital"
         v-thousands.registeredCapital="ruleForm1.workInfo"
       ></el-input-number>
+      <p>不用对象</p>
+      <el-input-number
+        v-model="num2"
+        v-thousandsSingle="num2"
+      ></el-input-number>
+      <p>修改源码</p>
+      <ElInputNumber2
+        separator=","
+        v-model="num3"
+        @blur="blurNumber"
+        class="large"
+        @change="changeNumber"
+      />
+      <ElInputNumber2
+        separator=","
+        v-model="form.num4"
+        @blur="blurNumber"
+        class="large"
+        @change="changeNumber"
+      />
+      <!-- <input type="number"> -->
     </div>
   </div>
 </template>
 <script>
 import { getInputValue } from "../utils/util";
+import ElInputNumber2 from "../../node_modules/element-ui/packages/input-number/index";
 const { log } = console;
 export default {
   name: "ElementInputNumber",
+  components: {
+    ElInputNumber2,
+  },
   data() {
     return {
+      num3: "123456789.12345678987654321",
+      num2: "1000000000000.12345678987654321",
       form: {
         num: "",
+        num4: "999",
       },
       ruleForm1: {
         workInfo: {
-          registeredCapital: "1234567",
+          registeredCapital: "1000000000.12345678987654321",
         },
       },
     };
@@ -37,10 +65,21 @@ export default {
     inputMoney(el, name) {
       log(el, name, getInputValue(el));
       this.form["num"] = getInputValue(el);
-      console.log(this.form);
+      // console.log(this.form);
+    },
+    blurNumber() {
+      console.log("ElementInputNumber", ...arguments);
+    },
+    changeNumber(num) {
+      console.log("最终结果", num);
     },
   },
   directives: {
+    thousandsSingle: {
+      bind(el, binding, vnode) {
+        // console.log(el, binding, vnode);
+      },
+    },
     thousands: {
       bind(el, binding, vnode) {
         const key = Object.keys(binding.modifiers)[0];
@@ -88,4 +127,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.el-input-number {
+  width: 500px;
+}
 </style>

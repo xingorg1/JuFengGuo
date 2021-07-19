@@ -9,14 +9,21 @@
 <body>
   <script src="./xingorg1Exp.js"></script>
   <script>
-    console.log(xingorg1Exp);
-    var str = '2019xing.org1^888'
-    var test = xingorg1Exp.getLastNum('2019xing.org1^888')
-    var test = xingorg1Exp.getLastNum()
-    console.log(test);
-    console.log(str.match(test));
+    // console.log(xingorg1Exp);
+    // var str = '2019xing.org1^888'
+    // var test = xingorg1Exp.getLastNum('2019xing.org1^888')
+    // var test = xingorg1Exp.getLastNum()
+    // console.log(test);
+    // console.log(str.match(test));
 
-
+    var str = '1000000000000.12345678987654321';
+    var reg = /(?=(\B)(\d{3})+$)/g;
+    var str1 = '1000000000000';
+    var reg1 = /(?=(\B)(\d{3})+$)/g;
+    console.log(str1.match(reg1),'====222=====')
+    console.log(str1.replace(reg1, ','))
+    console.log(str.match(reg),'=========')
+    console.log(str.replace(reg, ','))
 
     
   </script>

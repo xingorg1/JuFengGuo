@@ -215,7 +215,10 @@
 import axios from 'axios' // 引入axios
 import urls from '@/mock/urls'  // 引入实现准备好的接口请求相关配置
 import ElementInputNumber from './ElementInputNumber.vue'
-const { log } = console
+// const { log } = console
+const log = function() {
+  
+}
 export default {
   name: 'Element',
   components: {
