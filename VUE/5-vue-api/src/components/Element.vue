@@ -1,5 +1,6 @@
 <template>
   <div class="api-element">
+    <ElementInputNumber />
     <div class="area">
       <h3>el-table表头置顶 - 只针对非fixed的表格内容,且需要没有超出滚动效果</h3>
       <el-table :data="tableDataFixed"
@@ -213,9 +214,13 @@
 // log(Mock)
 import axios from 'axios' // 引入axios
 import urls from '@/mock/urls'  // 引入实现准备好的接口请求相关配置
+import ElementInputNumber from './ElementInputNumber.vue'
 const { log } = console
 export default {
   name: 'Element',
+  components: {
+    ElementInputNumber
+  },
   data () {
     return {
       flag: true,
