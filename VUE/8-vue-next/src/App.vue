@@ -1,9 +1,7 @@
 <template>
   <div class="wrapper">
     <div class="menu">
-      <span class="logo">
-        ✊ 石头加油
-      </span>
+      <span class="logo"> 🎉 vue3.0 💗 </span>
       <router-link
         v-for="item in menuConfig"
         :key="item.fileName"
@@ -16,18 +14,37 @@
     </div>
     <div class="content">
       <router-view></router-view>
+      <span v-once>这个将不会改变: {{ state.msg }}
+        <em>{{state.innerTxt}}</em>
+      </span>
     </div>
   </div>
 </template>
 
 <script>
+import { reactive } from '@vue/reactivity';
 import menuConfig from "./utils/menus";
 export default {
   components: {},
+  methods: {
+    appMethod() {
+      console.log(this);
+    },
+  },
   setup() {
     // console.log(this)
+    const state = reactive({
+      msg: 'v-once一次性绑定',
+      innerTxt: '但请留心这会影响到该节点上的其它数据绑定'
+    })
+    setTimeout(() => {
+      state.msg = '修改了内容也不会触发响应式更新'
+      // state.innerTxt = '修改了内容也不会触发响应式更新'
+      console.log(state);
+    })
     return {
       menuConfig,
+      state
     };
   },
 };

@@ -2,22 +2,17 @@
   <!-- 新特性学习 -->
   <div class="api-demo">
     <!-- ref -->
-    <p ref="refDom" style="text-align: right" @click="changeCount">
+    <p ref="refDom" @click="changeCount">
       我是ref元素。点我看效果
     </p>
 
     <!-- teleport -->
-    <axe-button @click="openModal">点我打开弹窗</axe-button>
+    <axe-button @click="openModal">点我打开 teleport组件 生成的弹窗</axe-button>
     <teleport to="#app" v-if="data.showModal">
-      <span style="padding: 20px; border: 1px solid; background: red">
-        我是弹窗-toApp
-      </span>
+      <span class="api-modal"> 我是弹窗-toApp </span>
     </teleport>
     <teleport to="body">
-      <span
-        style="padding: 20px; border: 1px solid; background: yellow"
-        v-if="data.showModalBody"
-      >
+      <span class="vue3-modal" v-if="data.showModalBody">
         我是弹窗-toBody。v-if也可以放到内部元素而非teleport组件上
       </span>
     </teleport>
@@ -63,9 +58,31 @@ export default {
 };
 </script>
 <style scoped>
-.api-demo {
-  clear: both;
-  margin-top: 50px;
+.api-demo p{
+  margin-bottom: 10px;
+}
+.api-modal {
+  padding: 20px;
+  border: 1px solid #7b2227;
+  background: #b83f45;
+  color: #fff;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>
+<style>
+.vue3-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: -50px;
+  padding: 10px;
+  border: 1px solid #c5c500;
+  background: yellow;
 }
 </style>
 

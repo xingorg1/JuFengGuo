@@ -53,20 +53,28 @@ export default {
 
     // 返回渲染函数
     return () =>
-      h(
-        "div",
-        {},
+      h("div", [
         h(
-          "strong",
+          "div",
           {
-            icon: "axe-icon-love",
-            type: "danger",
-            position: "left",
-            onClick: increment,
+            style: {
+              marginBottom: "20px",
+            },
           },
-          state.count
-        )
-      );
+          "我是首页"
+        ),
+        h(
+          "button",
+          {
+            onClick: increment,
+            style: {
+              padding: "10px",
+              border: '1px solid #e1e1e1'
+            },
+          },
+          "点击我：" + state.count
+        ),
+      ]);
   },
 };
 </script>

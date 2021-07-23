@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单例模式</title>
+</head>
+<body>
+  <h4>核心思想：多次构造只返回同一个实例对象。</h4>
+  <p>应用：购物车、登录</p>
+  <p>思路：设计一个标识符记录是否被new构造过。</p>
+  <p>方案：闭包、函数属性</p>
+  <script>
+    // 利用函数属性的方式
+    // es6 写法:
+    class Single {
+      constructor(name) {
+        if (Single.instance) return Single.instance
+        Single.instance = this
+        this.name = name
+      }
+    }
+
+    const S1 = new Single('S1')
+    const S2 = new Single('S2')
+    console.log(S1, S2, S1 === S2) // 都返回S1的实例对象，对比得到true
+
+
+    // es5 写法
+    function SingleFunc(name) {
+      if (SingleFunc.instance) return SingleFunc.instance
+      SingleFunc.instance = this
+      this.name = name
+      this.info = function (info) {
+        console.log(this.name + info)
+      }
+    }
+    const S3 = new SingleFunc('S3')
+    const S4 = new SingleFunc('S4')
+    console.log(S3, S4, S3 === S4) // 都返回S3的实例对象，对比得到true
+    S3.info('$3') // S3$3
+    S4.info('$4') // S3$4
+
+
+    // 利用闭包的思路 (实例应用)
+    function StorageCase () {}
+    StorageCase.prototype.getItem = function (key){
+        console.log('getItem', key)
+    }
+    StorageCase.prototype.setItem = function (key, value) {
+        console.log('setItem', key, value)
+    }
+    /* 因为返回一个函数、且需要闭包留存instance，所以需要自调用。这种写法是错误的。
+    const SingleClosure = function () {
+      let instance = null;
+      return function (name) {
+        if (!instance) instance = new StorageCase()
+        return instance
+      }
+    } */
+    const SingleClosure = (function (){
+      let instance = null;
+      return function (name) {
+        console.log(name)
+        if (!instance) instance = new StorageCase() // 利用闭包，保存一个实例
+        return instance
+      }
+    })()
+    const S5 = new SingleClosure('S5')
+    const S6 = new SingleClosure('S6')
+    console.log(S5, S6, S5 === S6)
+  </script>
+</body>
+</html>
