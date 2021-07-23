@@ -100,21 +100,22 @@ export default {
     }
     console.log(useDebouncedRef("hello")); // CustomRefImpl {__v_isRef: true, _get: ƒ, _set: ƒ}
 
-    // shallowRef
-    const foo = shallowRef({
-      deep: {
-        name: "deep",
-      },
-    });
-    console.log(foo); // RefImpl {_rawValue: {…}, _shallow: true, __v_isRef: true, _value: {…}}
-    foo.value.deep.name = "shallowRef";
-    console.log(isReactive(foo.value));
-    console.log(isRef(foo));
-    // 第一次运行时记录一次 "Hello, world"
-    watchEffect(() => {
-      console.log(foo.value.deep);
-    });
-    triggerRef(foo) // 手动触发，shallow只响应式化一层引用只，嵌套内容不会触发副作用watchEffect，可以手动触发记录一次。
+    // // shallowRef
+    // const foo = shallowRef({
+    //   deep: {
+    //     name: "deep",
+    //   },
+    // });
+    // console.log(foo); // RefImpl {_rawValue: {…}, _shallow: true, __v_isRef: true, _value: {…}}
+    // foo.value.deep.name = "shallowRef";
+    // console.log(isReactive(foo.value));
+    // console.log(isRef(foo));
+    // // 第一次运行时记录一次 "Hello, world"
+    // watchEffect(() => {
+    //   console.log(foo.value.deep);
+    // });
+    // triggerRef(foo) // 手动触发，shallow只响应式化一层引用只，嵌套内容不会触发副作用watchEffect，可以手动触发记录一次。
+    
     return {
       // count,
       // obj,

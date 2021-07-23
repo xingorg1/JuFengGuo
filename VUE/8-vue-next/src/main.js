@@ -17,7 +17,8 @@ console.log(app); // {_uid: 0, _component: {…}, _props: null, _container: div#
 console.log(axe); // {_uid: 0, _component: {…}, _props: null, _container: div#app, _context: {…}, …}
 console.log(route); // {_uid: 0, _component: {…}, _props: null, _container: div#app, _context: {…}, …}
 console.log(vm); // Proxy {…}
-
+console.log(vm.menuConfig); // 组件身上的属性是通过组件实例暴露的
+console.log(vm.appMethod()); // 方法内部的this就是根组件实例本身
 // 局部引入axe-ui
 // import { createApp } from 'vue'
 // import App from './App.vue'
