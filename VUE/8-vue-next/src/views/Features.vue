@@ -64,7 +64,7 @@ export default {
 .api-modal {
   padding: 20px;
   border: 1px solid #7b2227;
-  background: #b83f45;
+  background: #c33dca;
   color: #fff;
   z-index: 1;
   position: absolute;

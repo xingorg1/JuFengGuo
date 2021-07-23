@@ -14,9 +14,9 @@
     </div>
     <div class="content">
       <router-view></router-view>
-      <span v-once>这个将不会改变: {{ state.msg }}
+      <!-- <span v-once>这个将不会改变: {{ state.msg }}
         <em>{{state.innerTxt}}</em>
-      </span>
+      </span> -->
     </div>
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
 </script>
 <style scoped>
 /* :root {
-  --primary-color: #b83f45;
+  --primary-color: #c33dca;
 } */
 .wrapper {
   display: flex;
@@ -68,7 +68,7 @@ export default {
   line-height: 50px;
   font-size: 20px;
   text-align: center;
-  background: #b83f45;
+  background: #c33dca;
   color: #fff;
   border-bottom: 1px solid #fff;
 }
@@ -83,8 +83,8 @@ export default {
 .menu a:hover,
 .menu a:active,
 .menu a.router-link-active {
-  color: #b83f45;
-  border-right-color: #b83f45;
+  color: #c33dca;
+  border-right-color: #c33dca;
 }
 .content {
   padding: 20px;

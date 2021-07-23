@@ -147,7 +147,7 @@ export default {
   font-size: 80px;
   font-weight: 200;
   text-align: center;
-  color: #b83f45;
+  color: #c33dca;
   -webkit-text-rendering: optimizeLegibility;
   -moz-text-rendering: optimizeLegibility;
   text-rendering: optimizeLegibility;
