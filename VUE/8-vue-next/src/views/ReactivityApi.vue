@@ -1,9 +1,13 @@
 <template>
-  <a href="https://zhuanlan.zhihu.com/p/146097763">深入理解响应式API</a>
-  <hr />
+  <h3>
+    深入理解响应式API
+    <a href="https://zhuanlan.zhihu.com/p/146097763">更多</a>
+  </h3>
   <!-- <ReactiveVue /> -->
   <!-- <RefVue /> -->
-  <RefDom />
+  <div class="area">
+    <RefDom />
+  </div>
 </template>
 
 <script>
