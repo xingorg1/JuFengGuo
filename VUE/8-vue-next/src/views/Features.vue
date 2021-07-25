@@ -19,14 +19,31 @@
   <div class="area">
     <Emittes @click="handleClick" @submit="submitClick" />
   </div>
+
+  <div class="area">
+    <h3>v-model</h3>
+    <Vmodel
+      :type="1"
+      v-model="model1.count"
+      @update:modelValue="updateModelVal"
+    />
+    <h3>v-model参数、多个v-model</h3>
+    <Vmodel
+      :type="2"
+      v-model:myCount2="model2.count"
+      v-model:myCount3="model3"
+    />
+  </div>
 </template>
 
 <script>
 import { reactive, ref, watch } from "vue";
 import Emittes from "../components/features/Emits.vue";
+import Vmodel from "../components/features/Vmodel.vue";
 export default {
   components: {
     Emittes,
+    Vmodel,
   },
   setup() {
     // console.log(this)
@@ -62,6 +79,28 @@ export default {
     function submitClick({ email, psd }) {
       console.log(email, psd);
     }
+
+    // v-model
+    const model1 = reactive({
+      count: 1,
+    });
+    function updateModelVal() {
+      console.log("updateModelVal函数签名：", ...arguments);
+      console.log("父组件的响应式数据被改变了：", model1.count);
+    }
+
+    // v-model参数使用、多个v-model
+    const model2 = reactive({
+      count: 1,
+    });
+    // function updateModelVal2() {
+    //   // 父组件不定义这个函数也可以，因为值已经在子组件发射的时候变了，而不是在父组件的这个自定义事件中变得。
+    //   console.log("updateModelVal2-父组件的响应式数据被改变了：", model2.count);
+    // }
+
+    const model3 = reactive({
+      count: 1,
+    });
     return {
       refDom,
       changeCount,
@@ -69,6 +108,11 @@ export default {
       openModal,
       handleClick,
       submitClick,
+      model1,
+      updateModelVal,
+      model2,
+      // updateModelVal2,
+      model3,
     };
   },
 };
@@ -99,6 +143,10 @@ export default {
   padding: 10px;
   border: 1px solid #c5c500;
   background: yellow;
+}
+.axe-button {
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
 </style>
 
