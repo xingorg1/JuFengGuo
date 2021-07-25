@@ -2,9 +2,7 @@
   <!-- 新特性学习 -->
   <div class="api-demo">
     <!-- ref -->
-    <p ref="refDom" @click="changeCount">
-      我是ref元素。点我看效果
-    </p>
+    <p ref="refDom" @click="changeCount">我是ref元素。点我看效果</p>
 
     <!-- teleport -->
     <axe-button @click="openModal">点我打开 teleport组件 生成的弹窗</axe-button>
@@ -17,11 +15,19 @@
       </span>
     </teleport>
   </div>
+
+  <div class="area">
+    <Emittes @click="handleClick" @submit="submitClick" />
+  </div>
 </template>
 
 <script>
 import { reactive, ref, watch } from "vue";
+import Emittes from "../components/features/Emits.vue";
 export default {
+  components: {
+    Emittes,
+  },
   setup() {
     // console.log(this)
     const refDom = ref(null);
@@ -48,23 +54,33 @@ export default {
       data.showModal = !data.showModal;
       data.showModalBody = !data.showModalBody;
     }
+
+    function handleClick() {
+      console.log("自定义事件");
+    }
+
+    function submitClick({ email, psd }) {
+      console.log(email, psd);
+    }
     return {
       refDom,
       changeCount,
       data,
       openModal,
+      handleClick,
+      submitClick,
     };
   },
 };
 </script>
 <style scoped>
-.api-demo p{
+.api-demo p {
   margin-bottom: 10px;
 }
 .api-modal {
   padding: 20px;
-  border: 1px solid #7b2227;
-  background: #c33dca;
+  border: 1px solid #215b92;
+  background: #3d87ca;
   color: #fff;
   z-index: 1;
   position: absolute;
