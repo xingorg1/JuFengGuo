@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { reactive } from '@vue/reactivity';
+import { reactive } from "@vue/reactivity";
 import menuConfig from "./utils/menus";
 export default {
   components: {},
@@ -34,24 +34,24 @@ export default {
   setup() {
     // console.log(this)
     const state = reactive({
-      msg: 'v-once一次性绑定',
-      innerTxt: '但请留心这会影响到该节点上的其它数据绑定'
-    })
+      msg: "v-once一次性绑定",
+      innerTxt: "但请留心这会影响到该节点上的其它数据绑定",
+    });
     setTimeout(() => {
-      state.msg = '修改了内容也不会触发响应式更新'
+      state.msg = "修改了内容也不会触发响应式更新";
       // state.innerTxt = '修改了内容也不会触发响应式更新'
       console.log(state);
-    })
+    });
     return {
       menuConfig,
-      state
+      state,
     };
   },
 };
 </script>
 <style scoped>
 /* :root {
-  --primary-color: #c33dca;
+  --primary-color: #3d87ca;
 } */
 .wrapper {
   display: flex;
@@ -68,7 +68,7 @@ export default {
   line-height: 50px;
   font-size: 20px;
   text-align: center;
-  background: #c33dca;
+  background: #3d87ca;
   color: #fff;
   border-bottom: 1px solid #fff;
 }
@@ -83,11 +83,12 @@ export default {
 .menu a:hover,
 .menu a:active,
 .menu a.router-link-active {
-  color: #c33dca;
-  border-right-color: #c33dca;
+  color: #3d87ca;
+  border-right-color: #3d87ca;
 }
 .content {
   padding: 20px;
   flex: 1;
+  background-color: #f8f8f8;
 }
 </style>
