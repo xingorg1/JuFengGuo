@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSONP实现</title>
+</head>
+
+<body>
+  目标：调用jsonp函数，传入请求地址、请求参数、callback函数名字后，得到一个promise，then里接收响应结果
+  思路：
+  定义一个jsonp函数，接受一个options，键名可以有url、params、callback。
+  函数内部，返回一个promise，用于实现异步请求后获得数据的处理（代替了进一步的回调嵌套）
+  函数内部，再根据jsonp的原理，创建一个script标签并插入到document.body中，script的src属性是由url+params+callback组成的。最终形成的形式就是get请求的样子。
+  url?param1=aaa&param2=bbb&cb=callback
+  函数内部，使用callback的值（一个字符串），往window上绑定一个全局函数。用于发起请求后，后端的返回调用（jsonp原理体现）。在全局函数里，调用promise的resolve并传递参数、同时删除body里刚插入的script标签
+  <script>
+    function jsonp({ url, params, cb }) {
+      return new Promise((resolve, reject) => {
+        let script = document.createElement('script');
+        window[cb] = function (data) {
+          resolve(data);
+          document.body.removeChild(script);
+        }
+        params = { ...params, cb } // wd=b&cb=show
+        let arrs = [];
+        for (let key in params) {
+          arrs.push(`${key}=${params[key]}`);
+        }
+        script.src = `${url}?${arrs.join('&')}`;
+        document.body.appendChild(script);
+      });
+    }
+    // 只能发送get请求 不支持post put delete
+    // 不安全 xss攻击  不采用
+    jsonp({
+      url: 'http://localhost:3000/say',
+      params: { wd: '小石头' },
+      cb: 'show'
+    }).then(data => {
+      console.log(data);
+    });
+  </script>
+</body>
+
+</html>
