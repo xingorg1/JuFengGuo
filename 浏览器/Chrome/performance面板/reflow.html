@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>reflow测试</title>
+  <style>
+    #dom {
+      display: inline-block;
+      width: 400px;
+      height: 200px;
+      padding: 20px;
+      background: rgba(255, 2, 234, 0.653);
+    }
+    span {
+      border: 1px solid #000;
+      padding: 10px 20px;
+      cursor: pointer;
+      display: inline-block;
+      margin: 20px 0;
+      background: #f1f1f1;
+    }
+    table {
+      padding: 0;
+      margin: 20px 0;
+      border-color: #f1f1f1;
+    }
+    th,td {
+      padding: 3px 5px;
+      text-align: center;
+    }
+    th {
+      background-color: #f1f1f1;
+    }
+    th.red {
+      background-color: #ffcdcd;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>performance面板观察浏览器渲染流程，重绘重排的引发</h1>
+  <div id="dom">dom</div>
+  <span onclick="getCS()">getComputedStyle</span>
+  <span onclick="getBCR()">getBoundingClientRect</span>
+  <h3>规律总结：</h3>
+  <table border="1" cellpadding="0" cellspacing="0">
+    <thead>
+      <tr>
+        <th>改变的内容</th>
+        <th>Schedule Style Recalculation</th>
+        <th class="red">Parse Html</th>
+        <th>Recalculate Style</th>
+        <th class="red">Layout</th>
+        <th>Update Layer Tree</th>
+        <th>Paint</th>
+        <th>Composite Layers</th>
+        <th>立刻改变</th>
+      </tr>
+    </thead>
+    <tr>
+      <td>getComputedStyle()</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>✅</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>颜色</td>
+      <td>✅</td>
+      <td></td>
+      <td>✅</td>
+      <td></td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>innerHTML</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+    </tr>
+    <tr>
+      <td>innerText</td>
+      <td>✅</td>
+      <td></td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>✅</td>
+    </tr>
+  </table>
+  <script>
+    function getCS() {
+      const sty = window.getComputedStyle(dom)
+      console.log(sty)
+      const a = sty.backgroundColor 
+      console.log(a) 
+      // 上边的代码，执行后会马上计算 Update Layer Tree，但是不会立马重绘
+
+      /* 是否引发reflow和repaint，取决于后边是否对dom进行修改。如下： */
+
+      // 下边的代码不写，上边的代码不会立刻触发layer tree更新
+      // dom.style.backgroundColor = 'rgb(2, 251, 255)' // 立马触发重绘 Schedule Style Recalculation - Recalculate Style - Update Layer Tree - Paint - Composite Layers
+      // dom.innerHTML = 'reflow' // 立马触发回流，流程：Schedule Style Recalculation - Parse Html - Recalculate Style - Layout - Update Layer Tree - Paint - Composite Layers
+      // dom.innerText = 'reflow' // 触发回流，流程：Schedule Style Recalculation - Recalculate Style - Layout - Update Layer Tree - Paint - Composite Layers
+    }
+
+    function getBCR() {
+      let elem = document.querySelector('div');
+      let rect = elem.getBoundingClientRect(); // 同 getComputedStyle
+      console.log(elem, rect)
+      for (var key in rect) {
+        if (typeof rect[key] !== 'function') {
+          let para = document.createElement('p');
+          para.textContent = `${key} : ${rect[key]}`;
+          document.body.appendChild(para); // 流程同 innerText
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
