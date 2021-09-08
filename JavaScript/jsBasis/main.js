@@ -26,11 +26,14 @@ function renderDom(arr) {
 }
 renderDom(origin);
 // 行为交互
-/* 深克隆 */
+/**
+ * 深克隆（深拷贝）
+ * @param {object} origin 
+ * @returns origin / 克隆的origin
+ */
 function deepClone(origin) {
-  var type = typeof (origin),
-    result = null;
-  if (type === 'object' && origin !== null) {
+  let result = null;
+  if (typeof origin === 'object' && origin !== null) {
     if (Object.prototype.toString.call(origin) === '[object Array]') {
       result = [];
       origin.forEach(el => {
@@ -45,6 +48,48 @@ function deepClone(origin) {
       }
     }
   } else {
+    return origin;
+  }
+  return result;
+  /* 
+    问题：origin如果有循环应用，深克隆就会报错栈溢出
+    let obj2 = {
+      name: '循环应用测试'
+    }
+    obj2.cycle = obj2
+    let objClone2 = deepClone(obj2); // 报错栈溢出 Uncaught RangeError: Maximum call stack size exceeded
+   */
+}
+/**
+ * 深克隆（深拷贝）+ 解决上边深拷贝函数中循环引用时导致的栈溢出的问题
+ * @param {object} origin 
+ * @param {*} hashMap WeakMap数据，用于缓存克隆过的对象，这里也可以尝试用WeakSet的写法
+ * @returns origin / 克隆的origin
+ */
+function deepCloneCycle(origin, hashMap = new WeakMap()) {
+  let result = null;
+  if (hashMap.has(origin)) return hashMap.get(origin); // 查缓存字典中是否已有需要克隆的对象，有的话直接返回同一个对象（同一个引用，不用递归无限创建进而导致栈溢出了）
+  if (typeof origin === 'object' && origin !== null) { // 【类型判断】引用类型，进行递归拷贝（用typeof判断类型要剔除null的情况）
+    if (Object.prototype.toString.call(origin) === '[object Array]') {
+      // 【类型判断】数组类型，创建一个新数组
+      result = [];
+      hashMap.set(origin, result); // 哈希表缓存新值
+      // 【遍历赋值】
+      origin.forEach(el => {
+        result.push(deepCloneCycle(el, hashMap)); // 【递归】
+      });
+    } else {
+      // 【类型判断】对象类型，创建一个新对象
+      result = {};
+      hashMap.set(origin, result); // 哈希表缓存新值
+      for (const key in origin) {
+        // 【遍历赋值】对象这里特殊处理了，不遍历拷贝原型链上的属性
+        if (origin.hasOwnProperty(key)) {
+          result[key] = deepCloneCycle(origin[key], hashMap); // 【递归】
+        }
+      }
+    }
+  } else { // 【类型判断】原始类型直接返回
     return origin;
   }
   return result;
