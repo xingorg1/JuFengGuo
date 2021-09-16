@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>
+    打印一个8
+  </h1>
+  两种思路：
+  <ol>
+    <li>
+      使用矩阵映射；
+    </li>
+    <li>
+      按规律循环
+    </li>
+  </ol>
+  <script>
+    /* 
+      创建一个二维数组组成的点阵队形。遍历这个队形就行了。
+     */
+    var arr = [
+      [8, 8, 8, 8, 8, 8, 8],
+      [8, 0, 0, 0, 0, 0, 8],
+      [8, 0, 0, 0, 0, 0, 8],
+      [8, 0, 0, 0, 0, 0, 8],
+      [8, 8, 8, 8, 8, 8, 8],
+      [8, 0, 0, 0, 0, 0, 8],
+      [8, 0, 0, 0, 0, 0, 8],
+      [8, 0, 0, 0, 0, 0, 8],
+      [8, 8, 8, 8, 8, 8, 8]
+    ]
+    arr.forEach((innerArr) => {
+      innerArr.forEach((num) => {
+        if (num) {
+          document.write('🌚')
+        } else {
+          document.write('🌝')
+        }
+      })
+      document.write('<br>')
+    })
+    document.write('<hr>')
+    /* 
+    规律：
+    9 * 7 的格子，格子里填充内容
+    第一行满格
+    第二、三、四行，首尾有内容，中间空芯儿
+    第五行满格
+    第六、七、八行，首尾有内容，中间空芯儿
+    第九行满格
+    */
+    // 9 * 7 就是两个for循环嵌套
+    includesArrRow = [2, 3, 4, 6, 7, 8]
+    includesArrCol = [2, 3, 4, 5, 6]
+
+    for (var row = 1; row <= 9; row++) {
+      for (var col = 1; col <= 7; col++) {
+        console.log(row, col)
+        if (includesArrRow.includes(row) && includesArrCol.includes(col)) {
+          document.write('🌝')
+        } else {
+          document.write('🌚')
+        }
+      }
+      document.write('<br/>')
+    }
+  </script>
+</body>
+
+</html>
