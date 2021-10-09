@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div#outA {
+      width: 400px;
+      height: 400px;
+      background: #CDC9C9;
+      position: relative;
+    }
+
+    div#outB {
+      height: 200;
+      background: #0000ff;
+      top: 100px;
+      position: relative;
+    }
+
+    div#outC {
+      height: 100px;
+      background: #FFB90F;
+      top: 50px;
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>点击outB，观察执行顺序</h2>
+  <div id="outA">1
+    <div id="outB">2
+      <div id="outC">3
+      </div>
+    </div>
+  </div>
+  <script>
+    window.onload = function () {
+      var outA = document.getElementById("outA");
+      var outB = document.getElementById("outB");
+      var outC = document.getElementById("outC");
+      outA.addEventListener('click', function () { console.log("bubble1"); }, false);
+      outB.addEventListener('click', function () { console.log("bubble2"); }, false);
+      outB.addEventListener('click', function () { console.log("capture2"); }, true);
+      outC.addEventListener('click', function () { console.log("target"); }, true);
+      outA.addEventListener('click', function () { console.log("capture1"); }, true);
+    };
+  </script>
+</body>
+
+</html>

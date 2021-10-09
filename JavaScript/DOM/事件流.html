@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      text-align: center;
+    }
+
+    div {
+      display: inline-block;
+      background: rgba(117, 186, 255, 0.38);
+      border: 1px solid #def;
+      padding: 25px;
+      cursor: pointer;
+      border-radius: 50%;
+      color: #fff;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    div::after {
+      content: attr(data-cont);
+      position: absolute;
+      color: #333;
+      left: 0;
+      top: 0;
+      right: 0;
+      margin: auto;
+    }
+
+
+    #layer1 {
+      border-color: #ddd;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="layer1" data-cont="1">
+    <div id="layer2" data-cont="2">
+      <div id="layer3" data-cont="3">
+        冒泡
+      </div>
+    </div>
+  </div>
+  <br>
+  <div id="layer4" data-cont="4">
+    <div id="layer5" data-cont="5">
+      <div id="layer6" data-cont="6">
+        捕获
+      </div>
+    </div>
+  </div>
+  <br>
+  <div id="layer7" data-cont="7">
+    <div id="layer8" data-cont="8">
+      <div id="layer9" data-cont="9">
+        随机
+      </div>
+    </div>
+  </div>
+  <p>目标元素layer10，点击后，先执行1、3捕获，后执行的第二个绑定的冒泡事件。并不是按绑定顺序执行的</p>
+  <div id="layer10" data-cont="10">
+    随机
+  </div>
+  <script>
+    document.addEventListener("click", (e) => {
+      console.log('document click - 冒泡')
+    }, false)
+    document.addEventListener("click", (e) => {
+      console.log('document click - 捕获1')
+    }, true)
+    document.addEventListener("click", (e) => {
+      console.log('document click - 捕获2')
+    }, true)
+    // 冒泡机制，目标元素定义多个事件
+    layer1.addEventListener("click", (e) => {
+      console.log('%clayer1 - click - 第 1 次绑定', 'color: #f39900')
+    }, false)
+    layer1.addEventListener("click", (e) => {
+      console.log('%clayer1 - click - 第 2 次绑定', 'color: #f39900')
+    }, false)
+    layer1.addEventListener("click", (e) => {
+      console.log('%clayer1 - click - 第 3 次绑定', 'color: #f39900')
+    }, false)
+    layer2.addEventListener("click", (e) => {
+      console.log('%clayer2 - click - 第 1 次绑定', 'color: blue')
+    }, false)
+    layer2.addEventListener("click", (e) => {
+      console.log('%clayer2 - click - 第 2 次绑定', 'color: blue')
+    }, false)
+    layer2.addEventListener("click", (e) => {
+      console.log('%clayer2 - click - 第 3 次绑定', 'color: blue')
+    }, false)
+    layer3.addEventListener("click", (e) => {
+      console.log('%clayer3 - click - 第 1 次绑定', 'color: red')
+    }, false)
+    layer3.addEventListener("click", (e) => {
+      console.log('%clayer3 - click - 第 2 次绑定', 'color: red')
+    }, false)
+    layer3.addEventListener("click", (e) => {
+      console.log('%clayer3 - click - 第 3 次绑定', 'color: red')
+    }, false)
+    // 捕获机制，目标元素定义多个事件
+    layer4.addEventListener("click", (e) => {
+      console.log('%clayer4 - click - 第 1 次绑定', 'color: #f39900')
+    }, true)
+    layer4.addEventListener("click", (e) => {
+      console.log('%clayer4 - click - 第 2 次绑定', 'color: #f39900')
+    }, true)
+    layer4.addEventListener("click", (e) => {
+      console.log('%clayer4 - click - 第 3 次绑定', 'color: #f39900')
+    }, true)
+    layer5.addEventListener("click", (e) => {
+      console.log('%clayer5 - click - 第 1 次绑定', 'color: blue')
+    }, true)
+    layer5.addEventListener("click", (e) => {
+      console.log('%clayer5 - click - 第 2 次绑定', 'color: blue')
+    }, true)
+    layer5.addEventListener("click", (e) => {
+      console.log('%clayer5 - click - 第 3 次绑定', 'color: blue')
+    }, true)
+    layer6.addEventListener("click", (e) => {
+      console.log('%clayer6 - click - 第 1 次绑定', 'color: red')
+    }, true)
+    layer6.addEventListener("click", (e) => {
+      console.log('%clayer6 - click - 第 2 次绑定', 'color: red')
+    }, true)
+    layer6.addEventListener("click", (e) => {
+      console.log('%clayer6 - click - 第 3 次绑定', 'color: red')
+    }, true)
+    // 如果该 DOM **是目标元素，则按事件绑定顺序执行**，不区分冒泡还是捕获
+    layer7.addEventListener("click", (e) => {
+      console.log('%clayer7 - click - 第 1 次绑定 - 冒泡', 'color: #f39900')
+    }, false)
+    layer7.addEventListener("click", (e) => {
+      console.log('%clayer7 - click - 第 2 次绑定 - 捕获', 'color: #f39900')
+    }, true)
+    layer7.addEventListener("click", (e) => {
+      console.log('%clayer7 - click - 第 3 次绑定 - 冒泡', 'color: #f39900')
+    }, false)
+    layer8.addEventListener("click", (e) => {
+      console.log('%clayer8 - click - 第 1 次绑定 - 捕获', 'color: blue')
+    }, true)
+    layer8.addEventListener("click", (e) => {
+      console.log('%clayer8 - click - 第 2 次绑定 - 冒泡', 'color: blue')
+    }, false)
+    layer8.addEventListener("click", (e) => {
+      console.log('%clayer8 - click - 第 3 次绑定 - 捕获', 'color: blue')
+    }, true)
+    layer9.addEventListener("click", (e) => {
+      console.log('%clayer9 - click - 第 1 次绑定 - 捕获', 'color: red')
+    }, true)
+    layer9.addEventListener("click", (e) => {
+      console.log('%clayer9 - click - 第 2 次绑定 - 冒泡', 'color: red')
+    }, false)
+    layer9.addEventListener("click", (e) => {
+      console.log('%clayer9 - click - 第 3 次绑定 - 捕获', 'color: red')
+    }, true)
+    // 测试目标元素的执行顺序
+    layer10.addEventListener("click", (e) => {
+      console.log('%clayer10 - click - 第 1 次绑定 - 捕获', 'color: green')
+    }, true)
+    layer10.addEventListener("click", (e) => {
+      console.log('%clayer10 - click - 第 2 次绑定 - 冒泡', 'color: green')
+    }, false)
+    layer10.addEventListener("click", (e) => {
+      console.log('%clayer10 - click - 第 3 次绑定 - 捕获', 'color: green')
+    }, true)
+
+  </script>
+</body>
+
+</html>
