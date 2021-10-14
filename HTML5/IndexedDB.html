@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IndexedDB简单操作</title>
+</head>
+
+<body>
+  <h4>1、打开/创建一个 IndexedDB 数据库</h4>
+  <p>当该数据库不存在时，open 方法会直接创建一个</p>
+  <script>
+    let db
+    // 参数'testDB'为数据库名，1为版本号
+    const request = window.indexedDB.open("testDB", 1)
+    // 使用IndexedDB失败时的监听函数
+    request.onerror = function (event) {
+      console.log('无法使用IndexedDB')
+    }
+    // 成功
+    request.onsuccess = function (event) {
+      // 此处就可以获取到db实例
+      db = event.target.result
+      console.log("你打开了IndexedDB", event)
+      console.log('数据库实例', db)
+    }
+    // onupgradeneeded事件会在初始化数据库/版本发生更新时被调用，我们在它的监听函数中创建object store
+    request.onupgradeneeded = function (event) {
+      let objectStore
+      // 如果同名表未被创建过，则新建test表
+      if (!db.objectStoreNames.contains('test')) {
+        objectStore = db.createObjectStore('test', {
+          keyPath: 'id'
+        })
+        console.log('创建一个名为test的store', objectStore)
+        // 创建事务，指定表格名称和读写权限（transaction：交易、买卖）
+        const transaction = db.transaction(["test"], "readwrite")
+        // 拿到Object Store对象
+        const objectStore = transaction.objectStore("test")
+        // 向表格写入数据
+        objectStore.add({ id: 1, name: '小石头' })
+
+        // 打印
+        console.log('数据', objectStore)
+
+        // 操作成功时的监听函数
+        transaction.oncomplete = function (event) {
+          console.log("操作成功")
+        }
+        // 操作失败时的监听函数
+        transaction.onerror = function (event) {
+          console.log("这里有一个Error")
+        }
+      }
+    }
+    // 这个blocked事件很容易被忽略，当我们已经打开过IndexedDB，且它的数据库连接还未关闭时，会触发这个事件、而不会触发success
+    request.onblocked = function () {
+      console.log('onblocked')
+    }
+
+  </script>
+  <h4>2、创建一个 object store（object store 对标到数据库中的“表”单位）。</h4>
+  <script>
+    // // onupgradeneeded事件会在初始化数据库/版本发生更新时被调用，我们在它的监听函数中创建object store
+    // request.onupgradeneeded = function (event) {
+    //   let objectStore
+    //   // 如果同名表未被创建过，则新建test表
+    //   if (!db.objectStoreNames.contains('test')) {
+    //     objectStore = db.createObjectStore('test', {
+    //       keyPath: 'id'
+    //     })
+    //     console.log('创建一个名为test的store', objectStore)
+    //   }
+    // }
+  </script>
+  <h4>3、构建一个事务来执行一些数据库操作，像增加或提取数据等。 </h4>
+  <script>
+    // // 创建事务，指定表格名称和读写权限（transaction：交易、买卖）
+    // const transaction = db.transaction(["test"], "readwrite")
+    // // 拿到Object Store对象
+    // const objectStore = transaction.objectStore("test")
+    // // 向表格写入数据
+    // objectStore.add({ id: 1, name: '小石头' })
+
+    // // 打印
+    // console.log('数据', objectStore)
+  </script>
+  <h4>4、通过监听正确类型的事件以等待操作完成。</h4>
+  <script>
+    // // 操作成功时的监听函数
+    // transaction.oncomplete = function (event) {
+    //   console.log("操作成功")
+    // }
+    // // 操作失败时的监听函数
+    // transaction.onerror = function (event) {
+    //   console.log("这里有一个Error")
+    // }
+  </script>
+</body>
+
+</html>
