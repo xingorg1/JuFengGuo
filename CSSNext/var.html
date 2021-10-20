@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css变量</title>
+  <style>
+    :root {
+      --test: #f40;
+      --main-bg-color: #faf9f97c;
+      --color: rgb(7, 113, 219);
+      --fs: 12px;
+    }
+
+    body {
+      background-color: var(--main-bg-color);
+    }
+
+    .var-test {
+      color: var(--color, red, blue);
+      /* red blue就是当--color值无效时展示的数据。但是在我这里实测没有起作用 */
+      font-size: var(--fs, 18px);
+
+      border: 1px solid var(--test11, green);
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/var()" target="_blank" rel="noopener noreferrer">MDN文档 </a>
+  <br>
+  <a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/--*" target="_blank">css变量</a>
+  <div class="var-test">
+    var()语法：
+    <p>
+      第一个参数是变量名称；
+    </p>
+    <p>
+      第二个参数是兜底值，用来保证第一个属性值无效的情况下保证函数有值
+    </p>
+  </div>
+  <script>
+    console.log(window.document.styleSheets)
+    console.log(window.document.style)
+    // window.document.documentElement.setAttribute( "data-theme", type );
+  </script>
+
+  <div class="component">
+    兜底值测试：
+    <h3 class="header">header-color变量无效或不存在，展示兜底值</h3>
+    <span class="text">TEXT 使用父作用域中的样式</span>
+  </div>
+  <style>
+    /* 后备值 */
+
+    /* 在父元素样式中定义一个值 */
+    .component {
+      --text-color: #080;
+      /* header-color 并没有被设定 */
+
+      margin-top: 20px;
+    }
+
+    /* 在 component 的样式中使用它： */
+    .component .text {
+      color: var(--text-color, black);
+      /* 此处 color 正常取值 --text-color */
+    }
+
+    .component .header {
+      /* --header-color: #f40; */
+      color: var(--header-color, blue);
+      /* 此处 color 被回退到 blue */
+    }
+  </style>
+</body>
+
+</html>
