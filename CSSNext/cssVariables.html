@@ -5,7 +5,37 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>var</title>
+  <title>css 变量</title>
+  <style>
+    body {
+      text-align: center;
+      padding-top: 30px;
+    }
+    button {
+      margin-top: 20px;
+    }
+    /* 更改 input 拾色器的外观 - 火狐 不兼容 */
+    /* ::-webkit-color-swatch-wrapper 设置拾色器的外层包括的边框带样式 */
+    .input_color {
+      --borderC: #005496;
+      width: 50px;
+      height: 50px;
+      border: 2px dotted var(--borderC);
+      padding: 0;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .input_color[type='color']::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    /* ::-webkit-color-swatch  设置内层的边框(放置从拾色器选取的颜色)样式，颜色改变的地方 */
+    .input_color[type='color']::-webkit-color-swatch {
+      border: 0;
+      border-radius: 50%;
+    }
+  </style>
 </head>
 
 <body>
@@ -40,6 +70,7 @@
       --color: rgb(255, 60, 190);
       color: var(--color);
     }
+
     h3 {
       color: var(--color);
       transition: color .3s linear;
@@ -83,7 +114,8 @@
   <button id="setBtn">设置css var变量值</button>
   <button id="deleteBtn">删除css var变量值</button>
   <h3>从下边选择你想要的颜色，实现动态换肤</h3>
-  <input type="color" name="color" id="color" onchange="changeColor()">
+  <!-- input type=color；可以定义两个事件：input和change，oninput在内容改变时就触发，onchange在表单失焦后才会触发 -->
+  <input type="color" name="color" id="colorInput" oninput="changeColor()" value="#1890ff" class="input_color">
   <script>
     // 兼容性判断-js
     (() => {
@@ -104,8 +136,9 @@
       console.log(var2);
     }
     function changeColor() {
-      father.style.setProperty('--color', color.value);
-      document.documentElement.style.setProperty('--color', color.value)
+      father.style.setProperty('--color', colorInput.value);
+      document.documentElement.style.setProperty('--color', colorInput.value)
+      colorInput.style.setProperty('--borderC', colorInput.value)
     }
     // 删除 变量值
     deleteBtn.onclick = () => {
