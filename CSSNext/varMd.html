@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>var</title>
+</head>
+
+<body>
+  <style>
+    :root {
+      /* 全局作用域的变量 */
+      --color: blue;
+      --borderC: green;
+      --变量名: '变量名可以是数字、字母、下换线、中横线、中文';
+    }
+
+    div {
+      --color: pink;
+    }
+
+    div.father {
+      /* 私有作用域 */
+      --color: red;
+      color: var(--color);
+      position: relative;
+      transition: color .3s ease-in-out;
+    }
+
+    div.father::after {
+      content: var(--变量名);
+      color: var(--color);
+      border: 1px solid var(--borderC);
+      transition: color .3s ease-in-out;
+    }
+
+    div.father .child {
+      --color: rgb(255, 60, 190);
+      color: var(--color);
+    }
+
+    /* 结合`@media`实现响应式变化不同作用域的变量值 */
+    @media screen and (min-width: 768px) {
+      :root {
+        --color: orange;
+      }
+
+      div.father {
+        --color: black;
+      }
+    }
+
+    /* 兼容性判断 - css */
+    @supports ((--color: 0)) {
+      div.father::before {
+        content: '当前浏览器支持css variables';
+        color: red;
+        border: 3px lodash var(--borderC);
+      }
+    }
+
+    @supports (not (--color: 0)) {
+      div.father::before {
+        content: '不支持';
+        color: var(--color);
+        border: 3px lodash var(--borderC);
+      }
+    }
+  </style>
+  <div class="father" id="father">
+    用变量修改颜色值
+    <span class="child">
+      子作用域
+    </span>
+  </div>
+  <button id="getBtn">获取css var变量值</button>
+  <button id="setBtn">设置css var变量值</button>
+  <button id="deleteBtn">删除css var变量值</button>
+  <script>
+    // 兼容性判断-js
+    (() => {
+      console.log('当前页面是否支持Css变量', window.CSS.supports('--color', 0))
+    })()
+    var root = getComputedStyle(document.documentElement);
+    var divFather = getComputedStyle(father);
+    console.log(root, divFather)
+    //  读取 变量值
+    getBtn.onclick = () => {
+      var var1 = root.getPropertyValue('--color').trim();
+      console.log(var1);
+    }
+    // 新增 / 修改变量值
+    setBtn.onclick = () => {
+      father.style.setProperty('--color', '#111def');
+      var var2 = divFather.getPropertyValue('--color').trim();
+      console.log(var2);
+    }
+    // 删除 变量值
+    deleteBtn.onclick = () => {
+      father.style.removeProperty('--color');
+      var var3 = divFather.getPropertyValue('--color').trim();
+      console.log(var3);
+    }
+  </script>
+</body>
+
+</html>
