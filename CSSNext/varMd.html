@@ -40,6 +40,10 @@
       --color: rgb(255, 60, 190);
       color: var(--color);
     }
+    h3 {
+      color: var(--color);
+      transition: color .3s linear;
+    }
 
     /* 结合`@media`实现响应式变化不同作用域的变量值 */
     @media screen and (min-width: 768px) {
@@ -78,6 +82,8 @@
   <button id="getBtn">获取css var变量值</button>
   <button id="setBtn">设置css var变量值</button>
   <button id="deleteBtn">删除css var变量值</button>
+  <h3>从下边选择你想要的颜色，实现动态换肤</h3>
+  <input type="color" name="color" id="color" onchange="changeColor()">
   <script>
     // 兼容性判断-js
     (() => {
@@ -85,7 +91,7 @@
     })()
     var root = getComputedStyle(document.documentElement);
     var divFather = getComputedStyle(father);
-    console.log(root, divFather)
+    // console.log(root, divFather)
     //  读取 变量值
     getBtn.onclick = () => {
       var var1 = root.getPropertyValue('--color').trim();
@@ -96,6 +102,10 @@
       father.style.setProperty('--color', '#111def');
       var var2 = divFather.getPropertyValue('--color').trim();
       console.log(var2);
+    }
+    function changeColor() {
+      father.style.setProperty('--color', color.value);
+      document.documentElement.style.setProperty('--color', color.value)
     }
     // 删除 变量值
     deleteBtn.onclick = () => {
