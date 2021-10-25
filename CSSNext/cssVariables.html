@@ -11,9 +11,11 @@
       text-align: center;
       padding-top: 30px;
     }
+
     button {
       margin-top: 20px;
     }
+
     /* 更改 input 拾色器的外观 - 火狐 不兼容 */
     /* ::-webkit-color-swatch-wrapper 设置拾色器的外层包括的边框带样式 */
     .input_color {
@@ -123,7 +125,7 @@
     })()
     var root = getComputedStyle(document.documentElement);
     var divFather = getComputedStyle(father);
-    // console.log(root, divFather)
+    // console.log(root, root.length)
     //  读取 变量值
     getBtn.onclick = () => {
       var var1 = root.getPropertyValue('--color').trim();
@@ -133,12 +135,19 @@
     setBtn.onclick = () => {
       father.style.setProperty('--color', '#111def');
       var var2 = divFather.getPropertyValue('--color').trim();
+      console.log(divFather.item(0))
       console.log(var2);
     }
     function changeColor() {
       father.style.setProperty('--color', colorInput.value);
       document.documentElement.style.setProperty('--color', colorInput.value)
       colorInput.style.setProperty('--borderC', colorInput.value)
+      // TODO: 怎么改样式表的变量，了解cssOM的知识点，了解CSSStyleDeclaration对象
+      var declaration = document.styleSheets[0].cssRules[0].style;
+      console.log(declaration)
+      // var setprop = declaration.setProperty("background-color", "yellow", "important");
+      // TODO: js动态计算辅色
+      // TODO: 状态记忆功能
     }
     // 删除 变量值
     deleteBtn.onclick = () => {
