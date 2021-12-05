@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>es5环境和es6环境还不一样</h1>
+  <h1>以下代码在火狐和谷歌打印的结果都不一样</h1>
+  <script>
+    console.log('foo-up', foo); 
+    /* 
+    块1
+     */
+    {
+      function foo() {
+        console.log(1)
+      };
+      foo = 1;
+
+      function foo() {
+        console.log(2)
+      }
+      foo = 2;
+    };
+    console.log('foo', foo);
+
+    var x = 1; 
+    /* 块2 */
+    {
+      var x = 2;
+    };
+    console.log('x', x); // 输出 2
+
+    // es6 块级作用域
+
+    function f() {
+      console.log(1)
+    }
+    if (false) {
+      // 重复声明一次函数f
+      function f() {
+        console.log(2);
+      }
+    }
+
+    f();
+  </script>
+</body>
+
+</html>
