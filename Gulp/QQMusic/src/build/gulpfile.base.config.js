@@ -29,9 +29,9 @@ const base={
         ],
         dist:`${app.dist}/images`,
         commonBgImg:{
-            mobile:`${app.src}/node_modules/yi-yiche-ui/assets/m-widget/images/common/**/*`,
-            pc:`${app.src}/node_modules/yi-yiche-ui/assets/pc-widget/images/jxs-common/**/*`,
-            platform:`${app.src}/node_modules/yi-yiche-ui/assets/pc-widget/images/common/**/*`,
+            mobile:`${app.src}/node_modules/element-ui/assets/m-widget/images/common/**/*`,
+            pc:`${app.src}/node_modules/element-ui/assets/pc-widget/images/jxs-common/**/*`,
+            platform:`${app.src}/node_modules/element-ui/assets/pc-widget/images/common/**/*`,
             src:`${app.src}/images/common`,
             dist:`${app.dist}/images/common`
         },

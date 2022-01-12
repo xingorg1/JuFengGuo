@@ -1,7 +1,7 @@
 {
-  "name": "generator-yi-yiche-default",
+  "name": "generator-default",
   "version": "0.0.66",
-  "description": "The Frames of Yi-Front-End-Development-Team",
+  "description": "xxx",
   "main": "index.js",
   "scripts": {
     "start": "gulp dev",
@@ -14,11 +14,6 @@
     "type": "git",
     "url": "#####"
   },
-  "keywords": [
-    "yeoman-generator",
-    "yi-yiche",
-    "generator-yi-yiche"
-  ],
   "author": "testName",
   "license": "MIT",
   "bugs": {
@@ -34,8 +29,7 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "jquery": "^3.4.1",
-    "es5-shim": "^4.5.10",
-    "yi-yiche-ui": "^0.0.56"
+    "es5-shim": "^4.5.10"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",

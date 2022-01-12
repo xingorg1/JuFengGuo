@@ -37,6 +37,11 @@
       </div>
     </div>
     <div class="area">
+      <h3>watch监听嵌套对象</h3>
+      {{ oldObj }}
+      <button @click="changeOldObj">修改对象数据</button>
+    </div>
+    <div class="area">
       {{ obj.a.v}}
       <h3 :class="{'my-class': `${isA} + ${isB}` == `${isC}`}">动态绑定class {{isA + isB }}</h3>
       <p>这用错了，得到一个字符串加法表达式啊：{{`${isA} + ${isB}`}}、{{`${isA} + ${isB}` == `${isC}`}}</p>
@@ -105,7 +110,14 @@ export default {
         name1: "obj2",
         age1: 1
       },
-      syncData2: "父组件给的数据"
+      syncData2: "父组件给的数据",
+      oldObj: {
+        name: 'one',
+        arr: [1],
+        o: {
+          a: 1
+        }
+      }
     };
   },
   created() {
@@ -136,6 +148,12 @@ export default {
         immediate: true
       }
     ],
+    oldObj: {
+      handler(val, oldVal){
+        log("oldObj修改，测试oldVal拿到的值 ",val, oldVal.name);
+      },
+      deep:true
+    }
     // emitPropsData: function(newData){
     //   log(newData, 'watch后的newData')
     // }
@@ -155,6 +173,16 @@ export default {
     },
     msgChange() {
       log('msgChange函数',this.msg)
+    },
+    changeOldObj() {
+      // 修改obj的属性后，watch监听到的oldVal也跟着变了（拿不到旧值），这是因为watch只是监听了改变、但是没有缓存旧数据
+      // this.oldObj.name = 'two'
+      // 问题：那react的shouldIComponent里就能拿到旧的props，是做了深拷贝么？
+      // 直接修改obj对象，watch拿到的旧值就对了。因为俩不是一个对象了。
+      this.oldObj = {
+        name: 'new obj'
+      }
+      log(this.oldObj)
     },
     divClickHandle() {
       log(123)

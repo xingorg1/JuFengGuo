@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>等比例缩放、自适应</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    div {
+      background-color: #53a9ff;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .vw {
+      width: 60vw;
+      height: 60vw;
+    }
+
+    .grid {
+      display: inline-grid;
+      grid-template-columns: 60vw;
+      grid-template-rows: 60vw;
+    }
+
+    .border {
+      display: inline-block;
+      border: 30vw solid #53a9ff;
+      position: relative;
+    }
+
+    .border::after {
+      content: "border+vw";
+      position: absolute;
+      top: 0;
+      left: -50px;
+    }
+
+    .padding {
+      display: inline-block;
+      padding: 30vw;
+      position: relative;
+    }
+
+    .padding::after {
+      content: "padding+vw";
+      position: absolute;
+      top: 0;
+      left: 0px;
+    }
+
+    .padding2 {
+      padding: 20vw;
+    }
+
+    .square {
+      width: 30%;
+      height: 30vh;
+    }
+
+    .padding-square {
+      width: 30%;
+      padding-bottom: 30%;
+      /* 这样max-height就失效了，因为有内容会和padding-bottom共同占据高度，所以高度设置为0 */
+      /* max-height: 100px */
+      height: 0;
+      /* 同理
+        width: 30vw;
+        padding-bottom: 30vw;
+       */
+    }
+
+    .margin {
+      width: 30%;
+      overflow: hidden;
+      /* 这样max-height就生效了 */
+      /* max-height: 100px */
+      /* 同理
+        width: 30vw;
+       */
+    }
+
+    .margin::after {
+      content: "";
+      display: block;
+      margin-top: 100%;
+      /* 或者 padding-bottom: 100%; */
+    }
+    .margin.rect::after {
+      content: "";
+      display: block;
+      /* 矩形 */
+      margin-top: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  一共想到了四种实现方案，基本都是基于vw的
+  <h3>宽高设置为固定的vw值</h3>
+  <div class="vw">
+    width（vw） * height (vw)
+  </div>
+  <h3>grid一行一列宽度为vw值</h3>
+  <div class="grid">
+    grid
+  </div>
+  <h3>border四个方向设置为固定的vw值</h3>
+  <div class="border"></div>
+  <h3>padding实现同border</h3>
+  <div class="padding"></div>
+  <h3>padding非正方形的等比例缩放</h3>
+  <div class="padding2">
+  </div>
+  <p>其他方案</p>
+  <h3>实现正方形，宽高等比例缩放，原理同第一种</h3>
+  <div class="square"></div>
+  <h3>padding 的百分比数值是相对于父元素的宽度计算的</h3>
+  只需将元素垂直方向的一个 padding 值设定为与 width 相同的百分比就可以制作出自适应方形了。
+  <div class="padding-square">
+    内容加了一行，高度设为0
+  </div>
+  <h3>margin百分比撑开容器</h3>
+  margin-top设置100%，就是正方形，设置50%，就是2：1的矩形，具体图形宽高比就由margin-top的百分值决定了！
+  <div class="margin"></div>
+  <div class="margin rect"></div>
+</body>
+
+</html>

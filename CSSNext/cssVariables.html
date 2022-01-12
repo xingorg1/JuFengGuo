@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css 变量</title>
+  <style>
+    body {
+      text-align: center;
+      padding-top: 30px;
+    }
+
+    button {
+      margin-top: 20px;
+    }
+
+    /* 更改 input 拾色器的外观 - 火狐 不兼容 */
+    /* ::-webkit-color-swatch-wrapper 设置拾色器的外层包括的边框带样式 */
+    .input_color {
+      --borderC: #005496;
+      width: 50px;
+      height: 50px;
+      border: 2px dotted var(--borderC);
+      padding: 0;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .input_color[type='color']::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    /* ::-webkit-color-swatch  设置内层的边框(放置从拾色器选取的颜色)样式，颜色改变的地方 */
+    .input_color[type='color']::-webkit-color-swatch {
+      border: 0;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <style>
+    :root {
+      /* 全局作用域的变量 */
+      --color: blue;
+      --borderC: green;
+      --变量名: '变量名可以是数字、字母、下换线、中横线、中文';
+    }
+
+    div {
+      --color: pink;
+    }
+
+    div.father {
+      /* 私有作用域 */
+      --color: red;
+      color: var(--color);
+      position: relative;
+      transition: color .3s ease-in-out;
+    }
+
+    div.father::after {
+      content: var(--变量名);
+      color: var(--color);
+      border: 1px solid var(--borderC);
+      transition: color .3s ease-in-out;
+    }
+
+    div.father .child {
+      --color: rgb(255, 60, 190);
+      color: var(--color);
+    }
+
+    h3 {
+      color: var(--color);
+      transition: color .3s linear;
+    }
+
+    /* 结合`@media`实现响应式变化不同作用域的变量值 */
+    @media screen and (min-width: 768px) {
+      :root {
+        --color: orange;
+      }
+
+      div.father {
+        --color: black;
+      }
+    }
+
+    /* 兼容性判断 - css */
+    @supports ((--color: 0)) {
+      div.father::before {
+        content: '当前浏览器支持css variables';
+        color: red;
+        border: 3px lodash var(--borderC);
+      }
+    }
+
+    @supports (not (--color: 0)) {
+      div.father::before {
+        content: '不支持';
+        color: var(--color);
+        border: 3px lodash var(--borderC);
+      }
+    }
+  </style>
+  <div class="father" id="father">
+    用变量修改颜色值
+    <span class="child">
+      子作用域
+    </span>
+  </div>
+  <button id="getBtn">获取css var变量值</button>
+  <button id="setBtn">设置css var变量值</button>
+  <button id="deleteBtn">删除css var变量值</button>
+  <h3>从下边选择你想要的颜色，实现动态换肤</h3>
+  <!-- input type=color；可以定义两个事件：input和change，oninput在内容改变时就触发，onchange在表单失焦后才会触发 -->
+  <input type="color" name="color" id="colorInput" oninput="changeColor()" value="#1890ff" class="input_color">
+  <script>
+    // 兼容性判断-js
+    (() => {
+      console.log('当前页面是否支持Css变量', window.CSS.supports('--color', 0))
+    })()
+    var root = getComputedStyle(document.documentElement);
+    var divFather = getComputedStyle(father);
+    // console.log(root, root.length)
+    //  读取 变量值
+    getBtn.onclick = () => {
+      var var1 = root.getPropertyValue('--color').trim();
+      console.log(var1);
+    }
+    // 新增 / 修改变量值
+    setBtn.onclick = () => {
+      father.style.setProperty('--color', '#111def');
+      var var2 = divFather.getPropertyValue('--color').trim();
+      console.log(divFather.item(0))
+      console.log(var2);
+    }
+    function changeColor() {
+      father.style.setProperty('--color', colorInput.value);
+      document.documentElement.style.setProperty('--color', colorInput.value)
+      colorInput.style.setProperty('--borderC', colorInput.value)
+      // TODO: 怎么改样式表的变量，了解cssOM的知识点，了解CSSStyleDeclaration对象
+      var declaration = document.styleSheets[0].cssRules[0].style;
+      console.log(declaration)
+      // var setprop = declaration.setProperty("background-color", "yellow", "important");
+      // TODO: js动态计算辅色
+      // TODO: 状态记忆功能
+    }
+    // 删除 变量值
+    deleteBtn.onclick = () => {
+      father.style.removeProperty('--color');
+      var var3 = divFather.getPropertyValue('--color').trim();
+      console.log(var3);
+    }
+  </script>
+</body>
+
+</html>

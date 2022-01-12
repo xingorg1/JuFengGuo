@@ -4,7 +4,7 @@ const url = require('url')
 
 const Server = http.createServer({
 }, (IncomingMessage, serverResponse) => {
-  // console.log('监听到一个请求req：', IncomingMessage); //  Specifies the IncomingMessage class to be used. Useful for extending the original IncomingMessage https://nodejs.org/dist/latest-v14.x/docs/api/http.html#http_class_http_incomingmessage
+  console.log('监听到一个请求req：', IncomingMessage); //  Specifies the IncomingMessage class to be used. Useful for extending the original IncomingMessage https://nodejs.org/dist/latest-v14.x/docs/api/http.html#http_class_http_incomingmessage
   // console.log('我发出的响应res：', serverResponse); // Specifies the ServerResponse class to be used. Useful for extending the original ServerResponse https://nodejs.org/dist/latest-v14.x/docs/api/http.html#http_class_http_serverresponse
 
   // 获取并处理请求信息
