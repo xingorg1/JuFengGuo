@@ -46,11 +46,11 @@ module.exports={
 	resolve: {
         extensions: ['.js', '.vue','.scss','.css','.pug','.html','.json'],
         alias: {
-		    '@pcjs': path.resolve(__dirname, '../node_modules/yi-yiche-ui/pc-widget/src/js/common/mods'),
-			'@mjs': path.resolve(__dirname, '../node_modules/yi-yiche-ui/m-widget/src/js/common/mods'),
-			'@utilsjs': path.resolve(__dirname, '../node_modules/yi-yiche-ui/utils/src/js/common/mods'),
-			'@yiframesjs': path.resolve(__dirname, '../node_modules/yi-yiche-ui/yiframes/src/js/common/mods'),
-			'@jsbridge': path.resolve(__dirname, '../node_modules/yi-yiche-ui/yiframesjsbridge/src/js/common/mods')
+		    '@pcjs': path.resolve(__dirname, '../node_modules/element-ui/pc-widget/src/js/common/mods'),
+			'@mjs': path.resolve(__dirname, '../node_modules/element-ui/m-widget/src/js/common/mods'),
+			'@utilsjs': path.resolve(__dirname, '../node_modules/element-ui/utils/src/js/common/mods'),
+			'@yiframesjs': path.resolve(__dirname, '../node_modules/element-ui/yiframes/src/js/common/mods'),
+			'@jsbridge': path.resolve(__dirname, '../node_modules/element-ui/yiframesjsbridge/src/js/common/mods')
 		}
     },
     module:{
@@ -58,7 +58,7 @@ module.exports={
     		{
     			enforce: 'pre',
 		        test: /\.js$/,
-		        include:/(common|conf|yi-yiche-js)/,
+		        include:/(common|conf|element-js)/,
 		        use: [
 			        {
 			          loader:'eslint-loader',
@@ -73,7 +73,7 @@ module.exports={
 		    },
     		{
 		        test: /\.js$/,
-		        include:/(common|conf|yi-yiche-js)/,
+		        include:/(common|conf|element-js)/,
 		        use:[
 			        {
 				        loader:'babel-loader',
