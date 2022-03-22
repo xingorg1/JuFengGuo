@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>我是父应用</div>
+  <script>
+    let content = `<div class="container">
+      <div>我是子应用</div>
+      <style>
+        div {color: red;}
+      </style>
+    </div>
+    `
+    // 创建一个div元素，内容为待渲染的结构字符串
+    let tempEle = document.createElement('div')
+    tempEle.innerHTML = content
+    // 获取到container元素
+    let containerDOM = tempEle.firstChild
+    // 拿到container的内容，备份，后续使用
+    let old = containerDOM.innerHTML
+    // 清空container内的东西
+    containerDOM.innerHTML = ''
+    // 在container内部创建shadowDOM
+    let shadowDOM = containerDOM.attachShadow({
+      mode: 'closed'
+    })
+    // 在shadowDOM内填充container原来的内容
+    shadowDOM.innerHTML = old
+    // 将渲染为DOM结构的Container扔进body
+    document.body.appendChild(containerDOM)
+  </script>
+
+  <script>
+    let content2 = `<div class="container">
+      <div>我是子应用2</div>
+      <style>
+        div {color: blue;}
+      </style>
+    </div>
+    `
+    let tempEle2 = document.createElement('div')
+    tempEle2.innerHTML = content2
+    let containerDOM2 = tempEle2.firstChild
+    let old2 = containerDOM2.innerHTML
+    containerDOM2.innerHTML = ''
+    let shadowDOM2 = containerDOM2.attachShadow({
+      mode: 'open'
+    })
+    shadowDOM2.innerHTML = old2
+    document.body.appendChild(containerDOM2)
+  </script>
+</body>
+
+</html>
