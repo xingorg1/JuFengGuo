@@ -1320,4 +1320,29 @@ var xingorg1Utils = {
       });
      */
   },
+  /**
+   * 洗牌算法
+   * @param {*} arr 
+   */
+  shuffleArray: function (arr) {
+    return arr.sort(() => Math.random() - 0.5)
+  },
+  /**
+   * 复制到剪切板
+   * @param {*} text 
+   * @returns 
+   */
+  copyToClipboard: (text) => navigator.clipboard?.writeText && navigator.clipboard.writeText(text),
+  /**
+   * 暗黑模式判断
+   * @returns 
+   */
+  isDarkMode: () => window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches,
+  /**
+   * 滚动到顶部/底部
+   * @param {*} element 
+   * @returns 
+   */
+  scrollToTop: (element) => element.scrollIntoView({ behavior: "smooth", block: "start" }),
+  scrollToBottom: (element) => element.scrollIntoView({ behavior: "smooth", block: "end" }),
 }
