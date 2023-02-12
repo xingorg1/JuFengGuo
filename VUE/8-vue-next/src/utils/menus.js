@@ -24,5 +24,10 @@ export default [
     name: 'Reactivity响应式API',
     fileName: 'ReactivityApi',
     path: '/reactivity-api'
+  },
+  {
+    name: '低代码平台',
+    fileName: 'LowCodePlatform',
+    path: '/low-code-platform'
   }
 ]
