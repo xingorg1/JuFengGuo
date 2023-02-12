@@ -5,7 +5,7 @@
  * @Last Modified time: 2018-05-31 20:32:23
  */
 // _mixin.scss
-// @import "../../node_modules/yi-yiche-ui/m-widget/src/scss/modules/layout.scss";
+// @import "../../node_modules/element-ui/m-widget/src/scss/modules/layout.scss";
 
 // reset
 $inputSelectTextareaPlaceholder:			#B7B7B7;
@@ -107,7 +107,7 @@ $yiBtnValueMap: (
 	// 加载
 	btnLoadW: 24px,
 	btnLoadH: 24px,
-	btnLoadBgImg: url(https://img1.bitautoimg.com/das/fe/yi-widget/m-widget/other/load.gif),
+	btnLoadBgImg: url(/load.gif),
 );
 
 // $yiAlertValueMap
@@ -123,7 +123,7 @@ $yiAlertValueMap: (
 	yiAlertCloLineH: 1.5,
 	yiAlertCloW: 32px,
 	yiAlertCloH: 32px,
-	yiAlertCloBgImg: url(https://img1.bitautoimg.com/das/fe/yi-widget/m-widget/other/close.gif) no-repeat center center / 24px 24px,
+	yiAlertCloBgImg: url(/close.gif) no-repeat center center / 24px 24px,
 	yiAlertCloText: 100px,
 	yiAlertCloTextI: 40px,
 

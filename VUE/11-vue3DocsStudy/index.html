@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>看控制台</h1>
+  <div id="app"></div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.2.33/dist/vue.global.js"></script>
+  <script>
+    const App = {
+      data() {
+        return {
+          message: 'Hello Vue.js!'
+        }
+      },
+      methods: {
+        handle: function gjf() { console.log('i‘m a methods') }
+      }
+    }
+    const app = Vue.createApp(App)
+    const vm = app.mount('#app')
+    console.log('应用', app)
+    console.log('（根组件）实例', vm)
+  </script>
+</body>
+
+</html>
