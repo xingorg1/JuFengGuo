@@ -1,0 +1,21 @@
+{
+  "name": "axe-nvwa-cli",
+  "version": "1.0.0",
+  "description": "从0-1搭建脚手架",
+  "main": "index.js",
+  "bin": {
+    "axe-nvwa-cli": "bin/index.js"
+  },
+  "scripts": {
+    "start": "node bin/index.js",
+    "dev": "node utils/inquirer.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^9.4.1",
+    "ejs": "^3.1.8",
+    "inquirer": "^8.2.5"
+  }
+}
