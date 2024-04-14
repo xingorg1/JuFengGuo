@@ -1,5 +1,7 @@
 const Controller = require('egg').Controller;
 
+// HomeController ：控制器，继承自egg Controller的一个类
+// index() ：action 实例方法
 class HomeController extends Controller {
   async index() {
     // this.ctx.body = 'hello world'
