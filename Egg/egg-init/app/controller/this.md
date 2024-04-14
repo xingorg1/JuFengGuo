@@ -1,4 +1,5 @@
-HomeController
+控制器中的this都有啥？以home 控制器为例：
+# HomeController
 ```js
 {
   ctx: {

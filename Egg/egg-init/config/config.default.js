@@ -1,4 +1,5 @@
-exports.keys = "cookie";
+// 默认配置
+exports.keys = "cookie"; // 秘钥，用于加密cookie
 exports.view = {
   defaultViewEngine: 'nunjucks',
   mapping: {

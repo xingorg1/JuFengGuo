@@ -11,7 +11,7 @@
   "author": "xingorg1",
   "license": "ISC",
   "dependencies": {
-    "egg": "^2.29.3",
+    "egg": "^2.37.0",
     "egg-bin": "^4.15.0",
     "egg-view-nunjucks": "^2.3.0",
     "moment": "^2.29.1"
