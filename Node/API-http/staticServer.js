@@ -5,6 +5,11 @@ const path = require('path');
 const fs = require('fs');
 const contentTypeJson = require('./contentTypeJson.json')
 const server = http.createServer({}, async (req, res) => {
+    if (path.normalize(decodeURI(req.url)) !== decodeURI(req.url)) {
+        res.statusCode = 403;
+        res.end();
+        return;
+    }
   // 思路: 解析请求的路径，对应返回不同的文件
   console.log(req.url);
   let { pathname } = urlHandle(req.url || {})
